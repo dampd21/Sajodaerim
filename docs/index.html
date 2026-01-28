@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사조 주문 데이터 대시보드</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <!-- 헤더 -->
         <header class="header">
             <h1>사조 주문 데이터 대시보드</h1>
             <p class="update-time" id="updateTime"></p>
         </header>
 
-        <!-- 필터 영역 -->
         <section class="filter-section">
             <div class="filter-group">
                 <label>지점 선택</label>
@@ -31,7 +31,6 @@
             </div>
         </section>
 
-        <!-- 요약 카드 -->
         <section class="summary-cards">
             <div class="card">
                 <div class="card-label">주문 건수</div>
@@ -51,18 +50,21 @@
             </div>
         </section>
 
-        <!-- 탭 -->
         <nav class="tabs">
             <button class="tab active" data-tab="sales">매출 현황</button>
             <button class="tab" data-tab="prices">가격 변동</button>
         </nav>
 
-        <!-- 탭 콘텐츠 -->
         <main class="tab-content">
-            <!-- 매출 현황 -->
             <section id="sales" class="tab-pane active">
                 <div class="chart-container">
-                    <h3>일별 매출 추이</h3>
+                    <div class="chart-header">
+                        <h3>일별 매출 추이</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn" id="resetDailyZoom">초기화</button>
+                            <span class="chart-hint">마우스 휠: 확대/축소 | 드래그: 이동</span>
+                        </div>
+                    </div>
                     <canvas id="dailySalesChart"></canvas>
                 </div>
                 
@@ -93,7 +95,6 @@
                 </div>
             </section>
 
-            <!-- 가격 변동 -->
             <section id="prices" class="tab-pane">
                 <div class="filter-bar">
                     <input type="text" id="priceSearch" placeholder="상품명 검색..." class="search-input">
@@ -130,12 +131,17 @@
             </section>
         </main>
 
-        <!-- 가격 상세 모달 -->
         <div class="modal" id="priceModal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
                 <h2 id="modalTitle">상품 가격 변동</h2>
                 <div class="modal-body">
+                    <div class="chart-header">
+                        <div class="chart-controls">
+                            <button class="chart-btn" id="resetModalZoom">초기화</button>
+                            <span class="chart-hint">마우스 휠: 확대/축소 | 드래그: 좌우 이동</span>
+                        </div>
+                    </div>
                     <canvas id="priceHistoryChart"></canvas>
                     <div class="price-details" id="priceDetails"></div>
                     <div class="price-history-table" id="priceHistoryTable"></div>
