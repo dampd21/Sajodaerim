@@ -261,6 +261,42 @@ body {
     background: #1a1a2e;
 }
 
+/* Price Change Display */
+.price-change {
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.price-change.up {
+    color: #ff6b6b;
+}
+
+.price-change.down {
+    color: #51cf66;
+}
+
+.price-change.neutral {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* Price Card Body - 더 넓게 */
+.price-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.price-range {
+    color: #aaa;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
 /* Price Summary */
 .price-summary {
     display: flex;
