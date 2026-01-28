@@ -18,21 +18,13 @@ def load_master_data():
         return []
     
     with open(master_file, 'r', encoding='utf-8') as f:
-        return json.load(f)
-
-
-def get_week_key(date_str):
-    dt = datetime.strptime(date_str, "%Y-%m-%d")
-    year, week, _ = dt.isocalendar()
-    return f"{year}-W{week:02d}"
-
-
-def get_month_key(date_str):
-    return date_str[:7]
+        data = json.load(f)
+    
+    print(f"[INFO] Loaded {len(data)} records")
+    return data
 
 
 def analyze_price_changes(price_data, products):
-    """가격 변동 분석"""
     changes = []
     
     for code, prices in price_data.items():
@@ -83,156 +75,167 @@ def generate_report():
     
     if not data:
         print("[INFO] No data, generating empty report.")
-        report = {
-            "generated_at": datetime.now().isoformat(),
-            "summary": {
-                "total_records": 0,
-                "total_stores": 0,
-                "total_categories": 0,
-                "total_products": 0,
-                "date_range": {"start": None, "end": None},
-                "total_sales": 0
-            },
-            "daily": {},
-            "weekly": {},
-            "monthly": {},
-            "price_changes": [],
-            "store_price_changes": {},
-            "stores": [],
-            "categories": [],
-            "products": [],
-            "store_list": []
-        }
-    else:
-        print(f"[INFO] Analyzing {len(data):,} records...")
+        report = create_empty_report()
+        save_report(report)
+        return
+    
+    print(f"[INFO] Analyzing {len(data):,} records...")
+    
+    stores_set = set()
+    categories_set = set()
+    products = {}
+    
+    daily_sales = defaultdict(lambda: {"count": 0, "total": 0, "items": 0})
+    store_sales = defaultdict(lambda: {"count": 0, "total": 0})
+    category_sales = defaultdict(lambda: {"count": 0, "total": 0})
+    
+    product_prices = defaultdict(list)
+    store_product_prices = defaultdict(lambda: defaultdict(list))
+    store_daily_sales = defaultdict(lambda: defaultdict(lambda: {"count": 0, "total": 0, "items": 0}))
+    
+    for item in data:
+        date_str = item.get('조회일자', '')
+        store = item.get('지점명', '').strip()
+        category = item.get('대분류', '').strip()
+        product_code = item.get('상품코드', '').strip()
+        product_name = item.get('상품명', '').strip()
         
-        stores = set()
-        categories = set()
-        products = {}
+        try:
+            qty = int(item.get('수량', 0) or 0)
+            price = int(item.get('단가', 0) or 0)
+            total = int(item.get('합계', 0) or 0)
+        except (ValueError, TypeError):
+            qty, price, total = 0, 0, 0
         
-        daily_sales = defaultdict(lambda: {"count": 0, "total": 0})
-        weekly_sales = defaultdict(lambda: {"count": 0, "total": 0})
-        monthly_sales = defaultdict(lambda: {"count": 0, "total": 0})
+        if store:
+            stores_set.add(store)
+        if category:
+            categories_set.add(category)
         
-        store_sales = defaultdict(lambda: {"count": 0, "total": 0})
-        category_sales = defaultdict(lambda: {"count": 0, "total": 0})
+        if product_code and product_code not in products:
+            products[product_code] = {
+                "code": product_code,
+                "name": product_name,
+                "category": category,
+                "unit": item.get('단위', '')
+            }
         
-        product_prices = defaultdict(list)
-        store_product_prices = defaultdict(lambda: defaultdict(list))
+        # 일별 매출
+        daily_sales[date_str]["count"] += qty
+        daily_sales[date_str]["total"] += total
+        daily_sales[date_str]["items"] += 1
         
-        for item in data:
-            date_str = item['조회일자']
-            store = item['지점명']
-            category = item['대분류']
-            product_code = item['상품코드']
-            product_name = item['상품명']
-            
-            try:
-                qty = int(item['수량']) if item['수량'] else 0
-                price = int(item['단가']) if item['단가'] else 0
-                total = int(item['합계']) if item['합계'] else 0
-            except:
-                qty, price, total = 0, 0, 0
-            
-            # 지점명 수집
-            if store:
-                stores.add(store)
-            
-            if category:
-                categories.add(category)
-            
-            if product_code and product_code not in products:
-                products[product_code] = {
-                    "code": product_code,
-                    "name": product_name,
-                    "category": category,
-                    "unit": item.get('단위', '')
-                }
-            
-            daily_sales[date_str]["count"] += qty
-            daily_sales[date_str]["total"] += total
-            
-            week_key = get_week_key(date_str)
-            weekly_sales[week_key]["count"] += qty
-            weekly_sales[week_key]["total"] += total
-            
-            month_key = get_month_key(date_str)
-            monthly_sales[month_key]["count"] += qty
-            monthly_sales[month_key]["total"] += total
-            
+        # 지점별 매출
+        if store:
             store_sales[store]["count"] += qty
             store_sales[store]["total"] += total
             
+            store_daily_sales[store][date_str]["count"] += qty
+            store_daily_sales[store][date_str]["total"] += total
+            store_daily_sales[store][date_str]["items"] += 1
+        
+        # 카테고리별 매출
+        if category:
             category_sales[category]["count"] += qty
             category_sales[category]["total"] += total
+        
+        # 가격 추적
+        if price > 0 and product_code:
+            product_prices[product_code].append({
+                "date": date_str,
+                "price": price,
+                "store": store
+            })
             
-            if price > 0 and product_code:
-                product_prices[product_code].append({
-                    "date": date_str,
-                    "price": price,
-                    "store": store
-                })
-                
+            if store:
                 store_product_prices[store][product_code].append({
                     "date": date_str,
                     "price": price
                 })
-        
-        # 전체 가격 변동 분석
-        price_changes = analyze_price_changes(product_prices, products)
-        
-        # 지점별 가격 변동 분석
-        store_price_changes = {}
-        for store, store_products in store_product_prices.items():
-            if store:  # 빈 지점명 제외
-                store_changes = analyze_price_changes(store_products, products)
-                if store_changes:
-                    store_price_changes[store] = store_changes
-        
-        dates = sorted(daily_sales.keys())
-        
-        # 지점 리스트 정렬
-        store_list = sorted(list(stores))
-        
-        print(f"[INFO] Found {len(store_list)} stores")
-        print(f"[INFO] Stores: {store_list[:5]}..." if len(store_list) > 5 else f"[INFO] Stores: {store_list}")
-        
-        report = {
-            "generated_at": datetime.now().isoformat(),
-            "summary": {
-                "total_records": len(data),
-                "total_stores": len(stores),
-                "total_categories": len(categories),
-                "total_products": len(products),
-                "date_range": {
-                    "start": dates[0] if dates else None,
-                    "end": dates[-1] if dates else None
-                },
-                "total_sales": sum(d["total"] for d in daily_sales.values())
-            },
-            "daily": dict(sorted(daily_sales.items())),
-            "weekly": dict(sorted(weekly_sales.items())),
-            "monthly": dict(sorted(monthly_sales.items())),
-            "stores": [
-                {"name": k, "count": v["count"], "total": v["total"]} 
-                for k, v in sorted(store_sales.items(), key=lambda x: -x[1]["total"])
-                if k  # 빈 지점명 제외
-            ],
-            "categories": [
-                {"name": k, "count": v["count"], "total": v["total"]} 
-                for k, v in sorted(category_sales.items(), key=lambda x: -x[1]["total"])
-                if k  # 빈 카테고리 제외
-            ],
-            "price_changes": price_changes[:100],
-            "store_price_changes": store_price_changes,
-            "products": list(products.values()),
-            "store_list": store_list  # 지점 목록
+    
+    # 가격 변동 분석
+    price_changes = analyze_price_changes(product_prices, products)
+    
+    store_price_changes = {}
+    for store in stores_set:
+        if store in store_product_prices:
+            store_changes = analyze_price_changes(store_product_prices[store], products)
+            if store_changes:
+                store_price_changes[store] = store_changes
+    
+    dates = sorted(daily_sales.keys())
+    store_list = sorted(list(stores_set))
+    
+    # 지점별 상세 데이터
+    store_details = {}
+    for store in store_list:
+        store_details[store] = {
+            "daily": dict(sorted(store_daily_sales[store].items())),
+            "total_count": store_sales[store]["count"],
+            "total_sales": store_sales[store]["total"]
         }
     
-    # 저장
+    print(f"[INFO] Found {len(store_list)} stores")
+    
+    report = {
+        "generated_at": datetime.now().isoformat(),
+        "summary": {
+            "total_records": len(data),
+            "total_stores": len(stores_set),
+            "total_categories": len(categories_set),
+            "total_products": len(products),
+            "date_range": {
+                "start": dates[0] if dates else None,
+                "end": dates[-1] if dates else None
+            },
+            "total_sales": sum(d["total"] for d in daily_sales.values())
+        },
+        "daily": dict(sorted(daily_sales.items())),
+        "stores": [
+            {"name": k, "count": v["count"], "total": v["total"]} 
+            for k, v in sorted(store_sales.items(), key=lambda x: -x[1]["total"])
+            if k
+        ],
+        "categories": [
+            {"name": k, "count": v["count"], "total": v["total"]} 
+            for k, v in sorted(category_sales.items(), key=lambda x: -x[1]["total"])
+            if k
+        ],
+        "price_changes": price_changes[:300],
+        "store_price_changes": store_price_changes,
+        "store_details": store_details,
+        "products": list(products.values()),
+        "store_list": store_list
+    }
+    
+    save_report(report)
+
+
+def create_empty_report():
+    return {
+        "generated_at": datetime.now().isoformat(),
+        "summary": {
+            "total_records": 0,
+            "total_stores": 0,
+            "total_categories": 0,
+            "total_products": 0,
+            "date_range": {"start": None, "end": None},
+            "total_sales": 0
+        },
+        "daily": {},
+        "stores": [],
+        "categories": [],
+        "price_changes": [],
+        "store_price_changes": {},
+        "store_details": {},
+        "products": [],
+        "store_list": []
+    }
+
+
+def save_report(report):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # output 폴더에 저장
     output_dir = os.path.join(script_dir, "output")
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "report_data.json")
@@ -242,7 +245,6 @@ def generate_report():
     
     print(f"[SAVE] Report: {output_file}")
     
-    # docs 폴더에도 복사 (GitHub Pages용)
     docs_dir = os.path.join(script_dir, "docs")
     os.makedirs(docs_dir, exist_ok=True)
     docs_file = os.path.join(docs_dir, "report_data.json")
@@ -251,7 +253,7 @@ def generate_report():
         json.dump(report, f, ensure_ascii=False)
     
     print(f"[SAVE] Web report: {docs_file}")
-    print(f"[INFO] Store list saved: {len(report['store_list'])} stores")
+    print(f"[DONE] {len(report.get('store_list', []))} stores saved")
 
 
 if __name__ == "__main__":
