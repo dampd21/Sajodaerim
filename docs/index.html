@@ -10,38 +10,36 @@
 </head>
 <body>
     <div class="container">
-        <!-- 헤더 -->
         <header class="header">
-            <h1>📊 사조 주문 데이터 대시보드</h1>
+            <h1>사조 주문 데이터 대시보드</h1>
             <p class="subtitle">가격 변동 및 주문 현황 분석</p>
             <p class="update-time" id="updateTime"></p>
         </header>
 
-        <!-- 요약 카드 -->
         <section class="summary-cards">
             <div class="card">
-                <div class="card-icon">📦</div>
+                <div class="card-icon">BOX</div>
                 <div class="card-content">
                     <div class="card-value" id="totalRecords">-</div>
                     <div class="card-label">총 주문 건수</div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-icon">🏪</div>
+                <div class="card-icon">STORE</div>
                 <div class="card-content">
                     <div class="card-value" id="totalStores">-</div>
                     <div class="card-label">지점 수</div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-icon">🏷️</div>
+                <div class="card-icon">ITEM</div>
                 <div class="card-content">
                     <div class="card-value" id="totalProducts">-</div>
                     <div class="card-label">상품 종류</div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-icon">💰</div>
+                <div class="card-icon">KRW</div>
                 <div class="card-content">
                     <div class="card-value" id="totalSales">-</div>
                     <div class="card-label">총 매출</div>
@@ -49,18 +47,17 @@
             </div>
         </section>
 
-        <!-- 탭 메뉴 -->
         <nav class="tabs">
-            <button class="tab active" data-tab="overview">📈 개요</button>
-            <button class="tab" data-tab="weekly">📅 주간</button>
-            <button class="tab" data-tab="monthly">📆 월간</button>
-            <button class="tab" data-tab="prices">💹 가격변동</button>
-            <button class="tab" data-tab="stores">🏪 지점별</button>
+            <button class="tab active" data-tab="overview">개요</button>
+            <button class="tab" data-tab="weekly">주간</button>
+            <button class="tab" data-tab="monthly">월간</button>
+            <button class="tab" data-tab="prices">가격변동</button>
+            <button class="tab" data-tab="store-prices">지점별 가격변동</button>
+            <button class="tab" data-tab="stores">지점별 매출</button>
         </nav>
 
-        <!-- 탭 콘텐츠 -->
         <main class="tab-content">
-            <!-- 개요 탭 -->
+            <!-- 개요 -->
             <section id="overview" class="tab-pane active">
                 <div class="chart-container">
                     <h3>일별 매출 추이</h3>
@@ -78,7 +75,7 @@
                 </div>
             </section>
 
-            <!-- 주간 탭 -->
+            <!-- 주간 -->
             <section id="weekly" class="tab-pane">
                 <div class="chart-container">
                     <h3>주간 매출 추이</h3>
@@ -100,7 +97,7 @@
                 </div>
             </section>
 
-            <!-- 월간 탭 -->
+            <!-- 월간 -->
             <section id="monthly" class="tab-pane">
                 <div class="chart-container">
                     <h3>월간 매출 추이</h3>
@@ -122,13 +119,15 @@
                 </div>
             </section>
 
-            <!-- 가격변동 탭 -->
+            <!-- 전체 가격변동 -->
             <section id="prices" class="tab-pane">
                 <div class="filter-bar">
                     <input type="text" id="priceSearch" placeholder="상품명 검색..." class="search-input">
                     <select id="priceSort" class="sort-select">
                         <option value="change_desc">변동률 높은순</option>
                         <option value="change_asc">변동률 낮은순</option>
+                        <option value="up_only">상승만</option>
+                        <option value="down_only">하락만</option>
                         <option value="price_desc">가격 높은순</option>
                         <option value="name_asc">상품명순</option>
                     </select>
@@ -136,7 +135,26 @@
                 <div class="price-cards" id="priceCards"></div>
             </section>
 
-            <!-- 지점별 탭 -->
+            <!-- 지점별 가격변동 -->
+            <section id="store-prices" class="tab-pane">
+                <div class="filter-bar">
+                    <select id="storeSelect" class="sort-select">
+                        <option value="">지점 선택...</option>
+                    </select>
+                    <input type="text" id="storePriceSearch" placeholder="상품명 검색..." class="search-input">
+                    <select id="storePriceSort" class="sort-select">
+                        <option value="change_desc">변동률 높은순</option>
+                        <option value="change_asc">변동률 낮은순</option>
+                        <option value="up_only">상승만</option>
+                        <option value="down_only">하락만</option>
+                        <option value="price_desc">가격 높은순</option>
+                    </select>
+                </div>
+                <div class="store-info" id="storeInfo"></div>
+                <div class="price-cards" id="storePriceCards"></div>
+            </section>
+
+            <!-- 지점별 매출 -->
             <section id="stores" class="tab-pane">
                 <div class="filter-bar">
                     <input type="text" id="storeSearch" placeholder="지점명 검색..." class="search-input">
@@ -158,7 +176,7 @@
             </section>
         </main>
 
-        <!-- 가격 상세 모달 -->
+        <!-- 모달 -->
         <div class="modal" id="priceModal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
