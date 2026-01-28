@@ -519,3 +519,65 @@ body {
         justify-content: center;
     }
 }
+
+/* Chart Controls */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-header h3 {
+    margin: 0;
+}
+
+.chart-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chart-btn {
+    padding: 6px 14px;
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    border-radius: 6px;
+    color: #00d4ff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chart-btn:hover {
+    background: rgba(0, 212, 255, 0.4);
+}
+
+.chart-hint {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+/* Modal Chart Controls */
+.modal-body .chart-header {
+    margin-bottom: 12px;
+}
+
+.modal-body .chart-controls {
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Touch friendly on mobile */
+@media (max-width: 768px) {
+    .chart-hint {
+        display: none;
+    }
+    
+    .chart-controls {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
