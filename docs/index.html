@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사조 주문 데이터 대시보드</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <h1>📊 사조 주문 데이터 대시보드</h1>
+            <p class="subtitle">가격 변동 및 주문 현황 분석</p>
+            <p class="update-time" id="updateTime"></p>
+        </header>
+
+        <!-- 요약 카드 -->
+        <section class="summary-cards">
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <div class="card-content">
+                    <div class="card-value" id="totalRecords">-</div>
+                    <div class="card-label">총 주문 건수</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏪</div>
+                <div class="card-content">
+                    <div class="card-value" id="totalStores">-</div>
+                    <div class="card-label">지점 수</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏷️</div>
+                <div class="card-content">
+                    <div class="card-value" id="totalProducts">-</div>
+                    <div class="card-label">상품 종류</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💰</div>
+                <div class="card-content">
+                    <div class="card-value" id="totalSales">-</div>
+                    <div class="card-label">총 매출</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 탭 메뉴 -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="overview">📈 개요</button>
+            <button class="tab" data-tab="weekly">📅 주간</button>
+            <button class="tab" data-tab="monthly">📆 월간</button>
+            <button class="tab" data-tab="prices">💹 가격변동</button>
+            <button class="tab" data-tab="stores">🏪 지점별</button>
+        </nav>
+
+        <!-- 탭 콘텐츠 -->
+        <main class="tab-content">
+            <!-- 개요 탭 -->
+            <section id="overview" class="tab-pane active">
+                <div class="chart-container">
+                    <h3>일별 매출 추이</h3>
+                    <canvas id="dailyChart"></canvas>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-container half">
+                        <h3>대분류별 매출</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-container half">
+                        <h3>상위 지점 매출</h3>
+                        <canvas id="topStoresChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 주간 탭 -->
+            <section id="weekly" class="tab-pane">
+                <div class="chart-container">
+                    <h3>주간 매출 추이</h3>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+                <div class="data-table-container">
+                    <h3>주간 상세</h3>
+                    <table class="data-table" id="weeklyTable">
+                        <thead>
+                            <tr>
+                                <th>주차</th>
+                                <th>주문 수량</th>
+                                <th>매출액</th>
+                                <th>전주 대비</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 월간 탭 -->
+            <section id="monthly" class="tab-pane">
+                <div class="chart-container">
+                    <h3>월간 매출 추이</h3>
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+                <div class="data-table-container">
+                    <h3>월간 상세</h3>
+                    <table class="data-table" id="monthlyTable">
+                        <thead>
+                            <tr>
+                                <th>월</th>
+                                <th>주문 수량</th>
+                                <th>매출액</th>
+                                <th>전월 대비</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 가격변동 탭 -->
+            <section id="prices" class="tab-pane">
+                <div class="filter-bar">
+                    <input type="text" id="priceSearch" placeholder="상품명 검색..." class="search-input">
+                    <select id="priceSort" class="sort-select">
+                        <option value="change_desc">변동률 높은순</option>
+                        <option value="change_asc">변동률 낮은순</option>
+                        <option value="price_desc">가격 높은순</option>
+                        <option value="name_asc">상품명순</option>
+                    </select>
+                </div>
+                <div class="price-cards" id="priceCards"></div>
+            </section>
+
+            <!-- 지점별 탭 -->
+            <section id="stores" class="tab-pane">
+                <div class="filter-bar">
+                    <input type="text" id="storeSearch" placeholder="지점명 검색..." class="search-input">
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table" id="storeTable">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>지점명</th>
+                                <th>주문 수량</th>
+                                <th>매출액</th>
+                                <th>비중</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- 가격 상세 모달 -->
+        <div class="modal" id="priceModal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2 id="modalTitle">상품 가격 변동</h2>
+                <div class="modal-body">
+                    <canvas id="priceHistoryChart"></canvas>
+                    <div class="price-details" id="priceDetails"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
