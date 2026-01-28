@@ -326,39 +326,35 @@ function initStoreSelect() {
     const select = document.getElementById('storeSelect');
     if (!select) return;
     
-    const storeList = reportData.store_list || [];
+    // store_list가 없으면 stores 배열에서 추출
+    let storeList = reportData.store_list || [];
     
-    select.innerHTML = '<option value="">지점 선택...</option>' +
-        storeList.map(store => `<option value="${store}">${store}</option>`).join('');
+    if (storeList.length === 0 && reportData.stores) {
+        storeList = reportData.stores.map(s => s.name).sort();
+    }
+    
+    // store_price_changes 키에서도 추출 시도
+    if (storeList.length === 0 && reportData.store_price_changes) {
+        storeList = Object.keys(reportData.store_price_changes).sort();
+    }
+    
+    console.log('Store list:', storeList.length, 'stores');
+    
+    select.innerHTML = '<option value="">-- 지점 선택 (' + storeList.length + '개) --</option>';
+    
+    storeList.forEach(store => {
+        const option = document.createElement('option');
+        option.value = store;
+        option.textContent = store;
+        select.appendChild(option);
+    });
     
     select.addEventListener('change', () => {
         const storeName = select.value;
-        const storeInfo = document.getElementById('storeInfo');
-        const container = document.getElementById('storePriceCards');
-        
-        if (!storeName) {
-            storeInfo.classList.remove('show');
-            container.innerHTML = '<div class="no-data">지점을 선택해주세요.</div>';
-            return;
-        }
-        
-        const storePrices = reportData.store_price_changes?.[storeName] || [];
-        
-        if (storePrices.length > 0) {
-            const storeData = reportData.stores?.find(s => s.name === storeName);
-            storeInfo.innerHTML = `
-                <h4>${storeName}</h4>
-                <p>총 ${storePrices.length}개 상품 가격 변동 | 
-                   매출: ${storeData ? formatCurrency(storeData.total) : '-'}</p>
-            `;
-            storeInfo.classList.add('show');
-            
-            // 지점별 가격 데이터에 store 정보 추가
-            const pricesWithStore = storePrices.map(p => ({...p, store: storeName}));
-            renderPriceCards(pricesWithStore, 'storePriceCards', true);
+        if (storeName) {
+            showStoreData(storeName);
         } else {
-            storeInfo.classList.remove('show');
-            container.innerHTML = '<div class="no-data">해당 지점의 가격 변동 데이터가 없습니다.</div>';
+            hideStoreData();
         }
     });
 }
