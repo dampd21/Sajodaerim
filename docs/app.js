@@ -170,12 +170,14 @@ function updateSummary() {
 function getFilteredDailyData() {
     let dailyData = {};
     
+    // 지점 선택 여부에 따라 데이터 소스 결정
     if (currentStore && reportData.store_details?.[currentStore]) {
-        dailyData = { ...reportData.store_details[currentStore].daily };
+        dailyData = JSON.parse(JSON.stringify(reportData.store_details[currentStore].daily || {}));
     } else {
-        dailyData = { ...reportData.daily };
+        dailyData = JSON.parse(JSON.stringify(reportData.daily || {}));
     }
     
+    // 기간이 선택된 경우에만 필터링
     if (currentPeriod) {
         const filtered = {};
         Object.keys(dailyData).forEach(date => {
@@ -193,16 +195,18 @@ function getFilteredDailyData() {
 function getFilteredPriceData() {
     let priceData = [];
     
+    // 지점 선택 여부에 따라 데이터 소스 결정
     if (currentStore && reportData.store_price_changes?.[currentStore]) {
-        priceData = [...reportData.store_price_changes[currentStore]];
+        priceData = JSON.parse(JSON.stringify(reportData.store_price_changes[currentStore]));
     } else {
-        priceData = [...(reportData.price_changes || [])];
+        priceData = JSON.parse(JSON.stringify(reportData.price_changes || []));
     }
     
+    // 기간이 선택된 경우에만 필터링
     if (currentPeriod) {
         priceData = priceData.map(item => {
             const filteredHistory = (item.history || []).filter(h => 
-                h.date.startsWith(currentPeriod)
+                h.date && h.date.startsWith(currentPeriod)
             );
             
             if (filteredHistory.length === 0) return null;
