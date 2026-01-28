@@ -1,0 +1,80 @@
+name: Sajo Order Data Crawler
+
+on:
+  # 수동 실행 (원하는 날짜 입력 가능)
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: '시작 날짜 (YYYY-MM-DD)'
+        required: true
+        default: '2025-01-01'
+      end_date:
+        description: '종료 날짜 (YYYY-MM-DD)'
+        required: true
+        default: '2025-01-31'
+  
+  # 스케줄 실행 (매일 오전 9시 KST = UTC 0시)
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # 2. Python 설정
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      # 3. Chrome 설치
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 'stable'
+      
+      # 4. 의존성 설치
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      # 5. 크롤러 실행
+      - name: Run Crawler
+        env:
+          LOGIN_ID: ${{ secrets.SAJO_LOGIN_ID }}
+          LOGIN_PWD: ${{ secrets.SAJO_LOGIN_PWD }}
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            python sajo_crawler.py "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"
+          else
+            # 스케줄 실행시 어제 날짜 데이터 수집
+            YESTERDAY=$(date -d "yesterday" '+%Y-%m-%d')
+            python sajo_crawler.py "$YESTERDAY" "$YESTERDAY"
+          fi
+      
+      # 6. 결과 업로드 (Artifact)
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: crawl-results-${{ github.run_number }}
+          path: output/
+          retention-days: 30
+      
+      # 7. 결과를 Repository에 커밋 (선택사항)
+      - name: Commit and Push Results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # output 폴더가 있으면 커밋
+          if [ -d "output" ] && [ "$(ls -A output)" ]; then
+            git add output/
+            git commit -m "📊 크롤링 결과 업데이트: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+            git push || echo "Nothing to push"
+          fi
