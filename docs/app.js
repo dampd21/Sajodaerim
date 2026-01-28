@@ -524,7 +524,7 @@ function renderPriceCards(priceData) {
         const changePct = item.change_pct || 0;
         const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
         
-        // 변동 표시: ▲12,000 (+5.5%) 또는 ▼8,000 (-3.2%)
+        // 변동 표시
         let changeDisplay = '';
         if (change > 0) {
             changeDisplay = `▲${formatNumber(change)} (+${changePct}%)`;
@@ -690,6 +690,7 @@ function showPriceModal(item) {
     
     document.getElementById('modalTitle').textContent = item.name || '';
     
+    // 차트
     const ctx = document.getElementById('priceHistoryChart')?.getContext('2d');
     if (ctx) {
         if (charts.priceHistory) charts.priceHistory.destroy();
@@ -735,7 +736,8 @@ function showPriceModal(item) {
                                     if (idx > 0) {
                                         const diff = history[idx].price - history[idx-1].price;
                                         if (diff !== 0) {
-                                            return `변동: ${diff > 0 ? '+' : ''}${formatNumber(diff)}원`;
+                                            const arrow = diff > 0 ? '▲' : '▼';
+                                            return `변동: ${arrow}${formatNumber(Math.abs(diff))}원`;
                                         }
                                     }
                                     return '';
@@ -758,7 +760,32 @@ function showPriceModal(item) {
         }
     }
     
-    const changeClass = (item.change || 0) > 0 ? 'change-positive' : (item.change || 0) < 0 ? 'change-negative' : '';
+    // 변동 계산
+    const change = item.change || 0;
+    const changePct = item.change_pct || 0;
+    const changeClass = change > 0 ? 'change-positive' : change < 0 ? 'change-negative' : '';
+    
+    // 변동액 표시
+    let changeAmountDisplay = '';
+    if (change > 0) {
+        changeAmountDisplay = `▲${formatNumber(change)}원`;
+    } else if (change < 0) {
+        changeAmountDisplay = `▼${formatNumber(Math.abs(change))}원`;
+    } else {
+        changeAmountDisplay = '0원';
+    }
+    
+    // 변동률 표시
+    let changePctDisplay = '';
+    if (changePct > 0) {
+        changePctDisplay = `+${changePct}%`;
+    } else if (changePct < 0) {
+        changePctDisplay = `${changePct}%`;
+    } else {
+        changePctDisplay = '0%';
+    }
+    
+    // 상세 정보
     document.getElementById('priceDetails').innerHTML = `
         <div class="detail-item">
             <div class="detail-label">상품코드</div>
@@ -786,14 +813,15 @@ function showPriceModal(item) {
         </div>
         <div class="detail-item">
             <div class="detail-label">변동액</div>
-            <div class="detail-value ${changeClass}">${(item.change || 0) > 0 ? '+' : ''}${formatNumber(item.change)}원</div>
+            <div class="detail-value ${changeClass}">${changeAmountDisplay}</div>
         </div>
         <div class="detail-item">
             <div class="detail-label">변동률</div>
-            <div class="detail-value ${changeClass}">${(item.change_pct || 0) > 0 ? '+' : ''}${item.change_pct || 0}%</div>
+            <div class="detail-value ${changeClass}">${changePctDisplay}</div>
         </div>
     `;
     
+    // 가격 히스토리 테이블
     const history = item.history || [];
     document.getElementById('priceHistoryTable').innerHTML = history.length > 0 ? `
         <h4>가격 변동 내역</h4>
@@ -806,11 +834,23 @@ function showPriceModal(item) {
                     const prevPrice = i > 0 ? history[i-1].price : h.price;
                     const diff = (h.price || 0) - (prevPrice || 0);
                     const diffClass = diff > 0 ? 'change-positive' : diff < 0 ? 'change-negative' : '';
+                    
+                    let diffDisplay = '-';
+                    if (i > 0) {
+                        if (diff > 0) {
+                            diffDisplay = `▲${formatNumber(diff)}원`;
+                        } else if (diff < 0) {
+                            diffDisplay = `▼${formatNumber(Math.abs(diff))}원`;
+                        } else {
+                            diffDisplay = '0원';
+                        }
+                    }
+                    
                     return `
                         <tr>
                             <td>${formatDateKorean(h.date)}</td>
                             <td>${formatNumber(h.price)}원</td>
-                            <td class="${diffClass}">${i === 0 ? '-' : (diff > 0 ? '+' : '') + formatNumber(diff) + '원'}</td>
+                            <td class="${diffClass}">${diffDisplay}</td>
                         </tr>
                     `;
                 }).join('')}
