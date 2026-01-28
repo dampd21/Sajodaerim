@@ -1,0 +1,75 @@
+name: Sajo Order Data Crawler
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: '시작 날짜 (YYYY-MM-DD)'
+        required: true
+        default: '2025-01-01'
+      end_date:
+        description: '종료 날짜 (YYYY-MM-DD)'
+        required: true
+        default: '2025-01-31'
+  
+  schedule:
+    # 매일 오전 9시 KST (UTC 0시)
+    - cron: '0 0 * * *'
+
+env:
+  TZ: Asia/Seoul
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 'stable'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run Crawler
+        env:
+          SAJO_LOGIN_ID: ${{ secrets.SAJO_LOGIN_ID }}
+          SAJO_LOGIN_PWD: ${{ secrets.SAJO_LOGIN_PWD }}
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            python sajo_crawler.py "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"
+          else
+            YESTERDAY=$(date -d "yesterday" '+%Y-%m-%d')
+            python sajo_crawler.py "$YESTERDAY" "$YESTERDAY"
+          fi
+      
+      - name: Generate Report Data
+        run: python generate_report.py
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: crawl-results-${{ github.run_number }}
+          path: output/
+          retention-days: 90
+      
+      - name: Commit Results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "📊 데이터 업데이트: $(date '+%Y-%m-%d %H:%M')"
+          git push
