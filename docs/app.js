@@ -520,8 +520,20 @@ function renderPriceCards(priceData) {
     }
     
     container.innerHTML = priceData.map((item, index) => {
-        const changeClass = item.change > 0 ? 'up' : item.change < 0 ? 'down' : 'neutral';
-        const arrow = item.change > 0 ? '+' : '';
+        const change = item.change || 0;
+        const changePct = item.change_pct || 0;
+        const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
+        
+        // 변동 표시: ▲12,000 (+5.5%) 또는 ▼8,000 (-3.2%)
+        let changeDisplay = '';
+        if (change > 0) {
+            changeDisplay = `▲${formatNumber(change)} (+${changePct}%)`;
+        } else if (change < 0) {
+            changeDisplay = `▼${formatNumber(Math.abs(change))} (${changePct}%)`;
+        } else {
+            changeDisplay = '변동없음';
+        }
+        
         const shortDate = (dateStr) => {
             if (!dateStr) return '';
             return dateStr.replace(/-/g, '.');
@@ -535,10 +547,10 @@ function renderPriceCards(priceData) {
                 </div>
                 <div class="price-card-body">
                     <div class="price-range">
-                        ${formatNumber(item.first_price)} -> ${formatNumber(item.last_price)}원
+                        ${formatNumber(item.first_price)}원 → ${formatNumber(item.last_price)}원
                     </div>
                     <div class="price-change ${changeClass}">
-                        ${arrow}${item.change_pct || 0}%
+                        ${changeDisplay}
                     </div>
                 </div>
                 <div class="price-card-footer">
