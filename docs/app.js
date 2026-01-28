@@ -9,7 +9,6 @@ const zoomOptions = {
     pan: {
         enabled: true,
         mode: 'x',
-        modifierKey: null,
     },
     zoom: {
         wheel: {
@@ -19,14 +18,9 @@ const zoomOptions = {
             enabled: true
         },
         mode: 'x',
-        onZoomComplete: function({chart}) {
-            chart.update('none');
-        }
     },
     limits: {
-        x: {
-            minRange: 3
-        }
+        x: { minRange: 3 }
     }
 };
 
@@ -71,12 +65,16 @@ async function loadData() {
         if (!response.ok) throw new Error('Data load failed');
         reportData = await response.json();
         
-        console.log('Data loaded:', reportData.summary?.total_records, 'records');
+        console.log('=== Data Loaded ===');
+        console.log('Records:', reportData.summary?.total_records);
+        console.log('Stores:', reportData.store_list?.length);
+        console.log('Store price changes:', Object.keys(reportData.store_price_changes || {}).length);
+        
         initDashboard();
     } catch (error) {
         console.error('Error:', error);
         document.querySelector('.tab-content').innerHTML = 
-            '<div class="no-data">데이터를 불러올 수 없습니다. 크롤러를 먼저 실행해주세요.</div>';
+            '<div class="no-data">데이터를 불러올 수 없습니다.</div>';
     }
 }
 
@@ -97,18 +95,13 @@ function initDashboard() {
     updateDashboard();
 }
 
-// Zoom 리셋 버튼 초기화
 function initZoomResetButtons() {
     document.getElementById('resetDailyZoom')?.addEventListener('click', () => {
-        if (charts.dailySales) {
-            charts.dailySales.resetZoom();
-        }
+        if (charts.dailySales) charts.dailySales.resetZoom();
     });
     
     document.getElementById('resetModalZoom')?.addEventListener('click', () => {
-        if (charts.priceHistory) {
-            charts.priceHistory.resetZoom();
-        }
+        if (charts.priceHistory) charts.priceHistory.resetZoom();
     });
 }
 
@@ -117,13 +110,11 @@ function initStoreSelect() {
     const select = document.getElementById('storeSelect');
     if (!select) return;
     
-    let storeList = [];
-    
-    if (reportData.store_list && reportData.store_list.length > 0) {
-        storeList = reportData.store_list;
-    } else if (reportData.stores && reportData.stores.length > 0) {
+    let storeList = reportData.store_list || [];
+    if (storeList.length === 0 && reportData.stores) {
         storeList = reportData.stores.map(s => s.name);
-    } else if (reportData.store_price_changes) {
+    }
+    if (storeList.length === 0 && reportData.store_price_changes) {
         storeList = Object.keys(reportData.store_price_changes);
     }
     
@@ -139,6 +130,9 @@ function initStoreSelect() {
     
     select.addEventListener('change', () => {
         currentStore = select.value;
+        console.log('=== Store Changed ===');
+        console.log('Selected:', currentStore || '(전체)');
+        
         updatePeriodSelect();
         updateDashboard();
     });
@@ -150,6 +144,9 @@ function initPeriodSelect() {
     
     document.getElementById('periodSelect')?.addEventListener('change', (e) => {
         currentPeriod = e.target.value;
+        console.log('=== Period Changed ===');
+        console.log('Selected:', currentPeriod || '(전체)');
+        
         updateDashboard();
     });
 }
@@ -161,20 +158,18 @@ function updatePeriodSelect() {
     
     const months = new Set();
     
-    let dailyData = null;
-    if (currentStore) {
-        dailyData = reportData.store_details?.[currentStore]?.daily;
-    }
-    if (!dailyData || Object.keys(dailyData).length === 0) {
-        dailyData = reportData.daily;
+    // 지점이 선택된 경우 해당 지점의 날짜만, 아니면 전체
+    let dailyData = {};
+    if (currentStore && reportData.store_details?.[currentStore]?.daily) {
+        dailyData = reportData.store_details[currentStore].daily;
+    } else if (!currentStore) {
+        dailyData = reportData.daily || {};
     }
     
-    if (dailyData) {
-        Object.keys(dailyData).forEach(date => {
-            const monthKey = getMonthKey(date);
-            if (monthKey) months.add(monthKey);
-        });
-    }
+    Object.keys(dailyData).forEach(date => {
+        const monthKey = getMonthKey(date);
+        if (monthKey) months.add(monthKey);
+    });
     
     const sortedMonths = Array.from(months).sort().reverse();
     
@@ -191,6 +186,10 @@ function updatePeriodSelect() {
 
 // 대시보드 업데이트
 function updateDashboard() {
+    console.log('=== Update Dashboard ===');
+    console.log('Store:', currentStore || '(전체)');
+    console.log('Period:', currentPeriod || '(전체)');
+    
     updateSummary();
     updateSalesTab();
     updatePricesTab();
@@ -198,27 +197,34 @@ function updateDashboard() {
 
 // 필터된 일별 데이터 가져오기
 function getFilteredDailyData() {
-    let dailyData = null;
+    let dailyData = {};
     
+    // 지점이 선택된 경우
     if (currentStore) {
-        if (reportData.store_details && reportData.store_details[currentStore]) {
-            dailyData = reportData.store_details[currentStore].daily;
+        // 해당 지점 데이터가 있으면 사용
+        if (reportData.store_details?.[currentStore]?.daily) {
+            dailyData = JSON.parse(JSON.stringify(reportData.store_details[currentStore].daily));
+            console.log('Daily: Using store data for', currentStore, '-', Object.keys(dailyData).length, 'days');
+        } else {
+            // 지점 데이터가 없으면 빈 객체 (전체 데이터 사용하지 않음)
+            console.log('Daily: No store data for', currentStore);
+            dailyData = {};
         }
+    } else {
+        // 지점 미선택 = 전체 데이터
+        dailyData = JSON.parse(JSON.stringify(reportData.daily || {}));
+        console.log('Daily: Using all data -', Object.keys(dailyData).length, 'days');
     }
     
-    if (!dailyData) {
-        dailyData = reportData.daily || {};
-    }
-    
-    dailyData = JSON.parse(JSON.stringify(dailyData));
-    
-    if (currentPeriod) {
+    // 기간 필터링
+    if (currentPeriod && Object.keys(dailyData).length > 0) {
         const filtered = {};
         Object.keys(dailyData).forEach(date => {
             if (date.startsWith(currentPeriod)) {
                 filtered[date] = dailyData[date];
             }
         });
+        console.log('Daily: Filtered by period -', Object.keys(filtered).length, 'days');
         return filtered;
     }
     
@@ -227,22 +233,26 @@ function getFilteredDailyData() {
 
 // 필터된 가격 데이터 가져오기
 function getFilteredPriceData() {
-    let priceData = null;
+    let priceData = [];
     
+    // 지점이 선택된 경우
     if (currentStore) {
-        if (reportData.store_price_changes && reportData.store_price_changes[currentStore]) {
-            priceData = reportData.store_price_changes[currentStore];
+        // 해당 지점 데이터가 있으면 사용
+        if (reportData.store_price_changes?.[currentStore]) {
+            priceData = JSON.parse(JSON.stringify(reportData.store_price_changes[currentStore]));
+            console.log('Price: Using store data for', currentStore, '-', priceData.length, 'items');
         } else {
+            // 지점 데이터가 없으면 빈 배열 (전체 데이터 사용하지 않음)
+            console.log('Price: No store data for', currentStore);
             priceData = [];
         }
+    } else {
+        // 지점 미선택 = 전체 데이터
+        priceData = JSON.parse(JSON.stringify(reportData.price_changes || []));
+        console.log('Price: Using all data -', priceData.length, 'items');
     }
     
-    if (priceData === null) {
-        priceData = reportData.price_changes || [];
-    }
-    
-    priceData = JSON.parse(JSON.stringify(priceData));
-    
+    // 기간 필터링
     if (currentPeriod && priceData.length > 0) {
         priceData = priceData.map(item => {
             const filteredHistory = (item.history || []).filter(h => 
@@ -273,6 +283,8 @@ function getFilteredPriceData() {
                 last_date: filteredHistory[filteredHistory.length - 1].date
             };
         }).filter(item => item !== null);
+        
+        console.log('Price: Filtered by period -', priceData.length, 'items');
     }
     
     filteredPriceData = priceData;
@@ -327,61 +339,56 @@ function updateSalesCharts(dailyData) {
     const dates = Object.keys(dailyData).sort();
     const values = dates.map(d => dailyData[d]?.total || 0);
     
-    // 일별 매출 차트 (with zoom/pan)
     const dailyCtx = document.getElementById('dailySalesChart')?.getContext('2d');
-    if (dailyCtx && dates.length > 0) {
-        charts.dailySales = new Chart(dailyCtx, {
-            type: 'line',
-            data: {
-                labels: dates.map(d => {
-                    const parts = d.split('-');
-                    return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
-                }),
-                datasets: [{
-                    label: '매출액',
-                    data: values,
-                    borderColor: '#00d4ff',
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 3,
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
+    if (dailyCtx) {
+        if (dates.length > 0) {
+            charts.dailySales = new Chart(dailyCtx, {
+                type: 'line',
+                data: {
+                    labels: dates.map(d => {
+                        const parts = d.split('-');
+                        return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+                    }),
+                    datasets: [{
+                        label: '매출액',
+                        data: values,
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 6
+                    }]
                 },
-                plugins: { 
-                    legend: { display: false },
-                    zoom: zoomOptions,
-                    tooltip: {
-                        callbacks: {
-                            title: (items) => {
-                                const idx = items[0].dataIndex;
-                                return formatDateKorean(dates[idx]);
-                            },
-                            label: (ctx) => '매출: ' + formatCurrency(ctx.parsed.y)
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { 
+                        legend: { display: false },
+                        zoom: zoomOptions,
+                        tooltip: {
+                            callbacks: {
+                                title: (items) => formatDateKorean(dates[items[0].dataIndex]),
+                                label: (ctx) => '매출: ' + formatCurrency(ctx.parsed.y)
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            ticks: { color: '#888', maxRotation: 45 },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
+                        },
+                        y: { 
+                            ticks: { color: '#888', callback: v => formatNumber(v) },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
                         }
                     }
-                },
-                scales: {
-                    x: { 
-                        ticks: { color: '#888', maxRotation: 45 },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    },
-                    y: { 
-                        ticks: { color: '#888', callback: v => formatNumber(v) },
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    }
                 }
-            }
-        });
+            });
+        }
     }
     
-    // 대분류별 차트
+    // 대분류별 차트 - 지점 선택시에도 전체 카테고리 표시 (또는 해당 지점 카테고리)
     const categories = reportData.categories || [];
     const categoryCtx = document.getElementById('categorySalesChart')?.getContext('2d');
     if (categoryCtx && categories.length > 0) {
@@ -456,7 +463,11 @@ function updateSalesTable(dailyData) {
     const dates = Object.keys(dailyData).sort().reverse();
     
     if (dates.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#666;padding:40px;">데이터가 없습니다.</td></tr>';
+        let msg = '데이터가 없습니다.';
+        if (currentStore) {
+            msg = `"${currentStore}" 지점의 매출 데이터가 없습니다.`;
+        }
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#666;padding:40px;">${msg}</td></tr>`;
         return;
     }
     
@@ -513,8 +524,7 @@ function renderPriceCards(priceData) {
         const arrow = item.change > 0 ? '+' : '';
         const shortDate = (dateStr) => {
             if (!dateStr) return '';
-            const parts = dateStr.split('-');
-            return `${parts[0]}.${parts[1]}.${parts[2]}`;
+            return dateStr.replace(/-/g, '.');
         };
         
         return `
@@ -550,7 +560,6 @@ function renderPriceCards(priceData) {
     });
 }
 
-// 현재 표시된 가격 데이터
 function getCurrentPriceData() {
     const query = document.getElementById('priceSearch')?.value.toLowerCase() || '';
     const sortType = document.getElementById('priceSort')?.value || 'change_desc';
@@ -595,8 +604,7 @@ function initFilters() {
         }
         
         const sortType = document.getElementById('priceSort')?.value || 'change_desc';
-        data = applySortToPrice(data, sortType);
-        renderPriceCards(data);
+        renderPriceCards(applySortToPrice(data, sortType));
     });
     
     document.getElementById('priceSort')?.addEventListener('change', (e) => {
@@ -610,8 +618,7 @@ function initFilters() {
             );
         }
         
-        data = applySortToPrice(data, e.target.value);
-        renderPriceCards(data);
+        renderPriceCards(applySortToPrice(data, e.target.value));
     });
 }
 
@@ -671,7 +678,6 @@ function showPriceModal(item) {
     
     document.getElementById('modalTitle').textContent = item.name || '';
     
-    // 차트 (with zoom/pan)
     const ctx = document.getElementById('priceHistoryChart')?.getContext('2d');
     if (ctx) {
         if (charts.priceHistory) charts.priceHistory.destroy();
@@ -702,23 +708,15 @@ function showPriceModal(item) {
                 },
                 options: {
                     responsive: true,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
+                    interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: { display: false },
                         zoom: zoomOptions,
                         tooltip: {
                             backgroundColor: 'rgba(0,0,0,0.8)',
-                            titleFont: { size: 14 },
-                            bodyFont: { size: 13 },
                             padding: 12,
                             callbacks: {
-                                title: (items) => {
-                                    const idx = items[0].dataIndex;
-                                    return formatDateKorean(history[idx]?.date);
-                                },
+                                title: (items) => formatDateKorean(history[items[0].dataIndex]?.date),
                                 label: (ctx) => '단가: ' + formatNumber(ctx.parsed.y) + '원',
                                 afterLabel: (ctx) => {
                                     const idx = ctx.dataIndex;
@@ -748,7 +746,6 @@ function showPriceModal(item) {
         }
     }
     
-    // 상세 정보
     const changeClass = (item.change || 0) > 0 ? 'change-positive' : (item.change || 0) < 0 ? 'change-negative' : '';
     document.getElementById('priceDetails').innerHTML = `
         <div class="detail-item">
@@ -785,17 +782,12 @@ function showPriceModal(item) {
         </div>
     `;
     
-    // 가격 히스토리 테이블
     const history = item.history || [];
     document.getElementById('priceHistoryTable').innerHTML = history.length > 0 ? `
         <h4>가격 변동 내역</h4>
         <table>
             <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>단가</th>
-                    <th>변동</th>
-                </tr>
+                <tr><th>날짜</th><th>단가</th><th>변동</th></tr>
             </thead>
             <tbody>
                 ${history.map((h, i) => {
@@ -812,10 +804,9 @@ function showPriceModal(item) {
                 }).join('')}
             </tbody>
         </table>
-    ` : '<p style="color:#666;">가격 히스토리가 없습니다.</p>';
+    ` : '';
     
     modal.classList.add('show');
 }
 
-// 초기화
 document.addEventListener('DOMContentLoaded', loadData);
