@@ -21,6 +21,7 @@ on:
           - 'true'
 
   schedule:
+    # 매일 오후 11시 (KST) = UTC 14:00
     - cron: '0 14 * * *'
 
 jobs:
@@ -49,6 +50,7 @@ jobs:
       - name: Set date range for scheduled run
         if: github.event_name == 'schedule'
         run: |
+          # 2일 전 ~ 오늘 데이터 수집
           echo "START_DATE=$(date -d '2 days ago' '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "END_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "FORCE=false" >> $GITHUB_ENV
@@ -61,7 +63,7 @@ jobs:
           FORCE="${{ github.event.inputs.force }}"
           
           if [ -z "$START" ]; then
-            START=$(date -d '1 day ago' '+%Y-%m-%d')
+            START=$(date -d '2 days ago' '+%Y-%m-%d')
           fi
           if [ -z "$END" ]; then
             END=$(date '+%Y-%m-%d')
