@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매출 관리 - 역대짬뽕</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 네비게이션 -->
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">발주 리포트</a>
+            <a href="sales.html" class="nav-link active">매출 관리</a>
+        </nav>
+
+        <header class="header">
+            <h1>매출 관리</h1>
+            <p class="update-time" id="updateTime"></p>
+        </header>
+
+        <!-- 기간 필터 -->
+        <section class="filter-section">
+            <div class="filter-group">
+                <label>기간 유형</label>
+                <select id="periodType" class="filter-select">
+                    <option value="monthly">월별</option>
+                    <option value="weekly">주별</option>
+                    <option value="daily">일별</option>
+                    <option value="custom">직접 선택</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>기간 선택</label>
+                <select id="periodSelect" class="filter-select">
+                    <option value="">전체 기간</option>
+                </select>
+            </div>
+            <div class="filter-group custom-date" id="customDateGroup" style="display: none;">
+                <label>시작일</label>
+                <input type="date" id="startDate" class="filter-input">
+            </div>
+            <div class="filter-group custom-date" id="customDateGroup2" style="display: none;">
+                <label>종료일</label>
+                <input type="date" id="endDate" class="filter-input">
+            </div>
+        </section>
+
+        <!-- 요약 카드 -->
+        <section class="summary-cards">
+            <div class="card">
+                <div class="card-label">총 매출</div>
+                <div class="card-value" id="totalSales">-</div>
+            </div>
+            <div class="card card-hall">
+                <div class="card-label">홀 매출</div>
+                <div class="card-value" id="hallSales">-</div>
+            </div>
+            <div class="card card-delivery">
+                <div class="card-label">배달 매출</div>
+                <div class="card-value" id="deliverySales">-</div>
+            </div>
+            <div class="card">
+                <div class="card-label">영업일수</div>
+                <div class="card-value" id="totalDays">-</div>
+            </div>
+        </section>
+
+        <!-- 차트 영역 -->
+        <section class="chart-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>매출 추이</h3>
+                    <div class="chart-controls">
+                        <button class="chart-btn" id="resetChartZoom">초기화</button>
+                        <span class="chart-hint">마우스 휠: 확대/축소 | 드래그: 이동</span>
+                    </div>
+                </div>
+                <canvas id="salesTrendChart"></canvas>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-container half">
+                    <h3>채널별 매출 비중</h3>
+                    <canvas id="channelChart"></canvas>
+                </div>
+                <div class="chart-container half">
+                    <h3>지점별 매출 TOP 10</h3>
+                    <canvas id="storeRankChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 지점별 매출 테이블 -->
+        <section class="data-table-container">
+            <h3>지점별 매출 현황</h3>
+            <div class="table-controls">
+                <input type="text" id="storeSearch" placeholder="지점명 검색..." class="search-input">
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table sortable" id="storeTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="name" class="sortable-header">
+                                지점명 <span class="sort-icon">↕</span>
+                            </th>
+                            <th data-sort="hall" class="sortable-header text-right">
+                                홀 <span class="sort-icon">↕</span>
+                            </th>
+                            <th data-sort="delivery" class="sortable-header text-right">
+                                배달 <span class="sort-icon">↕</span>
+                            </th>
+                            <th data-sort="total" class="sortable-header text-right">
+                                합계 <span class="sort-icon">↕</span>
+                            </th>
+                            <th class="text-right">비중</th>
+                        </tr>
+                    </thead>
+                    <tbody id="storeTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 일별 상세 모달 -->
+        <div class="modal" id="dailyModal">
+            <div class="modal-content modal-large">
+                <span class="modal-close">&times;</span>
+                <h2 id="modalTitle">일별 상세</h2>
+                <div class="modal-body">
+                    <div class="modal-summary" id="modalSummary"></div>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="modalTable">
+                            <thead>
+                                <tr>
+                                    <th>지점명</th>
+                                    <th class="text-right">홀</th>
+                                    <th class="text-right">배달</th>
+                                    <th class="text-right">포장</th>
+                                    <th class="text-right">합계</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="sales.js"></script>
+</body>
+</html>
