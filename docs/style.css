@@ -986,3 +986,57 @@ body {
         font-size: 0.8rem;
     }
 }
+
+/* ===========================================
+   발주율 관련 스타일
+   =========================================== */
+
+.order-rate-table-container {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.rate-high {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.rate-mid {
+    color: #ffe66d;
+    font-weight: bold;
+}
+
+.rate-low {
+    color: #4ecdc4;
+}
+
+.filter-select-sm {
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.filter-select-sm option {
+    background: #1a1a2e;
+}
+
+.text-center {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+/* 차트 컨테이너 높이 조정 */
+.chart-canvas-container {
+    position: relative;
+    height: 300px;
+}
+
+#orderRateChartContainer {
+    height: 250px;
+}
