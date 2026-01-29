@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사조 주문 데이터 대시보드</title>
+    <title>발주 리포트 - 사조</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
@@ -11,6 +11,12 @@
 </head>
 <body>
     <div class="container">
+        <!-- 네비게이션 추가 -->
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link active">발주 리포트</a>
+            <a href="sales.html" class="nav-link">매출 관리</a>
+        </nav>
+
         <header class="header">
             <h1>사조 주문 데이터 대시보드</h1>
             <p class="update-time" id="updateTime"></p>
