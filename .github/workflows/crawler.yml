@@ -15,8 +15,8 @@ on:
         type: string
 
   schedule:
-    # 매일 오후 2시 (KST) = UTC 05:00
-    - cron: '0 5 * * *'
+    # 매일 오후 11시 (KST) = UTC 14:00
+    - cron: '0 14 * * *'
 
 env:
   TZ: Asia/Seoul
@@ -54,7 +54,7 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             python sajo_crawler.py "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"
           else
-            # 스케줄 실행 시: 오늘-2일 ~ 오늘 데이터 수집
+            # 스케줄 실행 시: 2일 전 ~ 오늘 데이터 수집
             START_DATE=$(date -d "-2 days" '+%Y-%m-%d')
             END_DATE=$(date '+%Y-%m-%d')
             echo "Collecting data from $START_DATE to $END_DATE"
