@@ -197,55 +197,164 @@ def navigate_to_sales_page(driver):
             print(f"[NAV] 일자별 JavaScript 클릭도 실패: {e2}", flush=True)
             raise
     
-    time.sleep(3)
+    # 페이지 로딩을 위해 더 긴 대기
+    print("[NAV] 페이지 로딩 대기 중...", flush=True)
+    time.sleep(5)
     
     print("[NAV] 일자별 매출 페이지 이동 완료!", flush=True)
     return True
 
 
-def switch_to_main_frame(driver):
-    """MainFrm으로 전환"""
-    driver.switch_to.default_content()
-    time.sleep(0.5)
-    
-    try:
-        main_frame = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "MainFrm"))
-        )
-        driver.switch_to.frame(main_frame)
-        print("[FRAME] MainFrm으로 전환 완료", flush=True)
-        return True
-    except Exception as e:
-        print(f"[FRAME] MainFrm 전환 실패: {e}", flush=True)
-        return False
-
-
 def set_date_and_search(driver, start_date, end_date):
     """날짜 설정 및 조회 실행"""
-    wait = WebDriverWait(driver, 15)
     
     print(f"\n[SEARCH] 조회 기간: {start_date} ~ {end_date}", flush=True)
     
     # MainFrm으로 전환
-    if not switch_to_main_frame(driver):
-        raise Exception("MainFrm 전환 실패")
+    driver.switch_to.default_content()
+    time.sleep(1)
     
-    # 페이지 로딩 대기
-    time.sleep(2)
-    
-    # 시작일 설정
-    print("[SEARCH] 시작일 설정...", flush=True)
+    # MainFrm 찾기 및 전환
     try:
-        date1_input = wait.until(
+        main_frame = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.ID, "MainFrm"))
+        )
+        driver.switch_to.frame(main_frame)
+        print("[FRAME] MainFrm으로 전환 완료", flush=True)
+    except Exception as e:
+        print(f"[FRAME] MainFrm 전환 실패: {e}", flush=True)
+        raise
+    
+    # 페이지 로딩 대기 (더 길게)
+    print("[SEARCH] 페이지 로딩 대기 중...", flush=True)
+    time.sleep(5)
+    
+    # 현재 프레임 내용 확인 (디버깅)
+    try:
+        page_title = driver.title
+        print(f"[DEBUG] 페이지 타이틀: {page_title}", flush=True)
+    except:
+        pass
+    
+    try:
+        page_source = driver.page_source
+        print(f"[DEBUG] 페이지 소스 길이: {len(page_source)}", flush=True)
+        if 'date1_1' in page_source:
+            print("[DEBUG] 페이지에 date1_1 문자열 존재함", flush=True)
+        else:
+            print("[DEBUG] 페이지에 date1_1 문자열 없음!", flush=True)
+            print(f"[DEBUG] 페이지 소스 일부: {page_source[:1000]}", flush=True)
+    except Exception as e:
+        print(f"[DEBUG] 페이지 소스 확인 실패: {e}", flush=True)
+    
+    # date1_1 요소 찾기 시도
+    print("[SEARCH] 날짜 입력 필드 찾는 중...", flush=True)
+    
+    date1_input = None
+    
+    # 방법 1: ID로 찾기 (대기 시간 늘림)
+    try:
+        date1_input = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.ID, "date1_1"))
         )
+        print("[SEARCH] date1_1 찾기 성공 (ID)", flush=True)
+    except Exception as e:
+        print(f"[SEARCH] date1_1 ID로 찾기 실패: {e}", flush=True)
+    
+    # 방법 2: NAME으로 찾기
+    if not date1_input:
+        try:
+            date1_input = driver.find_element(By.NAME, "date1_1")
+            print("[SEARCH] date1_1 찾기 성공 (NAME)", flush=True)
+        except:
+            print("[SEARCH] date1_1 NAME으로 찾기 실패", flush=True)
+    
+    # 방법 3: CSS Selector로 찾기
+    if not date1_input:
+        try:
+            date1_input = driver.find_element(By.CSS_SELECTOR, "#date1_1")
+            print("[SEARCH] date1_1 찾기 성공 (CSS)", flush=True)
+        except:
+            print("[SEARCH] date1_1 CSS로 찾기 실패", flush=True)
+    
+    # 방법 4: input 요소들 순회
+    if not date1_input:
+        try:
+            inputs = driver.find_elements(By.TAG_NAME, "input")
+            print(f"[DEBUG] 발견된 input 개수: {len(inputs)}", flush=True)
+            for i, inp in enumerate(inputs[:20]):
+                inp_id = inp.get_attribute('id') or ''
+                inp_name = inp.get_attribute('name') or ''
+                inp_type = inp.get_attribute('type') or ''
+                inp_class = inp.get_attribute('class') or ''
+                print(f"  input[{i}]: id={inp_id}, name={inp_name}, type={inp_type}, class={inp_class}", flush=True)
+                if 'date1_1' in inp_id or 'date1_1' in inp_name:
+                    date1_input = inp
+                    print("[SEARCH] date1_1 찾기 성공 (순회)", flush=True)
+                    break
+        except Exception as e:
+            print(f"[DEBUG] input 순회 실패: {e}", flush=True)
+    
+    # 방법 5: JavaScript로 직접 설정
+    if not date1_input:
+        print("[SEARCH] JavaScript로 직접 날짜 설정 시도...", flush=True)
+        try:
+            # date1_1 존재 확인
+            exists = driver.execute_script("return document.getElementById('date1_1') !== null;")
+            print(f"[DEBUG] JavaScript로 date1_1 존재 확인: {exists}", flush=True)
+            
+            if exists:
+                driver.execute_script(f"document.getElementById('date1_1').value = '{start_date}';")
+                print(f"[SEARCH] JavaScript로 시작일 설정 성공: {start_date}", flush=True)
+                
+                driver.execute_script(f"document.getElementById('date1_2').value = '{end_date}';")
+                print(f"[SEARCH] JavaScript로 종료일 설정 성공: {end_date}", flush=True)
+                
+                time.sleep(1)
+                
+                # 조회 실행
+                driver.execute_script("fnSearch();")
+                print("[SEARCH] fnSearch() 호출 성공", flush=True)
+                
+                print("[SEARCH] 데이터 로딩 중...", flush=True)
+                time.sleep(5)
+                return True
+            else:
+                # 모든 요소 ID 출력
+                all_ids = driver.execute_script("""
+                    var elements = document.querySelectorAll('[id]');
+                    var ids = [];
+                    for (var i = 0; i < Math.min(elements.length, 50); i++) {
+                        ids.push(elements[i].id);
+                    }
+                    return ids;
+                """)
+                print(f"[DEBUG] 페이지 내 ID 목록: {all_ids}", flush=True)
+                
+        except Exception as e:
+            print(f"[DEBUG] JavaScript 방식 실패: {e}", flush=True)
+    
+    if not date1_input:
+        # 현재 URL 확인
+        try:
+            driver.switch_to.default_content()
+            current_url = driver.current_url
+            print(f"[DEBUG] 현재 URL: {current_url}", flush=True)
+        except:
+            pass
+        
+        raise Exception("날짜 입력 필드(date1_1)를 찾을 수 없습니다")
+    
+    # Selenium으로 날짜 설정
+    print("[SEARCH] 시작일 설정...", flush=True)
+    try:
         driver.execute_script(f"arguments[0].value = '{start_date}';", date1_input)
         print(f"[SEARCH] 시작일 설정 완료: {start_date}", flush=True)
     except Exception as e:
         print(f"[SEARCH] 시작일 설정 실패: {e}", flush=True)
         raise
     
-    time.sleep(0.3)
+    time.sleep(0.5)
     
     # 종료일 설정
     print("[SEARCH] 종료일 설정...", flush=True)
@@ -255,27 +364,28 @@ def set_date_and_search(driver, start_date, end_date):
         print(f"[SEARCH] 종료일 설정 완료: {end_date}", flush=True)
     except Exception as e:
         print(f"[SEARCH] 종료일 설정 실패: {e}", flush=True)
-        raise
-    
-    time.sleep(0.3)
-    
-    # 조회 버튼 클릭
-    print("[SEARCH] 조회 버튼 클릭...", flush=True)
-    try:
-        search_button = wait.until(
-            EC.element_to_be_clickable(
-                (By.XPATH, "//button[@onclick='fnSearch();']")
-            )
-        )
-        search_button.click()
-        print("[SEARCH] 조회 버튼 클릭 성공", flush=True)
-    except Exception as e:
-        print(f"[SEARCH] 조회 버튼 클릭 실패, JavaScript 시도: {e}", flush=True)
+        # JavaScript로 재시도
         try:
-            driver.execute_script("fnSearch();")
-            print("[SEARCH] fnSearch() 직접 호출 성공", flush=True)
-        except Exception as e2:
-            print(f"[SEARCH] fnSearch() 호출 실패: {e2}", flush=True)
+            driver.execute_script(f"document.getElementById('date1_2').value = '{end_date}';")
+            print(f"[SEARCH] 종료일 JavaScript 설정 완료: {end_date}", flush=True)
+        except:
+            raise
+    
+    time.sleep(0.5)
+    
+    # 조회 실행
+    print("[SEARCH] 조회 실행...", flush=True)
+    try:
+        driver.execute_script("fnSearch();")
+        print("[SEARCH] fnSearch() 호출 성공", flush=True)
+    except Exception as e:
+        print(f"[SEARCH] fnSearch() 호출 실패: {e}", flush=True)
+        # 버튼 클릭 시도
+        try:
+            search_btn = driver.find_element(By.XPATH, "//button[contains(@onclick, 'fnSearch')]")
+            search_btn.click()
+            print("[SEARCH] 조회 버튼 클릭 성공", flush=True)
+        except:
             raise
     
     # 데이터 로딩 대기
@@ -289,8 +399,14 @@ def extract_sales_data(driver):
     """IBSheet에서 매출 데이터 추출"""
     print("\n[EXTRACT] 데이터 추출 시작...", flush=True)
     
-    # MainFrm 확인
-    switch_to_main_frame(driver)
+    # MainFrm으로 전환
+    driver.switch_to.default_content()
+    try:
+        main_frame = driver.find_element(By.ID, "MainFrm")
+        driver.switch_to.frame(main_frame)
+        print("[FRAME] MainFrm으로 전환 완료", flush=True)
+    except Exception as e:
+        print(f"[FRAME] MainFrm 전환 실패: {e}", flush=True)
     
     # mySheet1 존재 확인
     try:
@@ -298,11 +414,26 @@ def extract_sales_data(driver):
         print(f"[EXTRACT] mySheet1 존재: {sheet_exists}", flush=True)
         
         if not sheet_exists:
-            print("[EXTRACT] mySheet1 객체가 없습니다", flush=True)
-            return []
+            # 다른 시트 이름 시도
+            other_sheets = driver.execute_script("""
+                var sheets = [];
+                if (typeof sheet !== 'undefined') sheets.push('sheet');
+                if (typeof Sheet1 !== 'undefined') sheets.push('Sheet1');
+                if (typeof dataSheet !== 'undefined') sheets.push('dataSheet');
+                return sheets;
+            """)
+            print(f"[EXTRACT] 다른 시트 객체: {other_sheets}", flush=True)
+            
+            if not other_sheets:
+                print("[EXTRACT] mySheet1 객체가 없습니다", flush=True)
+                return []
         
         row_count = driver.execute_script("return mySheet1.RowCount();")
         print(f"[EXTRACT] 총 행 수: {row_count}", flush=True)
+        
+        if row_count == 0:
+            print("[EXTRACT] 데이터가 없습니다", flush=True)
+            return []
         
     except Exception as e:
         print(f"[EXTRACT] 시트 확인 오류: {e}", flush=True)
@@ -310,29 +441,39 @@ def extract_sales_data(driver):
     
     # 데이터 추출
     print("[EXTRACT] 데이터 추출 중...", flush=True)
-    data = driver.execute_script("""
-        var data = [];
-        var rowCount = mySheet1.RowCount();
+    try:
+        data = driver.execute_script("""
+            var data = [];
+            var rowCount = mySheet1.RowCount();
+            
+            for (var i = 1; i <= rowCount; i++) {
+                var row = mySheet1.GetRowData(i);
+                
+                // 헤더 행 제외
+                if (row.SALE_DATE === "일자") continue;
+                
+                // 소계 행 제외
+                if (row.SALE_DATE && row.SALE_DATE.toString().startsWith("소계:")) continue;
+                
+                // 합계 행 제외
+                if (row.SALE_DATE && row.SALE_DATE.toString().includes("합계")) continue;
+                
+                data.push(row);
+            }
+            return data;
+        """)
         
-        for (var i = 1; i <= rowCount; i++) {
-            var row = mySheet1.GetRowData(i);
-            
-            // 헤더 행 제외
-            if (row.SALE_DATE === "일자") continue;
-            
-            // 소계 행 제외
-            if (row.SALE_DATE && row.SALE_DATE.toString().startsWith("소계:")) continue;
-            
-            // 합계 행 제외
-            if (row.SALE_DATE && row.SALE_DATE.toString().includes("합계")) continue;
-            
-            data.push(row);
-        }
-        return data;
-    """)
-    
-    print(f"[EXTRACT] 추출된 데이터: {len(data)}건", flush=True)
-    return data
+        print(f"[EXTRACT] 추출된 데이터: {len(data)}건", flush=True)
+        
+        # 샘플 데이터 출력
+        if data and len(data) > 0:
+            print(f"[EXTRACT] 첫 번째 데이터 샘플: {list(data[0].keys())[:10]}", flush=True)
+        
+        return data
+        
+    except Exception as e:
+        print(f"[EXTRACT] 데이터 추출 오류: {e}", flush=True)
+        return []
 
 
 def load_existing_data(file_path):
@@ -430,6 +571,10 @@ def main():
         
         if not new_data:
             print("[WARN] 수집된 데이터가 없습니다.", flush=True)
+            # 빈 파일이라도 생성
+            data_file = 'output/data/sales_data.json'
+            if not os.path.exists(data_file):
+                save_data([], data_file)
             return
         
         data_file = 'output/data/sales_data.json'
