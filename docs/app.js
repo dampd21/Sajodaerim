@@ -36,11 +36,27 @@ function formatCurrency(num) {
     return new Intl.NumberFormat('ko-KR').format(num) + '원';
 }
 
+function formatCompact(value) {
+    if (value >= 100000000) {
+        return (value / 100000000).toFixed(1) + '억';
+    } else if (value >= 10000) {
+        return (value / 10000).toFixed(0) + '만';
+    }
+    return value.toLocaleString();
+}
+
 function formatDateKorean(dateStr) {
     if (!dateStr) return '-';
     const parts = dateStr.split('-');
     if (parts.length !== 3) return dateStr;
     return `${parts[0]}년 ${parseInt(parts[1])}월 ${parseInt(parts[2])}일`;
+}
+
+function formatDateShort(dateStr) {
+    if (!dateStr) return '-';
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
 }
 
 function getMonthKey(dateStr) {
@@ -93,7 +109,27 @@ function initDashboard() {
     initDailyDetailModal();
     initZoomResetButtons();
     
+    // 기본값: 최근 1달 설정
+    setDefaultPeriod();
+    
     updateDashboard();
+}
+
+// 기본 기간 설정 (최근 1달)
+function setDefaultPeriod() {
+    const select = document.getElementById('periodSelect');
+    if (!select) return;
+    
+    // 가장 최근 월 선택
+    const options = select.querySelectorAll('option');
+    if (options.length > 1) {
+        // 첫 번째 옵션은 "전체 기간"이므로 두 번째(최근 월) 선택
+        const latestMonth = options[1]?.value;
+        if (latestMonth) {
+            select.value = latestMonth;
+            currentPeriod = latestMonth;
+        }
+    }
 }
 
 function initZoomResetButtons() {
@@ -175,7 +211,11 @@ function updatePeriodSelect() {
         select.appendChild(option);
     });
     
-    currentPeriod = '';
+    // 최근 1달 기본 선택 유지
+    if (sortedMonths.length > 0 && !currentPeriod) {
+        currentPeriod = sortedMonths[0];
+        select.value = currentPeriod;
+    }
 }
 
 // 대시보드 업데이트
@@ -262,7 +302,7 @@ function getFilteredPriceData() {
     return priceData;
 }
 
-// 요약 카드 업데이트 - 평균 단가 삭제
+// 요약 카드 업데이트
 function updateSummary() {
     const dailyData = getFilteredDailyData();
     const priceData = getFilteredPriceData();
@@ -289,39 +329,58 @@ function updateSalesTab() {
     updateSalesTable(dailyData);
 }
 
-// 매출 차트 업데이트 - 지점별 순위 삭제
+// Canvas 재생성 함수
+function recreateCanvas(containerId, canvasId) {
+    const container = document.getElementById(containerId);
+    if (!container) return null;
+    
+    const oldCanvas = document.getElementById(canvasId);
+    if (oldCanvas) {
+        oldCanvas.remove();
+    }
+    
+    const newCanvas = document.createElement('canvas');
+    newCanvas.id = canvasId;
+    container.appendChild(newCanvas);
+    
+    return newCanvas.getContext('2d');
+}
+
+// 매출 차트 업데이트 - 막대 그래프로 변경
 function updateSalesCharts(dailyData) {
     if (charts.dailySales) charts.dailySales.destroy();
     if (charts.categorySales) charts.categorySales.destroy();
     if (charts.topProducts) charts.topProducts.destroy();
     
     const dates = Object.keys(dailyData).sort();
-    const values = dates.map(d => dailyData[d]?.total || 0);
+    const totals = dates.map(d => dailyData[d]?.total || 0);
+    const counts = dates.map(d => dailyData[d]?.count || 0);
     
-    // 일별 매출 차트
+    // 발주 현황 그래프 (세로 막대 그래프)
     const dailyCtx = document.getElementById('dailySalesChart')?.getContext('2d');
     if (dailyCtx) {
         if (dates.length > 0) {
             charts.dailySales = new Chart(dailyCtx, {
-                type: 'line',
+                type: 'bar',
                 data: {
-                    labels: dates.map(d => {
-                        const parts = d.split('-');
-                        return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
-                    }),
+                    labels: dates.map(d => formatDateShort(d)),
                     datasets: [{
-                        label: '매출액',
-                        data: values,
-                        borderColor: '#00d4ff',
-                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
-                        fill: true,
-                        tension: 0,  // 직선으로 변경
-                        pointRadius: 3,
-                        pointHoverRadius: 6
+                        label: '발주 금액',
+                        data: totals,
+                        backgroundColor: '#00d4ff',
+                        borderRadius: {
+                            topLeft: 4,
+                            topRight: 4,
+                            bottomLeft: 0,
+                            bottomRight: 0
+                        },
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.8
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
                     plugins: { 
                         legend: { display: false },
@@ -329,18 +388,36 @@ function updateSalesCharts(dailyData) {
                         tooltip: {
                             callbacks: {
                                 title: (items) => formatDateKorean(dates[items[0].dataIndex]),
-                                label: (ctx) => '매출: ' + formatCurrency(ctx.parsed.y)
+                                label: (ctx) => `발주 금액: ${formatCurrency(ctx.parsed.y)}`,
+                                afterLabel: (ctx) => {
+                                    const idx = ctx.dataIndex;
+                                    return `발주 수량: ${formatNumber(counts[idx])}건`;
+                                }
                             }
                         }
                     },
                     scales: {
                         x: { 
-                            ticks: { color: '#888', maxRotation: 45 },
+                            ticks: { 
+                                color: '#888', 
+                                maxRotation: 45,
+                                font: { size: 11 }
+                            },
                             grid: { color: 'rgba(255,255,255,0.05)' }
                         },
                         y: { 
-                            ticks: { color: '#888', callback: v => formatNumber(v) },
+                            ticks: { 
+                                color: '#888', 
+                                callback: v => formatCompact(v) 
+                            },
                             grid: { color: 'rgba(255,255,255,0.05)' }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const date = dates[index];
+                            showDailyDetailModal(date);
                         }
                     }
                 }
@@ -393,7 +470,8 @@ function updateSalesCharts(dailyData) {
                 datasets: [{
                     label: '금액',
                     data: topProducts.map(p => p.total),
-                    backgroundColor: 'rgba(123, 44, 191, 0.7)'
+                    backgroundColor: 'rgba(123, 44, 191, 0.7)',
+                    borderRadius: 4
                 }]
             },
             options: {
@@ -402,7 +480,7 @@ function updateSalesCharts(dailyData) {
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { 
-                        ticks: { color: '#888', callback: v => formatNumber(v) },
+                        ticks: { color: '#888', callback: v => formatCompact(v) },
                         grid: { color: 'rgba(255,255,255,0.05)' }
                     },
                     y: { 
@@ -425,7 +503,7 @@ function updateSalesTable(dailyData) {
     if (dates.length === 0) {
         let msg = '데이터가 없습니다.';
         if (currentStore) {
-            msg = `"${currentStore}" 지점의 매출 데이터가 없습니다.`;
+            msg = `"${currentStore}" 지점의 발주 데이터가 없습니다.`;
         }
         tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#666;padding:40px;">${msg}</td></tr>`;
         return;
@@ -811,7 +889,7 @@ function showPriceModal(item) {
                         borderColor: '#00d4ff',
                         backgroundColor: 'rgba(0, 212, 255, 0.1)',
                         fill: true,
-                        tension: 0,  // 직선으로 변경
+                        tension: 0,
                         pointRadius: 5,
                         pointHoverRadius: 8,
                         pointBackgroundColor: '#00d4ff',
