@@ -8,17 +8,29 @@ let currentSort = { column: 'name', direction: 'asc' };
 let salesTrendChart = null;
 let channelChart = null;
 let storeRankChart = null;
-let isInitialized = false;  // ✅ 추가: 초기화 플래그
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
-    if (isInitialized) return;  // ✅ 중복 초기화 방지
-    isInitialized = true;
-    
     await loadData();
     initEventListeners();
     renderDashboard();
 });
+
+// ✅ Canvas 재생성 함수
+function recreateCanvas(containerId, canvasId) {
+    const container = document.getElementById(containerId);
+    const oldCanvas = document.getElementById(canvasId);
+    
+    if (oldCanvas) {
+        oldCanvas.remove();
+    }
+    
+    const newCanvas = document.createElement('canvas');
+    newCanvas.id = canvasId;
+    container.appendChild(newCanvas);
+    
+    return newCanvas.getContext('2d');
+}
 
 // 데이터 로드
 async function loadData() {
@@ -27,14 +39,12 @@ async function loadData() {
         salesData = await response.json();
         console.log('Data loaded:', salesData);
         
-        // 업데이트 시간 표시
         if (salesData.generated_at) {
             const date = new Date(salesData.generated_at);
             document.getElementById('updateTime').textContent = 
                 `마지막 업데이트: ${formatDateTime(date)}`;
         }
         
-        // 기간 드롭다운 초기화
         initPeriodSelect();
         
     } catch (error) {
@@ -44,17 +54,14 @@ async function loadData() {
 
 // 이벤트 리스너 초기화
 function initEventListeners() {
-    // 기간 유형 변경
     document.getElementById('periodType').addEventListener('change', (e) => {
         handlePeriodTypeChange(e.target.value);
     });
     
-    // 기간 선택 변경
     document.getElementById('periodSelect').addEventListener('change', () => {
         renderDashboard();
     });
     
-    // 직접 선택 날짜 변경
     document.getElementById('startDate').addEventListener('change', () => {
         renderDashboard();
     });
@@ -62,12 +69,10 @@ function initEventListeners() {
         renderDashboard();
     });
     
-    // 지점 검색
     document.getElementById('storeSearch').addEventListener('input', (e) => {
         renderStoreTable(e.target.value);
     });
     
-    // 테이블 헤더 정렬 클릭
     document.querySelectorAll('.sortable-header').forEach(header => {
         header.addEventListener('click', () => {
             const column = header.dataset.sort;
@@ -75,14 +80,12 @@ function initEventListeners() {
         });
     });
     
-    // 차트 초기화 버튼
     document.getElementById('resetChartZoom').addEventListener('click', () => {
         if (salesTrendChart) {
             salesTrendChart.resetZoom();
         }
     });
     
-    // 모달 닫기
     document.querySelector('.modal-close').addEventListener('click', closeModal);
     document.getElementById('dailyModal').addEventListener('click', (e) => {
         if (e.target.id === 'dailyModal') closeModal();
@@ -103,7 +106,6 @@ function handlePeriodTypeChange(type) {
         customGroup2.style.display = 'block';
         periodSelect.parentElement.style.display = 'none';
         
-        // 기본 날짜 설정
         if (salesData && salesData.summary.date_range) {
             document.getElementById('startDate').value = salesData.summary.date_range.start;
             document.getElementById('endDate').value = salesData.summary.date_range.end;
@@ -125,22 +127,17 @@ function initPeriodSelect(type = 'monthly') {
     
     if (!salesData) return;
     
-    let options = [];
-    
     if (type === 'monthly') {
-        options = salesData.month_list || [];
-        options.forEach(month => {
+        (salesData.month_list || []).forEach(month => {
             const [year, mon] = month.split('-');
             select.innerHTML += `<option value="${month}">${year}년 ${parseInt(mon)}월</option>`;
         });
     } else if (type === 'weekly') {
-        options = (salesData.weekly || []).map(w => w.week).reverse();
-        options.forEach(week => {
+        (salesData.weekly || []).map(w => w.week).reverse().forEach(week => {
             select.innerHTML += `<option value="${week}">${week}</option>`;
         });
     } else if (type === 'daily') {
-        options = (salesData.daily || []).map(d => d.date).reverse().slice(0, 60);
-        options.forEach(date => {
+        (salesData.daily || []).map(d => d.date).reverse().slice(0, 60).forEach(date => {
             select.innerHTML += `<option value="${date}">${formatDateKorean(date)}</option>`;
         });
     }
@@ -176,14 +173,10 @@ function getFilteredData() {
                 d.date.startsWith(periodValue)
             );
         } else if (periodType === 'weekly') {
-            // 주차에 해당하는 날짜들 필터링
-            const weekData = (salesData.weekly || []).find(w => w.week === periodValue);
-            if (weekData) {
-                result.daily = (salesData.daily || []).filter(d => {
-                    const weekKey = getWeekKey(d.date);
-                    return weekKey === periodValue;
-                });
-            }
+            result.daily = (salesData.daily || []).filter(d => {
+                const weekKey = getWeekKey(d.date);
+                return weekKey === periodValue;
+            });
         } else if (periodType === 'daily') {
             result.daily = (salesData.daily || []).filter(d => d.date === periodValue);
         }
@@ -191,7 +184,6 @@ function getFilteredData() {
         result.daily = salesData.daily || [];
     }
     
-    // 필터된 기간의 지점별 합계 계산
     const storeMap = {};
     const dates = new Set(result.daily.map(d => d.date));
     
@@ -217,7 +209,6 @@ function getFilteredData() {
     
     result.stores = Object.values(storeMap);
     
-    // 요약 계산
     result.daily.forEach(d => {
         result.summary.hall += d.hall || 0;
         result.summary.delivery += d.delivery || 0;
@@ -229,29 +220,10 @@ function getFilteredData() {
     return result;
 }
 
-// ✅ 모든 차트 파괴 함수
-function destroyAllCharts() {
-    if (salesTrendChart) {
-        salesTrendChart.destroy();
-        salesTrendChart = null;
-    }
-    if (channelChart) {
-        channelChart.destroy();
-        channelChart = null;
-    }
-    if (storeRankChart) {
-        storeRankChart.destroy();
-        storeRankChart = null;
-    }
-}
-
 // 대시보드 렌더링
 function renderDashboard() {
     filteredData = getFilteredData();
     if (!filteredData) return;
-    
-    // ✅ 차트 렌더링 전 모든 기존 차트 파괴
-    destroyAllCharts();
     
     renderSummaryCards();
     renderTrendChart();
@@ -270,13 +242,16 @@ function renderSummaryCards() {
     document.getElementById('totalDays').textContent = `${summary.days}일`;
 }
 
-// 매출 추이 차트
+// ✅ 매출 추이 차트 (Canvas 재생성 방식)
 function renderTrendChart() {
-    const canvas = document.getElementById('salesTrendChart');
-    const ctx = canvas.getContext('2d');
+    // 기존 차트 파괴
+    if (salesTrendChart) {
+        salesTrendChart.destroy();
+        salesTrendChart = null;
+    }
     
-    // ✅ 캔버스 초기화 (혹시 모를 잔여 데이터 제거)
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Canvas 재생성
+    const ctx = recreateCanvas('trendChartContainer', 'salesTrendChart');
     
     const daily = filteredData.daily;
     const labels = daily.map(d => formatDateShort(d.date));
@@ -326,9 +301,7 @@ function renderTrendChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: (context) => {
-                            return `${context.dataset.label}: ${formatCurrency(context.raw)}`;
-                        }
+                        label: (context) => `${context.dataset.label}: ${formatCurrency(context.raw)}`
                     }
                 },
                 zoom: {
@@ -364,13 +337,14 @@ function renderTrendChart() {
     });
 }
 
-// 채널별 차트
+// ✅ 채널별 차트 (Canvas 재생성 방식)
 function renderChannelChart() {
-    const canvas = document.getElementById('channelChart');
-    const ctx = canvas.getContext('2d');
+    if (channelChart) {
+        channelChart.destroy();
+        channelChart = null;
+    }
     
-    // ✅ 캔버스 초기화
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ctx = recreateCanvas('channelChartContainer', 'channelChart');
     
     const summary = filteredData.summary;
     
@@ -406,15 +380,15 @@ function renderChannelChart() {
     });
 }
 
-// 지점 순위 차트
+// ✅ 지점 순위 차트 (Canvas 재생성 방식)
 function renderStoreRankChart() {
-    const canvas = document.getElementById('storeRankChart');
-    const ctx = canvas.getContext('2d');
+    if (storeRankChart) {
+        storeRankChart.destroy();
+        storeRankChart = null;
+    }
     
-    // ✅ 캔버스 초기화
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ctx = recreateCanvas('storeRankChartContainer', 'storeRankChart');
     
-    // 매출순 상위 10개
     const topStores = [...filteredData.stores]
         .sort((a, b) => b.total - a.total)
         .slice(0, 10);
@@ -472,13 +446,11 @@ function renderStoreTable(searchTerm = '') {
     
     let stores = [...filteredData.stores];
     
-    // 검색 필터
     if (searchTerm) {
         const term = searchTerm.toLowerCase();
         stores = stores.filter(s => s.name.toLowerCase().includes(term));
     }
     
-    // 정렬
     stores.sort((a, b) => {
         let aVal = a[currentSort.column];
         let bVal = b[currentSort.column];
@@ -496,10 +468,8 @@ function renderStoreTable(searchTerm = '') {
         }
     });
     
-    // 전체 합계 계산
     const totalSum = stores.reduce((sum, s) => sum + s.total, 0);
     
-    // 테이블 행 생성
     stores.forEach(store => {
         const percent = totalSum > 0 ? ((store.total / totalSum) * 100).toFixed(1) : 0;
         
@@ -514,22 +484,18 @@ function renderStoreTable(searchTerm = '') {
         tbody.appendChild(tr);
     });
     
-    // 정렬 아이콘 업데이트
     updateSortIcons();
 }
 
 // 정렬 처리
 function handleSort(column) {
     if (currentSort.column === column) {
-        // 같은 컬럼 클릭: 방향 전환
         if (column === 'name') {
             currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
         } else {
-            // 숫자 컬럼은 기본 내림차순
             currentSort.direction = currentSort.direction === 'desc' ? 'asc' : 'desc';
         }
     } else {
-        // 다른 컬럼 클릭
         currentSort.column = column;
         currentSort.direction = column === 'name' ? 'asc' : 'desc';
     }
@@ -584,7 +550,6 @@ function showDailyModal(date) {
         </div>
     `;
     
-    // 매출순 정렬
     const sortedDetail = [...detail].sort((a, b) => b.total - a.total);
     
     tbody.innerHTML = '';
