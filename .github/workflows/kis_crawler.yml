@@ -86,14 +86,10 @@ jobs:
             FORCE_FLAG="--force"
           fi
           
-          python kis_crawler.py \
-            --start-date "$START_DATE" \
-            --end-date "$END_DATE" \
-            $FORCE_FLAG
+          python kis_crawler.py --start-date "$START_DATE" --end-date "$END_DATE" $FORCE_FLAG
 
       - name: Generate sales report
-        run: |
-          python generate_sales_report.py
+        run: python generate_sales_report.py
 
       - name: Commit and push data
         run: |
