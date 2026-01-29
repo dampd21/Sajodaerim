@@ -60,7 +60,7 @@
         widget.innerHTML = `
             <!-- 플로팅 버튼 -->
             <button id="aiChatToggle" class="ai-chat-toggle" title="AI 어시스턴트">
-                <span class="ai-chat-icon">🤖</span>
+                <span class="ai-chat-icon">🍜</span>
                 <span class="ai-chat-close">✕</span>
             </button>
             
@@ -68,7 +68,7 @@
             <div id="aiChatPopup" class="ai-chat-popup">
                 <div class="ai-chat-header">
                     <div class="ai-chat-title">
-                        <span>🤖</span>
+                        <span>🍜</span>
                         <span>AI 어시스턴트</span>
                     </div>
                     <div class="ai-chat-status" id="aiDataStatus">
@@ -77,15 +77,15 @@
                 </div>
                 
                 <div class="ai-chat-quick">
-                    <button class="ai-quick-btn" data-q="이번 달 매출 요약해줘">📈 매출 요약</button>
-                    <button class="ai-quick-btn" data-q="매출 1위 지점은?">🏆 1위 지점</button>
-                    <button class="ai-quick-btn" data-q="발주 현황 알려줘">📦 발주 현황</button>
-                    <button class="ai-quick-btn" data-q="홀과 배달 비율은?">🍽️ 채널 비율</button>
+                    <button class="ai-quick-btn" data-q="이번 달 매출 요약해줘">매출 요약</button>
+                    <button class="ai-quick-btn" data-q="매출 1위 지점은?">1위 지점</button>
+                    <button class="ai-quick-btn" data-q="발주 현황 알려줘">발주 현황</button>
+                    <button class="ai-quick-btn" data-q="홀과 배달 비율은?">홀/배달 비율</button>
                 </div>
                 
                 <div class="ai-chat-messages" id="aiChatMessages">
                     <div class="ai-msg ai" id="aiWelcomeMsg">
-                        안녕하세요! 역대짬뽕 데이터 분석 AI입니다. 🍜<br>
+                        안녕하세요! 역대짬뽕 데이터 분석 AI입니다.<br>
                         매출, 발주 등에 대해 질문해주세요!
                     </div>
                 </div>
