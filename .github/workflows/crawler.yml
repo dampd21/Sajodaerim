@@ -15,7 +15,8 @@ on:
         type: string
 
   schedule:
-    - cron: '0 0 * * *'
+    # 매일 오후 11시 30분 (KST) = UTC 14:30
+    - cron: '30 14 * * *'
 
 env:
   TZ: Asia/Seoul
@@ -53,8 +54,11 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             python sajo_crawler.py "${{ github.event.inputs.start_date }}" "${{ github.event.inputs.end_date }}"
           else
-            YESTERDAY=$(date -d "yesterday" '+%Y-%m-%d')
-            python sajo_crawler.py "$YESTERDAY" "$YESTERDAY"
+            # 스케줄 실행 시: 오늘-2일 ~ 오늘 데이터 수집
+            START_DATE=$(date -d "-2 days" '+%Y-%m-%d')
+            END_DATE=$(date '+%Y-%m-%d')
+            echo "Collecting data from $START_DATE to $END_DATE"
+            python sajo_crawler.py "$START_DATE" "$END_DATE"
           fi
 
       - name: Generate Report
@@ -76,5 +80,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git diff --staged --quiet || git commit -m "Data Update: $(date '+%Y-%m-%d %H:%M')"
+          git diff --staged --quiet || git commit -m "Auto Update: $(date '+%Y-%m-%d %H:%M') KST"
           git push || echo "Nothing to push"
