@@ -19,6 +19,21 @@ jobs:
       - name: Run generate_report.py
         run: python generate_report.py
       
+      - name: Run generate_sales_report.py
+        run: |
+          if [ -f "generate_sales_report.py" ]; then
+            python generate_sales_report.py
+          fi
+      
+      - name: Create AI Config
+        run: |
+          cat > docs/ai-config.js << 'EOF'
+          const AI_CONFIG = {
+            GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
+            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+          };
+          EOF
+      
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
