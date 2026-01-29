@@ -1,22 +1,33 @@
 /**
  * 매출 관리 대시보드
+ * - 지점별/기간별(월/주) 필터
+ * - 직선 그래프, 세로 막대 차트
+ * - 매출 대비 발주율 섹션
+ * - 기본값: 최근 1달
  */
 
 let salesData = null;
+let orderData = null;  // 발주 데이터
 let filteredData = null;
-let currentSort = { column: 'name', direction: 'asc' };
+let currentStore = '';
+let currentPeriodType = 'monthly';
+let currentPeriod = '';
+let currentSort = { column: 'total', direction: 'desc' };
+
 let salesTrendChart = null;
 let channelChart = null;
 let storeRankChart = null;
+let orderRateChart = null;
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
     await loadData();
     initEventListeners();
+    setDefaultPeriod();
     renderDashboard();
 });
 
-// ✅ Canvas 재생성 함수
+// Canvas 재생성 함수
 function recreateCanvas(containerId, canvasId) {
     const container = document.getElementById(containerId);
     const oldCanvas = document.getElementById(canvasId);
@@ -35,9 +46,20 @@ function recreateCanvas(containerId, canvasId) {
 // 데이터 로드
 async function loadData() {
     try {
-        const response = await fetch('sales_data.json');
-        salesData = await response.json();
-        console.log('Data loaded:', salesData);
+        // 매출 데이터
+        const salesResponse = await fetch('sales_data.json?t=' + Date.now());
+        salesData = await salesResponse.json();
+        console.log('Sales data loaded:', salesData);
+        
+        // 발주 데이터 (매출 대비 발주율용)
+        try {
+            const orderResponse = await fetch('report_data.json?t=' + Date.now());
+            orderData = await orderResponse.json();
+            console.log('Order data loaded:', orderData);
+        } catch (e) {
+            console.log('Order data not available');
+            orderData = null;
+        }
         
         if (salesData.generated_at) {
             const date = new Date(salesData.generated_at);
@@ -45,6 +67,7 @@ async function loadData() {
                 `마지막 업데이트: ${formatDateTime(date)}`;
         }
         
+        initStoreSelect();
         initPeriodSelect();
         
     } catch (error) {
@@ -52,27 +75,47 @@ async function loadData() {
     }
 }
 
+// 기본 기간 설정 (최근 1달)
+function setDefaultPeriod() {
+    if (!salesData || !salesData.month_list || salesData.month_list.length === 0) return;
+    
+    // 최근 월 자동 선택
+    const latestMonth = salesData.month_list[0];
+    currentPeriod = latestMonth;
+    
+    const periodSelect = document.getElementById('periodSelect');
+    if (periodSelect) {
+        periodSelect.value = latestMonth;
+    }
+}
+
 // 이벤트 리스너 초기화
 function initEventListeners() {
+    // 지점 선택
+    document.getElementById('storeSelect').addEventListener('change', (e) => {
+        currentStore = e.target.value;
+        renderDashboard();
+    });
+    
+    // 기간 유형 변경
     document.getElementById('periodType').addEventListener('change', (e) => {
-        handlePeriodTypeChange(e.target.value);
-    });
-    
-    document.getElementById('periodSelect').addEventListener('change', () => {
+        currentPeriodType = e.target.value;
+        initPeriodSelect();
         renderDashboard();
     });
     
-    document.getElementById('startDate').addEventListener('change', () => {
-        renderDashboard();
-    });
-    document.getElementById('endDate').addEventListener('change', () => {
+    // 기간 선택
+    document.getElementById('periodSelect').addEventListener('change', (e) => {
+        currentPeriod = e.target.value;
         renderDashboard();
     });
     
+    // 지점 검색
     document.getElementById('storeSearch').addEventListener('input', (e) => {
         renderStoreTable(e.target.value);
     });
     
+    // 테이블 정렬
     document.querySelectorAll('.sortable-header').forEach(header => {
         header.addEventListener('click', () => {
             const column = header.dataset.sort;
@@ -80,12 +123,19 @@ function initEventListeners() {
         });
     });
     
+    // 차트 줌 초기화
     document.getElementById('resetChartZoom').addEventListener('click', () => {
         if (salesTrendChart) {
             salesTrendChart.resetZoom();
         }
     });
     
+    // 발주율 기간 유형
+    document.getElementById('orderRatePeriodType')?.addEventListener('change', () => {
+        renderOrderRateSection();
+    });
+    
+    // 모달
     document.querySelector('.modal-close').addEventListener('click', closeModal);
     document.getElementById('dailyModal').addEventListener('click', (e) => {
         if (e.target.id === 'dailyModal') closeModal();
@@ -95,124 +145,165 @@ function initEventListeners() {
     });
 }
 
-// 기간 유형 변경 처리
-function handlePeriodTypeChange(type) {
-    const periodSelect = document.getElementById('periodSelect');
-    const customGroup1 = document.getElementById('customDateGroup');
-    const customGroup2 = document.getElementById('customDateGroup2');
+// 지점 선택 초기화
+function initStoreSelect() {
+    const select = document.getElementById('storeSelect');
+    if (!select || !salesData) return;
     
-    if (type === 'custom') {
-        customGroup1.style.display = 'block';
-        customGroup2.style.display = 'block';
-        periodSelect.parentElement.style.display = 'none';
-        
-        if (salesData && salesData.summary.date_range) {
-            document.getElementById('startDate').value = salesData.summary.date_range.start;
-            document.getElementById('endDate').value = salesData.summary.date_range.end;
-        }
-    } else {
-        customGroup1.style.display = 'none';
-        customGroup2.style.display = 'none';
-        periodSelect.parentElement.style.display = 'block';
-        initPeriodSelect(type);
-    }
+    const stores = salesData.stores || [];
+    const storeNames = [...new Set(stores.map(s => s.name))].sort((a, b) => a.localeCompare(b, 'ko'));
     
-    renderDashboard();
+    select.innerHTML = '<option value="">전체 지점</option>';
+    storeNames.forEach(name => {
+        select.innerHTML += `<option value="${name}">${name}</option>`;
+    });
 }
 
 // 기간 드롭다운 초기화
-function initPeriodSelect(type = 'monthly') {
+function initPeriodSelect() {
     const select = document.getElementById('periodSelect');
+    if (!select || !salesData) return;
+    
     select.innerHTML = '<option value="">전체 기간</option>';
     
-    if (!salesData) return;
-    
-    if (type === 'monthly') {
+    if (currentPeriodType === 'monthly') {
+        // 월별: 1월 ~ 12월
         (salesData.month_list || []).forEach(month => {
             const [year, mon] = month.split('-');
             select.innerHTML += `<option value="${month}">${year}년 ${parseInt(mon)}월</option>`;
         });
-    } else if (type === 'weekly') {
-        (salesData.weekly || []).map(w => w.week).reverse().forEach(week => {
-            select.innerHTML += `<option value="${week}">${week}</option>`;
-        });
-    } else if (type === 'daily') {
-        (salesData.daily || []).map(d => d.date).reverse().slice(0, 60).forEach(date => {
-            select.innerHTML += `<option value="${date}">${formatDateKorean(date)}</option>`;
+    } else if (currentPeriodType === 'weekly') {
+        // 주별: 연도-W주차
+        const weeks = getWeekList();
+        weeks.forEach(week => {
+            select.innerHTML += `<option value="${week.key}">${week.label}</option>`;
         });
     }
+    
+    // 기본값 복원
+    if (currentPeriod && select.querySelector(`option[value="${currentPeriod}"]`)) {
+        select.value = currentPeriod;
+    } else {
+        currentPeriod = '';
+    }
+}
+
+// 주차 목록 생성
+function getWeekList() {
+    if (!salesData || !salesData.daily) return [];
+    
+    const weekMap = new Map();
+    
+    salesData.daily.forEach(d => {
+        const weekKey = getWeekKey(d.date);
+        if (weekKey && !weekMap.has(weekKey)) {
+            const [year, weekNum] = weekKey.split('-W');
+            weekMap.set(weekKey, {
+                key: weekKey,
+                label: `${year}년 ${parseInt(weekNum)}주차`,
+                year: parseInt(year),
+                week: parseInt(weekNum)
+            });
+        }
+    });
+    
+    return Array.from(weekMap.values())
+        .sort((a, b) => {
+            if (a.year !== b.year) return b.year - a.year;
+            return b.week - a.week;
+        });
+}
+
+// 주차 키 계산
+function getWeekKey(dateStr) {
+    if (!dateStr) return null;
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const oneJan = new Date(year, 0, 1);
+    const days = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+    const week = Math.ceil((days + oneJan.getDay() + 1) / 7);
+    return `${year}-W${String(week).padStart(2, '0')}`;
 }
 
 // 필터링된 데이터 가져오기
 function getFilteredData() {
     if (!salesData) return null;
     
-    const periodType = document.getElementById('periodType').value;
-    const periodValue = document.getElementById('periodSelect').value;
-    
     let result = {
         stores: [],
         daily: [],
-        summary: { hall: 0, delivery: 0, packaging: 0, total: 0, days: 0 }
+        summary: { hall: 0, delivery: 0, deliveryExternal: 0, total: 0, days: 0 }
     };
     
-    if (periodType === 'custom') {
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-        
-        if (startDate && endDate) {
-            result.daily = (salesData.daily || []).filter(d => 
-                d.date >= startDate && d.date <= endDate
-            );
-        } else {
-            result.daily = salesData.daily || [];
+    // 일별 데이터 필터링
+    let dailyData = salesData.daily || [];
+    
+    // 기간 필터
+    if (currentPeriod) {
+        if (currentPeriodType === 'monthly') {
+            dailyData = dailyData.filter(d => d.date && d.date.startsWith(currentPeriod));
+        } else if (currentPeriodType === 'weekly') {
+            dailyData = dailyData.filter(d => getWeekKey(d.date) === currentPeriod);
         }
-    } else if (periodValue) {
-        if (periodType === 'monthly') {
-            result.daily = (salesData.daily || []).filter(d => 
-                d.date.startsWith(periodValue)
-            );
-        } else if (periodType === 'weekly') {
-            result.daily = (salesData.daily || []).filter(d => {
-                const weekKey = getWeekKey(d.date);
-                return weekKey === periodValue;
-            });
-        } else if (periodType === 'daily') {
-            result.daily = (salesData.daily || []).filter(d => d.date === periodValue);
-        }
-    } else {
-        result.daily = salesData.daily || [];
     }
     
+    // 지점 필터 (지점별 데이터 집계)
     const storeMap = {};
-    const dates = new Set(result.daily.map(d => d.date));
+    const dates = new Set(dailyData.map(d => d.date));
     
     dates.forEach(date => {
-        const detail = salesData.daily_detail[date] || [];
+        const detail = salesData.daily_detail?.[date] || [];
         detail.forEach(store => {
+            // 지점 필터 적용
+            if (currentStore && store.name !== currentStore) return;
+            
             if (!storeMap[store.code]) {
                 storeMap[store.code] = {
                     code: store.code,
                     name: store.name,
                     hall: 0,
                     delivery: 0,
-                    packaging: 0,
+                    deliveryExternal: 0,  // 포스 미연동 (추후 추가)
                     total: 0
                 };
             }
             storeMap[store.code].hall += store.hall || 0;
             storeMap[store.code].delivery += store.delivery || 0;
-            storeMap[store.code].packaging += store.packaging || 0;
             storeMap[store.code].total += store.total || 0;
         });
     });
     
     result.stores = Object.values(storeMap);
     
+    // 일별 데이터 (지점 필터 적용)
+    if (currentStore) {
+        result.daily = dailyData.map(d => {
+            const detail = salesData.daily_detail?.[d.date] || [];
+            const storeData = detail.find(s => s.name === currentStore);
+            if (!storeData) return null;
+            return {
+                date: d.date,
+                hall: storeData.hall || 0,
+                delivery: storeData.delivery || 0,
+                deliveryExternal: 0,
+                total: storeData.total || 0
+            };
+        }).filter(d => d !== null);
+    } else {
+        result.daily = dailyData.map(d => ({
+            date: d.date,
+            hall: d.hall || 0,
+            delivery: d.delivery || 0,
+            deliveryExternal: 0,
+            total: d.total || 0
+        }));
+    }
+    
+    // 요약 집계
     result.daily.forEach(d => {
         result.summary.hall += d.hall || 0;
         result.summary.delivery += d.delivery || 0;
-        result.summary.packaging += d.packaging || 0;
+        result.summary.deliveryExternal += d.deliveryExternal || 0;
         result.summary.total += d.total || 0;
     });
     result.summary.days = result.daily.length;
@@ -229,6 +320,7 @@ function renderDashboard() {
     renderTrendChart();
     renderChannelChart();
     renderStoreRankChart();
+    renderOrderRateSection();
     renderStoreTable();
 }
 
@@ -242,18 +334,18 @@ function renderSummaryCards() {
     document.getElementById('totalDays').textContent = `${summary.days}일`;
 }
 
-// ✅ 매출 추이 차트 (Canvas 재생성 방식)
+// 매출 현황 차트 (직선 그래프)
 function renderTrendChart() {
-    // 기존 차트 파괴
     if (salesTrendChart) {
         salesTrendChart.destroy();
         salesTrendChart = null;
     }
     
-    // Canvas 재생성
     const ctx = recreateCanvas('trendChartContainer', 'salesTrendChart');
     
     const daily = filteredData.daily;
+    if (!daily || daily.length === 0) return;
+    
     const labels = daily.map(d => formatDateShort(d.date));
     
     salesTrendChart = new Chart(ctx, {
@@ -267,23 +359,25 @@ function renderTrendChart() {
                     borderColor: '#4ecdc4',
                     backgroundColor: 'rgba(78, 205, 196, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0,  // 직선
+                    borderWidth: 2
                 },
                 {
-                    label: '배달',
+                    label: '배달(포스연동)',
                     data: daily.map(d => d.delivery),
                     borderColor: '#ff6b6b',
                     backgroundColor: 'rgba(255, 107, 107, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0,  // 직선
+                    borderWidth: 2
                 },
                 {
                     label: '합계',
                     data: daily.map(d => d.total),
                     borderColor: '#00d4ff',
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    backgroundColor: 'transparent',
                     fill: false,
-                    tension: 0.4,
+                    tension: 0,  // 직선
                     borderWidth: 3
                 }
             ]
@@ -301,6 +395,7 @@ function renderTrendChart() {
                 },
                 tooltip: {
                     callbacks: {
+                        title: (items) => formatDateKorean(daily[items[0].dataIndex]?.date),
                         label: (context) => `${context.dataset.label}: ${formatCurrency(context.raw)}`
                     }
                 },
@@ -329,15 +424,15 @@ function renderTrendChart() {
             onClick: (event, elements) => {
                 if (elements.length > 0) {
                     const index = elements[0].index;
-                    const date = filteredData.daily[index].date;
-                    showDailyModal(date);
+                    const date = filteredData.daily[index]?.date;
+                    if (date) showDailyModal(date);
                 }
             }
         }
     });
 }
 
-// ✅ 채널별 차트 (Canvas 재생성 방식)
+// 매출 비중 현황 차트
 function renderChannelChart() {
     if (channelChart) {
         channelChart.destroy();
@@ -351,9 +446,9 @@ function renderChannelChart() {
     channelChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['홀', '배달', '포장'],
+            labels: ['홀', '배달(포스연동)', '배달(포스미연동)'],
             datasets: [{
-                data: [summary.hall, summary.delivery, summary.packaging],
+                data: [summary.hall, summary.delivery, summary.deliveryExternal],
                 backgroundColor: ['#4ecdc4', '#ff6b6b', '#ffe66d'],
                 borderWidth: 0
             }]
@@ -369,7 +464,7 @@ function renderChannelChart() {
                 tooltip: {
                     callbacks: {
                         label: (context) => {
-                            const total = summary.hall + summary.delivery + summary.packaging;
+                            const total = summary.hall + summary.delivery + summary.deliveryExternal;
                             const percent = total > 0 ? ((context.raw / total) * 100).toFixed(1) : 0;
                             return `${context.label}: ${formatCurrency(context.raw)} (${percent}%)`;
                         }
@@ -380,7 +475,7 @@ function renderChannelChart() {
     });
 }
 
-// ✅ 지점 순위 차트 (Canvas 재생성 방식)
+// 지점별 매출 TOP 10 (세로 막대 그래프)
 function renderStoreRankChart() {
     if (storeRankChart) {
         storeRankChart.destroy();
@@ -393,229 +488,18 @@ function renderStoreRankChart() {
         .sort((a, b) => b.total - a.total)
         .slice(0, 10);
     
+    if (topStores.length === 0) return;
+    
     const colors = topStores.map((_, i) => {
-        if (i === 0) return '#ffd700';
-        if (i === 1) return '#c0c0c0';
-        if (i === 2) return '#cd7f32';
+        if (i === 0) return '#ffd700';  // 금
+        if (i === 1) return '#c0c0c0';  // 은
+        if (i === 2) return '#cd7f32';  // 동
         return '#00d4ff';
     });
     
     storeRankChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: topStores.map(s => s.name.replace('역대짬뽕 ', '')),
-            datasets: [{
-                data: topStores.map(s => s.total),
-                backgroundColor: colors,
-                borderRadius: 4
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => formatCurrency(context.raw)
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#a0a0a0',
-                        callback: (value) => formatCompact(value)
-                    },
-                    grid: { color: 'rgba(255,255,255,0.05)' }
-                },
-                y: {
-                    ticks: { color: '#e0e0e0' },
-                    grid: { display: false }
-                }
-            }
-        }
-    });
-}
-
-// 지점 테이블 렌더링
-function renderStoreTable(searchTerm = '') {
-    const tbody = document.getElementById('storeTableBody');
-    tbody.innerHTML = '';
-    
-    let stores = [...filteredData.stores];
-    
-    if (searchTerm) {
-        const term = searchTerm.toLowerCase();
-        stores = stores.filter(s => s.name.toLowerCase().includes(term));
-    }
-    
-    stores.sort((a, b) => {
-        let aVal = a[currentSort.column];
-        let bVal = b[currentSort.column];
-        
-        if (currentSort.column === 'name') {
-            aVal = aVal || '';
-            bVal = bVal || '';
-            return currentSort.direction === 'asc' 
-                ? aVal.localeCompare(bVal, 'ko')
-                : bVal.localeCompare(aVal, 'ko');
-        } else {
-            aVal = aVal || 0;
-            bVal = bVal || 0;
-            return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
-        }
-    });
-    
-    const totalSum = stores.reduce((sum, s) => sum + s.total, 0);
-    
-    stores.forEach(store => {
-        const percent = totalSum > 0 ? ((store.total / totalSum) * 100).toFixed(1) : 0;
-        
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${store.name}</td>
-            <td class="text-right">${formatCurrency(store.hall)}</td>
-            <td class="text-right">${formatCurrency(store.delivery)}</td>
-            <td class="text-right">${formatCurrency(store.total)}</td>
-            <td class="text-right">${percent}%</td>
-        `;
-        tbody.appendChild(tr);
-    });
-    
-    updateSortIcons();
-}
-
-// 정렬 처리
-function handleSort(column) {
-    if (currentSort.column === column) {
-        if (column === 'name') {
-            currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-        } else {
-            currentSort.direction = currentSort.direction === 'desc' ? 'asc' : 'desc';
-        }
-    } else {
-        currentSort.column = column;
-        currentSort.direction = column === 'name' ? 'asc' : 'desc';
-    }
-    
-    renderStoreTable(document.getElementById('storeSearch').value);
-}
-
-// 정렬 아이콘 업데이트
-function updateSortIcons() {
-    document.querySelectorAll('.sortable-header').forEach(header => {
-        const icon = header.querySelector('.sort-icon');
-        const column = header.dataset.sort;
-        
-        if (column === currentSort.column) {
-            icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
-            header.classList.add('sorted');
-        } else {
-            icon.textContent = '↕';
-            header.classList.remove('sorted');
-        }
-    });
-}
-
-// 일별 상세 모달
-function showDailyModal(date) {
-    const modal = document.getElementById('dailyModal');
-    const title = document.getElementById('modalTitle');
-    const summary = document.getElementById('modalSummary');
-    const tbody = document.getElementById('modalTableBody');
-    
-    const detail = salesData.daily_detail[date] || [];
-    const dayData = (salesData.daily || []).find(d => d.date === date) || {};
-    
-    title.textContent = `${formatDateKorean(date)} 매출 상세`;
-    
-    summary.innerHTML = `
-        <div class="summary-item">
-            <span class="label">총 매출</span>
-            <span class="value">${formatCurrency(dayData.total || 0)}</span>
-        </div>
-        <div class="summary-item">
-            <span class="label">홀</span>
-            <span class="value hall">${formatCurrency(dayData.hall || 0)}</span>
-        </div>
-        <div class="summary-item">
-            <span class="label">배달</span>
-            <span class="value delivery">${formatCurrency(dayData.delivery || 0)}</span>
-        </div>
-        <div class="summary-item">
-            <span class="label">영업 지점</span>
-            <span class="value">${detail.length}개</span>
-        </div>
-    `;
-    
-    const sortedDetail = [...detail].sort((a, b) => b.total - a.total);
-    
-    tbody.innerHTML = '';
-    sortedDetail.forEach(store => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${store.name}</td>
-            <td class="text-right">${formatCurrency(store.hall)}</td>
-            <td class="text-right">${formatCurrency(store.delivery)}</td>
-            <td class="text-right">${formatCurrency(store.packaging)}</td>
-            <td class="text-right">${formatCurrency(store.total)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-    
-    modal.classList.add('active');
-}
-
-// 모달 닫기
-function closeModal() {
-    document.getElementById('dailyModal').classList.remove('active');
-}
-
-// 주차 계산
-function getWeekKey(dateStr) {
-    const date = new Date(dateStr);
-    const year = date.getFullYear();
-    const oneJan = new Date(year, 0, 1);
-    const days = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
-    const week = Math.ceil((days + oneJan.getDay() + 1) / 7);
-    return `${year}-W${String(week).padStart(2, '0')}`;
-}
-
-// 유틸리티 함수
-function formatCurrency(value) {
-    if (!value && value !== 0) return '-';
-    return new Intl.NumberFormat('ko-KR').format(value) + '원';
-}
-
-function formatCompact(value) {
-    if (value >= 100000000) {
-        return (value / 100000000).toFixed(1) + '억';
-    } else if (value >= 10000) {
-        return (value / 10000).toFixed(0) + '만';
-    }
-    return value.toLocaleString();
-}
-
-function formatDateTime(date) {
-    return date.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
-
-function formatDateKorean(dateStr) {
-    if (!dateStr) return '-';
-    const [year, month, day] = dateStr.split('-');
-    return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
-}
-
-function formatDateShort(dateStr) {
-    if (!dateStr) return '-';
-    const [year, month, day] = dateStr.split('-');
-    return `${parseInt(month)}/${parseInt(day)}`;
-}
+            labels: topStores.map(s => {
+                const name = s.name.replace('역대짬뽕 ', '');
+                return name.length > 8 
