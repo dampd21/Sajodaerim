@@ -2,6 +2,7 @@
 """
 시각화용 리포트 데이터 생성
 - 지점별 가격 변동 데이터 생성 보장
+- 일별 상세 데이터 추가
 """
 
 import os
@@ -58,6 +59,9 @@ def generate_report():
     store_product_prices = defaultdict(lambda: defaultdict(list))
     store_daily = defaultdict(lambda: defaultdict(lambda: {"count": 0, "total": 0, "items": 0}))
     
+    # 일별 상세 데이터
+    daily_details = defaultdict(list)
+    
     # 데이터 처리
     for idx, item in enumerate(data):
         date_str = str(item.get('조회일자', '') or '').strip()
@@ -65,6 +69,7 @@ def generate_report():
         category = str(item.get('대분류', '') or '').strip()
         product_code = str(item.get('상품코드', '') or '').strip()
         product_name = str(item.get('상품명', '') or '').strip()
+        spec = str(item.get('규격', '') or '').strip()
         
         # 숫자 파싱
         try:
@@ -105,6 +110,18 @@ def generate_report():
             daily_sales[date_str]["count"] += qty
             daily_sales[date_str]["total"] += total
             daily_sales[date_str]["items"] += 1
+            
+            # 일별 상세 데이터 추가
+            daily_details[date_str].append({
+                "store": store,
+                "product": product_name,
+                "code": product_code,
+                "category": category,
+                "spec": spec,
+                "qty": qty,
+                "price": price,
+                "total": total
+            })
         
         # 지점별 처리
         if store:
@@ -140,6 +157,7 @@ def generate_report():
     print(f"[INFO] Stores found: {len(stores_set)}")
     print(f"[INFO] Products found: {len(products)}")
     print(f"[INFO] Categories found: {len(categories_set)}")
+    print(f"[INFO] Daily details: {len(daily_details)} days")
     
     # 전체 가격 변동 분석
     print("[INFO] Analyzing all price changes...")
@@ -183,6 +201,7 @@ def generate_report():
     print(f"  store_list: {len(store_list)}")
     print(f"  store_details: {len(store_details)}")
     print(f"  store_price_changes: {len(store_price_changes)}")
+    print(f"  daily_details: {len(daily_details)} days")
     
     # 일부 지점 상세 확인
     print("\n[CHECK] Sample stores:")
@@ -207,6 +226,7 @@ def generate_report():
             "total_sales": sum(d["total"] for d in daily_sales.values())
         },
         "daily": dict(sorted(daily_sales.items())),
+        "daily_details": {k: v for k, v in sorted(daily_details.items())},
         "stores": [
             {"name": k, "count": v["count"], "total": v["total"]} 
             for k, v in sorted(store_sales.items(), key=lambda x: -x[1]["total"])
@@ -293,6 +313,7 @@ def create_empty_report():
             "total_sales": 0
         },
         "daily": {},
+        "daily_details": {},
         "stores": [],
         "categories": [],
         "price_changes": [],
@@ -330,6 +351,7 @@ def save_report(report):
     print(f"  - store_details: {len(report.get('store_details', {}))} stores")
     print(f"  - store_price_changes: {len(report.get('store_price_changes', {}))} stores")
     print(f"  - price_changes: {len(report.get('price_changes', []))} items")
+    print(f"  - daily_details: {len(report.get('daily_details', {}))} days")
 
 
 if __name__ == "__main__":
