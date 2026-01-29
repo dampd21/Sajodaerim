@@ -40,10 +40,9 @@ jobs:
           
           # AI Config 파일 생성 (API 키 주입)
           cat > docs/ai-config.js << 'EOF'
-          // Auto-generated - Do not edit manually
           const AI_CONFIG = {
             GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
-            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
           EOF
           
