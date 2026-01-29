@@ -1040,3 +1040,10 @@ body {
 #orderRateChartContainer {
     height: 250px;
 }
+
+/* 미연동 지점 표시 */
+.no-match {
+    color: #888;
+    font-style: italic;
+    font-size: 0.85em;
+}
