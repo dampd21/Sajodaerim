@@ -2,7 +2,7 @@
 """
 KIS POS 매출 데이터 크롤러
 - OKPos KIS 시스템에서 일별 매출 데이터 수집
-- 프레임 구조: 메뉴는 메인, 콘텐츠는 MainFrm
+- 프레임 구조: 메뉴는 메인, 서브메뉴는 cswmIFrameGroup_15, 콘텐츠는 MainFrm
 """
 
 import os
@@ -91,7 +91,7 @@ def navigate_to_sales_page(driver):
     
     print("\n[NAV] 매출관리 메뉴 이동...")
     
-    # 메인 document로 전환 (메뉴는 프레임 외부에 있음)
+    # 메인 document로 전환
     driver.switch_to.default_content()
     time.sleep(1)
     
@@ -105,34 +105,73 @@ def navigate_to_sales_page(driver):
         print("[NAV] 매출관리 클릭 성공")
     except Exception as e:
         print(f"[NAV] 매출관리 클릭 실패: {e}")
-        # JavaScript로 직접 클릭
-        try:
-            driver.execute_script("cswmButtonDown('cswmMenuButtonGroup_15', 'Group_15');")
-            print("[NAV] 매출관리 JavaScript 클릭 성공")
-        except:
-            raise Exception("매출관리 메뉴를 클릭할 수 없습니다")
+        driver.execute_script("cswmButtonDown('cswmMenuButtonGroup_15', 'Group_15');")
+        print("[NAV] 매출관리 JavaScript 클릭 성공")
+    
+    time.sleep(2)
+    
+    # 2. 서브메뉴 프레임(cswmIFrameGroup_15)으로 전환
+    print("[NAV] 2. 서브메뉴 프레임으로 전환...")
+    driver.switch_to.default_content()
+    
+    try:
+        submenu_frame = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "cswmIFrameGroup_15"))
+        )
+        driver.switch_to.frame(submenu_frame)
+        print("[NAV] cswmIFrameGroup_15 프레임 전환 성공")
+    except Exception as e:
+        print(f"[NAV] 서브메뉴 프레임 전환 실패: {e}")
+        raise
     
     time.sleep(1)
     
-    # 2. 일자별 메뉴 클릭
-    print("[NAV] 2. 일자별 클릭...")
+    # 3. 일자별 메뉴 클릭
+    print("[NAV] 3. 일자별 클릭...")
+    
+    daily_clicked = False
+    
+    # 방법 1: ID로 클릭
     try:
-        daily_menu = wait.until(
-            EC.element_to_be_clickable((By.ID, "cswmItem8_51"))
+        daily_menu = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "cswmItem8_51"))
         )
-        daily_menu.click()
-        print("[NAV] 일자별 클릭 성공")
+        driver.execute_script("arguments[0].click();", daily_menu)
+        daily_clicked = True
+        print("[NAV] 일자별 클릭 성공 (JavaScript)")
     except Exception as e:
-        print(f"[NAV] 일자별 클릭 실패: {e}")
-        # 다른 선택자 시도
+        print(f"[NAV] 일자별 ID 클릭 실패: {e}")
+    
+    # 방법 2: 텍스트로 찾기
+    if not daily_clicked:
         try:
             daily_menu = driver.find_element(By.XPATH, "//td[contains(text(), '일자별')]")
-            daily_menu.click()
-            print("[NAV] 일자별 XPath 클릭 성공")
-        except:
-            raise Exception("일자별 메뉴를 클릭할 수 없습니다")
+            driver.execute_script("arguments[0].click();", daily_menu)
+            daily_clicked = True
+            print("[NAV] 일자별 텍스트 클릭 성공")
+        except Exception as e:
+            print(f"[NAV] 일자별 텍스트 클릭 실패: {e}")
+    
+    # 방법 3: 모든 td 순회
+    if not daily_clicked:
+        try:
+            tds = driver.find_elements(By.TAG_NAME, "td")
+            for td in tds:
+                if '일자별' in td.text:
+                    driver.execute_script("arguments[0].click();", td)
+                    daily_clicked = True
+                    print("[NAV] 일자별 순회 클릭 성공")
+                    break
+        except Exception as e:
+            print(f"[NAV] 일자별 순회 클릭 실패: {e}")
+    
+    if not daily_clicked:
+        raise Exception("일자별 메뉴를 클릭할 수 없습니다")
     
     time.sleep(3)
+    
+    # 메인 document로 복귀
+    driver.switch_to.default_content()
     
     print("[NAV] 일자별 매출 페이지 이동 완료!")
     return True
@@ -144,12 +183,14 @@ def switch_to_main_frame(driver):
     time.sleep(0.5)
     
     try:
-        main_frame = driver.find_element(By.ID, "MainFrm")
+        main_frame = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "MainFrm"))
+        )
         driver.switch_to.frame(main_frame)
         print("[FRAME] MainFrm으로 전환 완료")
         return True
-    except NoSuchElementException:
-        print("[FRAME] MainFrm을 찾을 수 없음")
+    except Exception as e:
+        print(f"[FRAME] MainFrm 전환 실패: {e}")
         return False
 
 
@@ -203,7 +244,6 @@ def set_date_and_search(driver, start_date, end_date):
         search_button.click()
         print("[SEARCH] 조회 버튼 클릭 성공")
     except:
-        # JavaScript로 직접 호출
         try:
             driver.execute_script("fnSearch();")
             print("[SEARCH] fnSearch() 직접 호출 성공")
@@ -246,7 +286,7 @@ def extract_sales_data(driver):
         for (var i = 1; i <= rowCount; i++) {
             var row = mySheet1.GetRowData(i);
             
-            // 헤더 행 제외 (SALE_DATE가 "일자"인 경우)
+            // 헤더 행 제외
             if (row.SALE_DATE === "일자") continue;
             
             // 소계 행 제외
