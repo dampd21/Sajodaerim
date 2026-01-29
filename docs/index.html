@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="data-table-container">
-                    <h3>상세 내역</h3>
+                    <h3>상세 내역 <span class="table-hint">(클릭하여 상세 보기)</span></h3>
                     <table class="data-table" id="salesTable">
                         <thead>
                             <tr>
@@ -137,6 +137,7 @@
             </section>
         </main>
 
+        <!-- 가격 변동 모달 -->
         <div class="modal" id="priceModal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
@@ -151,6 +152,42 @@
                     <canvas id="priceHistoryChart"></canvas>
                     <div class="price-details" id="priceDetails"></div>
                     <div class="price-history-table" id="priceHistoryTable"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 일별 상세 모달 -->
+        <div class="modal" id="dailyDetailModal">
+            <div class="modal-content modal-large">
+                <span class="modal-close">&times;</span>
+                <h2 id="dailyDetailTitle">일별 상세 내역</h2>
+                <div class="modal-body">
+                    <div class="daily-summary" id="dailySummary"></div>
+                    <div class="daily-filter">
+                        <input type="text" id="dailySearch" placeholder="상품명, 지점명 검색..." class="search-input">
+                        <select id="dailySort" class="sort-select">
+                            <option value="store">지점명순</option>
+                            <option value="product">상품명순</option>
+                            <option value="total_desc">금액 높은순</option>
+                            <option value="total_asc">금액 낮은순</option>
+                            <option value="qty_desc">수량 많은순</option>
+                        </select>
+                    </div>
+                    <div class="daily-table-container">
+                        <table class="data-table" id="dailyDetailTable">
+                            <thead>
+                                <tr>
+                                    <th>지점명</th>
+                                    <th>상품명</th>
+                                    <th>규격</th>
+                                    <th>수량</th>
+                                    <th>단가</th>
+                                    <th>합계</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
