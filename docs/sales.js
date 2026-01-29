@@ -1,7 +1,7 @@
 /**
  * 매출 관리 대시보드
  * - 지점별/기간별(월/주) 필터
- * - 직선 그래프, 세로 막대 차트
+ * - 누적 막대 그래프 (세로형)
  * - 매출 대비 발주율 섹션
  * - 기본값: 최근 1달
  */
@@ -18,6 +18,40 @@ let salesTrendChart = null;
 let channelChart = null;
 let storeRankChart = null;
 let orderRateChart = null;
+
+// ============================================
+// 지점명 매칭 테이블
+// 발주(사조) 지점명 → 포스(KIS) 지점명
+// ============================================
+
+const STORE_MAPPING = {
+    // "발주 지점명": "포스 지점명"
+    "역대짬뽕 장안본점(98)": "역대짬뽕 본점",
+    "역대짬뽕 오산시청점(99)": "역대짬뽕 오산시청점",
+    "역대짬뽕 병점점(99)": "역대짬뽕 병점점",
+    "역대짬뽕 송탄점(99)": "역대짬뽕 송탄점",
+    "역대짬뽕 화성반월점(99)": "역대짬뽕 화성반월점",
+    "역대짬뽕 다산1호점(14)": "역대짬뽕 다산1호점",
+    "역대짬뽕 송파점(95)": "역대짬뽕 송파점",
+    "역대짬뽕 두정점(101)": "역대짬뽕 두정점"
+};
+
+// 역방향 매핑 (포스 → 발주) 자동 생성
+const STORE_MAPPING_REVERSE = {};
+Object.keys(STORE_MAPPING).forEach(orderName => {
+    const posName = STORE_MAPPING[orderName];
+    STORE_MAPPING_REVERSE[posName] = orderName;
+});
+
+// 발주 지점명 → 포스 지점명 변환
+function getPosStoeName(orderStoreName) {
+    return STORE_MAPPING[orderStoreName] || orderStoreName;
+}
+
+// 포스 지점명 → 발주 지점명 변환
+function getOrderStoreName(posStoreName) {
+    return STORE_MAPPING_REVERSE[posStoreName] || posStoreName;
+}
 
 // ============================================
 // 초기화
@@ -364,7 +398,7 @@ function renderSummaryCards() {
 }
 
 // ============================================
-// 매출 현황 차트 (누적 막대 그래프)
+// 매출 현황 차트 (누적 막대 그래프 - 세로형)
 // ============================================
 
 function renderTrendChart() {
@@ -406,7 +440,12 @@ function renderTrendChart() {
                     label: '배달(포스미연동)',
                     data: daily.map(d => d.deliveryExternal || 0),
                     backgroundColor: '#ffe66d',
-                    borderRadius: 4,  // 맨 위만 둥글게
+                    borderRadius: {
+                        topLeft: 4,
+                        topRight: 4,
+                        bottomLeft: 0,
+                        bottomRight: 0
+                    },
                     stack: 'sales'
                 }
             ]
@@ -420,7 +459,12 @@ function renderTrendChart() {
             },
             plugins: {
                 legend: {
-                    labels: { color: '#e0e0e0' }
+                    position: 'top',
+                    labels: { 
+                        color: '#e0e0e0',
+                        usePointStyle: true,
+                        padding: 20
+                    }
                 },
                 tooltip: {
                     callbacks: {
@@ -446,7 +490,11 @@ function renderTrendChart() {
             scales: {
                 x: {
                     stacked: true,
-                    ticks: { color: '#a0a0a0', maxRotation: 45 },
+                    ticks: { 
+                        color: '#a0a0a0', 
+                        maxRotation: 45,
+                        font: { size: 11 }
+                    },
                     grid: { color: 'rgba(255,255,255,0.05)' }
                 },
                 y: {
@@ -590,7 +638,7 @@ function renderStoreRankChart() {
 }
 
 // ============================================
-// 매출 대비 발주율 섹션
+// 매출 대비 발주율 섹션 (지점명 매칭 적용)
 // ============================================
 
 function renderOrderRateSection() {
@@ -599,18 +647,23 @@ function renderOrderRateSection() {
         if (container) {
             container.innerHTML = '<div class="no-data">발주 데이터가 없습니다.</div>';
         }
+        const tbody = document.getElementById('orderRateTableBody');
+        if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center">발주 데이터가 없습니다.</td></tr>';
+        }
         return;
     }
     
-    const periodType = document.getElementById('orderRatePeriodType')?.value || 'weekly';
-    
-    // 발주 데이터 집계
-    const orderByStore = {};
+    // 발주 데이터 집계 (발주 지점명 → 포스 지점명으로 변환)
+    const orderByPosStore = {};
     const storeDetails = orderData.store_details || {};
     
-    Object.keys(storeDetails).forEach(storeName => {
-        const storeData = storeDetails[storeName];
+    Object.keys(storeDetails).forEach(orderStoreName => {
+        const storeData = storeDetails[orderStoreName];
         if (!storeData.daily) return;
+        
+        // 발주 지점명 → 포스 지점명 변환
+        const posStoreName = getPosStoeName(orderStoreName);
         
         let total = 0;
         Object.keys(storeData.daily).forEach(date => {
@@ -623,24 +676,35 @@ function renderOrderRateSection() {
         });
         
         if (total > 0) {
-            orderByStore[storeName] = total;
+            // 같은 포스 지점명으로 합산
+            if (!orderByPosStore[posStoreName]) {
+                orderByPosStore[posStoreName] = 0;
+            }
+            orderByPosStore[posStoreName] += total;
         }
     });
+    
+    console.log('=== 발주율 계산 ===');
+    console.log('발주 데이터 (포스 지점명 기준):', orderByPosStore);
+    console.log('매출 지점:', filteredData.stores.map(s => s.name));
     
     // 매출 대비 발주율 계산
     const rateData = filteredData.stores.map(store => {
         const salesAmount = store.total || 0;
-        const orderAmount = orderByStore[store.name] || 0;
+        const orderAmount = orderByPosStore[store.name] || 0;
         const rate = salesAmount > 0 ? (orderAmount / salesAmount * 100) : 0;
         
         return {
             name: store.name,
             sales: salesAmount,
             order: orderAmount,
-            rate: rate
+            rate: rate,
+            hasOrder: orderAmount > 0
         };
     }).filter(d => d.sales > 0 || d.order > 0)
       .sort((a, b) => b.rate - a.rate);
+    
+    console.log('발주율 데이터:', rateData);
     
     // 차트 렌더링
     renderOrderRateChart(rateData);
@@ -731,12 +795,15 @@ function renderOrderRateTable(rateData) {
     
     tbody.innerHTML = rateData.map(d => {
         const rateClass = d.rate >= 40 ? 'rate-high' : d.rate >= 30 ? 'rate-mid' : 'rate-low';
+        const orderDisplay = d.order > 0 ? formatCurrency(d.order) : '<span class="no-match">미연동</span>';
+        const rateDisplay = d.order > 0 ? `${d.rate.toFixed(1)}%` : '-';
+        
         return `
             <tr>
                 <td>${d.name}</td>
                 <td class="text-right">${formatCurrency(d.sales)}</td>
-                <td class="text-right">${formatCurrency(d.order)}</td>
-                <td class="text-right ${rateClass}">${d.rate.toFixed(1)}%</td>
+                <td class="text-right">${orderDisplay}</td>
+                <td class="text-right ${d.order > 0 ? rateClass : ''}">${rateDisplay}</td>
             </tr>
         `;
     }).join('');
@@ -839,7 +906,6 @@ function showDailyModal(date) {
     const tbody = document.getElementById('modalTableBody');
     
     const detail = salesData.daily_detail?.[date] || [];
-    const dayData = (salesData.daily || []).find(d => d.date === date) || {};
     
     // 지점 필터 적용
     let filteredDetail = detail;
