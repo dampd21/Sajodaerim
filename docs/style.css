@@ -1047,3 +1047,30 @@ body {
     font-style: italic;
     font-size: 0.85em;
 }
+
+/* ============================================
+   차트 컨테이너 높이 설정
+   ============================================ */
+
+.chart-canvas-container {
+    position: relative;
+    height: 350px;
+}
+
+.chart-canvas-container-small {
+    position: relative;
+    height: 250px;
+}
+
+#dailySalesChartContainer {
+    height: 350px;
+}
+
+#categorySalesChartContainer,
+#topProductsChartContainer {
+    height: 250px;
+}
+
+#priceHistoryChartContainer {
+    height: 300px;
+}
