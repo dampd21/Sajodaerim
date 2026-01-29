@@ -1,7 +1,6 @@
 name: KIS Sales Crawler
 
 on:
-  # 수동 실행
   workflow_dispatch:
     inputs:
       start_date:
@@ -21,7 +20,6 @@ on:
           - 'false'
           - 'true'
 
-  # 매일 오후 11시 KST (UTC 14:00)
   schedule:
     - cron: '0 14 * * *'
 
@@ -51,7 +49,6 @@ jobs:
       - name: Set date range for scheduled run
         if: github.event_name == 'schedule'
         run: |
-          # 스케줄 실행: 오늘-2일 ~ 오늘 (누락 방지)
           echo "START_DATE=$(date -d '2 days ago' '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "END_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "FORCE=false" >> $GITHUB_ENV
@@ -63,7 +60,6 @@ jobs:
           END="${{ github.event.inputs.end_date }}"
           FORCE="${{ github.event.inputs.force }}"
           
-          # 빈 값이면 기본값 사용
           if [ -z "$START" ]; then
             START=$(date -d '1 day ago' '+%Y-%m-%d')
           fi
@@ -80,6 +76,11 @@ jobs:
           KIS_USER_ID: ${{ secrets.KIS_USER_ID }}
           KIS_USER_PWD: ${{ secrets.KIS_USER_PWD }}
         run: |
+          echo "=== Starting KIS Crawler ==="
+          echo "Start Date: $START_DATE"
+          echo "End Date: $END_DATE"
+          echo "Force: $FORCE"
+          
           FORCE_FLAG=""
           if [ "$FORCE" = "true" ]; then
             FORCE_FLAG="--force"
