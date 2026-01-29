@@ -2,7 +2,7 @@
 """
 KIS POS 매출 데이터 크롤러
 - OKPos KIS 시스템에서 일별 매출 데이터 수집
-- IBSheet(mySheet1)에서 데이터 추출
+- 프레임 구조: 메뉴는 메인, 콘텐츠는 MainFrm
 """
 
 import os
@@ -16,7 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -91,24 +91,66 @@ def navigate_to_sales_page(driver):
     
     print("\n[NAV] 매출관리 메뉴 이동...")
     
+    # 메인 document로 전환 (메뉴는 프레임 외부에 있음)
+    driver.switch_to.default_content()
+    time.sleep(1)
+    
     # 1. 매출관리 메뉴 클릭
     print("[NAV] 1. 매출관리 클릭...")
-    sales_menu = wait.until(
-        EC.element_to_be_clickable((By.ID, "cswmMenuButtonGroup_15"))
-    )
-    sales_menu.click()
+    try:
+        sales_menu = wait.until(
+            EC.element_to_be_clickable((By.ID, "cswmMenuButtonGroup_15"))
+        )
+        sales_menu.click()
+        print("[NAV] 매출관리 클릭 성공")
+    except Exception as e:
+        print(f"[NAV] 매출관리 클릭 실패: {e}")
+        # JavaScript로 직접 클릭
+        try:
+            driver.execute_script("cswmButtonDown('cswmMenuButtonGroup_15', 'Group_15');")
+            print("[NAV] 매출관리 JavaScript 클릭 성공")
+        except:
+            raise Exception("매출관리 메뉴를 클릭할 수 없습니다")
+    
     time.sleep(1)
     
     # 2. 일자별 메뉴 클릭
     print("[NAV] 2. 일자별 클릭...")
-    daily_menu = wait.until(
-        EC.element_to_be_clickable((By.ID, "cswmItem8_51"))
-    )
-    daily_menu.click()
+    try:
+        daily_menu = wait.until(
+            EC.element_to_be_clickable((By.ID, "cswmItem8_51"))
+        )
+        daily_menu.click()
+        print("[NAV] 일자별 클릭 성공")
+    except Exception as e:
+        print(f"[NAV] 일자별 클릭 실패: {e}")
+        # 다른 선택자 시도
+        try:
+            daily_menu = driver.find_element(By.XPATH, "//td[contains(text(), '일자별')]")
+            daily_menu.click()
+            print("[NAV] 일자별 XPath 클릭 성공")
+        except:
+            raise Exception("일자별 메뉴를 클릭할 수 없습니다")
+    
     time.sleep(3)
     
     print("[NAV] 일자별 매출 페이지 이동 완료!")
     return True
+
+
+def switch_to_main_frame(driver):
+    """MainFrm으로 전환"""
+    driver.switch_to.default_content()
+    time.sleep(0.5)
+    
+    try:
+        main_frame = driver.find_element(By.ID, "MainFrm")
+        driver.switch_to.frame(main_frame)
+        print("[FRAME] MainFrm으로 전환 완료")
+        return True
+    except NoSuchElementException:
+        print("[FRAME] MainFrm을 찾을 수 없음")
+        return False
 
 
 def set_date_and_search(driver, start_date, end_date):
@@ -117,26 +159,57 @@ def set_date_and_search(driver, start_date, end_date):
     
     print(f"\n[SEARCH] 조회 기간: {start_date} ~ {end_date}")
     
+    # MainFrm으로 전환
+    if not switch_to_main_frame(driver):
+        raise Exception("MainFrm 전환 실패")
+    
+    # 페이지 로딩 대기
+    time.sleep(2)
+    
     # 시작일 설정
-    date1_input = wait.until(
-        EC.presence_of_element_located((By.ID, "date1_1"))
-    )
-    driver.execute_script(f"arguments[0].value = '{start_date}';", date1_input)
+    print("[SEARCH] 시작일 설정...")
+    try:
+        date1_input = wait.until(
+            EC.presence_of_element_located((By.ID, "date1_1"))
+        )
+        driver.execute_script(f"arguments[0].value = '{start_date}';", date1_input)
+        print(f"[SEARCH] 시작일 설정 완료: {start_date}")
+    except Exception as e:
+        print(f"[SEARCH] 시작일 설정 실패: {e}")
+        raise
+    
     time.sleep(0.3)
     
     # 종료일 설정
-    date2_input = driver.find_element(By.ID, "date1_2")
-    driver.execute_script(f"arguments[0].value = '{end_date}';", date2_input)
+    print("[SEARCH] 종료일 설정...")
+    try:
+        date2_input = driver.find_element(By.ID, "date1_2")
+        driver.execute_script(f"arguments[0].value = '{end_date}';", date2_input)
+        print(f"[SEARCH] 종료일 설정 완료: {end_date}")
+    except Exception as e:
+        print(f"[SEARCH] 종료일 설정 실패: {e}")
+        raise
+    
     time.sleep(0.3)
     
     # 조회 버튼 클릭
     print("[SEARCH] 조회 버튼 클릭...")
-    search_button = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//button[@onclick='fnSearch();']")
+    try:
+        search_button = wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[@onclick='fnSearch();']")
+            )
         )
-    )
-    search_button.click()
+        search_button.click()
+        print("[SEARCH] 조회 버튼 클릭 성공")
+    except:
+        # JavaScript로 직접 호출
+        try:
+            driver.execute_script("fnSearch();")
+            print("[SEARCH] fnSearch() 직접 호출 성공")
+        except Exception as e:
+            print(f"[SEARCH] 조회 실패: {e}")
+            raise
     
     # 데이터 로딩 대기
     print("[SEARCH] 데이터 로딩 중...")
@@ -148,6 +221,24 @@ def set_date_and_search(driver, start_date, end_date):
 def extract_sales_data(driver):
     """IBSheet에서 매출 데이터 추출"""
     
+    # MainFrm 확인
+    switch_to_main_frame(driver)
+    
+    # mySheet1 존재 확인
+    try:
+        sheet_exists = driver.execute_script("return typeof mySheet1 !== 'undefined';")
+        if not sheet_exists:
+            print("[EXTRACT] mySheet1 객체가 없습니다")
+            return []
+        
+        row_count = driver.execute_script("return mySheet1.RowCount();")
+        print(f"[EXTRACT] 총 행 수: {row_count}")
+        
+    except Exception as e:
+        print(f"[EXTRACT] 시트 확인 오류: {e}")
+        return []
+    
+    # 데이터 추출
     data = driver.execute_script("""
         var data = [];
         var rowCount = mySheet1.RowCount();
@@ -158,7 +249,7 @@ def extract_sales_data(driver):
             // 헤더 행 제외 (SALE_DATE가 "일자"인 경우)
             if (row.SALE_DATE === "일자") continue;
             
-            // 소계 행 제외 (SALE_DATE가 "소계:"로 시작하는 경우)
+            // 소계 행 제외
             if (row.SALE_DATE && row.SALE_DATE.toString().startsWith("소계:")) continue;
             
             // 합계 행 제외
@@ -192,18 +283,15 @@ def save_data(data, file_path):
 def merge_data(existing_data, new_data, force=False):
     """기존 데이터와 새 데이터 병합"""
     if force:
-        # 강제 재수집: 새 데이터의 날짜 범위에 해당하는 기존 데이터 삭제
         new_dates = set(row.get('SALE_DATE') for row in new_data if row.get('SALE_DATE'))
         existing_data = [row for row in existing_data if row.get('SALE_DATE') not in new_dates]
         print(f"[MERGE] 강제 모드: {len(new_dates)}일 데이터 교체")
     
-    # 기존 데이터를 (날짜, 매장코드)로 인덱싱
     existing_keys = set()
     for row in existing_data:
         key = (row.get('SALE_DATE'), row.get('SHOP_CD'))
         existing_keys.add(key)
     
-    # 새 데이터 중 중복되지 않는 것만 추가
     added_count = 0
     for row in new_data:
         key = (row.get('SALE_DATE'), row.get('SHOP_CD'))
@@ -214,7 +302,6 @@ def merge_data(existing_data, new_data, force=False):
     
     print(f"[MERGE] 새로 추가: {added_count}건")
     
-    # 날짜순 정렬
     existing_data.sort(key=lambda x: (x.get('SALE_DATE', ''), x.get('SHOP_CD', '')))
     
     return existing_data
@@ -227,7 +314,6 @@ def main():
     parser.add_argument('--force', action='store_true', help='강제 재수집')
     args = parser.parse_args()
     
-    # 기본값: 어제 ~ 오늘
     today = datetime.now()
     if args.start_date:
         start_date = args.start_date
@@ -248,35 +334,27 @@ def main():
     
     driver = None
     try:
-        # 드라이버 설정
         driver = setup_driver()
         
-        # 로그인
         login_to_kis(driver)
         
-        # 매출 페이지 이동
         navigate_to_sales_page(driver)
         
-        # 날짜 설정 및 조회
         set_date_and_search(driver, start_date, end_date)
         
-        # 데이터 추출
         new_data = extract_sales_data(driver)
         
         if not new_data:
             print("[WARN] 수집된 데이터가 없습니다.")
             return
         
-        # 기존 데이터 로드
         data_file = 'output/data/sales_data.json'
         existing_data = load_existing_data(data_file)
         print(f"[INFO] 기존 데이터: {len(existing_data)}건")
         
-        # 데이터 병합
         merged_data = merge_data(existing_data, new_data, args.force)
         print(f"[INFO] 전체 데이터: {len(merged_data)}건")
         
-        # 저장
         save_data(merged_data, data_file)
         
         print("\n" + "=" * 60)
