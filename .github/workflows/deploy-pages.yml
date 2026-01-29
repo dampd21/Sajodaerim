@@ -1,11 +1,11 @@
-name: Deploy Visualization to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: ["main"]
     paths:
       - 'docs/**'
-      - 'output/report_data.json'
+      - 'output/**'
   workflow_dispatch:
 
 permissions:
@@ -33,10 +33,21 @@ jobs:
       
       - name: Prepare docs folder
         run: |
-          # report_data.json을 docs 폴더로 복사
+          # report_data.json 복사
           if [ -f "output/report_data.json" ]; then
             cp output/report_data.json docs/
           fi
+          
+          # AI Config 파일 생성 (API 키 주입)
+          cat > docs/ai-config.js << 'EOF'
+          // Auto-generated - Do not edit manually
+          const AI_CONFIG = {
+            GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
+            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+          };
+          EOF
+          
+          echo "AI config file created"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
