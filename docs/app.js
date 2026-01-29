@@ -25,7 +25,31 @@ const zoomOptions = {
     }
 };
 
+// ============================================
+// Canvas 재생성 함수 (차트 증식 방지)
+// ============================================
+function recreateCanvas(containerId, canvasId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        console.error('Container not found:', containerId);
+        return null;
+    }
+    
+    const oldCanvas = document.getElementById(canvasId);
+    if (oldCanvas) {
+        oldCanvas.remove();
+    }
+    
+    const newCanvas = document.createElement('canvas');
+    newCanvas.id = canvasId;
+    container.appendChild(newCanvas);
+    
+    return newCanvas.getContext('2d');
+}
+
+// ============================================
 // 유틸리티 함수
+// ============================================
 function formatNumber(num) {
     if (num === null || num === undefined || isNaN(num)) return '-';
     return new Intl.NumberFormat('ko-KR').format(num);
@@ -75,7 +99,9 @@ function round(num, decimals) {
     return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
+// ============================================
 // 데이터 로드
+// ============================================
 async function loadData() {
     try {
         const response = await fetch('report_data.json?t=' + Date.now());
@@ -94,7 +120,9 @@ async function loadData() {
     }
 }
 
+// ============================================
 // 대시보드 초기화
+// ============================================
 function initDashboard() {
     if (!reportData) return;
     
@@ -120,10 +148,8 @@ function setDefaultPeriod() {
     const select = document.getElementById('periodSelect');
     if (!select) return;
     
-    // 가장 최근 월 선택
     const options = select.querySelectorAll('option');
     if (options.length > 1) {
-        // 첫 번째 옵션은 "전체 기간"이므로 두 번째(최근 월) 선택
         const latestMonth = options[1]?.value;
         if (latestMonth) {
             select.value = latestMonth;
@@ -142,7 +168,9 @@ function initZoomResetButtons() {
     });
 }
 
+// ============================================
 // 지점 선택 초기화
+// ============================================
 function initStoreSelect() {
     const select = document.getElementById('storeSelect');
     if (!select) return;
@@ -172,7 +200,9 @@ function initStoreSelect() {
     });
 }
 
+// ============================================
 // 기간 선택 초기화
+// ============================================
 function initPeriodSelect() {
     updatePeriodSelect();
     
@@ -182,7 +212,6 @@ function initPeriodSelect() {
     });
 }
 
-// 기간 드롭다운 업데이트
 function updatePeriodSelect() {
     const select = document.getElementById('periodSelect');
     if (!select) return;
@@ -211,21 +240,24 @@ function updatePeriodSelect() {
         select.appendChild(option);
     });
     
-    // 최근 1달 기본 선택 유지
     if (sortedMonths.length > 0 && !currentPeriod) {
         currentPeriod = sortedMonths[0];
         select.value = currentPeriod;
     }
 }
 
+// ============================================
 // 대시보드 업데이트
+// ============================================
 function updateDashboard() {
     updateSummary();
     updateSalesTab();
     updatePricesTab();
 }
 
-// 필터된 일별 데이터 가져오기
+// ============================================
+// 필터된 데이터 가져오기
+// ============================================
 function getFilteredDailyData() {
     let dailyData = {};
     
@@ -252,7 +284,6 @@ function getFilteredDailyData() {
     return dailyData;
 }
 
-// 필터된 가격 데이터 가져오기
 function getFilteredPriceData() {
     let priceData = [];
     
@@ -302,7 +333,9 @@ function getFilteredPriceData() {
     return priceData;
 }
 
+// ============================================
 // 요약 카드 업데이트
+// ============================================
 function updateSummary() {
     const dailyData = getFilteredDailyData();
     const priceData = getFilteredPriceData();
@@ -322,112 +355,107 @@ function updateSummary() {
     document.getElementById('totalProducts').textContent = formatNumber(productSet.size);
 }
 
+// ============================================
 // 매출 탭 업데이트
+// ============================================
 function updateSalesTab() {
     const dailyData = getFilteredDailyData();
     updateSalesCharts(dailyData);
     updateSalesTable(dailyData);
 }
 
-// Canvas 재생성 함수
-function recreateCanvas(containerId, canvasId) {
-    const container = document.getElementById(containerId);
-    if (!container) return null;
-    
-    const oldCanvas = document.getElementById(canvasId);
-    if (oldCanvas) {
-        oldCanvas.remove();
-    }
-    
-    const newCanvas = document.createElement('canvas');
-    newCanvas.id = canvasId;
-    container.appendChild(newCanvas);
-    
-    return newCanvas.getContext('2d');
-}
-
-// 매출 차트 업데이트 - 막대 그래프로 변경
+// ============================================
+// 차트 업데이트 (Canvas 재생성 방식)
+// ============================================
 function updateSalesCharts(dailyData) {
-    if (charts.dailySales) charts.dailySales.destroy();
-    if (charts.categorySales) charts.categorySales.destroy();
-    if (charts.topProducts) charts.topProducts.destroy();
+    // 1. 기존 차트 파괴
+    if (charts.dailySales) {
+        charts.dailySales.destroy();
+        charts.dailySales = null;
+    }
+    if (charts.categorySales) {
+        charts.categorySales.destroy();
+        charts.categorySales = null;
+    }
+    if (charts.topProducts) {
+        charts.topProducts.destroy();
+        charts.topProducts = null;
+    }
     
     const dates = Object.keys(dailyData).sort();
     const totals = dates.map(d => dailyData[d]?.total || 0);
     const counts = dates.map(d => dailyData[d]?.count || 0);
     
-    // 발주 현황 그래프 (세로 막대 그래프)
-    const dailyCtx = document.getElementById('dailySalesChart')?.getContext('2d');
-    if (dailyCtx) {
-        if (dates.length > 0) {
-            charts.dailySales = new Chart(dailyCtx, {
-                type: 'bar',
-                data: {
-                    labels: dates.map(d => formatDateShort(d)),
-                    datasets: [{
-                        label: '발주 금액',
-                        data: totals,
-                        backgroundColor: '#00d4ff',
-                        borderRadius: {
-                            topLeft: 4,
-                            topRight: 4,
-                            bottomLeft: 0,
-                            bottomRight: 0
-                        },
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { 
-                        legend: { display: false },
-                        zoom: zoomOptions,
-                        tooltip: {
-                            callbacks: {
-                                title: (items) => formatDateKorean(dates[items[0].dataIndex]),
-                                label: (ctx) => `발주 금액: ${formatCurrency(ctx.parsed.y)}`,
-                                afterLabel: (ctx) => {
-                                    const idx = ctx.dataIndex;
-                                    return `발주 수량: ${formatNumber(counts[idx])}건`;
-                                }
+    // 2. 발주 현황 그래프 (Canvas 재생성!)
+    const dailyCtx = recreateCanvas('dailySalesChartContainer', 'dailySalesChart');
+    if (dailyCtx && dates.length > 0) {
+        charts.dailySales = new Chart(dailyCtx, {
+            type: 'bar',
+            data: {
+                labels: dates.map(d => formatDateShort(d)),
+                datasets: [{
+                    label: '발주 금액',
+                    data: totals,
+                    backgroundColor: '#00d4ff',
+                    borderRadius: {
+                        topLeft: 4,
+                        topRight: 4,
+                        bottomLeft: 0,
+                        bottomRight: 0
+                    },
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { 
+                    legend: { display: false },
+                    zoom: zoomOptions,
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => formatDateKorean(dates[items[0].dataIndex]),
+                            label: (ctx) => `발주 금액: ${formatCurrency(ctx.parsed.y)}`,
+                            afterLabel: (ctx) => {
+                                const idx = ctx.dataIndex;
+                                return `발주 수량: ${formatNumber(counts[idx])}건`;
                             }
                         }
-                    },
-                    scales: {
-                        x: { 
-                            ticks: { 
-                                color: '#888', 
-                                maxRotation: 45,
-                                font: { size: 11 }
-                            },
-                            grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { 
+                            color: '#888', 
+                            maxRotation: 45,
+                            font: { size: 11 }
                         },
-                        y: { 
-                            ticks: { 
-                                color: '#888', 
-                                callback: v => formatCompact(v) 
-                            },
-                            grid: { color: 'rgba(255,255,255,0.05)' }
-                        }
+                        grid: { color: 'rgba(255,255,255,0.05)' }
                     },
-                    onClick: (event, elements) => {
-                        if (elements.length > 0) {
-                            const index = elements[0].index;
-                            const date = dates[index];
-                            showDailyDetailModal(date);
-                        }
+                    y: { 
+                        ticks: { 
+                            color: '#888', 
+                            callback: v => formatCompact(v) 
+                        },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const date = dates[index];
+                        showDailyDetailModal(date);
                     }
                 }
-            });
-        }
+            }
+        });
     }
     
-    // 대분류별 차트
+    // 3. 대분류별 차트 (Canvas 재생성!)
     const categories = reportData.categories || [];
-    const categoryCtx = document.getElementById('categorySalesChart')?.getContext('2d');
+    const categoryCtx = recreateCanvas('categorySalesChartContainer', 'categorySalesChart');
     if (categoryCtx && categories.length > 0) {
         charts.categorySales = new Chart(categoryCtx, {
             type: 'doughnut',
@@ -443,6 +471,7 @@ function updateSalesCharts(dailyData) {
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: { 
                         position: 'right',
@@ -453,7 +482,7 @@ function updateSalesCharts(dailyData) {
         });
     }
     
-    // 상위 품목 차트
+    // 4. 상위 품목 차트 (Canvas 재생성!)
     const priceData = getFilteredPriceData();
     const topProducts = priceData
         .filter(p => p.last_price > 0)
@@ -461,7 +490,7 @@ function updateSalesCharts(dailyData) {
         .sort((a, b) => b.total - a.total)
         .slice(0, 8);
     
-    const productsCtx = document.getElementById('topProductsChart')?.getContext('2d');
+    const productsCtx = recreateCanvas('topProductsChartContainer', 'topProductsChart');
     if (productsCtx && topProducts.length > 0) {
         charts.topProducts = new Chart(productsCtx, {
             type: 'bar',
@@ -477,6 +506,7 @@ function updateSalesCharts(dailyData) {
             options: {
                 indexAxis: 'y',
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { 
@@ -493,7 +523,9 @@ function updateSalesCharts(dailyData) {
     }
 }
 
+// ============================================
 // 매출 테이블 업데이트
+// ============================================
 function updateSalesTable(dailyData) {
     const tbody = document.querySelector('#salesTable tbody');
     if (!tbody) return;
@@ -529,7 +561,9 @@ function updateSalesTable(dailyData) {
     });
 }
 
-// 일별 상세 모달 초기화
+// ============================================
+// 일별 상세 모달
+// ============================================
 function initDailyDetailModal() {
     const modal = document.getElementById('dailyDetailModal');
     const closeBtn = modal?.querySelector('.modal-close');
@@ -548,7 +582,6 @@ function initDailyDetailModal() {
     });
 }
 
-// 일별 상세 모달 표시
 function showDailyDetailModal(date) {
     const modal = document.getElementById('dailyDetailModal');
     if (!modal) return;
@@ -601,7 +634,6 @@ function showDailyDetailModal(date) {
     modal.classList.add('show');
 }
 
-// 일별 상세 필터링 및 렌더링
 function filterAndRenderDailyDetails() {
     const query = document.getElementById('dailySearch')?.value.toLowerCase() || '';
     const sortType = document.getElementById('dailySort')?.value || 'store';
@@ -638,7 +670,6 @@ function filterAndRenderDailyDetails() {
     renderDailyDetailsTable(filtered);
 }
 
-// 일별 상세 테이블 렌더링
 function renderDailyDetailsTable(details) {
     const tbody = document.querySelector('#dailyDetailTable tbody');
     if (!tbody) return;
@@ -663,7 +694,9 @@ function renderDailyDetailsTable(details) {
     `).join('');
 }
 
+// ============================================
 // 가격 탭 업데이트
+// ============================================
 function updatePricesTab() {
     const priceData = getFilteredPriceData();
     
@@ -684,7 +717,6 @@ function updatePricesTab() {
     renderPriceCards(sortedData);
 }
 
-// 가격 카드 렌더링
 function renderPriceCards(priceData) {
     const container = document.getElementById('priceCards');
     if (!container) return;
@@ -766,7 +798,9 @@ function getCurrentPriceData() {
     return applySortToPrice(data, sortType);
 }
 
+// ============================================
 // 탭 초기화
+// ============================================
 function initTabs() {
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
@@ -780,7 +814,9 @@ function initTabs() {
     });
 }
 
+// ============================================
 // 필터 초기화
+// ============================================
 function initFilters() {
     document.getElementById('priceSearch')?.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
@@ -843,7 +879,9 @@ function applySortToPrice(data, sortType) {
     return sorted;
 }
 
+// ============================================
 // 모달 초기화
+// ============================================
 function initModal() {
     const modal = document.getElementById('priceModal');
     const closeBtn = modal?.querySelector('.modal-close');
@@ -860,7 +898,9 @@ function initModal() {
     });
 }
 
+// ============================================
 // 가격 모달 표시
+// ============================================
 function showPriceModal(item) {
     if (!item) return;
     
@@ -869,9 +909,13 @@ function showPriceModal(item) {
     
     document.getElementById('modalTitle').textContent = item.name || '';
     
-    const ctx = document.getElementById('priceHistoryChart')?.getContext('2d');
+    // Canvas 재생성으로 차트 증식 방지
+    const ctx = recreateCanvas('priceHistoryChartContainer', 'priceHistoryChart');
     if (ctx) {
-        if (charts.priceHistory) charts.priceHistory.destroy();
+        if (charts.priceHistory) {
+            charts.priceHistory.destroy();
+            charts.priceHistory = null;
+        }
         
         const history = item.history || [];
         
@@ -899,6 +943,7 @@ function showPriceModal(item) {
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     interaction: { mode: 'index', intersect: false },
                     plugins: {
                         legend: { display: false },
@@ -1034,4 +1079,7 @@ function showPriceModal(item) {
     modal.classList.add('show');
 }
 
+// ============================================
+// 앱 시작
+// ============================================
 document.addEventListener('DOMContentLoaded', loadData);
