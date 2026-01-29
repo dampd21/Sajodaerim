@@ -364,7 +364,7 @@ function renderSummaryCards() {
 }
 
 // ============================================
-// 매출 현황 차트 (직선 그래프)
+// 매출 현황 차트 (누적 막대 그래프)
 // ============================================
 
 function renderTrendChart() {
@@ -384,42 +384,30 @@ function renderTrendChart() {
     const labels = daily.map(d => formatDateShort(d.date));
     
     salesTrendChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [
                 {
                     label: '홀',
                     data: daily.map(d => d.hall),
-                    borderColor: '#4ecdc4',
-                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
-                    fill: true,
-                    tension: 0,
-                    borderWidth: 2,
-                    pointRadius: 3,
-                    pointHoverRadius: 6
+                    backgroundColor: '#4ecdc4',
+                    borderRadius: 0,
+                    stack: 'sales'
                 },
                 {
                     label: '배달(포스연동)',
                     data: daily.map(d => d.delivery),
-                    borderColor: '#ff6b6b',
-                    backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                    fill: true,
-                    tension: 0,
-                    borderWidth: 2,
-                    pointRadius: 3,
-                    pointHoverRadius: 6
+                    backgroundColor: '#ff6b6b',
+                    borderRadius: 0,
+                    stack: 'sales'
                 },
                 {
-                    label: '합계',
-                    data: daily.map(d => d.total),
-                    borderColor: '#00d4ff',
-                    backgroundColor: 'transparent',
-                    fill: false,
-                    tension: 0,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointHoverRadius: 7
+                    label: '배달(포스미연동)',
+                    data: daily.map(d => d.deliveryExternal || 0),
+                    backgroundColor: '#ffe66d',
+                    borderRadius: 4,  // 맨 위만 둥글게
+                    stack: 'sales'
                 }
             ]
         },
@@ -437,7 +425,13 @@ function renderTrendChart() {
                 tooltip: {
                     callbacks: {
                         title: (items) => formatDateKorean(daily[items[0].dataIndex]?.date),
-                        label: (context) => `${context.dataset.label}: ${formatCurrency(context.raw)}`
+                        label: (context) => `${context.dataset.label}: ${formatCurrency(context.raw)}`,
+                        afterBody: (items) => {
+                            const idx = items[0].dataIndex;
+                            const d = daily[idx];
+                            const total = (d.hall || 0) + (d.delivery || 0) + (d.deliveryExternal || 0);
+                            return `──────────\n합계: ${formatCurrency(total)}`;
+                        }
                     }
                 },
                 zoom: {
@@ -451,10 +445,12 @@ function renderTrendChart() {
             },
             scales: {
                 x: {
+                    stacked: true,
                     ticks: { color: '#a0a0a0', maxRotation: 45 },
                     grid: { color: 'rgba(255,255,255,0.05)' }
                 },
                 y: {
+                    stacked: true,
                     ticks: {
                         color: '#a0a0a0',
                         callback: (value) => formatCompact(value)
