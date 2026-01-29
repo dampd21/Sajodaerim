@@ -210,203 +210,164 @@ def set_date_and_search(driver, start_date, end_date):
     
     print(f"\n[SEARCH] 조회 기간: {start_date} ~ {end_date}", flush=True)
     
-    # MainFrm으로 전환
+    # 메인 document로 완전히 돌아가기
     driver.switch_to.default_content()
-    time.sleep(1)
+    time.sleep(2)
+    
+    # 디버깅: 현재 프레임 구조 확인
+    print("[DEBUG] 프레임 구조 확인 중...", flush=True)
+    try:
+        frames = driver.find_elements(By.TAG_NAME, "iframe")
+        print(f"[DEBUG] 발견된 iframe 개수: {len(frames)}", flush=True)
+        for i, frame in enumerate(frames):
+            frame_id = frame.get_attribute('id') or '(no id)'
+            frame_name = frame.get_attribute('name') or '(no name)'
+            frame_src = frame.get_attribute('src') or '(no src)'
+            print(f"  iframe[{i}]: id={frame_id}, name={frame_name}, src={frame_src[:100]}", flush=True)
+    except Exception as e:
+        print(f"[DEBUG] 프레임 확인 실패: {e}", flush=True)
     
     # MainFrm 찾기 및 전환
     try:
+        print("[FRAME] MainFrm 찾는 중...", flush=True)
         main_frame = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.ID, "MainFrm"))
+            EC.presence_of_element_located((By.NAME, "MainFrm"))
         )
         driver.switch_to.frame(main_frame)
         print("[FRAME] MainFrm으로 전환 완료", flush=True)
+        time.sleep(2)
     except Exception as e:
-        print(f"[FRAME] MainFrm 전환 실패: {e}", flush=True)
-        raise
+        print(f"[FRAME] MainFrm 이름으로 찾기 실패: {e}", flush=True)
+        # ID로 재시도
+        try:
+            driver.switch_to.default_content()
+            main_frame = driver.find_element(By.ID, "MainFrm")
+            driver.switch_to.frame(main_frame)
+            print("[FRAME] MainFrm(ID)으로 전환 완료", flush=True)
+            time.sleep(2)
+        except Exception as e2:
+            print(f"[FRAME] MainFrm ID로도 찾기 실패: {e2}", flush=True)
+            raise
     
-    # 페이지 로딩 대기 (더 길게)
-    print("[SEARCH] 페이지 로딩 대기 중...", flush=True)
-    time.sleep(5)
-    
-    # 현재 프레임 내용 확인 (디버깅)
+    # 현재 프레임 내 iframe 확인
+    print("[DEBUG] MainFrm 내부 iframe 확인 중...", flush=True)
     try:
-        page_title = driver.title
-        print(f"[DEBUG] 페이지 타이틀: {page_title}", flush=True)
-    except:
-        pass
+        inner_frames = driver.find_elements(By.TAG_NAME, "iframe")
+        print(f"[DEBUG] MainFrm 내부 iframe 개수: {len(inner_frames)}", flush=True)
+        for i, frame in enumerate(inner_frames):
+            frame_id = frame.get_attribute('id') or '(no id)'
+            frame_name = frame.get_attribute('name') or '(no name)'
+            print(f"  inner iframe[{i}]: id={frame_id}, name={frame_name}", flush=True)
+    except Exception as e:
+        print(f"[DEBUG] 내부 iframe 확인 실패: {e}", flush=True)
     
+    # 탭 확인 및 첫 번째 탭 클릭
+    print("[TAB] 탭 구조 확인 중...", flush=True)
+    try:
+        # 활성화된 탭 찾기
+        tabs = driver.find_elements(By.XPATH, "//div[contains(@id, 'tabTabDIV_myTab1_')]")
+        print(f"[TAB] 발견된 탭 개수: {len(tabs)}", flush=True)
+        
+        if tabs:
+            # 첫 번째 탭 클릭
+            print("[TAB] 첫 번째 탭 클릭 시도...", flush=True)
+            first_tab = tabs[0]
+            tab_id = first_tab.get_attribute('id')
+            print(f"[TAB] 클릭할 탭 ID: {tab_id}", flush=True)
+            
+            # JavaScript로 탭 클릭
+            driver.execute_script("arguments[0].click();", first_tab)
+            time.sleep(2)
+            print("[TAB] 탭 클릭 완료", flush=True)
+    except Exception as e:
+        print(f"[TAB] 탭 처리 실패: {e}", flush=True)
+    
+    # 탭 전환 후 다시 iframe 확인
+    print("[DEBUG] 탭 전환 후 iframe 재확인...", flush=True)
+    try:
+        inner_frames2 = driver.find_elements(By.TAG_NAME, "iframe")
+        print(f"[DEBUG] 탭 전환 후 iframe 개수: {len(inner_frames2)}", flush=True)
+        
+        if inner_frames2:
+            # 첫 번째 내부 iframe으로 전환 시도
+            print("[FRAME] 내부 iframe으로 전환 시도...", flush=True)
+            driver.switch_to.frame(inner_frames2[0])
+            time.sleep(2)
+            print("[FRAME] 내부 iframe 전환 완료", flush=True)
+    except Exception as e:
+        print(f"[DEBUG] 내부 iframe 전환 실패: {e}", flush=True)
+    
+    # 페이지 소스 확인
+    print("[DEBUG] 최종 페이지 확인...", flush=True)
     try:
         page_source = driver.page_source
         print(f"[DEBUG] 페이지 소스 길이: {len(page_source)}", flush=True)
+        
         if 'date1_1' in page_source:
-            print("[DEBUG] 페이지에 date1_1 문자열 존재함", flush=True)
+            print("[DEBUG] ✓ 페이지에 date1_1 존재함!", flush=True)
         else:
-            print("[DEBUG] 페이지에 date1_1 문자열 없음!", flush=True)
-            print(f"[DEBUG] 페이지 소스 일부: {page_source[:1000]}", flush=True)
+            print("[DEBUG] ✗ 페이지에 date1_1 없음", flush=True)
+            # 소스 일부 출력
+            print(f"[DEBUG] 페이지 소스 샘플:\n{page_source[:2000]}", flush=True)
     except Exception as e:
         print(f"[DEBUG] 페이지 소스 확인 실패: {e}", flush=True)
     
-    # date1_1 요소 찾기 시도
+    # date1_1 요소 찾기
     print("[SEARCH] 날짜 입력 필드 찾는 중...", flush=True)
     
-    date1_input = None
-    
-    # 방법 1: ID로 찾기 (대기 시간 늘림)
+    # JavaScript로 date1_1 존재 확인
     try:
-        date1_input = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.ID, "date1_1"))
-        )
-        print("[SEARCH] date1_1 찾기 성공 (ID)", flush=True)
-    except Exception as e:
-        print(f"[SEARCH] date1_1 ID로 찾기 실패: {e}", flush=True)
-    
-    # 방법 2: NAME으로 찾기
-    if not date1_input:
-        try:
-            date1_input = driver.find_element(By.NAME, "date1_1")
-            print("[SEARCH] date1_1 찾기 성공 (NAME)", flush=True)
-        except:
-            print("[SEARCH] date1_1 NAME으로 찾기 실패", flush=True)
-    
-    # 방법 3: CSS Selector로 찾기
-    if not date1_input:
-        try:
-            date1_input = driver.find_element(By.CSS_SELECTOR, "#date1_1")
-            print("[SEARCH] date1_1 찾기 성공 (CSS)", flush=True)
-        except:
-            print("[SEARCH] date1_1 CSS로 찾기 실패", flush=True)
-    
-    # 방법 4: input 요소들 순회
-    if not date1_input:
-        try:
-            inputs = driver.find_elements(By.TAG_NAME, "input")
-            print(f"[DEBUG] 발견된 input 개수: {len(inputs)}", flush=True)
-            for i, inp in enumerate(inputs[:20]):
-                inp_id = inp.get_attribute('id') or ''
-                inp_name = inp.get_attribute('name') or ''
-                inp_type = inp.get_attribute('type') or ''
-                inp_class = inp.get_attribute('class') or ''
-                print(f"  input[{i}]: id={inp_id}, name={inp_name}, type={inp_type}, class={inp_class}", flush=True)
-                if 'date1_1' in inp_id or 'date1_1' in inp_name:
-                    date1_input = inp
-                    print("[SEARCH] date1_1 찾기 성공 (순회)", flush=True)
-                    break
-        except Exception as e:
-            print(f"[DEBUG] input 순회 실패: {e}", flush=True)
-    
-    # 방법 5: JavaScript로 직접 설정
-    if not date1_input:
-        print("[SEARCH] JavaScript로 직접 날짜 설정 시도...", flush=True)
-        try:
-            # date1_1 존재 확인
-            exists = driver.execute_script("return document.getElementById('date1_1') !== null;")
-            print(f"[DEBUG] JavaScript로 date1_1 존재 확인: {exists}", flush=True)
+        exists = driver.execute_script("return document.getElementById('date1_1') !== null;")
+        print(f"[DEBUG] JavaScript로 date1_1 존재 확인: {exists}", flush=True)
+        
+        if exists:
+            # JavaScript로 직접 날짜 설정 및 조회
+            print("[SEARCH] JavaScript로 날짜 설정 및 조회 실행...", flush=True)
             
-            if exists:
-                driver.execute_script(f"document.getElementById('date1_1').value = '{start_date}';")
-                print(f"[SEARCH] JavaScript로 시작일 설정 성공: {start_date}", flush=True)
-                
-                driver.execute_script(f"document.getElementById('date1_2').value = '{end_date}';")
-                print(f"[SEARCH] JavaScript로 종료일 설정 성공: {end_date}", flush=True)
-                
-                time.sleep(1)
-                
-                # 조회 실행
+            driver.execute_script(f"document.getElementById('date1_1').value = '{start_date}';")
+            print(f"[SEARCH] 시작일 설정: {start_date}", flush=True)
+            
+            driver.execute_script(f"document.getElementById('date1_2').value = '{end_date}';")
+            print(f"[SEARCH] 종료일 설정: {end_date}", flush=True)
+            
+            time.sleep(1)
+            
+            # fnSearch 함수 존재 확인
+            fn_exists = driver.execute_script("return typeof fnSearch === 'function';")
+            print(f"[DEBUG] fnSearch 함수 존재: {fn_exists}", flush=True)
+            
+            if fn_exists:
                 driver.execute_script("fnSearch();")
                 print("[SEARCH] fnSearch() 호출 성공", flush=True)
-                
-                print("[SEARCH] 데이터 로딩 중...", flush=True)
-                time.sleep(5)
-                return True
             else:
-                # 모든 요소 ID 출력
-                all_ids = driver.execute_script("""
-                    var elements = document.querySelectorAll('[id]');
-                    var ids = [];
-                    for (var i = 0; i < Math.min(elements.length, 50); i++) {
-                        ids.push(elements[i].id);
-                    }
-                    return ids;
+                # 조회 버튼 클릭
+                driver.execute_script("""
+                    var btn = document.querySelector('button[onclick*="fnSearch"]');
+                    if (btn) btn.click();
                 """)
-                print(f"[DEBUG] 페이지 내 ID 목록: {all_ids}", flush=True)
-                
-        except Exception as e:
-            print(f"[DEBUG] JavaScript 방식 실패: {e}", flush=True)
-    
-    if not date1_input:
-        # 현재 URL 확인
-        try:
-            driver.switch_to.default_content()
-            current_url = driver.current_url
-            print(f"[DEBUG] 현재 URL: {current_url}", flush=True)
-        except:
-            pass
-        
-        raise Exception("날짜 입력 필드(date1_1)를 찾을 수 없습니다")
-    
-    # Selenium으로 날짜 설정
-    print("[SEARCH] 시작일 설정...", flush=True)
-    try:
-        driver.execute_script(f"arguments[0].value = '{start_date}';", date1_input)
-        print(f"[SEARCH] 시작일 설정 완료: {start_date}", flush=True)
+                print("[SEARCH] 조회 버튼 클릭", flush=True)
+            
+            print("[SEARCH] 데이터 로딩 중...", flush=True)
+            time.sleep(5)
+            return True
+            
     except Exception as e:
-        print(f"[SEARCH] 시작일 설정 실패: {e}", flush=True)
-        raise
+        print(f"[DEBUG] JavaScript 처리 실패: {e}", flush=True)
     
-    time.sleep(0.5)
-    
-    # 종료일 설정
-    print("[SEARCH] 종료일 설정...", flush=True)
-    try:
-        date2_input = driver.find_element(By.ID, "date1_2")
-        driver.execute_script(f"arguments[0].value = '{end_date}';", date2_input)
-        print(f"[SEARCH] 종료일 설정 완료: {end_date}", flush=True)
-    except Exception as e:
-        print(f"[SEARCH] 종료일 설정 실패: {e}", flush=True)
-        # JavaScript로 재시도
-        try:
-            driver.execute_script(f"document.getElementById('date1_2').value = '{end_date}';")
-            print(f"[SEARCH] 종료일 JavaScript 설정 완료: {end_date}", flush=True)
-        except:
-            raise
-    
-    time.sleep(0.5)
-    
-    # 조회 실행
-    print("[SEARCH] 조회 실행...", flush=True)
-    try:
-        driver.execute_script("fnSearch();")
-        print("[SEARCH] fnSearch() 호출 성공", flush=True)
-    except Exception as e:
-        print(f"[SEARCH] fnSearch() 호출 실패: {e}", flush=True)
-        # 버튼 클릭 시도
-        try:
-            search_btn = driver.find_element(By.XPATH, "//button[contains(@onclick, 'fnSearch')]")
-            search_btn.click()
-            print("[SEARCH] 조회 버튼 클릭 성공", flush=True)
-        except:
-            raise
-    
-    # 데이터 로딩 대기
-    print("[SEARCH] 데이터 로딩 중...", flush=True)
-    time.sleep(5)
-    
-    return True
+    # 모든 방법 실패
+    raise Exception("날짜 입력 필드(date1_1)를 찾을 수 없습니다. 프레임 구조를 확인하세요.")
 
 
 def extract_sales_data(driver):
     """IBSheet에서 매출 데이터 추출"""
     print("\n[EXTRACT] 데이터 추출 시작...", flush=True)
     
-    # MainFrm으로 전환
-    driver.switch_to.default_content()
+    # 현재 프레임 상태 확인
     try:
-        main_frame = driver.find_element(By.ID, "MainFrm")
-        driver.switch_to.frame(main_frame)
-        print("[FRAME] MainFrm으로 전환 완료", flush=True)
-    except Exception as e:
-        print(f"[FRAME] MainFrm 전환 실패: {e}", flush=True)
+        current_url = driver.current_url
+        print(f"[DEBUG] 현재 URL: {current_url}", flush=True)
+    except:
+        pass
     
     # mySheet1 존재 확인
     try:
