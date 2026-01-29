@@ -15,8 +15,8 @@ on:
         type: string
 
   schedule:
-    # 매일 오후 11시 30분 (KST) = UTC 14:30
-    - cron: '30 14 * * *'
+    # 매일 오후 2시 (KST) = UTC 05:00
+    - cron: '0 5 * * *'
 
 env:
   TZ: Asia/Seoul
