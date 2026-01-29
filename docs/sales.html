@@ -79,17 +79,23 @@
                         <span class="chart-hint">마우스 휠: 확대/축소 | 드래그: 이동</span>
                     </div>
                 </div>
-                <canvas id="salesTrendChart"></canvas>
+                <div id="trendChartContainer" class="chart-canvas-container">
+                    <canvas id="salesTrendChart"></canvas>
+                </div>
             </div>
 
             <div class="chart-row">
                 <div class="chart-container half">
                     <h3>채널별 매출 비중</h3>
-                    <canvas id="channelChart"></canvas>
+                    <div id="channelChartContainer" class="chart-canvas-container">
+                        <canvas id="channelChart"></canvas>
+                    </div>
                 </div>
                 <div class="chart-container half">
                     <h3>지점별 매출 TOP 10</h3>
-                    <canvas id="storeRankChart"></canvas>
+                    <div id="storeRankChartContainer" class="chart-canvas-container">
+                        <canvas id="storeRankChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
