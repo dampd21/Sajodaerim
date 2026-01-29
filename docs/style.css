@@ -617,3 +617,133 @@ body {
         justify-content: flex-end;
     }
 }
+
+/* 테이블 힌트 */
+.table-hint {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+/* 클릭 가능한 테이블 행 */
+.data-table tbody tr.clickable {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.data-table tbody tr.clickable:hover {
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.data-table tbody tr.clickable:hover td:first-child {
+    color: #00d4ff;
+}
+
+/* 큰 모달 */
+.modal-content.modal-large {
+    max-width: 1200px;
+}
+
+/* 일별 요약 */
+.daily-summary {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.daily-summary .summary-item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.daily-summary .summary-label {
+    color: #888;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.daily-summary .summary-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+/* 일별 필터 */
+.daily-filter {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.daily-filter .search-input {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* 일별 테이블 컨테이너 */
+.daily-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+}
+
+.daily-table-container table {
+    margin: 0;
+}
+
+.daily-table-container thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.daily-table-container thead th {
+    background: #1a1a2e;
+}
+
+/* 카테고리 태그 */
+.category-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    background: rgba(123, 44, 191, 0.3);
+    border-radius: 3px;
+    color: #b794f6;
+    margin-left: 6px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .modal-content.modal-large {
+        padding: 16px;
+    }
+    
+    .daily-table-container {
+        max-height: 300px;
+    }
+    
+    .daily-filter {
+        flex-direction: column;
+    }
+    
+    .daily-filter .search-input,
+    .daily-filter .sort-select {
+        width: 100%;
+    }
+    
+    #dailyDetailTable th:nth-child(3),
+    #dailyDetailTable td:nth-child(3) {
+        display: none;
+    }
+}
