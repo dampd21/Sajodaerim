@@ -8,9 +8,13 @@ let currentSort = { column: 'name', direction: 'asc' };
 let salesTrendChart = null;
 let channelChart = null;
 let storeRankChart = null;
+let isInitialized = false;  // ✅ 추가: 초기화 플래그
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
+    if (isInitialized) return;  // ✅ 중복 초기화 방지
+    isInitialized = true;
+    
     await loadData();
     initEventListeners();
     renderDashboard();
@@ -225,10 +229,29 @@ function getFilteredData() {
     return result;
 }
 
+// ✅ 모든 차트 파괴 함수
+function destroyAllCharts() {
+    if (salesTrendChart) {
+        salesTrendChart.destroy();
+        salesTrendChart = null;
+    }
+    if (channelChart) {
+        channelChart.destroy();
+        channelChart = null;
+    }
+    if (storeRankChart) {
+        storeRankChart.destroy();
+        storeRankChart = null;
+    }
+}
+
 // 대시보드 렌더링
 function renderDashboard() {
     filteredData = getFilteredData();
     if (!filteredData) return;
+    
+    // ✅ 차트 렌더링 전 모든 기존 차트 파괴
+    destroyAllCharts();
     
     renderSummaryCards();
     renderTrendChart();
@@ -249,11 +272,11 @@ function renderSummaryCards() {
 
 // 매출 추이 차트
 function renderTrendChart() {
-    const ctx = document.getElementById('salesTrendChart').getContext('2d');
+    const canvas = document.getElementById('salesTrendChart');
+    const ctx = canvas.getContext('2d');
     
-    if (salesTrendChart) {
-        salesTrendChart.destroy();
-    }
+    // ✅ 캔버스 초기화 (혹시 모를 잔여 데이터 제거)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     const daily = filteredData.daily;
     const labels = daily.map(d => formatDateShort(d.date));
@@ -343,11 +366,11 @@ function renderTrendChart() {
 
 // 채널별 차트
 function renderChannelChart() {
-    const ctx = document.getElementById('channelChart').getContext('2d');
+    const canvas = document.getElementById('channelChart');
+    const ctx = canvas.getContext('2d');
     
-    if (channelChart) {
-        channelChart.destroy();
-    }
+    // ✅ 캔버스 초기화
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     const summary = filteredData.summary;
     
@@ -385,11 +408,11 @@ function renderChannelChart() {
 
 // 지점 순위 차트
 function renderStoreRankChart() {
-    const ctx = document.getElementById('storeRankChart').getContext('2d');
+    const canvas = document.getElementById('storeRankChart');
+    const ctx = canvas.getContext('2d');
     
-    if (storeRankChart) {
-        storeRankChart.destroy();
-    }
+    // ✅ 캔버스 초기화
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     // 매출순 상위 10개
     const topStores = [...filteredData.stores]
