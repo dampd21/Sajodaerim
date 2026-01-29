@@ -69,8 +69,6 @@ async function loadData() {
         console.log('=== Data Loaded ===');
         console.log('Records:', reportData.summary?.total_records);
         console.log('Stores:', reportData.store_list?.length);
-        console.log('Store price changes:', Object.keys(reportData.store_price_changes || {}).length);
-        console.log('Daily details:', Object.keys(reportData.daily_details || {}).length);
         
         initDashboard();
     } catch (error) {
@@ -133,9 +131,6 @@ function initStoreSelect() {
     
     select.addEventListener('change', () => {
         currentStore = select.value;
-        console.log('=== Store Changed ===');
-        console.log('Selected:', currentStore || '(전체)');
-        
         updatePeriodSelect();
         updateDashboard();
     });
@@ -147,9 +142,6 @@ function initPeriodSelect() {
     
     document.getElementById('periodSelect')?.addEventListener('change', (e) => {
         currentPeriod = e.target.value;
-        console.log('=== Period Changed ===');
-        console.log('Selected:', currentPeriod || '(전체)');
-        
         updateDashboard();
     });
 }
@@ -188,10 +180,6 @@ function updatePeriodSelect() {
 
 // 대시보드 업데이트
 function updateDashboard() {
-    console.log('=== Update Dashboard ===');
-    console.log('Store:', currentStore || '(전체)');
-    console.log('Period:', currentPeriod || '(전체)');
-    
     updateSummary();
     updateSalesTab();
     updatePricesTab();
@@ -204,14 +192,11 @@ function getFilteredDailyData() {
     if (currentStore) {
         if (reportData.store_details?.[currentStore]?.daily) {
             dailyData = JSON.parse(JSON.stringify(reportData.store_details[currentStore].daily));
-            console.log('Daily: Using store data for', currentStore, '-', Object.keys(dailyData).length, 'days');
         } else {
-            console.log('Daily: No store data for', currentStore);
             dailyData = {};
         }
     } else {
         dailyData = JSON.parse(JSON.stringify(reportData.daily || {}));
-        console.log('Daily: Using all data -', Object.keys(dailyData).length, 'days');
     }
     
     if (currentPeriod && Object.keys(dailyData).length > 0) {
@@ -221,7 +206,6 @@ function getFilteredDailyData() {
                 filtered[date] = dailyData[date];
             }
         });
-        console.log('Daily: Filtered by period -', Object.keys(filtered).length, 'days');
         return filtered;
     }
     
@@ -235,14 +219,11 @@ function getFilteredPriceData() {
     if (currentStore) {
         if (reportData.store_price_changes?.[currentStore]) {
             priceData = JSON.parse(JSON.stringify(reportData.store_price_changes[currentStore]));
-            console.log('Price: Using store data for', currentStore, '-', priceData.length, 'items');
         } else {
-            console.log('Price: No store data for', currentStore);
             priceData = [];
         }
     } else {
         priceData = JSON.parse(JSON.stringify(reportData.price_changes || []));
-        console.log('Price: Using all data -', priceData.length, 'items');
     }
     
     if (currentPeriod && priceData.length > 0) {
@@ -275,15 +256,13 @@ function getFilteredPriceData() {
                 last_date: filteredHistory[filteredHistory.length - 1].date
             };
         }).filter(item => item !== null);
-        
-        console.log('Price: Filtered by period -', priceData.length, 'items');
     }
     
     filteredPriceData = priceData;
     return priceData;
 }
 
-// 요약 카드 업데이트
+// 요약 카드 업데이트 - 평균 단가 삭제
 function updateSummary() {
     const dailyData = getFilteredDailyData();
     const priceData = getFilteredPriceData();
@@ -298,21 +277,9 @@ function updateSummary() {
     
     const productSet = new Set(priceData.map(p => p.code));
     
-    let priceSum = 0;
-    let priceCount = 0;
-    priceData.forEach(p => {
-        if (p.last_price > 0) {
-            priceSum += p.last_price;
-            priceCount++;
-        }
-    });
-    
     document.getElementById('totalCount').textContent = formatNumber(totalCount);
     document.getElementById('totalSales').textContent = formatCurrency(totalSales);
     document.getElementById('totalProducts').textContent = formatNumber(productSet.size);
-    document.getElementById('avgPrice').textContent = priceCount > 0 
-        ? formatCurrency(Math.round(priceSum / priceCount)) 
-        : '-';
 }
 
 // 매출 탭 업데이트
@@ -322,12 +289,11 @@ function updateSalesTab() {
     updateSalesTable(dailyData);
 }
 
-// 매출 차트 업데이트
+// 매출 차트 업데이트 - 지점별 순위 삭제
 function updateSalesCharts(dailyData) {
     if (charts.dailySales) charts.dailySales.destroy();
     if (charts.categorySales) charts.categorySales.destroy();
     if (charts.topProducts) charts.topProducts.destroy();
-    if (charts.storeRanking) charts.storeRanking.destroy();
     
     const dates = Object.keys(dailyData).sort();
     const values = dates.map(d => dailyData[d]?.total || 0);
@@ -349,7 +315,7 @@ function updateSalesCharts(dailyData) {
                         borderColor: '#00d4ff',
                         backgroundColor: 'rgba(0, 212, 255, 0.1)',
                         fill: true,
-                        tension: 0.4,
+                        tension: 0,  // 직선으로 변경
                         pointRadius: 3,
                         pointHoverRadius: 6
                     }]
@@ -379,107 +345,6 @@ function updateSalesCharts(dailyData) {
                     }
                 }
             });
-        }
-    }
-    
-    // 지점별 매출 순위 차트 (전체 지점 선택 시만 표시)
-    const storeRankingContainer = document.getElementById('storeRankingContainer');
-    const storeRankingCtx = document.getElementById('storeRankingChart')?.getContext('2d');
-    
-    if (storeRankingContainer && storeRankingCtx) {
-        if (!currentStore) {
-            storeRankingContainer.style.display = 'block';
-            
-            let storeData = [];
-            
-            if (currentPeriod) {
-                Object.keys(reportData.store_details || {}).forEach(storeName => {
-                    const storeDaily = reportData.store_details[storeName]?.daily || {};
-                    let total = 0;
-                    let count = 0;
-                    
-                    Object.keys(storeDaily).forEach(date => {
-                        if (date.startsWith(currentPeriod)) {
-                            total += storeDaily[date].total || 0;
-                            count += storeDaily[date].count || 0;
-                        }
-                    });
-                    
-                    if (total > 0) {
-                        storeData.push({ name: storeName, total: total, count: count });
-                    }
-                });
-            } else {
-                storeData = (reportData.stores || []).map(s => ({
-                    name: s.name,
-                    total: s.total,
-                    count: s.count
-                }));
-            }
-            
-            storeData.sort((a, b) => b.total - a.total);
-            const topStores = storeData.slice(0, 15);
-            
-            if (topStores.length > 0) {
-                charts.storeRanking = new Chart(storeRankingCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: topStores.map((s, i) => `${i + 1}. ${s.name.length > 12 ? s.name.slice(0, 12) + '...' : s.name}`),
-                        datasets: [{
-                            label: '매출액',
-                            data: topStores.map(s => s.total),
-                            backgroundColor: topStores.map((_, i) => {
-                                if (i === 0) return 'rgba(255, 215, 0, 0.8)';
-                                if (i === 1) return 'rgba(192, 192, 192, 0.8)';
-                                if (i === 2) return 'rgba(205, 127, 50, 0.8)';
-                                return 'rgba(0, 212, 255, 0.6)';
-                            }),
-                            borderColor: topStores.map((_, i) => {
-                                if (i === 0) return 'rgba(255, 215, 0, 1)';
-                                if (i === 1) return 'rgba(192, 192, 192, 1)';
-                                if (i === 2) return 'rgba(205, 127, 50, 1)';
-                                return 'rgba(0, 212, 255, 1)';
-                            }),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        plugins: { 
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    title: (items) => {
-                                        const idx = items[0].dataIndex;
-                                        return topStores[idx].name;
-                                    },
-                                    label: (ctx) => {
-                                        const idx = ctx.dataIndex;
-                                        const store = topStores[idx];
-                                        return [
-                                            '매출: ' + formatCurrency(store.total),
-                                            '주문수량: ' + formatNumber(store.count)
-                                        ];
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { 
-                                ticks: { color: '#888', callback: v => formatNumber(v) },
-                                grid: { color: 'rgba(255,255,255,0.05)' }
-                            },
-                            y: { 
-                                ticks: { color: '#fff', font: { size: 11 } },
-                                grid: { display: false }
-                            }
-                        }
-                    }
-                });
-            }
-        } else {
-            storeRankingContainer.style.display = 'none';
         }
     }
     
@@ -578,7 +443,6 @@ function updateSalesTable(dailyData) {
         `;
     }).join('');
     
-    // 클릭 이벤트 추가
     tbody.querySelectorAll('tr.clickable').forEach(row => {
         row.addEventListener('click', () => {
             const date = row.dataset.date;
@@ -597,12 +461,10 @@ function initDailyDetailModal() {
         if (e.target === modal) modal.classList.remove('show');
     });
     
-    // 검색 필터
     document.getElementById('dailySearch')?.addEventListener('input', (e) => {
         filterAndRenderDailyDetails();
     });
     
-    // 정렬
     document.getElementById('dailySort')?.addEventListener('change', (e) => {
         filterAndRenderDailyDetails();
     });
@@ -615,24 +477,20 @@ function showDailyDetailModal(date) {
     
     document.getElementById('dailyDetailTitle').textContent = formatDateKorean(date) + ' 상세 내역';
     
-    // 상세 데이터 가져오기
     let details = [];
     
     if (currentStore) {
-        // 특정 지점 선택 시: 해당 지점의 해당 날짜 데이터
         if (reportData.daily_details?.[date]) {
             details = reportData.daily_details[date].filter(item => 
                 item.store === currentStore
             );
         }
     } else {
-        // 전체 지점: 해당 날짜의 모든 데이터
         details = reportData.daily_details?.[date] || [];
     }
     
     currentDailyDetails = details;
     
-    // 요약 정보
     const totalItems = details.length;
     const totalQty = details.reduce((sum, item) => sum + (parseInt(item.qty) || 0), 0);
     const totalAmount = details.reduce((sum, item) => sum + (parseInt(item.total) || 0), 0);
@@ -657,11 +515,9 @@ function showDailyDetailModal(date) {
         </div>
     `;
     
-    // 검색 초기화
     const searchInput = document.getElementById('dailySearch');
     if (searchInput) searchInput.value = '';
     
-    // 테이블 렌더링
     filterAndRenderDailyDetails();
     
     modal.classList.add('show');
@@ -674,7 +530,6 @@ function filterAndRenderDailyDetails() {
     
     let filtered = currentDailyDetails;
     
-    // 검색 필터
     if (query) {
         filtered = filtered.filter(item => 
             (item.store || '').toLowerCase().includes(query) ||
@@ -683,7 +538,6 @@ function filterAndRenderDailyDetails() {
         );
     }
     
-    // 정렬
     filtered = [...filtered];
     switch (sortType) {
         case 'store':
@@ -957,7 +811,7 @@ function showPriceModal(item) {
                         borderColor: '#00d4ff',
                         backgroundColor: 'rgba(0, 212, 255, 0.1)',
                         fill: true,
-                        tension: 0.2,
+                        tension: 0,  // 직선으로 변경
                         pointRadius: 5,
                         pointHoverRadius: 8,
                         pointBackgroundColor: '#00d4ff',
