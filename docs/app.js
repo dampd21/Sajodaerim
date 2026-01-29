@@ -332,13 +332,16 @@ function updateSalesTab() {
 
 // 매출 차트 업데이트
 function updateSalesCharts(dailyData) {
+    // 기존 차트 제거
     if (charts.dailySales) charts.dailySales.destroy();
     if (charts.categorySales) charts.categorySales.destroy();
     if (charts.topProducts) charts.topProducts.destroy();
+    if (charts.storeRanking) charts.storeRanking.destroy();
     
     const dates = Object.keys(dailyData).sort();
     const values = dates.map(d => dailyData[d]?.total || 0);
     
+    // 일별 매출 차트
     const dailyCtx = document.getElementById('dailySalesChart')?.getContext('2d');
     if (dailyCtx) {
         if (dates.length > 0) {
@@ -385,6 +388,115 @@ function updateSalesCharts(dailyData) {
                     }
                 }
             });
+        }
+    }
+    
+    // 지점별 매출 순위 차트 (전체 지점 선택 시만 표시)
+    const storeRankingContainer = document.getElementById('storeRankingContainer');
+    const storeRankingCtx = document.getElementById('storeRankingChart')?.getContext('2d');
+    
+    if (storeRankingContainer && storeRankingCtx) {
+        if (!currentStore) {
+            // 전체 지점 선택 시
+            storeRankingContainer.style.display = 'block';
+            
+            // 기간 필터링된 지점별 매출 계산
+            let storeData = [];
+            
+            if (currentPeriod) {
+                // 기간이 선택된 경우: store_details에서 해당 기간만 합산
+                Object.keys(reportData.store_details || {}).forEach(storeName => {
+                    const storeDaily = reportData.store_details[storeName]?.daily || {};
+                    let total = 0;
+                    let count = 0;
+                    
+                    Object.keys(storeDaily).forEach(date => {
+                        if (date.startsWith(currentPeriod)) {
+                            total += storeDaily[date].total || 0;
+                            count += storeDaily[date].count || 0;
+                        }
+                    });
+                    
+                    if (total > 0) {
+                        storeData.push({ name: storeName, total: total, count: count });
+                    }
+                });
+            } else {
+                // 전체 기간: reportData.stores 사용
+                storeData = (reportData.stores || []).map(s => ({
+                    name: s.name,
+                    total: s.total,
+                    count: s.count
+                }));
+            }
+            
+            // 매출 기준 내림차순 정렬
+            storeData.sort((a, b) => b.total - a.total);
+            
+            // 상위 15개만 표시
+            const topStores = storeData.slice(0, 15);
+            
+            if (topStores.length > 0) {
+                charts.storeRanking = new Chart(storeRankingCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: topStores.map((s, i) => `${i + 1}. ${s.name.length > 12 ? s.name.slice(0, 12) + '...' : s.name}`),
+                        datasets: [{
+                            label: '매출액',
+                            data: topStores.map(s => s.total),
+                            backgroundColor: topStores.map((_, i) => {
+                                if (i === 0) return 'rgba(255, 215, 0, 0.8)';      // 1위: 금색
+                                if (i === 1) return 'rgba(192, 192, 192, 0.8)';    // 2위: 은색
+                                if (i === 2) return 'rgba(205, 127, 50, 0.8)';     // 3위: 동색
+                                return 'rgba(0, 212, 255, 0.6)';                    // 나머지: 시안
+                            }),
+                            borderColor: topStores.map((_, i) => {
+                                if (i === 0) return 'rgba(255, 215, 0, 1)';
+                                if (i === 1) return 'rgba(192, 192, 192, 1)';
+                                if (i === 2) return 'rgba(205, 127, 50, 1)';
+                                return 'rgba(0, 212, 255, 1)';
+                            }),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: (items) => {
+                                        const idx = items[0].dataIndex;
+                                        return topStores[idx].name;
+                                    },
+                                    label: (ctx) => {
+                                        const idx = ctx.dataIndex;
+                                        const store = topStores[idx];
+                                        return [
+                                            '매출: ' + formatCurrency(store.total),
+                                            '주문수량: ' + formatNumber(store.count)
+                                        ];
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { 
+                                ticks: { color: '#888', callback: v => formatNumber(v) },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
+                            },
+                            y: { 
+                                ticks: { color: '#fff', font: { size: 11 } },
+                                grid: { display: false }
+                            }
+                        }
+                    }
+                });
+            }
+        } else {
+            // 특정 지점 선택 시 숨김
+            storeRankingContainer.style.display = 'none';
         }
     }
     
