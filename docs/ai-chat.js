@@ -1,19 +1,55 @@
 /**
  * AI 채팅 위젯
  * 모든 페이지에서 공통으로 사용
+ * API 키는 ai-config.js에서 로드 (GitHub Actions에서 생성)
  */
 
 (function() {
     // ============================================
-    // 설정
+    // 설정 (ai-config.js에서 로드)
     // ============================================
-    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // ⚠️ 실제 키로 교체
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    let GEMINI_API_KEY = '';
+    let GEMINI_API_URL = '';
     
     let salesData = null;
     let orderData = null;
     let isOpen = false;
     let isLoading = false;
+    let configLoaded = false;
+    
+    // ============================================
+    // 설정 로드
+    // ============================================
+    function loadConfig() {
+        return new Promise((resolve) => {
+            // ai-config.js가 이미 로드되어 있는지 확인
+            if (typeof AI_CONFIG !== 'undefined') {
+                GEMINI_API_KEY = AI_CONFIG.GEMINI_API_KEY || '';
+                GEMINI_API_URL = AI_CONFIG.GEMINI_API_URL || '';
+                configLoaded = true;
+                resolve(true);
+            } else {
+                // 동적으로 스크립트 로드 시도
+                const script = document.createElement('script');
+                script.src = 'ai-config.js?t=' + Date.now();
+                script.onload = () => {
+                    if (typeof AI_CONFIG !== 'undefined') {
+                        GEMINI_API_KEY = AI_CONFIG.GEMINI_API_KEY || '';
+                        GEMINI_API_URL = AI_CONFIG.GEMINI_API_URL || '';
+                        configLoaded = true;
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                };
+                script.onerror = () => {
+                    console.warn('AI config not found. AI chat will be disabled.');
+                    resolve(false);
+                };
+                document.head.appendChild(script);
+            }
+        });
+    }
     
     // ============================================
     // 위젯 HTML 생성
@@ -36,7 +72,7 @@
                         <span>AI 어시스턴트</span>
                     </div>
                     <div class="ai-chat-status" id="aiDataStatus">
-                        데이터 로딩중...
+                        초기화 중...
                     </div>
                 </div>
                 
@@ -48,7 +84,7 @@
                 </div>
                 
                 <div class="ai-chat-messages" id="aiChatMessages">
-                    <div class="ai-msg ai">
+                    <div class="ai-msg ai" id="aiWelcomeMsg">
                         안녕하세요! 역대짬뽕 데이터 분석 AI입니다. 🍜<br>
                         매출, 발주 등에 대해 질문해주세요!
                     </div>
@@ -99,6 +135,16 @@
             .ai-chat-toggle:hover {
                 transform: scale(1.1);
                 box-shadow: 0 6px 30px rgba(0, 212, 255, 0.6);
+            }
+            
+            .ai-chat-toggle.disabled {
+                background: #666;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+            
+            .ai-chat-toggle.disabled:hover {
+                transform: none;
             }
             
             .ai-chat-icon,
@@ -177,6 +223,10 @@
                 color: #ff6b6b;
             }
             
+            .ai-chat-status.warning {
+                color: #ffe66d;
+            }
+            
             /* 빠른 질문 */
             .ai-chat-quick {
                 display: flex;
@@ -202,6 +252,11 @@
                 background: rgba(0, 212, 255, 0.2);
                 border-color: #00d4ff;
                 color: #fff;
+            }
+            
+            .ai-quick-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
             }
             
             /* 메시지 영역 */
@@ -306,6 +361,11 @@
                 color: #666;
             }
             
+            .ai-chat-input:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            
             .ai-chat-send {
                 width: 44px;
                 height: 44px;
@@ -392,12 +452,42 @@
             console.log('Order data not available');
         }
         
-        if (loaded.length > 0) {
+        // 상태 업데이트
+        if (!configLoaded) {
+            statusEl.textContent = '⚠ AI 설정을 불러올 수 없습니다';
+            statusEl.className = 'ai-chat-status error';
+            disableChat();
+        } else if (!GEMINI_API_KEY || GEMINI_API_KEY === '' || GEMINI_API_KEY.includes('YOUR_')) {
+            statusEl.textContent = '⚠ API 키가 설정되지 않았습니다';
+            statusEl.className = 'ai-chat-status warning';
+            disableChat();
+        } else if (loaded.length > 0) {
             statusEl.textContent = `✓ ${loaded.join(', ')} 데이터 준비됨`;
-            statusEl.classList.remove('error');
+            statusEl.className = 'ai-chat-status';
         } else {
             statusEl.textContent = '⚠ 데이터를 불러올 수 없습니다';
-            statusEl.classList.add('error');
+            statusEl.className = 'ai-chat-status error';
+        }
+    }
+    
+    // ============================================
+    // 채팅 비활성화
+    // ============================================
+    function disableChat() {
+        const input = document.getElementById('aiChatInput');
+        const sendBtn = document.getElementById('aiChatSend');
+        const quickBtns = document.querySelectorAll('.ai-quick-btn');
+        const welcomeMsg = document.getElementById('aiWelcomeMsg');
+        
+        if (input) {
+            input.disabled = true;
+            input.placeholder = 'AI 기능을 사용할 수 없습니다';
+        }
+        if (sendBtn) sendBtn.disabled = true;
+        quickBtns.forEach(btn => btn.disabled = true);
+        
+        if (welcomeMsg) {
+            welcomeMsg.innerHTML = '⚠️ AI 기능을 사용할 수 없습니다.<br><br>관리자에게 문의하세요.';
         }
     }
     
@@ -423,8 +513,16 @@
                     .sort((a, b) => b.total - a.total)
                     .slice(0, 5)
                     .forEach((store, i) => {
-                        context += `${i + 1}. ${store.name}: ${store.total.toLocaleString()}원\n`;
+                        context += `${i + 1}. ${store.name}: ${store.total.toLocaleString()}원 (홀: ${store.hall?.toLocaleString() || 0}, 배달: ${store.delivery?.toLocaleString() || 0})\n`;
                     });
+                context += `\n`;
+            }
+            
+            if (salesData.daily?.length > 0) {
+                context += `### 최근 7일 매출\n`;
+                salesData.daily.slice(-7).forEach(day => {
+                    context += `- ${day.date}: ${(day.total || 0).toLocaleString()}원\n`;
+                });
                 context += `\n`;
             }
         }
@@ -435,14 +533,28 @@
             context += `- 기간: ${o.date_range?.start} ~ ${o.date_range?.end}\n`;
             context += `- 총 발주금액: ${(o.total_sales || 0).toLocaleString()}원\n`;
             context += `- 총 발주건수: ${(o.total_records || 0).toLocaleString()}건\n`;
-            context += `- 상품종류: ${o.total_products || 0}개\n\n`;
+            context += `- 상품종류: ${o.total_products || 0}개\n`;
+            context += `- 지점수: ${o.total_stores || 0}개\n\n`;
             
             if (orderData.categories?.length > 0) {
                 context += `### 대분류별 발주 TOP 5\n`;
                 orderData.categories.slice(0, 5).forEach(cat => {
-                    context += `- ${cat.name}: ${cat.total.toLocaleString()}원\n`;
+                    context += `- ${cat.name}: ${(cat.total || 0).toLocaleString()}원\n`;
                 });
                 context += `\n`;
+            }
+            
+            if (orderData.price_changes?.length > 0) {
+                const priceUp = orderData.price_changes.filter(p => p.change > 0).slice(0, 3);
+                const priceDown = orderData.price_changes.filter(p => p.change < 0).slice(0, 3);
+                
+                if (priceUp.length > 0) {
+                    context += `### 가격 상승 품목\n`;
+                    priceUp.forEach(p => {
+                        context += `- ${p.name}: ${p.first_price?.toLocaleString()}원 → ${p.last_price?.toLocaleString()}원 (+${p.change_pct}%)\n`;
+                    });
+                    context += `\n`;
+                }
             }
         }
         
@@ -453,6 +565,10 @@
     // Gemini API 호출
     // ============================================
     async function askGemini(question) {
+        if (!GEMINI_API_KEY || !GEMINI_API_URL) {
+            throw new Error('API 설정이 없습니다');
+        }
+        
         const dataContext = generateDataContext();
         
         const systemPrompt = `당신은 "역대짬뽕" 프랜차이즈의 데이터 분석 AI 어시스턴트입니다.
@@ -460,7 +576,8 @@
 아래 데이터를 기반으로 질문에 친절하고 간결하게 답변하세요.
 - 숫자는 천 단위 구분자 사용
 - 핵심 정보를 먼저 제공
-- 답변은 3-4문장으로 간결하게
+- 답변은 3-5문장으로 간결하게
+- 비교나 트렌드 언급 시 구체적 수치 포함
 - 한국어로 답변
 
 ${dataContext}`;
@@ -468,7 +585,7 @@ ${dataContext}`;
         const requestBody = {
             contents: [{
                 parts: [{
-                    text: `${systemPrompt}\n\n질문: ${question}`
+                    text: `${systemPrompt}\n\n사용자 질문: ${question}`
                 }]
             }],
             generationConfig: {
@@ -484,10 +601,16 @@ ${dataContext}`;
         });
         
         if (!response.ok) {
-            throw new Error(`API 오류: ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error?.message || `API 오류: ${response.status}`);
         }
         
         const data = await response.json();
+        
+        if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+            throw new Error('응답을 받지 못했습니다');
+        }
+        
         return data.candidates[0].content.parts[0].text;
     }
     
@@ -500,7 +623,10 @@ ${dataContext}`;
         document.getElementById('aiChatPopup').classList.toggle('open', isOpen);
         
         if (isOpen) {
-            document.getElementById('aiChatInput').focus();
+            const input = document.getElementById('aiChatInput');
+            if (input && !input.disabled) {
+                input.focus();
+            }
         }
     }
     
@@ -512,6 +638,8 @@ ${dataContext}`;
         // 간단한 마크다운 변환
         let html = content
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code>$1</code>')
             .replace(/\n/g, '<br>');
         
         msgDiv.innerHTML = html;
@@ -540,6 +668,7 @@ ${dataContext}`;
     
     async function sendMessage(question) {
         if (!question?.trim() || isLoading) return;
+        if (!configLoaded || !GEMINI_API_KEY) return;
         
         const input = document.getElementById('aiChatInput');
         const sendBtn = document.getElementById('aiChatSend');
@@ -557,7 +686,7 @@ ${dataContext}`;
             addMessage(answer, false);
         } catch (error) {
             hideLoading();
-            addMessage(`⚠️ 오류: ${error.message}`, false);
+            addMessage(`⚠️ 오류가 발생했습니다: ${error.message}`, false);
         }
         
         isLoading = false;
@@ -579,7 +708,8 @@ ${dataContext}`;
         
         // Enter 키
         document.getElementById('aiChatInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
                 sendMessage(document.getElementById('aiChatInput').value);
             }
         });
@@ -587,7 +717,9 @@ ${dataContext}`;
         // 빠른 질문
         document.querySelectorAll('.ai-quick-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                sendMessage(btn.dataset.q);
+                if (!btn.disabled) {
+                    sendMessage(btn.dataset.q);
+                }
             });
         });
         
@@ -597,16 +729,26 @@ ${dataContext}`;
                 toggleChat();
             }
         });
+        
+        // 팝업 외부 클릭 시 닫기 (선택사항)
+        // document.addEventListener('click', (e) => {
+        //     if (isOpen && !e.target.closest('#aiChatWidget')) {
+        //         toggleChat();
+        //     }
+        // });
     }
     
     // ============================================
     // 초기화
     // ============================================
-    function init() {
+    async function init() {
         injectStyles();
         createWidget();
         bindEvents();
-        loadData();
+        
+        // 설정 로드 후 데이터 로드
+        await loadConfig();
+        await loadData();
     }
     
     // DOM 로드 후 실행
