@@ -677,3 +677,19 @@
         -webkit-line-clamp: 1;
     }
 }
+
+/* 리뷰 카드 푸터 */
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.visit-info {
+    color: #888;
+}
