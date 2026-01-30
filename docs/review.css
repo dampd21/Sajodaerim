@@ -693,3 +693,98 @@
 .visit-info {
     color: #888;
 }
+
+/* 로딩 인디케이터 */
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.loading-spinner-small {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #00d4ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 레이지 로딩 이미지 플레이스홀더 */
+.lazy-image {
+    background: rgba(255, 255, 255, 0.05);
+    min-height: 80px;
+}
+
+.lazy-image[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.lazy-image:not([data-src]) {
+    opacity: 1;
+}
+
+/* 감성 점수 배지 */
+.sentiment-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: bold;
+}
+
+.sentiment-badge.neg {
+    background: rgba(255, 107, 107, 0.3);
+    color: #ff6b6b;
+}
+
+.sentiment-badge.pos {
+    background: rgba(78, 205, 196, 0.3);
+    color: #4ecdc4;
+}
+
+/* 감성 정보 (모달) */
+.sentiment-info {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* 리뷰 푸터 */
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.visit-info {
+    color: #888;
+}
+
+/* 스크롤 센티널 */
+#scrollSentinel {
+    height: 1px;
+    visibility: hidden;
+}
