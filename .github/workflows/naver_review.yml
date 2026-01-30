@@ -1,0 +1,58 @@
+name: Naver Review Crawler
+
+on:
+  # 수동 실행
+  workflow_dispatch:
+  
+  # 자동 실행: 매일 오전 9시 (KST)
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  TZ: Asia/Seoul
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium webdriver-manager
+
+      - name: Crawl Naver Reviews
+        run: python scripts/naver_review_crawler.py
+
+      - name: Create AI Config
+        run: |
+          cat > docs/ai-config.js << 'EOF'
+          const AI_CONFIG = {
+            GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
+            GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+          };
+          EOF
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "Update Naver reviews: $(date '+%Y-%m-%d %H:%M') KST"
+          git push || echo "Nothing to push"
