@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-31T00:31:48.222470",
+  "generated_at": "2026-01-31T02:11:36.853364",
   "platform": "naver",
   "stores": [
     {
@@ -7761,7 +7761,7 @@
       "visitor_count": 283,
       "blog_count": 10,
       "negative_count": 14,
-      "crawled_at": "2026-01-31T00:31:53.453460"
+      "crawled_at": "2026-01-31T02:12:12.638763"
     },
     {
       "store_name": "역대짬뽕 병점점",
@@ -8180,12 +8180,43 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T00:57:24.454624"
+      "crawled_at": "2026-01-31T02:29:15.801749"
     },
     {
       "store_name": "역대짬뽕 송파점",
       "place_id": "2066998075",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "yun****",
+          "content": "늦은밤 맛있게 먹었어요~^^~ 직원분 친절하시고 짬뽕이 맛있어요^^~",
+          "keywords": [
+            "밤에 방문",
+            "예약 없이 이용",
+            "바로 입장",
+            "일상",
+            "혼자"
+          ],
+          "tags": [
+            "음식이 맛있어요",
+            "재료가 신선해요",
+            "가성비가 좋아요",
+            "특별한 메뉴가 있어요",
+            "비싼 만큼 가치있어요"
+          ],
+          "visit_date_raw": "1.31.토",
+          "visit_date": "2026-01-31",
+          "visit_info": [
+            "방문일\n1.31.토\n2026년 1월 31일 토요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjAxMzFfODAg/MDAxNzY5NzkwMzc0NzMy.Bv2cpvDDvnRJfLDlN9GhJ2AmfNNYvbot4Kxc6ZxejRog.1Tn_gXnvnpSLugCqQFZww5aChEU94KuWcyFb6BmIu1sg.JPEG/1000017718.jpg.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": true,
+          "id": "7cc70aaf73a940be"
+        },
         {
           "type": "visitor",
           "author": "yeo82",
@@ -25977,10 +26008,10 @@
           "id": "3dff1edf0efdac6f"
         }
       ],
-      "visitor_count": 480,
+      "visitor_count": 481,
       "blog_count": 100,
-      "negative_count": 56,
-      "crawled_at": "2026-01-31T00:59:15.737605"
+      "negative_count": 57,
+      "crawled_at": "2026-01-31T02:35:59.812125"
     },
     {
       "store_name": "역대짬뽕 다산1호점",
@@ -30651,7 +30682,7 @@
       "visitor_count": 168,
       "blog_count": 10,
       "negative_count": 11,
-      "crawled_at": "2026-01-31T01:04:08.746150"
+      "crawled_at": "2026-01-31T02:43:58.214367"
     },
     {
       "store_name": "역대짬뽕 화성반월점",
@@ -31080,7 +31111,7 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T01:16:45.758601"
+      "crawled_at": "2026-01-31T02:58:58.890973"
     },
     {
       "store_name": "역대짬뽕 오산시청점",
@@ -31515,7 +31546,7 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T01:18:14.695503"
+      "crawled_at": "2026-01-31T03:01:34.752641"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -31947,7 +31978,7 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T01:18:48.446636"
+      "crawled_at": "2026-01-31T03:03:53.339576"
     },
     {
       "store_name": "역대짬뽕 송탄점",
@@ -32378,7 +32409,7 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T01:19:24.186174"
+      "crawled_at": "2026-01-31T03:06:11.967876"
     },
     {
       "store_name": "역대짬뽕 여수국동점",
@@ -32816,28 +32847,28 @@
       "visitor_count": 10,
       "blog_count": 10,
       "negative_count": 0,
-      "crawled_at": "2026-01-31T01:19:57.957795"
+      "crawled_at": "2026-01-31T03:08:32.732045"
     }
   ],
   "summary": {
     "total_stores": 9,
-    "total_visitor_reviews": 991,
+    "total_visitor_reviews": 992,
     "total_blog_reviews": 180,
-    "total_reviews": 1171,
-    "total_negative": 81,
-    "new_visitor_reviews": 901,
-    "new_blog_reviews": 90
+    "total_reviews": 1172,
+    "total_negative": 82,
+    "new_visitor_reviews": 1,
+    "new_blog_reviews": 0
   },
   "stats": {
-    "today": 0,
+    "today": 1,
     "yesterday": 20,
-    "this_week": 102,
+    "this_week": 103,
     "last_week": 66,
-    "this_month": 435,
+    "this_month": 436,
     "last_month": 300,
-    "total_negative": 81,
-    "daily_change": -100.0,
-    "weekly_change": 54.5,
-    "monthly_change": 45.0
+    "total_negative": 82,
+    "daily_change": -95.0,
+    "weekly_change": 56.1,
+    "monthly_change": 45.3
   }
 }
