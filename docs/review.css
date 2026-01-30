@@ -2,6 +2,154 @@
    리뷰 관리 페이지 전용 스타일
    =========================================== */
 
+/* 플랫폼 탭 */
+.platform-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.platform-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #aaa;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    position: relative;
+}
+
+.platform-tab:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.platform-tab.active {
+    background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+    color: #fff;
+    border-color: transparent;
+}
+
+.platform-tab.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.platform-icon {
+    font-size: 1.2rem;
+}
+
+.badge-coming {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    background: rgba(255, 107, 107, 0.3);
+    border-radius: 4px;
+    color: #ff6b6b;
+    margin-left: 4px;
+}
+
+.platform-tab.active .badge-coming {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* 배달 하위 탭 */
+.delivery-subtabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-left: 20px;
+}
+
+.delivery-tab {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #888;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delivery-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.delivery-tab.active {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+/* 플랫폼 콘텐츠 */
+.platform-content {
+    min-height: 500px;
+}
+
+.platform-pane {
+    display: none;
+}
+
+.platform-pane.active {
+    display: block;
+}
+
+/* Coming Soon 박스 */
+.coming-soon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+}
+
+.coming-soon-box .coming-soon-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.coming-soon-box h2 {
+    color: #888;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.coming-soon-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.coming-soon-badge {
+    padding: 8px 20px;
+    background: rgba(123, 44, 191, 0.2);
+    border: 1px solid rgba(123, 44, 191, 0.5);
+    border-radius: 20px;
+    color: #b794f6;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 /* 카드 색상 변형 */
 .card-visitor .card-value {
     color: #4ecdc4;
@@ -363,6 +511,23 @@
 
 /* 반응형 */
 @media (max-width: 768px) {
+    .platform-tabs {
+        padding: 8px;
+    }
+    
+    .platform-tab {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .platform-name {
+        display: none;
+    }
+    
+    .platform-tab .platform-icon {
+        font-size: 1.4rem;
+    }
+    
     .review-header {
         flex-direction: column;
         gap: 10px;
