@@ -8,7 +8,7 @@ let reviewData = null;
 let filteredReviews = [];
 let currentPlatform = 'naver';
 let currentStore = '';
-let currentReviewType = 'all'; // all, visitor, blog
+let currentReviewType = 'all';
 let currentSort = 'recent';
 let searchQuery = '';
 
@@ -40,7 +40,7 @@ async function loadData() {
         if (reviewData.generated_at) {
             const date = new Date(reviewData.generated_at);
             document.getElementById('updateTime').textContent = 
-                `마지막 업데이트: ${formatDateTime(date)}`;
+                '마지막 업데이트: ' + formatDateTime(date);
         }
         
         initStoreSelect();
@@ -54,14 +54,13 @@ async function loadData() {
 function showNoDataMessage() {
     const content = document.getElementById('naverContent');
     if (content) {
-        content.innerHTML = `
-            <div class="coming-soon-box">
-                <div class="coming-soon-icon">📝</div>
-                <h2>리뷰 데이터 없음</h2>
-                <p>아직 수집된 리뷰 데이터가 없습니다.<br>
-                GitHub Actions에서 'Naver Review Crawler'를 실행해주세요.</p>
-            </div>
-        `;
+        content.innerHTML = 
+            '<div class="coming-soon-box">' +
+                '<div class="coming-soon-icon">리뷰</div>' +
+                '<h2>리뷰 데이터 없음</h2>' +
+                '<p>아직 수집된 리뷰 데이터가 없습니다.<br>' +
+                'GitHub Actions에서 Naver Review Crawler를 실행해주세요.</p>' +
+            '</div>';
     }
 }
 
@@ -134,7 +133,7 @@ function switchPlatform(platform) {
     document.querySelectorAll('.platform-pane').forEach(pane => {
         pane.classList.remove('active');
     });
-    document.getElementById(`${platform}Content`)?.classList.add('active');
+    document.getElementById(platform + 'Content')?.classList.add('active');
     
     const deliverySubtabs = document.getElementById('deliverySubtabs');
     if (deliverySubtabs) {
@@ -156,7 +155,7 @@ function initStoreSelect() {
     stores.forEach(store => {
         const visitorCount = store.visitor_count || 0;
         const blogCount = store.blog_count || 0;
-        select.innerHTML += `<option value="${store.store_name}">${store.store_name} (${visitorCount + blogCount})</option>`;
+        select.innerHTML += '<option value="' + store.store_name + '">' + store.store_name + ' (' + (visitorCount + blogCount) + ')</option>';
     });
 }
 
@@ -271,12 +270,14 @@ function renderTagCloud() {
         return;
     }
     
-    container.innerHTML = topTags.map(([tag, count]) => `
-        <div class="tag-item" data-tag="${escapeHtml(tag)}">
-            <span>${escapeHtml(tag)}</span>
-            <span class="tag-count">${count}</span>
-        </div>
-    `).join('');
+    container.innerHTML = topTags.map(function(item) {
+        const tag = item[0];
+        const count = item[1];
+        return '<div class="tag-item" data-tag="' + escapeHtml(tag) + '">' +
+            '<span>' + escapeHtml(tag) + '</span>' +
+            '<span class="tag-count">' + count + '</span>' +
+        '</div>';
+    }).join('');
     
     container.querySelectorAll('.tag-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -299,86 +300,90 @@ function renderReviewList() {
     if (!container) return;
     
     if (countEl) {
-        countEl.textContent = `(${filteredReviews.length}개)`;
+        countEl.textContent = '(' + filteredReviews.length + '개)';
     }
     
     if (filteredReviews.length === 0) {
-        container.innerHTML = `
-            <div class="empty-reviews">
-                <div class="empty-icon">📝</div>
-                <p>리뷰가 없습니다.</p>
-            </div>
-        `;
+        container.innerHTML = 
+            '<div class="empty-reviews">' +
+                '<div class="empty-icon">리뷰</div>' +
+                '<p>리뷰가 없습니다.</p>' +
+            '</div>';
         return;
     }
     
-    container.innerHTML = filteredReviews.map((review, idx) => {
+    container.innerHTML = filteredReviews.map(function(review, idx) {
         const isBlog = review.type === 'blog';
-        const date = review.visit_date || review.write_date || '';
         const dateRaw = review.visit_date_raw || review.write_date_raw || '';
         
-        return `
-            <div class="review-card ${isBlog ? 'blog-review' : 'visitor-review'}" data-index="${idx}">
-                <div class="review-header">
-                    <div class="review-author">
-                        <div class="author-avatar">${isBlog ? '📝' : '👤'}</div>
-                        <div class="author-info">
-                            <span class="author-name">${escapeHtml(review.author || '익명')}</span>
-                            ${isBlog ? `<span class="blog-name">${escapeHtml(review.blog_name || '')}</span>` : ''}
-                            <span class="author-meta">
-                                ${review.visit_info?.join(' · ') || ''}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="review-meta">
-                        <span class="type-badge ${isBlog ? 'type-blog' : 'type-visitor'}">
-                            ${isBlog ? '블로그' : '방문자'}
-                        </span>
-                        <span class="store-badge">${escapeHtml(review.store_name || '')}</span>
-                        <span class="review-date">${escapeHtml(dateRaw)}</span>
-                    </div>
-                </div>
-                
-                ${isBlog && review.title ? `
-                    <div class="review-title">${escapeHtml(review.title)}</div>
-                ` : ''}
-                
-                ${review.images && review.images.length > 0 ? `
-                    <div class="review-images">
-                        ${review.images.slice(0, 4).map(img => `
-                            <img src="${escapeHtml(img)}" class="review-image" alt="리뷰 이미지" loading="lazy">
-                        `).join('')}
-                        ${review.images.length > 4 ? `<span class="more-images">+${review.images.length - 4}</span>` : ''}
-                    </div>
-                ` : ''}
-                
-                <div class="review-content truncated">
-                    ${escapeHtml(review.content || '')}
-                </div>
-                
-                ${review.keywords && review.keywords.length > 0 ? `
-                    <div class="review-keywords">
-                        ${review.keywords.map(kw => `
-                            <span class="keyword-badge">${escapeHtml(kw)}</span>
-                        `).join('')}
-                    </div>
-                ` : ''}
-                
-                ${review.tags && review.tags.length > 0 ? `
-                    <div class="review-tags">
-                        ${review.tags.map(tag => `
-                            <span class="review-tag">${escapeHtml(tag)}</span>
-                        `).join('')}
-                    </div>
-                ` : ''}
-                
-                ${isBlog && review.blog_url ? `
-                    <a href="${escapeHtml(review.blog_url)}" target="_blank" class="blog-link">
-                        블로그 원문 보기 →
-                    </a>
-                ` : ''}
-            </div>
-        `;
+        let html = '<div class="review-card ' + (isBlog ? 'blog-review' : 'visitor-review') + '" data-index="' + idx + '">';
+        
+        // 헤더
+        html += '<div class="review-header">';
+        html += '<div class="review-author">';
+        html += '<div class="author-avatar">' + (isBlog ? 'B' : 'V') + '</div>';
+        html += '<div class="author-info">';
+        html += '<span class="author-name">' + escapeHtml(review.author || '익명') + '</span>';
+        if (isBlog && review.blog_name) {
+            html += '<span class="blog-name">' + escapeHtml(review.blog_name) + '</span>';
+        }
+        if (review.visit_info && review.visit_info.length > 0) {
+            html += '<span class="author-meta">' + review.visit_info.join(' / ') + '</span>';
+        }
+        html += '</div></div>';
+        
+        html += '<div class="review-meta">';
+        html += '<span class="type-badge ' + (isBlog ? 'type-blog' : 'type-visitor') + '">' + (isBlog ? '블로그' : '방문자') + '</span>';
+        html += '<span class="store-badge">' + escapeHtml(review.store_name || '') + '</span>';
+        html += '<span class="review-date">' + escapeHtml(dateRaw) + '</span>';
+        html += '</div></div>';
+        
+        // 블로그 제목
+        if (isBlog && review.title) {
+            html += '<div class="review-title">' + escapeHtml(review.title) + '</div>';
+        }
+        
+        // 이미지
+        if (review.images && review.images.length > 0) {
+            html += '<div class="review-images">';
+            review.images.slice(0, 4).forEach(function(img) {
+                html += '<img src="' + escapeHtml(img) + '" class="review-image" alt="리뷰 이미지" loading="lazy">';
+            });
+            if (review.images.length > 4) {
+                html += '<span class="more-images">+' + (review.images.length - 4) + '</span>';
+            }
+            html += '</div>';
+        }
+        
+        // 내용
+        html += '<div class="review-content truncated">' + escapeHtml(review.content || '') + '</div>';
+        
+        // 키워드
+        if (review.keywords && review.keywords.length > 0) {
+            html += '<div class="review-keywords">';
+            review.keywords.forEach(function(kw) {
+                html += '<span class="keyword-badge">' + escapeHtml(kw) + '</span>';
+            });
+            html += '</div>';
+        }
+        
+        // 태그
+        if (review.tags && review.tags.length > 0) {
+            html += '<div class="review-tags">';
+            review.tags.forEach(function(tag) {
+                html += '<span class="review-tag">' + escapeHtml(tag) + '</span>';
+            });
+            html += '</div>';
+        }
+        
+        // 블로그 링크
+        if (isBlog && review.blog_url) {
+            html += '<a href="' + escapeHtml(review.blog_url) + '" target="_blank" class="blog-link">블로그 원문 보기</a>';
+        }
+        
+        html += '</div>';
+        
+        return html;
     }).join('');
     
     container.querySelectorAll('.review-card').forEach(card => {
@@ -401,71 +406,73 @@ function showReviewModal(review) {
     if (!modal || !body || !review) return;
     
     const isBlog = review.type === 'blog';
-    const date = review.visit_date || review.write_date || '';
     const dateRaw = review.visit_date_raw || review.write_date_raw || '';
     
-    body.innerHTML = `
-        <div class="review-detail">
-            <div class="review-header">
-                <div class="review-author">
-                    <div class="author-avatar">${isBlog ? '📝' : '👤'}</div>
-                    <div class="author-info">
-                        <span class="author-name">${escapeHtml(review.author || '익명')}</span>
-                        ${isBlog ? `<span class="blog-name">${escapeHtml(review.blog_name || '')}</span>` : ''}
-                        <span class="author-meta">
-                            ${review.visit_info?.join(' · ') || ''}
-                        </span>
-                    </div>
-                </div>
-                <div class="review-meta">
-                    <span class="type-badge ${isBlog ? 'type-blog' : 'type-visitor'}">
-                        ${isBlog ? '블로그' : '방문자'}
-                    </span>
-                    <span class="store-badge">${escapeHtml(review.store_name || '')}</span>
-                    <span class="review-date">${escapeHtml(dateRaw)}</span>
-                </div>
-            </div>
-            
-            ${isBlog && review.title ? `
-                <div class="review-title">${escapeHtml(review.title)}</div>
-            ` : ''}
-            
-            ${review.images && review.images.length > 0 ? `
-                <div class="review-images">
-                    ${review.images.map(img => `
-                        <img src="${escapeHtml(img)}" class="review-image" alt="리뷰 이미지">
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            <div class="review-content">
-                ${escapeHtml(review.content || '')}
-            </div>
-            
-            ${review.keywords && review.keywords.length > 0 ? `
-                <div class="review-keywords">
-                    ${review.keywords.map(kw => `
-                        <span class="keyword-badge">${escapeHtml(kw)}</span>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            ${review.tags && review.tags.length > 0 ? `
-                <div class="review-tags">
-                    ${review.tags.map(tag => `
-                        <span class="review-tag">${escapeHtml(tag)}</span>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            ${isBlog && review.blog_url ? `
-                <a href="${escapeHtml(review.blog_url)}" target="_blank" class="blog-link-modal">
-                    📎 블로그 원문 보기
-                </a>
-            ` : ''}
-        </div>
-    `;
+    let html = '<div class="review-detail">';
     
+    // 헤더
+    html += '<div class="review-header">';
+    html += '<div class="review-author">';
+    html += '<div class="author-avatar">' + (isBlog ? 'B' : 'V') + '</div>';
+    html += '<div class="author-info">';
+    html += '<span class="author-name">' + escapeHtml(review.author || '익명') + '</span>';
+    if (isBlog && review.blog_name) {
+        html += '<span class="blog-name">' + escapeHtml(review.blog_name) + '</span>';
+    }
+    if (review.visit_info && review.visit_info.length > 0) {
+        html += '<span class="author-meta">' + review.visit_info.join(' / ') + '</span>';
+    }
+    html += '</div></div>';
+    
+    html += '<div class="review-meta">';
+    html += '<span class="type-badge ' + (isBlog ? 'type-blog' : 'type-visitor') + '">' + (isBlog ? '블로그' : '방문자') + '</span>';
+    html += '<span class="store-badge">' + escapeHtml(review.store_name || '') + '</span>';
+    html += '<span class="review-date">' + escapeHtml(dateRaw) + '</span>';
+    html += '</div></div>';
+    
+    // 블로그 제목
+    if (isBlog && review.title) {
+        html += '<div class="review-title">' + escapeHtml(review.title) + '</div>';
+    }
+    
+    // 이미지
+    if (review.images && review.images.length > 0) {
+        html += '<div class="review-images">';
+        review.images.forEach(function(img) {
+            html += '<img src="' + escapeHtml(img) + '" class="review-image" alt="리뷰 이미지">';
+        });
+        html += '</div>';
+    }
+    
+    // 내용
+    html += '<div class="review-content">' + escapeHtml(review.content || '') + '</div>';
+    
+    // 키워드
+    if (review.keywords && review.keywords.length > 0) {
+        html += '<div class="review-keywords">';
+        review.keywords.forEach(function(kw) {
+            html += '<span class="keyword-badge">' + escapeHtml(kw) + '</span>';
+        });
+        html += '</div>';
+    }
+    
+    // 태그
+    if (review.tags && review.tags.length > 0) {
+        html += '<div class="review-tags">';
+        review.tags.forEach(function(tag) {
+            html += '<span class="review-tag">' + escapeHtml(tag) + '</span>';
+        });
+        html += '</div>';
+    }
+    
+    // 블로그 링크
+    if (isBlog && review.blog_url) {
+        html += '<a href="' + escapeHtml(review.blog_url) + '" target="_blank" class="blog-link-modal">블로그 원문 보기</a>';
+    }
+    
+    html += '</div>';
+    
+    body.innerHTML = html;
     modal.classList.add('active');
 }
 
