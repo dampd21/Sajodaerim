@@ -3,7 +3,7 @@
 """
 네이버 플레이스 리뷰 크롤러
 - 방문자 리뷰 + 블로그 리뷰 수집
-- 기간 설정 가능
+- 기간 설정 가능 (펼치면서 기간 체크하여 조기 중단)
 - 펼쳐서 더보기 버튼 클릭으로 리뷰 로드
 - 기존 데이터와 병합 (증분 수집)
 """
@@ -61,7 +61,7 @@ NEGATIVE_KEYWORDS = [
     "별로", "실망", "아쉽", "아쉬웠", "짜다", "짰", "싱겁", "느끼", "늦", "오래 걸", 
     "불친절", "차갑", "식었", "적었", "적다", "비싸", "비쌌", "양이 적", "재방문 의사 없",
     "다시 안", "다신 안", "비추", "최악", "후회", "맛없", "맛이 없", "서비스 별로",
-    "위생", "불결", "더럽", "냄새", "이상한 맛", "탔", "안 좋", "그닥", "그냥 그", 
+    "위생", "불결", "더럽", "냄새", "이상한 맛", "탔", "안 좋", "그닥", "그저 그", 
     "기대 이하", "평범", "보통", "그저 그", "애매"
 ]
 
@@ -92,41 +92,6 @@ def setup_driver():
         raise
 
 
-def click_more_button(driver, max_clicks=50, wait_time=1.5):
-    """펼쳐서 더보기 버튼 클릭하여 리뷰 로드"""
-    click_count = 0
-    
-    while click_count < max_clicks:
-        try:
-            # 펼쳐서 더보기 버튼 찾기
-            more_button = driver.find_element(By.CSS_SELECTOR, 'a.fvwqf')
-            
-            # 버튼이 보이는지 확인
-            if not more_button.is_displayed():
-                print("[MORE] 더보기 버튼이 보이지 않음 - 완료", flush=True)
-                break
-            
-            # 버튼 클릭
-            driver.execute_script("arguments[0].click();", more_button)
-            click_count += 1
-            print("[MORE] 펼쳐서 더보기 클릭 " + str(click_count) + "회", flush=True)
-            
-            time.sleep(wait_time)
-            
-        except NoSuchElementException:
-            print("[MORE] 더보기 버튼 없음 - 모든 리뷰 로드 완료", flush=True)
-            break
-        except ElementClickInterceptedException:
-            print("[MORE] 버튼 클릭 차단됨 - 스크롤 후 재시도", flush=True)
-            driver.execute_script("window.scrollBy(0, 300);")
-            time.sleep(0.5)
-        except Exception as e:
-            print("[MORE] 클릭 오류: " + str(e), flush=True)
-            break
-    
-    return click_count
-
-
 def parse_date(date_str):
     """날짜 문자열 파싱"""
     if not date_str:
@@ -148,20 +113,101 @@ def parse_date(date_str):
         day = int(parts[1])
         return "{:04d}-{:02d}-{:02d}".format(current_year, month, day)
     
-    return date_str
+    return None
+
+
+def get_last_review_date(driver):
+    """현재 로드된 리뷰 중 마지막(가장 오래된) 리뷰의 날짜 반환"""
+    try:
+        date_elements = driver.find_elements(By.CSS_SELECTOR, '.pui__gfuUIT time')
+        if not date_elements:
+            return None
+        
+        # 마지막 날짜 요소
+        last_date_raw = date_elements[-1].text.strip()
+        return parse_date(last_date_raw)
+    except:
+        return None
+
+
+def should_stop_loading(driver, start_date):
+    """시작일보다 오래된 리뷰가 나왔는지 확인"""
+    if not start_date:
+        return False
+    
+    last_date = get_last_review_date(driver)
+    if not last_date:
+        return False
+    
+    try:
+        last_dt = datetime.strptime(last_date, '%Y-%m-%d')
+        start_dt = datetime.strptime(start_date, '%Y-%m-%d')
+        
+        # 마지막 리뷰가 시작일보다 이전이면 중단
+        if last_dt < start_dt:
+            print("[STOP] 마지막 리뷰 날짜(" + last_date + ")가 시작일(" + start_date + ")보다 이전 - 로딩 중단", flush=True)
+            return True
+    except:
+        pass
+    
+    return False
+
+
+def click_more_button_with_date_check(driver, start_date=None, max_clicks=200, wait_time=1.5):
+    """펼쳐서 더보기 버튼 클릭 (기간 체크하며 진행)"""
+    click_count = 0
+    
+    while click_count < max_clicks:
+        # 기간 체크 - 시작일보다 오래된 리뷰가 나왔으면 중단
+        if should_stop_loading(driver, start_date):
+            print("[MORE] 목표 기간 도달 - 로딩 완료", flush=True)
+            break
+        
+        try:
+            # 펼쳐서 더보기 버튼 찾기
+            more_button = driver.find_element(By.CSS_SELECTOR, 'a.fvwqf')
+            
+            # 버튼이 보이는지 확인
+            if not more_button.is_displayed():
+                print("[MORE] 더보기 버튼이 보이지 않음 - 완료", flush=True)
+                break
+            
+            # 버튼 클릭
+            driver.execute_script("arguments[0].click();", more_button)
+            click_count += 1
+            
+            if click_count % 10 == 0:
+                last_date = get_last_review_date(driver)
+                print("[MORE] 클릭 " + str(click_count) + "회, 마지막 리뷰: " + str(last_date), flush=True)
+            
+            time.sleep(wait_time)
+            
+        except NoSuchElementException:
+            print("[MORE] 더보기 버튼 없음 - 모든 리뷰 로드 완료", flush=True)
+            break
+        except ElementClickInterceptedException:
+            driver.execute_script("window.scrollBy(0, 300);")
+            time.sleep(0.5)
+        except Exception as e:
+            print("[MORE] 클릭 오류: " + str(e), flush=True)
+            break
+    
+    print("[MORE] 총 " + str(click_count) + "회 클릭", flush=True)
+    return click_count
 
 
 def is_date_in_range(date_str, start_date, end_date):
     """날짜가 범위 내에 있는지 확인"""
-    if not date_str or not start_date:
+    if not date_str:
         return True
     
     try:
         review_date = datetime.strptime(date_str, '%Y-%m-%d')
-        start = datetime.strptime(start_date, '%Y-%m-%d')
         
-        if review_date < start:
-            return False
+        if start_date:
+            start = datetime.strptime(start_date, '%Y-%m-%d')
+            if review_date < start:
+                return False
         
         if end_date:
             end = datetime.strptime(end_date, '%Y-%m-%d')
@@ -178,12 +224,10 @@ def is_negative_review(review):
     content = (review.get('content') or '').lower()
     tags = review.get('tags') or []
     
-    # 내용에서 부정 키워드 검색
     for keyword in NEGATIVE_KEYWORDS:
         if keyword in content:
             return True
     
-    # 태그에서 부정 키워드 검색
     for tag in tags:
         tag_lower = tag.lower()
         for keyword in NEGATIVE_KEYWORDS:
@@ -394,7 +438,7 @@ def parse_blog_reviews(driver, start_date=None, end_date=None):
 # 지점별 리뷰 수집
 # ============================================
 
-def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=None, max_clicks=100):
+def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=None, max_clicks=200):
     """특정 지점의 방문자 + 블로그 리뷰 수집"""
     print("\n" + "=" * 50, flush=True)
     print("[CRAWL] " + store_name + " (ID: " + place_id + ")", flush=True)
@@ -429,9 +473,8 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
         except TimeoutException:
             print("[WARN] 방문자 리뷰 로딩 타임아웃 - 리뷰가 없을 수 있음", flush=True)
         
-        # 펼쳐서 더보기 클릭
-        click_count = click_more_button(driver, max_clicks=max_clicks)
-        print("[CRAWL] 펼쳐서 더보기 " + str(click_count) + "회 클릭 완료", flush=True)
+        # 펼쳐서 더보기 클릭 (기간 체크하며)
+        click_more_button_with_date_check(driver, start_date, max_clicks)
         
         visitor_reviews = parse_visitor_reviews(driver, start_date, end_date)
         store_data['visitor_reviews'] = visitor_reviews
@@ -459,9 +502,8 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
         except TimeoutException:
             print("[WARN] 블로그 리뷰 로딩 타임아웃 - 리뷰가 없을 수 있음", flush=True)
         
-        # 펼쳐서 더보기 클릭
-        click_count = click_more_button(driver, max_clicks=max_clicks)
-        print("[CRAWL] 펼쳐서 더보기 " + str(click_count) + "회 클릭 완료", flush=True)
+        # 펼쳐서 더보기 클릭 (기간 체크하며)
+        click_more_button_with_date_check(driver, start_date, max_clicks)
         
         blog_reviews = parse_blog_reviews(driver, start_date, end_date)
         store_data['blog_reviews'] = blog_reviews
@@ -521,7 +563,9 @@ def calculate_review_stats(stores):
     today = datetime.now().date()
     yesterday = today - timedelta(days=1)
     week_ago = today - timedelta(days=7)
+    two_weeks_ago = today - timedelta(days=14)
     month_ago = today - timedelta(days=30)
+    two_months_ago = today - timedelta(days=60)
     
     stats = {
         'today': 0,
@@ -559,7 +603,7 @@ def calculate_review_stats(stores):
                 stats['this_week'] += 1
             
             # 지난 주 (7~14일 전)
-            if week_ago > review_date >= (week_ago - timedelta(days=7)):
+            if week_ago > review_date >= two_weeks_ago:
                 stats['last_week'] += 1
             
             # 이번 달 (최근 30일)
@@ -567,7 +611,7 @@ def calculate_review_stats(stores):
                 stats['this_month'] += 1
             
             # 지난 달 (30~60일 전)
-            if month_ago > review_date >= (month_ago - timedelta(days=30)):
+            if month_ago > review_date >= two_months_ago:
                 stats['last_month'] += 1
             
             # 부정적 리뷰
@@ -616,7 +660,7 @@ def main():
     parser = argparse.ArgumentParser(description='네이버 플레이스 리뷰 크롤러')
     parser.add_argument('--start-date', type=str, help='시작일 (YYYY-MM-DD)')
     parser.add_argument('--end-date', type=str, help='종료일 (YYYY-MM-DD)')
-    parser.add_argument('--max-clicks', type=int, default=100, help='펼쳐서 더보기 최대 클릭 수')
+    parser.add_argument('--max-clicks', type=int, default=200, help='펼쳐서 더보기 최대 클릭 수')
     parser.add_argument('--store', type=str, help='특정 지점만 수집')
     args = parser.parse_args()
     
@@ -627,6 +671,7 @@ def main():
         print("시작일: " + args.start_date, flush=True)
     if args.end_date:
         print("종료일: " + args.end_date, flush=True)
+    print("최대 클릭 수: " + str(args.max_clicks), flush=True)
     
     # 기존 데이터 로드
     existing_data = load_existing_data('docs/review_data.json')
