@@ -1,19 +1,25 @@
 /**
- * 리뷰 관리 대시보드
- * - 네이버 방문자 리뷰 + 블로그 리뷰
- * - 지점별/플랫폼별 필터
- * - 부정적 리뷰 필터
- * - 항상 2단 그리드 레이아웃
- * - 전날/전주/전월 대비 통계
+ * 리뷰 관리 대시보드 v2
+ * - 무한 스크롤 (페이지네이션)
+ * - 이미지 레이지 로딩
+ * - 가상 스크롤링
+ * - 2단 그리드 고정
  */
 
 let reviewData = null;
 let filteredReviews = [];
+let displayedReviews = [];
 let currentPlatform = 'naver';
 let currentStore = '';
 let currentReviewType = 'all';
 let currentSort = 'recent';
 let searchQuery = '';
+
+// 페이지네이션 설정
+const REVIEWS_PER_PAGE = 20;
+let currentPage = 1;
+let isLoading = false;
+let hasMoreReviews = true;
 
 // ============================================
 // 초기화
@@ -22,6 +28,7 @@ let searchQuery = '';
 document.addEventListener('DOMContentLoaded', async function() {
     await loadData();
     initEventListeners();
+    initInfiniteScroll();
     renderDashboard();
 });
 
@@ -31,23 +38,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function loadData() {
     try {
-        var response = await fetch('review_data.json?t=' + Date.now());
-        
-        if (!response.ok) {
-            throw new Error('데이터 파일 없음');
-        }
+        const response = await fetch('review_data.json?t=' + Date.now());
+        if (!response.ok) throw new Error('데이터 파일 없음');
         
         reviewData = await response.json();
         console.log('Review data loaded:', reviewData.summary);
         
         if (reviewData.generated_at) {
-            var date = new Date(reviewData.generated_at);
             document.getElementById('updateTime').textContent = 
-                '마지막 업데이트: ' + formatDateTime(date);
+                '마지막 업데이트: ' + formatDateTime(new Date(reviewData.generated_at));
         }
         
         initStoreSelect();
-        
     } catch (error) {
         console.error('Failed to load review data:', error);
         showNoDataMessage();
@@ -55,15 +57,79 @@ async function loadData() {
 }
 
 function showNoDataMessage() {
-    var content = document.getElementById('naverContent');
+    const content = document.getElementById('naverContent');
     if (content) {
-        content.innerHTML = 
-            '<div class="coming-soon-box">' +
-                '<div class="coming-soon-icon">📝</div>' +
-                '<h2>리뷰 데이터 없음</h2>' +
-                '<p>아직 수집된 리뷰 데이터가 없습니다.<br>' +
-                'GitHub Actions에서 Naver Review Crawler를 실행해주세요.</p>' +
-            '</div>';
+        content.innerHTML = `
+            <div class="coming-soon-box">
+                <div class="coming-soon-icon">📝</div>
+                <h2>리뷰 데이터 없음</h2>
+                <p>GitHub Actions에서 Naver Review Crawler를 실행해주세요.</p>
+            </div>`;
+    }
+}
+
+// ============================================
+// 무한 스크롤 초기화
+// ============================================
+
+function initInfiniteScroll() {
+    const reviewList = document.getElementById('reviewList');
+    if (!reviewList) return;
+    
+    // Intersection Observer로 무한 스크롤 구현
+    const sentinel = document.createElement('div');
+    sentinel.id = 'scrollSentinel';
+    sentinel.style.height = '1px';
+    reviewList.parentNode.appendChild(sentinel);
+    
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !isLoading && hasMoreReviews) {
+            loadMoreReviews();
+        }
+    }, { rootMargin: '200px' });
+    
+    observer.observe(sentinel);
+}
+
+function loadMoreReviews() {
+    if (isLoading || !hasMoreReviews) return;
+    
+    isLoading = true;
+    showLoadingIndicator(true);
+    
+    // 약간의 딜레이로 UX 개선
+    setTimeout(() => {
+        currentPage++;
+        const startIdx = (currentPage - 1) * REVIEWS_PER_PAGE;
+        const endIdx = startIdx + REVIEWS_PER_PAGE;
+        const newReviews = filteredReviews.slice(startIdx, endIdx);
+        
+        if (newReviews.length > 0) {
+            appendReviewCards(newReviews, startIdx);
+        }
+        
+        hasMoreReviews = endIdx < filteredReviews.length;
+        isLoading = false;
+        showLoadingIndicator(false);
+        
+        updateReviewCount();
+    }, 100);
+}
+
+function showLoadingIndicator(show) {
+    let indicator = document.getElementById('loadingIndicator');
+    
+    if (show) {
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'loadingIndicator';
+            indicator.className = 'loading-indicator';
+            indicator.innerHTML = '<div class="loading-spinner-small"></div><span>리뷰 불러오는 중...</span>';
+            document.getElementById('reviewList').parentNode.appendChild(indicator);
+        }
+        indicator.style.display = 'flex';
+    } else if (indicator) {
+        indicator.style.display = 'none';
     }
 }
 
@@ -73,78 +139,54 @@ function showNoDataMessage() {
 
 function initEventListeners() {
     // 플랫폼 탭
-    var platformTabs = document.querySelectorAll('.platform-tab');
-    for (var i = 0; i < platformTabs.length; i++) {
-        platformTabs[i].addEventListener('click', function() {
+    document.querySelectorAll('.platform-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
             if (this.classList.contains('disabled')) return;
             switchPlatform(this.dataset.platform);
         });
-    }
+    });
     
-    // 배달 하위 탭
-    var deliveryTabs = document.querySelectorAll('.delivery-tab');
-    for (var i = 0; i < deliveryTabs.length; i++) {
-        deliveryTabs[i].addEventListener('click', function() {
-            var allTabs = document.querySelectorAll('.delivery-tab');
-            for (var j = 0; j < allTabs.length; j++) {
-                allTabs[j].classList.remove('active');
-            }
-            this.classList.add('active');
-        });
-    }
+    // 필터들
+    document.getElementById('storeSelect')?.addEventListener('change', function() {
+        currentStore = this.value;
+        resetAndRender();
+    });
     
-    // 지점 선택
-    var storeSelect = document.getElementById('storeSelect');
-    if (storeSelect) {
-        storeSelect.addEventListener('change', function(e) {
-            currentStore = e.target.value;
-            filterAndRender();
-        });
-    }
+    document.getElementById('reviewTypeSelect')?.addEventListener('change', function() {
+        currentReviewType = this.value;
+        resetAndRender();
+    });
     
-    // 리뷰 타입 선택
-    var reviewTypeSelect = document.getElementById('reviewTypeSelect');
-    if (reviewTypeSelect) {
-        reviewTypeSelect.addEventListener('change', function(e) {
-            currentReviewType = e.target.value;
-            filterAndRender();
-        });
-    }
+    document.getElementById('sortSelect')?.addEventListener('change', function() {
+        currentSort = this.value;
+        resetAndRender();
+    });
     
-    // 정렬
-    var sortSelect = document.getElementById('sortSelect');
-    if (sortSelect) {
-        sortSelect.addEventListener('change', function(e) {
-            currentSort = e.target.value;
-            filterAndRender();
-        });
-    }
-    
-    // 검색
-    var searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            searchQuery = e.target.value;
-            filterAndRender();
-        });
-    }
+    // 검색 (디바운스 적용)
+    let searchTimeout;
+    document.getElementById('searchInput')?.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            searchQuery = this.value;
+            resetAndRender();
+        }, 300);
+    });
     
     // 모달
-    var modalClose = document.querySelector('#reviewModal .modal-close');
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-    
-    var reviewModal = document.getElementById('reviewModal');
-    if (reviewModal) {
-        reviewModal.addEventListener('click', function(e) {
-            if (e.target.id === 'reviewModal') closeModal();
-        });
-    }
-    
+    document.querySelector('#reviewModal .modal-close')?.addEventListener('click', closeModal);
+    document.getElementById('reviewModal')?.addEventListener('click', function(e) {
+        if (e.target.id === 'reviewModal') closeModal();
+    });
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeModal();
     });
+}
+
+function resetAndRender() {
+    currentPage = 1;
+    hasMoreReviews = true;
+    displayedReviews = [];
+    filterAndRender();
 }
 
 // ============================================
@@ -154,26 +196,16 @@ function initEventListeners() {
 function switchPlatform(platform) {
     currentPlatform = platform;
     
-    var tabs = document.querySelectorAll('.platform-tab');
-    for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].dataset.platform === platform) {
-            tabs[i].classList.add('active');
-        } else {
-            tabs[i].classList.remove('active');
-        }
-    }
+    document.querySelectorAll('.platform-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.platform === platform);
+    });
     
-    var panes = document.querySelectorAll('.platform-pane');
-    for (var i = 0; i < panes.length; i++) {
-        panes[i].classList.remove('active');
-    }
+    document.querySelectorAll('.platform-pane').forEach(pane => {
+        pane.classList.remove('active');
+    });
+    document.getElementById(platform + 'Content')?.classList.add('active');
     
-    var activePane = document.getElementById(platform + 'Content');
-    if (activePane) {
-        activePane.classList.add('active');
-    }
-    
-    var deliverySubtabs = document.getElementById('deliverySubtabs');
+    const deliverySubtabs = document.getElementById('deliverySubtabs');
     if (deliverySubtabs) {
         deliverySubtabs.style.display = platform === 'delivery' ? 'flex' : 'none';
     }
@@ -184,18 +216,16 @@ function switchPlatform(platform) {
 // ============================================
 
 function initStoreSelect() {
-    var select = document.getElementById('storeSelect');
+    const select = document.getElementById('storeSelect');
     if (!select || !reviewData) return;
     
-    var stores = reviewData.stores || [];
-    
+    const stores = reviewData.stores || [];
     select.innerHTML = '<option value="">전체 지점</option>';
-    for (var i = 0; i < stores.length; i++) {
-        var store = stores[i];
-        var visitorCount = store.visitor_count || 0;
-        var blogCount = store.blog_count || 0;
-        select.innerHTML += '<option value="' + store.store_name + '">' + store.store_name + ' (' + (visitorCount + blogCount) + ')</option>';
-    }
+    
+    stores.forEach(store => {
+        const total = (store.visitor_count || 0) + (store.blog_count || 0);
+        select.innerHTML += `<option value="${store.store_name}">${store.store_name} (${total})</option>`;
+    });
 }
 
 // ============================================
@@ -204,15 +234,13 @@ function initStoreSelect() {
 
 function renderDashboard() {
     if (!reviewData) return;
-    
     renderSummaryCards();
     renderStatsCards();
     filterAndRender();
 }
 
 function renderSummaryCards() {
-    var summary = reviewData.summary || {};
-    
+    const summary = reviewData.summary || {};
     document.getElementById('totalReviews').textContent = formatNumber(summary.total_reviews || 0);
     document.getElementById('totalStores').textContent = formatNumber(summary.total_stores || 0);
     document.getElementById('visitorReviews').textContent = formatNumber(summary.total_visitor_reviews || 0);
@@ -221,45 +249,26 @@ function renderSummaryCards() {
 }
 
 function renderStatsCards() {
-    var stats = reviewData.stats || {};
+    const stats = reviewData.stats || {};
     
-    // 오늘 리뷰
-    var todayEl = document.getElementById('todayReviews');
-    if (todayEl) {
-        todayEl.textContent = formatNumber(stats.today || 0);
-    }
+    document.getElementById('todayReviews').textContent = formatNumber(stats.today || 0);
+    document.getElementById('weeklyReviews').textContent = formatNumber(stats.this_week || 0);
+    document.getElementById('monthlyReviews').textContent = formatNumber(stats.this_month || 0);
     
-    // 이번 주 리뷰
-    var weeklyEl = document.getElementById('weeklyReviews');
-    if (weeklyEl) {
-        weeklyEl.textContent = formatNumber(stats.this_week || 0);
-    }
-    
-    // 이번 달 리뷰
-    var monthlyEl = document.getElementById('monthlyReviews');
-    if (monthlyEl) {
-        monthlyEl.textContent = formatNumber(stats.this_month || 0);
-    }
-    
-    // 전일 대비
     renderChangeIndicator('dailyChange', stats.daily_change || 0);
-    
-    // 전주 대비
     renderChangeIndicator('weeklyChange', stats.weekly_change || 0);
-    
-    // 전월 대비
     renderChangeIndicator('monthlyChange', stats.monthly_change || 0);
 }
 
 function renderChangeIndicator(elementId, changeValue) {
-    var container = document.getElementById(elementId);
+    const container = document.getElementById(elementId);
     if (!container) return;
     
-    var changeEl = container.querySelector('.change-value');
+    const changeEl = container.querySelector('.change-value');
     if (!changeEl) return;
     
-    var changeClass = 'neutral';
-    var changeText = '0%';
+    let changeClass = 'neutral';
+    let changeText = '0%';
     
     if (changeValue > 0) {
         changeClass = 'positive';
@@ -280,285 +289,267 @@ function renderChangeIndicator(elementId, changeValue) {
 function filterAndRender() {
     if (!reviewData) return;
     
-    var allReviews = [];
-    var stores = reviewData.stores || [];
+    let allReviews = [];
+    const stores = reviewData.stores || [];
     
-    for (var i = 0; i < stores.length; i++) {
-        var store = stores[i];
+    stores.forEach(store => {
+        // 지점 필터
+        if (currentStore && store.store_name !== currentStore) return;
         
         // 방문자 리뷰
-        if (currentReviewType === 'all' || currentReviewType === 'visitor' || currentReviewType === 'negative') {
-            var visitorReviews = store.visitor_reviews || [];
-            for (var j = 0; j < visitorReviews.length; j++) {
-                var review = Object.assign({}, visitorReviews[j]);
-                review.store_name = store.store_name;
-                
-                // 부정적 리뷰 필터
-                if (currentReviewType === 'negative' && !review.is_negative) {
-                    continue;
+        if (currentReviewType !== 'blog') {
+            (store.visitor_reviews || []).forEach(review => {
+                const r = { ...review, store_name: store.store_name };
+                if (currentReviewType === 'negative' && !r.is_negative) return;
+                if (currentReviewType !== 'negative' || r.is_negative) {
+                    allReviews.push(r);
                 }
-                
-                if (currentReviewType !== 'blog') {
-                    allReviews.push(review);
-                }
-            }
+            });
         }
         
         // 블로그 리뷰
-        if (currentReviewType === 'all' || currentReviewType === 'blog' || currentReviewType === 'negative') {
-            var blogReviews = store.blog_reviews || [];
-            for (var j = 0; j < blogReviews.length; j++) {
-                var review = Object.assign({}, blogReviews[j]);
-                review.store_name = store.store_name;
-                
-                // 부정적 리뷰 필터
-                if (currentReviewType === 'negative' && !review.is_negative) {
-                    continue;
+        if (currentReviewType !== 'visitor') {
+            (store.blog_reviews || []).forEach(review => {
+                const r = { ...review, store_name: store.store_name };
+                if (currentReviewType === 'negative' && !r.is_negative) return;
+                if (currentReviewType !== 'negative' || r.is_negative) {
+                    allReviews.push(r);
                 }
-                
-                if (currentReviewType !== 'visitor') {
-                    allReviews.push(review);
-                }
-            }
+            });
         }
-    }
-    
-    // 지점 필터
-    if (currentStore) {
-        allReviews = allReviews.filter(function(r) {
-            return r.store_name === currentStore;
-        });
-    }
+    });
     
     // 검색 필터
     if (searchQuery) {
-        var query = searchQuery.toLowerCase();
-        allReviews = allReviews.filter(function(r) {
-            var content = (r.content || '').toLowerCase();
-            var author = (r.author || '').toLowerCase();
-            var title = (r.title || '').toLowerCase();
-            var tags = r.tags || [];
-            var keywords = r.keywords || [];
+        const query = searchQuery.toLowerCase();
+        allReviews = allReviews.filter(r => {
+            const content = (r.content || '').toLowerCase();
+            const author = (r.author || '').toLowerCase();
+            const title = (r.title || '').toLowerCase();
+            const tags = (r.tags || []).join(' ').toLowerCase();
+            const keywords = (r.keywords || []).join(' ').toLowerCase();
             
-            if (content.indexOf(query) >= 0) return true;
-            if (author.indexOf(query) >= 0) return true;
-            if (title.indexOf(query) >= 0) return true;
-            
-            for (var i = 0; i < tags.length; i++) {
-                if (tags[i].toLowerCase().indexOf(query) >= 0) return true;
-            }
-            for (var i = 0; i < keywords.length; i++) {
-                if (keywords[i].toLowerCase().indexOf(query) >= 0) return true;
-            }
-            
-            return false;
+            return content.includes(query) || author.includes(query) || 
+                   title.includes(query) || tags.includes(query) || keywords.includes(query);
         });
     }
     
     // 정렬
-    allReviews.sort(function(a, b) {
-        var dateA = a.visit_date || a.write_date || '';
-        var dateB = b.visit_date || b.write_date || '';
-        
-        if (currentSort === 'oldest') {
-            return dateA.localeCompare(dateB);
-        } else {
-            return dateB.localeCompare(dateA);
-        }
+    allReviews.sort((a, b) => {
+        const dateA = a.visit_date || a.write_date || '';
+        const dateB = b.visit_date || b.write_date || '';
+        return currentSort === 'oldest' ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
     });
     
     filteredReviews = allReviews;
+    displayedReviews = [];
     
     renderTagCloud();
-    renderReviewList();
+    renderInitialReviews();
 }
 
 // ============================================
-// 태그 클라우드 렌더링
+// 태그 클라우드
 // ============================================
 
 function renderTagCloud() {
-    var container = document.getElementById('tagCloud');
+    const container = document.getElementById('tagCloud');
     if (!container) return;
     
-    var tagCounts = {};
-    
-    for (var i = 0; i < filteredReviews.length; i++) {
-        var review = filteredReviews[i];
-        var tags = review.tags || [];
-        for (var j = 0; j < tags.length; j++) {
-            var tag = tags[j];
+    const tagCounts = {};
+    filteredReviews.forEach(review => {
+        (review.tags || []).forEach(tag => {
             tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-        }
-    }
-    
-    var tagArray = [];
-    for (var tag in tagCounts) {
-        tagArray.push([tag, tagCounts[tag]]);
-    }
-    
-    tagArray.sort(function(a, b) {
-        return b[1] - a[1];
+        });
     });
     
-    var topTags = tagArray.slice(0, 10);
+    const topTags = Object.entries(tagCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
     
     if (topTags.length === 0) {
         container.innerHTML = '<span style="color: #666;">태그 데이터가 없습니다.</span>';
         return;
     }
     
-    var html = '';
-    for (var i = 0; i < topTags.length; i++) {
-        var tag = topTags[i][0];
-        var count = topTags[i][1];
-        html += '<div class="tag-item" data-tag="' + escapeHtml(tag) + '">' +
-            '<span>' + escapeHtml(tag) + '</span>' +
-            '<span class="tag-count">' + count + '</span>' +
-        '</div>';
-    }
-    container.innerHTML = html;
+    container.innerHTML = topTags.map(([tag, count]) => `
+        <div class="tag-item" data-tag="${escapeHtml(tag)}">
+            <span>${escapeHtml(tag)}</span>
+            <span class="tag-count">${count}</span>
+        </div>
+    `).join('');
     
-    var tagItems = container.querySelectorAll('.tag-item');
-    for (var i = 0; i < tagItems.length; i++) {
-        tagItems[i].addEventListener('click', function() {
-            var tag = this.dataset.tag;
-            document.getElementById('searchInput').value = tag;
-            searchQuery = tag;
-            filterAndRender();
+    container.querySelectorAll('.tag-item').forEach(item => {
+        item.addEventListener('click', function() {
+            document.getElementById('searchInput').value = this.dataset.tag;
+            searchQuery = this.dataset.tag;
+            resetAndRender();
         });
-    }
+    });
 }
 
 // ============================================
-// 리뷰 목록 렌더링 (항상 2단 그리드)
+// 리뷰 목록 렌더링 (무한 스크롤)
 // ============================================
 
-function renderReviewList() {
-    var container = document.getElementById('reviewList');
-    var countEl = document.getElementById('reviewCount');
-    
+function renderInitialReviews() {
+    const container = document.getElementById('reviewList');
     if (!container) return;
     
-    if (countEl) {
-        countEl.textContent = '(' + filteredReviews.length + '개)';
-    }
+    // 초기화
+    container.innerHTML = '';
+    currentPage = 1;
+    hasMoreReviews = true;
+    
+    updateReviewCount();
     
     if (filteredReviews.length === 0) {
-        container.innerHTML = 
-            '<div class="empty-reviews">' +
-                '<div class="empty-icon">📝</div>' +
-                '<p>리뷰가 없습니다.</p>' +
-            '</div>';
+        container.innerHTML = `
+            <div class="empty-reviews">
+                <div class="empty-icon">📝</div>
+                <p>리뷰가 없습니다.</p>
+            </div>`;
+        hasMoreReviews = false;
         return;
     }
     
-    var html = '';
-    for (var idx = 0; idx < filteredReviews.length; idx++) {
-        var review = filteredReviews[idx];
-        var isBlog = review.type === 'blog';
-        var isNegative = review.is_negative;
-        var dateRaw = review.visit_date_raw || review.write_date_raw || '';
-        
-        var cardClass = 'review-card';
-        if (isBlog) {
-            cardClass += ' blog-review';
-        } else {
-            cardClass += ' visitor-review';
-        }
-        if (isNegative) {
-            cardClass += ' negative-review';
-        }
-        
-        html += '<div class="' + cardClass + '" data-index="' + idx + '">';
-        
-        // 헤더
-        html += '<div class="review-header">';
-        html += '<div class="review-author">';
-        html += '<div class="author-avatar">' + (isBlog ? 'B' : 'V') + '</div>';
-        html += '<div class="author-info">';
-        html += '<span class="author-name">' + escapeHtml(review.author || '익명') + '</span>';
-        if (isBlog && review.blog_name) {
-            html += '<span class="blog-name">' + escapeHtml(review.blog_name) + '</span>';
-        }
-        html += '</div></div>';
-        
-        html += '<div class="review-meta">';
-        if (isNegative) {
-            html += '<span class="type-badge type-negative">부정</span>';
-        }
-        html += '<span class="type-badge ' + (isBlog ? 'type-blog' : 'type-visitor') + '">' + (isBlog ? '블로그' : '방문자') + '</span>';
-        html += '<span class="store-badge">' + escapeHtml(review.store_name || '') + '</span>';
-        html += '</div></div>';
-        
-        // 블로그 제목
-        if (isBlog && review.title) {
-            html += '<div class="review-title">' + escapeHtml(review.title) + '</div>';
-        }
-        
-        // 이미지 (모든 이미지 표시, 최대 8개)
-        if (review.images && review.images.length > 0) {
-            html += '<div class="review-images">';
-            var maxImages = Math.min(8, review.images.length);
-            for (var i = 0; i < maxImages; i++) {
-                html += '<img src="' + escapeHtml(review.images[i]) + '" class="review-image" alt="리뷰 이미지" loading="lazy" onerror="this.style.display=\'none\'">';
-            }
-            if (review.images.length > 8) {
-                html += '<div class="more-images">+' + (review.images.length - 8) + '</div>';
-            }
-            html += '</div>';
-        }
-        
-        // 내용
-        html += '<div class="review-content">' + escapeHtml(review.content || '') + '</div>';
-        
-        // 키워드 (방문자 리뷰)
-        if (review.keywords && review.keywords.length > 0) {
-            html += '<div class="review-keywords">';
-            for (var i = 0; i < Math.min(5, review.keywords.length); i++) {
-                html += '<span class="keyword-badge">' + escapeHtml(review.keywords[i]) + '</span>';
-            }
-            html += '</div>';
-        }
-        
-        // 태그
-        if (review.tags && review.tags.length > 0) {
-            html += '<div class="review-tags">';
-            for (var i = 0; i < Math.min(4, review.tags.length); i++) {
-                html += '<span class="review-tag">' + escapeHtml(review.tags[i]) + '</span>';
-            }
-            if (review.tags.length > 4) {
-                html += '<span class="review-tag">+' + (review.tags.length - 4) + '</span>';
-            }
-            html += '</div>';
-        }
-        
-        // 날짜 및 방문 정보
-        html += '<div class="review-footer">';
-        html += '<span class="review-date">' + escapeHtml(dateRaw) + '</span>';
-        if (review.visit_info && review.visit_info.length > 0) {
-            html += '<span class="visit-info">' + escapeHtml(review.visit_info.slice(0, 3).join(' · ')) + '</span>';
-        }
-        html += '</div>';
-        
-        // 블로그 링크
-        if (isBlog && review.blog_url) {
-            html += '<a href="' + escapeHtml(review.blog_url) + '" target="_blank" class="blog-link" onclick="event.stopPropagation();">블로그 원문 보기 →</a>';
-        }
-        
-        html += '</div>';
+    // 첫 페이지 로드
+    const initialReviews = filteredReviews.slice(0, REVIEWS_PER_PAGE);
+    appendReviewCards(initialReviews, 0);
+    
+    hasMoreReviews = filteredReviews.length > REVIEWS_PER_PAGE;
+}
+
+function appendReviewCards(reviews, startIdx) {
+    const container = document.getElementById('reviewList');
+    if (!container) return;
+    
+    const fragment = document.createDocumentFragment();
+    
+    reviews.forEach((review, i) => {
+        const globalIdx = startIdx + i;
+        const card = createReviewCard(review, globalIdx);
+        fragment.appendChild(card);
+        displayedReviews.push(review);
+    });
+    
+    container.appendChild(fragment);
+}
+
+function createReviewCard(review, idx) {
+    const isBlog = review.type === 'blog';
+    const isNegative = review.is_negative;
+    const dateRaw = review.visit_date_raw || review.write_date_raw || '';
+    
+    const card = document.createElement('div');
+    card.className = `review-card ${isBlog ? 'blog-review' : 'visitor-review'}${isNegative ? ' negative-review' : ''}`;
+    card.dataset.index = idx;
+    
+    // 감성 점수 표시 (디버그용, 필요시 제거)
+    const sentimentBadge = review.sentiment_score !== undefined ? 
+        `<span class="sentiment-badge ${review.sentiment_score >= 2 ? 'neg' : 'pos'}" title="점수: ${review.sentiment_score}, 방법: ${review.sentiment_method || 'keyword'}">${review.sentiment_score}</span>` : '';
+    
+    card.innerHTML = `
+        <div class="review-header">
+            <div class="review-author">
+                <div class="author-avatar">${isBlog ? 'B' : 'V'}</div>
+                <div class="author-info">
+                    <span class="author-name">${escapeHtml(review.author || '익명')}</span>
+                    ${isBlog && review.blog_name ? `<span class="blog-name">${escapeHtml(review.blog_name)}</span>` : ''}
+                </div>
+            </div>
+            <div class="review-meta">
+                ${isNegative ? '<span class="type-badge type-negative">부정</span>' : ''}
+                ${sentimentBadge}
+                <span class="type-badge ${isBlog ? 'type-blog' : 'type-visitor'}">${isBlog ? '블로그' : '방문자'}</span>
+                <span class="store-badge">${escapeHtml(review.store_name || '')}</span>
+            </div>
+        </div>
+        ${isBlog && review.title ? `<div class="review-title">${escapeHtml(review.title)}</div>` : ''}
+        ${renderImages(review.images)}
+        <div class="review-content">${escapeHtml(review.content || '')}</div>
+        ${renderKeywords(review.keywords)}
+        ${renderTags(review.tags)}
+        <div class="review-footer">
+            <span class="review-date">${escapeHtml(dateRaw)}</span>
+            ${review.visit_info?.length ? `<span class="visit-info">${escapeHtml(review.visit_info.slice(0, 3).join(' · '))}</span>` : ''}
+        </div>
+        ${isBlog && review.blog_url ? `<a href="${escapeHtml(review.blog_url)}" target="_blank" class="blog-link" onclick="event.stopPropagation();">블로그 원문 보기 →</a>` : ''}
+    `;
+    
+    card.addEventListener('click', function(e) {
+        if (e.target.classList.contains('blog-link')) return;
+        showReviewModal(filteredReviews[idx]);
+    });
+    
+    return card;
+}
+
+function renderImages(images) {
+    if (!images || images.length === 0) return '';
+    
+    const maxImages = Math.min(4, images.length);
+    let html = '<div class="review-images">';
+    
+    for (let i = 0; i < maxImages; i++) {
+        // 레이지 로딩 적용
+        html += `<img data-src="${escapeHtml(images[i])}" class="review-image lazy-image" alt="리뷰 이미지" loading="lazy">`;
     }
     
-    container.innerHTML = html;
+    if (images.length > 4) {
+        html += `<div class="more-images">+${images.length - 4}</div>`;
+    }
     
-    // 클릭 이벤트
-    var cards = container.querySelectorAll('.review-card');
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click', function(e) {
-            if (e.target.classList.contains('blog-link')) return;
-            var idx = parseInt(this.dataset.index);
-            showReviewModal(filteredReviews[idx]);
+    html += '</div>';
+    
+    // 이미지 레이지 로딩 트리거
+    setTimeout(lazyLoadImages, 0);
+    
+    return html;
+}
+
+function lazyLoadImages() {
+    const images = document.querySelectorAll('.lazy-image[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                img.classList.remove('lazy-image');
+                imageObserver.unobserve(img);
+            }
         });
+    }, { rootMargin: '100px' });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+function renderKeywords(keywords) {
+    if (!keywords || keywords.length === 0) return '';
+    return `<div class="review-keywords">${keywords.slice(0, 5).map(k => 
+        `<span class="keyword-badge">${escapeHtml(k)}</span>`).join('')}</div>`;
+}
+
+function renderTags(tags) {
+    if (!tags || tags.length === 0) return '';
+    const displayTags = tags.slice(0, 4);
+    let html = `<div class="review-tags">${displayTags.map(t => 
+        `<span class="review-tag">${escapeHtml(t)}</span>`).join('')}`;
+    if (tags.length > 4) {
+        html += `<span class="review-tag">+${tags.length - 4}</span>`;
+    }
+    html += '</div>';
+    return html;
+}
+
+function updateReviewCount() {
+    const countEl = document.getElementById('reviewCount');
+    if (countEl) {
+        const displayed = displayedReviews.length;
+        const total = filteredReviews.length;
+        countEl.textContent = `(${displayed}/${total}개)`;
     }
 }
 
@@ -567,91 +558,54 @@ function renderReviewList() {
 // ============================================
 
 function showReviewModal(review) {
-    var modal = document.getElementById('reviewModal');
-    var body = document.getElementById('reviewModalBody');
-    
+    const modal = document.getElementById('reviewModal');
+    const body = document.getElementById('reviewModalBody');
     if (!modal || !body || !review) return;
     
-    var isBlog = review.type === 'blog';
-    var isNegative = review.is_negative;
-    var dateRaw = review.visit_date_raw || review.write_date_raw || '';
+    const isBlog = review.type === 'blog';
+    const isNegative = review.is_negative;
+    const dateRaw = review.visit_date_raw || review.write_date_raw || '';
     
-    var html = '<div class="review-detail">';
+    body.innerHTML = `
+        <div class="review-detail">
+            <div class="review-header">
+                <div class="review-author">
+                    <div class="author-avatar">${isBlog ? 'B' : 'V'}</div>
+                    <div class="author-info">
+                        <span class="author-name">${escapeHtml(review.author || '익명')}</span>
+                        ${isBlog && review.blog_name ? `<span class="blog-name">${escapeHtml(review.blog_name)}</span>` : ''}
+                        ${review.visit_info?.length ? `<span class="author-meta">${review.visit_info.join(' / ')}</span>` : ''}
+                    </div>
+                </div>
+                <div class="review-meta">
+                    ${isNegative ? '<span class="type-badge type-negative">부정</span>' : ''}
+                    <span class="type-badge ${isBlog ? 'type-blog' : 'type-visitor'}">${isBlog ? '블로그' : '방문자'}</span>
+                    <span class="store-badge">${escapeHtml(review.store_name || '')}</span>
+                    <span class="review-date">${escapeHtml(dateRaw)}</span>
+                </div>
+            </div>
+            ${isBlog && review.title ? `<div class="review-title" style="-webkit-line-clamp: unset;">${escapeHtml(review.title)}</div>` : ''}
+            ${review.images?.length ? `<div class="review-images">${review.images.map(img => 
+                `<img src="${escapeHtml(img)}" class="review-image" alt="리뷰 이미지">`).join('')}</div>` : ''}
+            <div class="review-content" style="-webkit-line-clamp: unset;">${escapeHtml(review.content || '')}</div>
+            ${review.keywords?.length ? `<div class="review-keywords">${review.keywords.map(k => 
+                `<span class="keyword-badge">${escapeHtml(k)}</span>`).join('')}</div>` : ''}
+            ${review.tags?.length ? `<div class="review-tags">${review.tags.map(t => 
+                `<span class="review-tag">${escapeHtml(t)}</span>`).join('')}</div>` : ''}
+            ${review.sentiment_score !== undefined ? `
+                <div class="sentiment-info">
+                    <span>감성 점수: ${review.sentiment_score}</span>
+                    <span>분석 방법: ${review.sentiment_method || 'keyword'}</span>
+                </div>` : ''}
+            ${isBlog && review.blog_url ? `<a href="${escapeHtml(review.blog_url)}" target="_blank" class="blog-link-modal">블로그 원문 보기 →</a>` : ''}
+        </div>
+    `;
     
-    // 헤더
-    html += '<div class="review-header">';
-    html += '<div class="review-author">';
-    html += '<div class="author-avatar">' + (isBlog ? 'B' : 'V') + '</div>';
-    html += '<div class="author-info">';
-    html += '<span class="author-name">' + escapeHtml(review.author || '익명') + '</span>';
-    if (isBlog && review.blog_name) {
-        html += '<span class="blog-name">' + escapeHtml(review.blog_name) + '</span>';
-    }
-    if (review.visit_info && review.visit_info.length > 0) {
-        html += '<span class="author-meta">' + review.visit_info.join(' / ') + '</span>';
-    }
-    html += '</div></div>';
-    
-    html += '<div class="review-meta">';
-    if (isNegative) {
-        html += '<span class="type-badge type-negative">부정</span>';
-    }
-    html += '<span class="type-badge ' + (isBlog ? 'type-blog' : 'type-visitor') + '">' + (isBlog ? '블로그' : '방문자') + '</span>';
-    html += '<span class="store-badge">' + escapeHtml(review.store_name || '') + '</span>';
-    html += '<span class="review-date">' + escapeHtml(dateRaw) + '</span>';
-    html += '</div></div>';
-    
-    // 블로그 제목
-    if (isBlog && review.title) {
-        html += '<div class="review-title" style="-webkit-line-clamp: unset;">' + escapeHtml(review.title) + '</div>';
-    }
-    
-    // 이미지 (모달에서는 모든 이미지 표시)
-    if (review.images && review.images.length > 0) {
-        html += '<div class="review-images">';
-        for (var i = 0; i < review.images.length; i++) {
-            html += '<img src="' + escapeHtml(review.images[i]) + '" class="review-image" alt="리뷰 이미지" onerror="this.style.display=\'none\'">';
-        }
-        html += '</div>';
-    }
-    
-    // 내용 (전체)
-    html += '<div class="review-content">' + escapeHtml(review.content || '') + '</div>';
-    
-    // 키워드
-    if (review.keywords && review.keywords.length > 0) {
-        html += '<div class="review-keywords">';
-        for (var i = 0; i < review.keywords.length; i++) {
-            html += '<span class="keyword-badge">' + escapeHtml(review.keywords[i]) + '</span>';
-        }
-        html += '</div>';
-    }
-    
-    // 태그 (전체)
-    if (review.tags && review.tags.length > 0) {
-        html += '<div class="review-tags">';
-        for (var i = 0; i < review.tags.length; i++) {
-            html += '<span class="review-tag">' + escapeHtml(review.tags[i]) + '</span>';
-        }
-        html += '</div>';
-    }
-    
-    // 블로그 링크
-    if (isBlog && review.blog_url) {
-        html += '<a href="' + escapeHtml(review.blog_url) + '" target="_blank" class="blog-link-modal">블로그 원문 보기 →</a>';
-    }
-    
-    html += '</div>';
-    
-    body.innerHTML = html;
     modal.classList.add('active');
 }
 
 function closeModal() {
-    var modal = document.getElementById('reviewModal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
+    document.getElementById('reviewModal')?.classList.remove('active');
 }
 
 // ============================================
@@ -665,17 +619,14 @@ function formatNumber(num) {
 
 function formatDateTime(date) {
     return date.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
     });
 }
 
 function escapeHtml(text) {
     if (!text) return '';
-    var div = document.createElement('div');
+    const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
