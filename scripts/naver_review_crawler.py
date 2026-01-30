@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-네이버 플레이스 리뷰 크롤러 (2026년 1월 업데이트)
-- 방문자 리뷰 + 블로그 리뷰 수집
-- 변경된 HTML 구조 대응
-- 모든 이미지 수집
+네이버 플레이스 리뷰 크롤러 v3
+- 타임아웃 재시도 로직 추가
+- 파싱 전 스크롤 초기화
+- 더 안정적인 요소 대기
 """
 
 import os
@@ -17,7 +17,7 @@ import argparse
 from datetime import datetime, timedelta
 
 print("=" * 60, flush=True)
-print("네이버 플레이스 리뷰 크롤러 v2", flush=True)
+print("네이버 플레이스 리뷰 크롤러 v3", flush=True)
 print("=" * 60, flush=True)
 
 try:
@@ -27,17 +27,17 @@ try:
     from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.chrome.service import Service
     from selenium.webdriver.chrome.options import Options
-    from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
+    from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException
     print("[INFO] Selenium 로드 완료", flush=True)
 except ImportError as e:
-    print("[ERROR] Selenium 필요: " + str(e), flush=True)
+    print(f"[ERROR] Selenium 필요: {e}", flush=True)
     sys.exit(1)
 
 try:
     from webdriver_manager.chrome import ChromeDriverManager
     print("[INFO] WebDriver Manager 로드 완료", flush=True)
 except ImportError as e:
-    print("[ERROR] WebDriver Manager 필요: " + str(e), flush=True)
+    print(f"[ERROR] WebDriver Manager 필요: {e}", flush=True)
     sys.exit(1)
 
 # ============================================
@@ -75,6 +75,8 @@ def setup_driver():
     options.add_argument('--disable-gpu')
     options.add_argument('--window-size=1920,1080')
     options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument('--disable-web-security')
+    options.add_argument('--allow-running-insecure-content')
     options.add_argument(
         '--user-agent=Mozilla/5.0 (Linux; Android 10; SM-G975F) '
         'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
@@ -83,19 +85,19 @@ def setup_driver():
     try:
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
+        driver.set_page_load_timeout(30)
         print("[SETUP] Chrome 드라이버 설정 완료", flush=True)
         return driver
     except Exception as e:
-        print("[ERROR] Chrome 드라이버 설정 실패: " + str(e), flush=True)
+        print(f"[ERROR] Chrome 드라이버 설정 실패: {e}", flush=True)
         raise
 
 
 def parse_date(date_str):
-    """날짜 문자열 파싱 (다양한 형식 지원)"""
+    """날짜 문자열 파싱"""
     if not date_str:
         return None
     
-    # 숫자만 추출
     parts = re.findall(r'\d+', date_str)
     
     if len(parts) >= 3:
@@ -104,77 +106,101 @@ def parse_date(date_str):
             year += 2000
         month = int(parts[1])
         day = int(parts[2])
-        return "{:04d}-{:02d}-{:02d}".format(year, month, day)
+        return f"{year:04d}-{month:02d}-{day:02d}"
     elif len(parts) >= 2:
-        # "1.30.금" 형식 처리
         current_year = datetime.now().year
         month = int(parts[0])
         day = int(parts[1])
-        return "{:04d}-{:02d}-{:02d}".format(current_year, month, day)
+        return f"{current_year:04d}-{month:02d}-{day:02d}"
     
     return None
 
 
-def scroll_and_load(driver, max_scrolls=50, wait_time=1.0):
-    """스크롤하여 더 많은 리뷰 로드"""
-    last_height = driver.execute_script("return document.body.scrollHeight")
-    scroll_count = 0
-    
-    while scroll_count < max_scrolls:
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(wait_time)
-        
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:
-            break
-        
-        last_height = new_height
-        scroll_count += 1
-        
-        if scroll_count % 10 == 0:
-            print(f"[SCROLL] {scroll_count}회 스크롤", flush=True)
-    
-    return scroll_count
+def wait_for_page_load(driver, timeout=15):
+    """페이지 완전 로딩 대기"""
+    try:
+        WebDriverWait(driver, timeout).until(
+            lambda d: d.execute_script("return document.readyState") == "complete"
+        )
+        time.sleep(2)  # 추가 대기
+        return True
+    except:
+        return False
 
 
-def click_more_buttons(driver, start_date=None, max_clicks=200):
-    """더보기 버튼 클릭"""
+def scroll_to_top(driver):
+    """페이지 맨 위로 스크롤"""
+    driver.execute_script("window.scrollTo(0, 0);")
+    time.sleep(0.5)
+
+
+def scroll_to_bottom(driver):
+    """페이지 맨 아래로 스크롤"""
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
+
+
+def load_all_reviews(driver, max_clicks=200):
+    """더보기 버튼 클릭하여 모든 리뷰 로드"""
     click_count = 0
+    no_button_count = 0
     
     while click_count < max_clicks:
         try:
-            # 다양한 더보기 버튼 셀렉터 시도
-            more_selectors = [
+            # 더보기 버튼 찾기 (여러 셀렉터 시도)
+            more_button = None
+            selectors = [
                 'a.fvwqf',
                 'a[class*="fvwqf"]',
                 'button[class*="more"]',
-                '.pui__rvshowmore'
+                'a[data-pui-click-code="rvshowmore"]'
             ]
             
-            more_button = None
-            for selector in more_selectors:
+            for sel in selectors:
                 try:
-                    more_button = driver.find_element(By.CSS_SELECTOR, selector)
-                    if more_button.is_displayed():
+                    buttons = driver.find_elements(By.CSS_SELECTOR, sel)
+                    for btn in buttons:
+                        if btn.is_displayed() and btn.is_enabled():
+                            more_button = btn
+                            break
+                    if more_button:
                         break
                 except:
                     continue
             
-            if not more_button or not more_button.is_displayed():
-                break
+            if not more_button:
+                no_button_count += 1
+                if no_button_count >= 3:
+                    print(f"[MORE] 더보기 버튼 없음 - 완료", flush=True)
+                    break
+                scroll_to_bottom(driver)
+                time.sleep(1)
+                continue
             
-            driver.execute_script("arguments[0].click();", more_button)
-            click_count += 1
+            no_button_count = 0
             
-            if click_count % 10 == 0:
-                print(f"[MORE] 클릭 {click_count}회", flush=True)
-            
-            time.sleep(1.0)
-            
-        except NoSuchElementException:
-            break
+            # 버튼 클릭
+            try:
+                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", more_button)
+                time.sleep(0.3)
+                driver.execute_script("arguments[0].click();", more_button)
+                click_count += 1
+                
+                if click_count % 10 == 0:
+                    print(f"[MORE] 클릭 {click_count}회", flush=True)
+                
+                time.sleep(1.0)
+                
+            except StaleElementReferenceException:
+                time.sleep(0.5)
+                continue
+            except ElementClickInterceptedException:
+                scroll_to_bottom(driver)
+                time.sleep(0.5)
+                continue
+                
         except Exception as e:
-            print(f"[MORE] 클릭 오류: {e}", flush=True)
+            print(f"[MORE] 오류: {e}", flush=True)
             break
     
     print(f"[MORE] 총 {click_count}회 클릭", flush=True)
@@ -186,7 +212,6 @@ def get_all_images(item):
     images = []
     
     try:
-        # 다양한 이미지 셀렉터 시도
         img_selectors = [
             'img.K0PDV',
             'img[class*="K0PDV"]',
@@ -210,7 +235,7 @@ def get_all_images(item):
             except:
                 continue
     except Exception as e:
-        print(f"[WARN] 이미지 추출 오류: {e}", flush=True)
+        pass
     
     return images
 
@@ -262,38 +287,55 @@ def generate_review_id(review):
     content = (review.get('content') or '')[:50]
     date = review.get('visit_date') or review.get('write_date') or ''
     
-    raw = author + "_" + content + "_" + date
+    raw = f"{author}_{content}_{date}"
     return hashlib.md5(raw.encode()).hexdigest()[:16]
 
 
+def find_elements_safe(driver, selectors, context=None):
+    """안전하게 요소 찾기 (여러 셀렉터 시도)"""
+    target = context if context else driver
+    
+    for selector in selectors:
+        try:
+            elements = target.find_elements(By.CSS_SELECTOR, selector)
+            if elements:
+                return elements, selector
+        except:
+            continue
+    
+    return [], None
+
+
 def parse_visitor_reviews(driver, start_date=None, end_date=None):
-    """방문자 리뷰 파싱 (새로운 HTML 구조)"""
+    """방문자 리뷰 파싱"""
     reviews = []
     
     try:
-        # 새로운 셀렉터: li.place_apply_pui.EjjAW 또는 li.EjjAW
-        review_selectors = [
+        # 스크롤을 맨 위로 이동
+        scroll_to_top(driver)
+        time.sleep(1)
+        
+        # 리뷰 아이템 찾기
+        selectors = [
             'li.place_apply_pui.EjjAW',
             'li.EjjAW',
             'li[class*="EjjAW"]',
-            'li.pui__X35jYm'  # 폴백용 기존 셀렉터
+            'li.pui__X35jYm'
         ]
         
-        review_items = []
-        for selector in review_selectors:
-            try:
-                items = driver.find_elements(By.CSS_SELECTOR, selector)
-                if items:
-                    review_items = items
-                    print(f"[PARSE] 셀렉터 '{selector}'로 {len(items)}개 발견", flush=True)
-                    break
-            except:
-                continue
+        review_items, used_selector = find_elements_safe(driver, selectors)
+        
+        if not review_items:
+            # 재시도: 페이지 새로고침 없이 잠시 대기 후 다시 시도
+            print("[PARSE] 리뷰 요소 찾기 재시도...", flush=True)
+            time.sleep(3)
+            review_items, used_selector = find_elements_safe(driver, selectors)
         
         if not review_items:
             print("[PARSE] 방문자 리뷰 요소를 찾을 수 없음", flush=True)
             return reviews
         
+        print(f"[PARSE] 셀렉터 '{used_selector}'로 {len(review_items)}개 발견", flush=True)
         print(f"[PARSE] 방문자 리뷰 {len(review_items)}개 파싱 중...", flush=True)
         
         for idx, item in enumerate(review_items):
@@ -302,77 +344,46 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None):
                 
                 # 작성자명
                 try:
-                    author_selectors = ['.pui__NMi-Dp', '.pui__uslU0d span', '[class*="NMi-Dp"]']
-                    for sel in author_selectors:
-                        try:
-                            review['author'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['author']:
-                                break
-                        except:
-                            continue
+                    author_els, _ = find_elements_safe(item, ['.pui__NMi-Dp', '[class*="NMi-Dp"]'])
+                    review['author'] = author_els[0].text.strip() if author_els else ''
                 except:
                     review['author'] = ''
                 
                 # 리뷰 내용
                 try:
-                    content_selectors = ['.pui__vn15t2', '[class*="vn15t2"]', '.review_content']
-                    for sel in content_selectors:
-                        try:
-                            review['content'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['content']:
-                                break
-                        except:
-                            continue
+                    content_els, _ = find_elements_safe(item, ['.pui__vn15t2', '[class*="vn15t2"]'])
+                    review['content'] = content_els[0].text.strip() if content_els else ''
                 except:
                     review['content'] = ''
                 
-                # 방문 키워드 (점심에 방문, 예약 없이 이용 등)
+                # 방문 키워드
                 try:
-                    keyword_selectors = ['.pui__V8F9nN em', '.pui__uqSlGl em', '[class*="V8F9nN"] em']
+                    keyword_els = item.find_elements(By.CSS_SELECTOR, '.pui__V8F9nN em, [class*="V8F9nN"] em')
                     keywords = []
-                    for sel in keyword_selectors:
-                        try:
-                            els = item.find_elements(By.CSS_SELECTOR, sel)
-                            for el in els:
-                                text = el.text.strip()
-                                if text and text not in keywords:
-                                    keywords.append(text)
-                        except:
-                            continue
+                    for el in keyword_els:
+                        text = el.text.strip()
+                        if text and text not in keywords:
+                            keywords.append(text)
                     review['keywords'] = keywords
                 except:
                     review['keywords'] = []
                 
-                # 태그 (음식이 맛있어요 등)
+                # 태그
                 try:
-                    tag_selectors = ['.pui__jhpEyP', '[class*="jhpEyP"]', '.review_tag']
+                    tag_els = item.find_elements(By.CSS_SELECTOR, '.pui__jhpEyP, [class*="jhpEyP"]')
                     tags = []
-                    for sel in tag_selectors:
-                        try:
-                            els = item.find_elements(By.CSS_SELECTOR, sel)
-                            for el in els:
-                                text = el.text.strip()
-                                # +4 같은 더보기 버튼 제외
-                                if text and not text.startswith('+') and text not in tags:
-                                    tags.append(text)
-                        except:
-                            continue
+                    for el in tag_els:
+                        text = el.text.strip()
+                        if text and not text.startswith('+') and text not in tags:
+                            tags.append(text)
                     review['tags'] = tags
                 except:
                     review['tags'] = []
                 
                 # 방문일
                 try:
-                    date_selectors = ['.pui__gfuUIT time', '.pui__QKE5Pr time', 'time']
-                    raw_date = ''
-                    for sel in date_selectors:
-                        try:
-                            date_el = item.find_element(By.CSS_SELECTOR, sel)
-                            raw_date = date_el.text.strip()
-                            if raw_date:
-                                break
-                        except:
-                            continue
+                    date_els = item.find_elements(By.CSS_SELECTOR, '.pui__gfuUIT time, .pui__QKE5Pr time, time')
+                    raw_date = date_els[0].text.strip() if date_els else ''
                     review['visit_date_raw'] = raw_date
                     review['visit_date'] = parse_date(raw_date)
                 except:
@@ -383,24 +394,19 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None):
                 if not is_date_in_range(review['visit_date'], start_date, end_date):
                     continue
                 
-                # 방문 정보 (1번째 방문, 영수증 등)
+                # 방문 정보
                 try:
-                    info_selectors = ['.pui__gfuUIT', '.pui__QKE5Pr span', '[class*="gfuUIT"]']
+                    info_els = item.find_elements(By.CSS_SELECTOR, '.pui__gfuUIT, [class*="gfuUIT"]')
                     visit_info = []
-                    for sel in info_selectors:
-                        try:
-                            els = item.find_elements(By.CSS_SELECTOR, sel)
-                            for el in els:
-                                text = el.text.strip()
-                                if text and text not in visit_info:
-                                    visit_info.append(text)
-                        except:
-                            continue
+                    for el in info_els:
+                        text = el.text.strip()
+                        if text and text not in visit_info:
+                            visit_info.append(text)
                     review['visit_info'] = visit_info[:5]
                 except:
                     review['visit_info'] = []
                 
-                # 이미지 (모든 이미지 수집)
+                # 이미지
                 review['images'] = get_all_images(item)
                 
                 # 부정적 리뷰 판별
@@ -413,8 +419,9 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None):
                 if review['author'] or review['content']:
                     reviews.append(review)
                     
+            except StaleElementReferenceException:
+                continue
             except Exception as e:
-                print(f"[WARN] 방문자 리뷰 {idx} 파싱 오류: {e}", flush=True)
                 continue
         
     except Exception as e:
@@ -425,32 +432,33 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None):
 
 
 def parse_blog_reviews(driver, start_date=None, end_date=None):
-    """블로그 리뷰 파싱 (새로운 HTML 구조)"""
+    """블로그 리뷰 파싱"""
     reviews = []
     
     try:
-        # 새로운 셀렉터: li.EblIP
-        review_selectors = [
+        # 스크롤을 맨 위로 이동
+        scroll_to_top(driver)
+        time.sleep(1)
+        
+        # 리뷰 아이템 찾기
+        selectors = [
             'li.EblIP',
             'li[class*="EblIP"]',
-            'li.pui__X35jYm'  # 폴백용 기존 셀렉터
+            'li.pui__X35jYm'
         ]
         
-        review_items = []
-        for selector in review_selectors:
-            try:
-                items = driver.find_elements(By.CSS_SELECTOR, selector)
-                if items:
-                    review_items = items
-                    print(f"[PARSE] 셀렉터 '{selector}'로 {len(items)}개 발견", flush=True)
-                    break
-            except:
-                continue
+        review_items, used_selector = find_elements_safe(driver, selectors)
+        
+        if not review_items:
+            print("[PARSE] 리뷰 요소 찾기 재시도...", flush=True)
+            time.sleep(3)
+            review_items, used_selector = find_elements_safe(driver, selectors)
         
         if not review_items:
             print("[PARSE] 블로그 리뷰 요소를 찾을 수 없음", flush=True)
             return reviews
         
+        print(f"[PARSE] 셀렉터 '{used_selector}'로 {len(review_items)}개 발견", flush=True)
         print(f"[PARSE] 블로그 리뷰 {len(review_items)}개 파싱 중...", flush=True)
         
         for idx, item in enumerate(review_items):
@@ -459,82 +467,43 @@ def parse_blog_reviews(driver, start_date=None, end_date=None):
                 
                 # 블로그 URL
                 try:
-                    link_selectors = ['a.behIY', 'a[class*="behIY"]', 'a[href*="blog.naver.com"]']
-                    for sel in link_selectors:
-                        try:
-                            link_el = item.find_element(By.CSS_SELECTOR, sel)
-                            review['blog_url'] = link_el.get_attribute('href') or ''
-                            if review['blog_url']:
-                                break
-                        except:
-                            continue
+                    link_els = item.find_elements(By.CSS_SELECTOR, 'a.behIY, a[class*="behIY"], a[href*="blog.naver.com"]')
+                    review['blog_url'] = link_els[0].get_attribute('href') if link_els else ''
                 except:
                     review['blog_url'] = ''
                 
                 # 작성자명
                 try:
-                    author_selectors = ['.pui__NMi-Dp', '[class*="NMi-Dp"]']
-                    for sel in author_selectors:
-                        try:
-                            review['author'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['author']:
-                                break
-                        except:
-                            continue
+                    author_els, _ = find_elements_safe(item, ['.pui__NMi-Dp', '[class*="NMi-Dp"]'])
+                    review['author'] = author_els[0].text.strip() if author_els else ''
                 except:
                     review['author'] = ''
                 
                 # 블로그명
                 try:
-                    blog_name_selectors = ['.XR_ao', '.X9yBv span', '[class*="XR_ao"]']
-                    for sel in blog_name_selectors:
-                        try:
-                            review['blog_name'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['blog_name']:
-                                break
-                        except:
-                            continue
+                    blog_name_els = item.find_elements(By.CSS_SELECTOR, '.XR_ao, [class*="XR_ao"]')
+                    review['blog_name'] = blog_name_els[0].text.strip() if blog_name_els else ''
                 except:
                     review['blog_name'] = ''
                 
                 # 제목
                 try:
-                    title_selectors = ['.pui__dGLDWy', '[class*="dGLDWy"]']
-                    for sel in title_selectors:
-                        try:
-                            review['title'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['title']:
-                                break
-                        except:
-                            continue
+                    title_els = item.find_elements(By.CSS_SELECTOR, '.pui__dGLDWy, [class*="dGLDWy"]')
+                    review['title'] = title_els[0].text.strip() if title_els else ''
                 except:
                     review['title'] = ''
                 
                 # 내용
                 try:
-                    content_selectors = ['.pui__vn15t2', '[class*="vn15t2"]']
-                    for sel in content_selectors:
-                        try:
-                            review['content'] = item.find_element(By.CSS_SELECTOR, sel).text.strip()
-                            if review['content']:
-                                break
-                        except:
-                            continue
+                    content_els = item.find_elements(By.CSS_SELECTOR, '.pui__vn15t2, [class*="vn15t2"]')
+                    review['content'] = content_els[0].text.strip() if content_els else ''
                 except:
                     review['content'] = ''
                 
                 # 작성일
                 try:
-                    date_selectors = ['.u5XwJ time', '.X9yBv time', 'time']
-                    raw_date = ''
-                    for sel in date_selectors:
-                        try:
-                            date_el = item.find_element(By.CSS_SELECTOR, sel)
-                            raw_date = date_el.text.strip()
-                            if raw_date:
-                                break
-                        except:
-                            continue
+                    date_els = item.find_elements(By.CSS_SELECTOR, '.u5XwJ time, .X9yBv time, time')
+                    raw_date = date_els[0].text.strip() if date_els else ''
                     review['write_date_raw'] = raw_date
                     review['write_date'] = parse_date(raw_date)
                 except:
@@ -545,7 +514,7 @@ def parse_blog_reviews(driver, start_date=None, end_date=None):
                 if not is_date_in_range(review['write_date'], start_date, end_date):
                     continue
                 
-                # 이미지 (모든 이미지 수집)
+                # 이미지
                 review['images'] = get_all_images(item)
                 
                 # 부정적 리뷰 판별
@@ -558,8 +527,9 @@ def parse_blog_reviews(driver, start_date=None, end_date=None):
                 if review['author'] or review['content'] or review['title']:
                     reviews.append(review)
                     
+            except StaleElementReferenceException:
+                continue
             except Exception as e:
-                print(f"[WARN] 블로그 리뷰 {idx} 파싱 오류: {e}", flush=True)
                 continue
         
     except Exception as e:
@@ -567,6 +537,56 @@ def parse_blog_reviews(driver, start_date=None, end_date=None):
     
     print(f"[PARSE] 블로그 리뷰 {len(reviews)}개 파싱 완료", flush=True)
     return reviews
+
+
+def crawl_with_retry(driver, url, parse_func, start_date, end_date, max_clicks, max_retries=3):
+    """재시도 로직이 포함된 크롤링"""
+    
+    for attempt in range(max_retries):
+        try:
+            print(f"[CRAWL] 시도 {attempt + 1}/{max_retries}: {url}", flush=True)
+            
+            driver.get(url)
+            
+            # 페이지 로딩 대기
+            if not wait_for_page_load(driver, timeout=20):
+                print("[WARN] 페이지 로딩 타임아웃, 재시도...", flush=True)
+                continue
+            
+            # 리뷰 요소 대기 (더 긴 시간)
+            try:
+                WebDriverWait(driver, 15).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, 
+                        'li[class*="EjjAW"], li[class*="EblIP"], li.pui__X35jYm'))
+                )
+                print("[CRAWL] 리뷰 요소 로드 완료", flush=True)
+            except TimeoutException:
+                print("[WARN] 리뷰 요소 로딩 타임아웃", flush=True)
+                # 타임아웃이어도 일단 진행
+            
+            time.sleep(2)
+            
+            # 더보기 클릭
+            load_all_reviews(driver, max_clicks)
+            
+            # 파싱 전 대기
+            time.sleep(2)
+            
+            # 파싱
+            reviews = parse_func(driver, start_date, end_date)
+            
+            if reviews:
+                return reviews
+            elif attempt < max_retries - 1:
+                print(f"[WARN] 리뷰 0개, 재시도...", flush=True)
+                time.sleep(5)  # 재시도 전 대기
+            
+        except Exception as e:
+            print(f"[ERROR] 크롤링 오류: {e}", flush=True)
+            if attempt < max_retries - 1:
+                time.sleep(5)
+    
+    return []
 
 
 def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=None, max_clicks=200):
@@ -588,80 +608,31 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
         'crawled_at': datetime.now().isoformat()
     }
     
-    # 방문자 리뷰
+    # 방문자 리뷰 (재시도 포함)
     visitor_url = f"https://m.place.naver.com/restaurant/{place_id}/review/visitor?reviewSort=recent"
-    print(f"[CRAWL] 방문자 리뷰: {visitor_url}", flush=True)
+    visitor_reviews = crawl_with_retry(
+        driver, visitor_url, parse_visitor_reviews, 
+        start_date, end_date, max_clicks, max_retries=2
+    )
+    store_data['visitor_reviews'] = visitor_reviews
+    store_data['visitor_count'] = len(visitor_reviews)
+    print(f"[CRAWL] 방문자 리뷰 {store_data['visitor_count']}개 수집", flush=True)
     
-    try:
-        driver.get(visitor_url)
-        time.sleep(3)
-        
-        # 페이지 로딩 대기
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'li[class*="EjjAW"], li.pui__X35jYm'))
-            )
-            print("[CRAWL] 방문자 리뷰 페이지 로드 완료", flush=True)
-        except TimeoutException:
-            print("[WARN] 방문자 리뷰 로딩 타임아웃", flush=True)
-        
-        # 스크롤하여 더 많은 리뷰 로드
-        scroll_and_load(driver, max_scrolls=30)
-        
-        # 더보기 버튼 클릭
-        click_more_buttons(driver, start_date, max_clicks)
-        
-        # 파싱
-        visitor_reviews = parse_visitor_reviews(driver, start_date, end_date)
-        store_data['visitor_reviews'] = visitor_reviews
-        store_data['visitor_count'] = len(visitor_reviews)
-        print(f"[CRAWL] 방문자 리뷰 {store_data['visitor_count']}개 수집", flush=True)
-        
-    except Exception as e:
-        print(f"[ERROR] 방문자 리뷰 실패: {e}", flush=True)
+    time.sleep(3)
     
-    time.sleep(2)
-    
-    # 블로그 리뷰
+    # 블로그 리뷰 (재시도 포함)
     blog_url = f"https://m.place.naver.com/restaurant/{place_id}/review/ugc?reviewSort=recent"
-    print(f"[CRAWL] 블로그 리뷰: {blog_url}", flush=True)
-    
-    try:
-        driver.get(blog_url)
-        time.sleep(3)
-        
-        # 페이지 로딩 대기
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'li[class*="EblIP"], li.pui__X35jYm'))
-            )
-            print("[CRAWL] 블로그 리뷰 페이지 로드 완료", flush=True)
-        except TimeoutException:
-            print("[WARN] 블로그 리뷰 로딩 타임아웃", flush=True)
-        
-        # 스크롤하여 더 많은 리뷰 로드
-        scroll_and_load(driver, max_scrolls=30)
-        
-        # 더보기 버튼 클릭
-        click_more_buttons(driver, start_date, max_clicks)
-        
-        # 파싱
-        blog_reviews = parse_blog_reviews(driver, start_date, end_date)
-        store_data['blog_reviews'] = blog_reviews
-        store_data['blog_count'] = len(blog_reviews)
-        print(f"[CRAWL] 블로그 리뷰 {store_data['blog_count']}개 수집", flush=True)
-        
-    except Exception as e:
-        print(f"[ERROR] 블로그 리뷰 실패: {e}", flush=True)
+    blog_reviews = crawl_with_retry(
+        driver, blog_url, parse_blog_reviews,
+        start_date, end_date, max_clicks, max_retries=2
+    )
+    store_data['blog_reviews'] = blog_reviews
+    store_data['blog_count'] = len(blog_reviews)
+    print(f"[CRAWL] 블로그 리뷰 {store_data['blog_count']}개 수집", flush=True)
     
     # 부정적 리뷰 수
-    negative_count = 0
-    for r in store_data['visitor_reviews']:
-        if r.get('is_negative'):
-            negative_count += 1
-    for r in store_data['blog_reviews']:
-        if r.get('is_negative'):
-            negative_count += 1
+    negative_count = sum(1 for r in store_data['visitor_reviews'] if r.get('is_negative'))
+    negative_count += sum(1 for r in store_data['blog_reviews'] if r.get('is_negative'))
     store_data['negative_count'] = negative_count
     
     total = store_data['visitor_count'] + store_data['blog_count']
@@ -672,10 +643,7 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
 
 def merge_reviews(existing_reviews, new_reviews):
     """기존 리뷰와 새 리뷰 병합"""
-    existing_ids = set()
-    for r in existing_reviews:
-        if r.get('id'):
-            existing_ids.add(r.get('id'))
+    existing_ids = {r.get('id') for r in existing_reviews if r.get('id')}
     
     merged = list(existing_reviews)
     added = 0
@@ -687,10 +655,7 @@ def merge_reviews(existing_reviews, new_reviews):
             existing_ids.add(review_id)
             added += 1
     
-    def get_date(r):
-        return r.get('visit_date') or r.get('write_date') or ''
-    
-    merged.sort(key=get_date, reverse=True)
+    merged.sort(key=lambda r: r.get('visit_date') or r.get('write_date') or '', reverse=True)
     
     return merged, added
 
@@ -729,22 +694,16 @@ def calculate_review_stats(stores):
             
             if review_date == today:
                 stats['today'] += 1
-            
             if review_date == yesterday:
                 stats['yesterday'] += 1
-            
             if review_date >= week_ago:
                 stats['this_week'] += 1
-            
             if week_ago > review_date >= two_weeks_ago:
                 stats['last_week'] += 1
-            
             if review_date >= month_ago:
                 stats['this_month'] += 1
-            
             if month_ago > review_date >= two_months_ago:
                 stats['last_month'] += 1
-            
             if review.get('is_negative'):
                 stats['total_negative'] += 1
     
@@ -788,7 +747,6 @@ def main():
     parser.add_argument('--store', type=str, help='특정 지점만 수집')
     args = parser.parse_args()
     
-    # 시작일/종료일 계산
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = None
     
@@ -805,7 +763,6 @@ def main():
     
     print(f"최대 클릭 수: {args.max_clicks}", flush=True)
     
-    # 기존 데이터 로드
     existing_data = load_existing_data('docs/review_data.json')
     if existing_data:
         print("[INFO] 기존 데이터 발견 - 병합 모드", flush=True)
@@ -853,11 +810,10 @@ def main():
             
             # 기존 데이터와 병합
             if existing_data:
-                existing_store = None
-                for s in existing_data.get('stores', []):
-                    if s['store_name'] == store_name:
-                        existing_store = s
-                        break
+                existing_store = next(
+                    (s for s in existing_data.get('stores', []) if s['store_name'] == store_name),
+                    None
+                )
                 
                 if existing_store:
                     merged_visitor, added_visitor = merge_reviews(
@@ -876,14 +832,10 @@ def main():
                     store_data['blog_count'] = len(merged_blog)
                     result['summary']['new_blog_reviews'] += added_blog
                     
-                    negative_count = 0
-                    for r in store_data['visitor_reviews']:
-                        if r.get('is_negative'):
-                            negative_count += 1
-                    for r in store_data['blog_reviews']:
-                        if r.get('is_negative'):
-                            negative_count += 1
-                    store_data['negative_count'] = negative_count
+                    store_data['negative_count'] = sum(
+                        1 for r in store_data['visitor_reviews'] + store_data['blog_reviews']
+                        if r.get('is_negative')
+                    )
                     
                     print(f"[MERGE] {store_name}: +{added_visitor} 방문자, +{added_blog} 블로그", flush=True)
             
@@ -892,7 +844,8 @@ def main():
             result['summary']['total_blog_reviews'] += store_data['blog_count']
             result['summary']['total_negative'] += store_data.get('negative_count', 0)
             
-            time.sleep(3)
+            # 지점 간 대기 (봇 감지 회피)
+            time.sleep(5)
         
         result['summary']['total_stores'] = len(result['stores'])
         result['summary']['total_reviews'] = (
@@ -917,7 +870,8 @@ def main():
         print(f"  총 리뷰: {result['summary']['total_reviews']}개", flush=True)
         print(f"  부정적: {result['summary']['total_negative']}개", flush=True)
         if existing_data:
-            print(f"  신규: +{result['summary']['new_visitor_reviews'] + result['summary']['new_blog_reviews']}개", flush=True)
+            new_total = result['summary']['new_visitor_reviews'] + result['summary']['new_blog_reviews']
+            print(f"  신규: +{new_total}개", flush=True)
         print("=" * 60, flush=True)
         
     except Exception as e:
