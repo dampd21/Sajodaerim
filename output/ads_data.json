@@ -1,0 +1,402 @@
+{
+  "generated_at": "2026-01-30T13:52:32.224676",
+  "campaigns": [
+    {
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "customerId": 4150382,
+      "name": "파워컨텐츠#1_DB수집",
+      "userLock": false,
+      "campaignTp": "POWER_CONTENTS",
+      "deliveryMethod": "ACCELERATED",
+      "trackingMode": "TRACKING_DISABLED",
+      "usePeriod": false,
+      "dailyBudget": 20000,
+      "useDailyBudget": true,
+      "totalChargeCost": 0,
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "expectCost": 0,
+      "migType": 0,
+      "delFlag": false,
+      "regTm": "2025-09-24T10:46:02.000Z",
+      "editTm": "2025-09-24T10:46:02.000Z",
+      "sharedBudgetLock": false
+    }
+  ],
+  "adgroups": [
+    {
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "customerId": 4150382,
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "mobileChannelId": "bsn-a001-00-000000012796548",
+      "pcChannelId": "bsn-a001-00-000000012796548",
+      "bidAmt": 500,
+      "name": "파워컨텐츠#1_DB수집_광고그룹#1",
+      "userLock": false,
+      "useDailyBudget": true,
+      "contentsNetworkBidAmt": 70,
+      "useCntsNetworkBidAmt": false,
+      "mobileNetworkBidWeight": 100,
+      "pcNetworkBidWeight": 100,
+      "dailyBudget": 10000,
+      "budgetLock": false,
+      "delFlag": false,
+      "regTm": "2025-09-24T10:46:49.000Z",
+      "editTm": "2025-09-24T10:46:49.000Z",
+      "targets": [
+        {
+          "nccTargetId": "tgt-a001-03-000000693583675",
+          "ownerId": "grp-a001-03-000000055170633",
+          "targetTp": "MEDIA_TARGET",
+          "target": {
+            "type": 1,
+            "contents": [],
+            "search": [],
+            "black": {
+              "media": null,
+              "mediaGroup": null
+            },
+            "white": {
+              "media": null,
+              "mediaGroup": null
+            }
+          },
+          "delFlag": false,
+          "regTm": "2025-09-24T10:46:49.000Z",
+          "editTm": "2025-09-24T10:46:49.000Z"
+        },
+        {
+          "nccTargetId": "tgt-a001-03-000000693583676",
+          "ownerId": "grp-a001-03-000000055170633",
+          "targetTp": "PC_MOBILE_TARGET",
+          "target": {
+            "pc": true,
+            "mobile": true
+          },
+          "delFlag": false,
+          "regTm": "2025-09-24T10:46:49.000Z",
+          "editTm": "2025-09-24T10:46:49.000Z"
+        }
+      ],
+      "targetSummary": {
+        "pcMobile": "all",
+        "media": "all"
+      },
+      "pcChannelKey": "https://blog.naver.com/ydjb7433_",
+      "mobileChannelKey": "https://blog.naver.com/ydjb7433_",
+      "status": "PAUSED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
+      "expectCost": 0,
+      "migType": 0,
+      "adgroupAttrJson": {
+        "contentsType": "INFORMATION",
+        "campaignTp": 3
+      },
+      "adRollingType": "PERFORMANCE",
+      "adgroupType": "INFORMATION",
+      "systemBiddingType": "NONE",
+      "useCntsNetworkBidWeight": false,
+      "contentsNetworkBidWeight": 100,
+      "sharedBudgetLock": false,
+      "useExpSearch": true,
+      "expSearchBudgetRatio": 100,
+      "sharedExpSearchBudgetRatio": 100,
+      "campaignName": "파워컨텐츠#1_DB수집"
+    }
+  ],
+  "keywords": [
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404099",
+      "keyword": "중식창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404100",
+      "keyword": "중국집창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404101",
+      "keyword": "창업추천",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404102",
+      "keyword": "식당창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404103",
+      "keyword": "중국집프랜차이즈",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404104",
+      "keyword": "창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404105",
+      "keyword": "중식당창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404106",
+      "keyword": "짬뽕창업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404107",
+      "keyword": "요식업",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404108",
+      "keyword": "중식프랜차이즈",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404109",
+      "keyword": "짬뽕프랜차이즈",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404110",
+      "keyword": "창업아이템",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    },
+    {
+      "nccKeywordId": "nkw-a001-03-000007536404111",
+      "keyword": "프랜차이즈",
+      "customerId": 4150382,
+      "nccAdgroupId": "grp-a001-03-000000055170633",
+      "nccCampaignId": "cmp-a001-03-000000009851010",
+      "userLock": false,
+      "inspectStatus": "UNDER_REVIEW",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2025-09-24T11:12:41.000Z",
+      "editTm": "2025-09-24T11:12:41.000Z",
+      "status": "PAUSED",
+      "statusReason": "KEYWORD_UNDER_REVIEW",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "파워컨텐츠#1_DB수집",
+      "adgroupName": "파워컨텐츠#1_DB수집_광고그룹#1"
+    }
+  ],
+  "keyword_stats": {},
+  "summary": {
+    "total_campaigns": 1,
+    "total_adgroups": 1,
+    "total_keywords": 13,
+    "active_keywords": 13
+  }
+}
