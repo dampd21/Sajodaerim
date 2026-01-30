@@ -5,7 +5,6 @@
 - 캠페인/광고그룹/키워드 조회
 - 키워드 입찰가 수정
 - 키워드 검색량 조회
-- 예상 성과 조회
 """
 
 import os
@@ -17,7 +16,6 @@ import hashlib
 import base64
 import argparse
 from datetime import datetime, timedelta
-from urllib.parse import urlencode
 
 try:
     import requests
@@ -39,7 +37,7 @@ class NaverAdsAPI:
         if not all([self.api_key, self.secret_key, self.customer_id]):
             raise ValueError("API 인증 정보가 설정되지 않았습니다.")
         
-        print(f"[INFO] 네이버 광고 API 초기화 완료 (Customer ID: {self.customer_id})")
+        print(f"[INFO] 네이버 광고 API 초기화 (Customer ID: {self.customer_id})")
     
     def _generate_signature(self, timestamp, method, path):
         """API 서명 생성"""
@@ -74,7 +72,7 @@ class NaverAdsAPI:
             elif method == 'PUT':
                 response = requests.put(url, headers=headers, json=data, timeout=30)
             else:
-                raise ValueError(f"지원하��� 않는 HTTP 메서드: {method}")
+                raise ValueError(f"지원하지 않는 HTTP 메서드: {method}")
             
             if response.status_code == 200:
                 return response.json() if response.text else {}
@@ -101,10 +99,6 @@ class NaverAdsAPI:
             print(f"[API] 캠페인 {len(result)}개 조회됨")
         return result or []
     
-    def get_campaign(self, campaign_id):
-        """캠페인 상세 조회"""
-        return self._request('GET', f'/ncc/campaigns/{campaign_id}')
-    
     # ============================================
     # 광고그룹 관련
     # ============================================
@@ -120,30 +114,22 @@ class NaverAdsAPI:
             print(f"[API] 광고그룹 {len(result)}개 조회됨")
         return result or []
     
-    def get_adgroup(self, adgroup_id):
-        """광고그룹 상세 조회"""
-        return self._request('GET', f'/ncc/adgroups/{adgroup_id}')
-    
     # ============================================
     # 키워드 관련
     # ============================================
     
     def get_keywords(self, adgroup_id):
         """키워드 목록 조회"""
-        print(f"[API] 키워드 목록 조회 (광고그룹: {adgroup_id})...")
+        print(f"[API] 키워드 목록 조회 (광고그룹: {adgroup_id[:8]}...)...")
         params = {'nccAdgroupId': adgroup_id}
         result = self._request('GET', '/ncc/keywords', params=params)
         if result:
             print(f"[API] 키워드 {len(result)}개 조회됨")
         return result or []
     
-    def get_keyword(self, keyword_id):
-        """키워드 상세 조회"""
-        return self._request('GET', f'/ncc/keywords/{keyword_id}')
-    
     def update_keyword(self, keyword_id, bid_amt=None, use_group_bid=None):
         """키워드 입찰가 수정"""
-        print(f"[API] 키워드 수정 (ID: {keyword_id}, 입찰가: {bid_amt})...")
+        print(f"[API] 키워드 수정 (ID: {keyword_id[:8]}..., 입찰가: {bid_amt})...")
         
         data = {'nccKeywordId': keyword_id}
         if bid_amt is not None:
@@ -157,9 +143,7 @@ class NaverAdsAPI:
         return result
     
     def update_keywords_batch(self, keywords_data):
-        """키워드 일괄 수정
-        keywords_data: [{'nccKeywordId': 'xxx', 'bidAmt': 1000}, ...]
-        """
+        """키워드 일괄 수정"""
         print(f"[API] 키워드 일괄 수정 ({len(keywords_data)}개)...")
         result = self._request('PUT', '/ncc/keywords', data=keywords_data)
         if result:
@@ -167,13 +151,11 @@ class NaverAdsAPI:
         return result
     
     # ============================================
-    # 키워드 도구 (검색량, 예상 성과)
+    # 키워드 도구 (검색량)
     # ============================================
     
     def get_keyword_stats(self, keywords, show_detail=True):
-        """키워드 검색량 조회 (관련 키워드 도구)
-        keywords: ['키워드1', '키워드2', ...]
-        """
+        """키워드 검색량 조회"""
         print(f"[API] 키워드 검색량 조회 ({len(keywords)}개)...")
         
         data = {
@@ -186,78 +168,12 @@ class NaverAdsAPI:
             print(f"[API] 검색량 데이터 {len(result['keywordList'])}개 조회됨")
         return result
     
-    def get_estimate_performance(self, keywords, device=None, key_type='exact'):
-        """키워드 예상 성과 조회
-        device: 'PC', 'MOBILE', None (전체)
-        key_type: 'exact' (완전일치), 'phrase' (구문일치)
-        """
-        print(f"[API] 예상 성과 조회 ({len(keywords)}개)...")
-        
-        data = []
-        for kw in keywords:
-            item = {
-                'keyword': kw,
-                'keywordType': key_type
-            }
-            if device:
-                item['device'] = device
-            data.append(item)
-        
-        result = self._request('POST', '/estimate/performance/keyword', data=data)
-        return result
-    
     def get_estimate_average_bid(self, keywords):
         """키워드별 평균 입찰가 조회"""
         print(f"[API] 평균 입찰가 조회 ({len(keywords)}개)...")
         
         data = [{'keyword': kw} for kw in keywords]
         result = self._request('POST', '/estimate/average-position-bid/keyword', data=data)
-        return result
-    
-    # ============================================
-    # 통계 리포트
-    # ============================================
-    
-    def get_stats(self, ids, fields, time_range='week', breakdown='daily'):
-        """성과 통계 조회
-        ids: 캠페인/광고그룹/키워드 ID 목록
-        fields: ['impCnt', 'clkCnt', 'salesAmt', 'ccnt'] 등
-        time_range: 'today', 'yesterday', 'week', 'month'
-        breakdown: 'daily', 'hourly'
-        """
-        print(f"[API] 성과 통계 조회 ({len(ids)}개)...")
-        
-        # 날짜 범위 계산
-        today = datetime.now()
-        if time_range == 'today':
-            start_date = today.strftime('%Y-%m-%d')
-            end_date = start_date
-        elif time_range == 'yesterday':
-            yesterday = today - timedelta(days=1)
-            start_date = yesterday.strftime('%Y-%m-%d')
-            end_date = start_date
-        elif time_range == 'week':
-            start_date = (today - timedelta(days=7)).strftime('%Y-%m-%d')
-            end_date = today.strftime('%Y-%m-%d')
-        elif time_range == 'month':
-            start_date = (today - timedelta(days=30)).strftime('%Y-%m-%d')
-            end_date = today.strftime('%Y-%m-%d')
-        else:
-            start_date = time_range
-            end_date = breakdown if breakdown != 'daily' else time_range
-        
-        params = {
-            'ids': ','.join(ids),
-            'fields': json.dumps(fields),
-            'timeRange': json.dumps({
-                'since': start_date,
-                'until': end_date
-            }),
-            'datePreset': 'custom',
-            'timeIncrement': breakdown
-        }
-        
-        result = self._request('GET', '/stats', params=params)
         return result
 
 
@@ -368,14 +284,13 @@ def main():
     args = parser.parse_args()
     
     print("=" * 60)
-    print("네이버 검색광고 API 클라이언트")
+    print("네이버 검색광고 API")
     print("=" * 60)
     
     try:
         api = NaverAdsAPI()
         
         if args.action == 'collect':
-            # 데이터 수집
             data = collect_all_data(api)
             
             # docs 폴더에 저장
