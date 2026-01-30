@@ -3,6 +3,23 @@ name: Naver Review Crawler
 on:
   # 수동 실행
   workflow_dispatch:
+    inputs:
+      start_date:
+        description: '시작일 (YYYY-MM-DD, 비워두면 전체)'
+        required: false
+        default: ''
+      end_date:
+        description: '종료일 (YYYY-MM-DD, 비워두면 현재)'
+        required: false
+        default: ''
+      max_clicks:
+        description: '펼쳐서 더보기 최대 클릭 수'
+        required: false
+        default: '100'
+      store:
+        description: '특정 지점만 수집 (비워두면 전체)'
+        required: false
+        default: ''
   
   # 자동 실행: 매일 오전 9시 (KST)
   schedule:
@@ -14,7 +31,7 @@ env:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     
     steps:
       - name: Checkout repository
@@ -38,7 +55,29 @@ jobs:
           pip install selenium webdriver-manager
 
       - name: Crawl Naver Reviews
-        run: python scripts/naver_review_crawler.py
+        run: |
+          ARGS=""
+          
+          if [ -n "${{ github.event.inputs.start_date }}" ]; then
+            ARGS="$ARGS --start-date ${{ github.event.inputs.start_date }}"
+          fi
+          
+          if [ -n "${{ github.event.inputs.end_date }}" ]; then
+            ARGS="$ARGS --end-date ${{ github.event.inputs.end_date }}"
+          fi
+          
+          if [ -n "${{ github.event.inputs.max_clicks }}" ]; then
+            ARGS="$ARGS --max-clicks ${{ github.event.inputs.max_clicks }}"
+          else
+            ARGS="$ARGS --max-clicks 100"
+          fi
+          
+          if [ -n "${{ github.event.inputs.store }}" ]; then
+            ARGS="$ARGS --store '${{ github.event.inputs.store }}'"
+          fi
+          
+          echo "Running: python scripts/naver_review_crawler.py $ARGS"
+          python scripts/naver_review_crawler.py $ARGS
 
       - name: Create AI Config
         run: |
