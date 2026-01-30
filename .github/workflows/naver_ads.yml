@@ -1,27 +1,12 @@
 name: Naver Ads Data Collector
 
 on:
+  # 수동 실행
   workflow_dispatch:
-    inputs:
-      action:
-        description: '실행할 작업'
-        required: true
-        default: 'collect'
-        type: choice
-        options:
-          - collect
-          - update
-      keyword_id:
-        description: '수정할 키워드 ID (update 시)'
-        required: false
-      bid_amt:
-        description: '새 입찰가 (update 시)'
-        required: false
 
+  # 자동 실행: 매일 오전 6시, 오후 6시 (KST)
   schedule:
-    # 매일 오전 6시, 오후 12시, 오후 6시 (KST)
     - cron: '0 21 * * *'   # KST 06:00
-    - cron: '0 3 * * *'    # KST 12:00
     - cron: '0 9 * * *'    # KST 18:00
 
 env:
@@ -47,23 +32,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Run Naver Ads API
+      - name: Collect Naver Ads Data
         env:
           NAVER_AD_API_KEY: ${{ secrets.NAVER_AD_API_KEY }}
           NAVER_AD_SECRET_KEY: ${{ secrets.NAVER_AD_SECRET_KEY }}
           NAVER_AD_CUSTOMER_ID: ${{ secrets.NAVER_AD_CUSTOMER_ID }}
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            if [ "${{ github.event.inputs.action }}" == "update" ]; then
-              python scripts/naver_ads_api.py --action update \
-                --keyword-id "${{ github.event.inputs.keyword_id }}" \
-                --bid-amt "${{ github.event.inputs.bid_amt }}"
-            else
-              python scripts/naver_ads_api.py --action collect
-            fi
-          else
-            python scripts/naver_ads_api.py --action collect
-          fi
+          python scripts/naver_ads_api.py
 
       - name: Create AI Config
         run: |
