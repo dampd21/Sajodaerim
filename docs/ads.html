@@ -27,33 +27,33 @@
         <nav class="platform-tabs">
             <button class="platform-tab active" data-platform="naver">
                 <span class="platform-icon">🟢</span>
-                네이버
+                <span class="platform-name">네이버</span>
             </button>
-            <button class="platform-tab" data-platform="instagram">
+            <button class="platform-tab disabled" data-platform="instagram">
                 <span class="platform-icon">📷</span>
-                인스타그램
-                <span class="coming-soon">미구현</span>
+                <span class="platform-name">인스타그램</span>
+                <span class="badge-coming">미구현</span>
             </button>
-            <button class="platform-tab" data-platform="daangn">
+            <button class="platform-tab disabled" data-platform="daangn">
                 <span class="platform-icon">🥕</span>
-                당근마켓
-                <span class="coming-soon">미구현</span>
+                <span class="platform-name">당근마켓</span>
+                <span class="badge-coming">미구현</span>
             </button>
-            <button class="platform-tab" data-platform="youtube">
+            <button class="platform-tab disabled" data-platform="youtube">
                 <span class="platform-icon">▶️</span>
-                유튜브
-                <span class="coming-soon">미구현</span>
+                <span class="platform-name">유튜브</span>
+                <span class="badge-coming">미구현</span>
             </button>
-            <button class="platform-tab" data-platform="delivery">
+            <button class="platform-tab disabled" data-platform="delivery">
                 <span class="platform-icon">🛵</span>
-                배달
-                <span class="coming-soon">미구현</span>
+                <span class="platform-name">배달</span>
+                <span class="badge-coming">미구현</span>
             </button>
         </nav>
 
-        <!-- 배달 하위 탭 (배달 선택 시 표시) -->
+        <!-- 배달 하위 탭 (배달 선택 시만 표시) -->
         <nav class="delivery-subtabs" id="deliverySubtabs" style="display: none;">
-            <button class="delivery-tab active" data-delivery="baemin">배달의민족</button>
+            <button class="delivery-tab" data-delivery="baemin">배달의민족</button>
             <button class="delivery-tab" data-delivery="yogiyo">요기요</button>
             <button class="delivery-tab" data-delivery="coupang">쿠팡이츠</button>
             <button class="delivery-tab" data-delivery="ddangyo">땡겨요</button>
@@ -89,10 +89,10 @@
             </div>
         </section>
 
-        <!-- 플랫폼별 콘텐츠 영역 -->
+        <!-- 플랫폼별 콘텐츠 -->
         <div class="platform-content">
             
-            <!-- 네이버 광고 -->
+            <!-- ========== 네이버 광고 ========== -->
             <section id="naverContent" class="platform-pane active">
                 
                 <!-- 요약 카드 -->
@@ -129,8 +129,7 @@
                         <div class="section-actions">
                             <input type="text" id="keywordSearch" placeholder="키워드 검색..." class="search-input">
                             <button class="btn btn-primary" id="saveChangesBtn" disabled>
-                                <span class="btn-icon">💾</span>
-                                변경사항 저장
+                                💾 변경사항 저장
                             </button>
                         </div>
                     </div>
@@ -139,7 +138,7 @@
                         <table class="data-table" id="keywordTable">
                             <thead>
                                 <tr>
-                                    <th class="checkbox-col">
+                                    <th class="col-checkbox">
                                         <input type="checkbox" id="selectAll">
                                     </th>
                                     <th class="sortable-header" data-sort="keyword">
@@ -164,9 +163,7 @@
                                     <th class="text-center">상태</th>
                                 </tr>
                             </thead>
-                            <tbody id="keywordTableBody">
-                                <!-- 동적 생성 -->
-                            </tbody>
+                            <tbody id="keywordTableBody"></tbody>
                         </table>
                     </div>
                     
@@ -185,7 +182,7 @@
                 <!-- 검색량 분석 탭 -->
                 <section id="searchVolume" class="tab-pane">
                     <div class="chart-container">
-                        <h3>키워드별 월간 검색량</h3>
+                        <h3>키워드별 월간 검색량 TOP 20</h3>
                         <div id="searchVolumeChartContainer" class="chart-canvas-container">
                             <canvas id="searchVolumeChart"></canvas>
                         </div>
@@ -209,9 +206,9 @@
 
                 <!-- 입찰가 추천 탭 -->
                 <section id="bidSuggestion" class="tab-pane">
-                    <div class="bid-suggestion-header">
+                    <div class="section-header">
                         <h3>순위별 예상 입찰가</h3>
-                        <p class="hint">입찰가 추천은 실시간 데이터 기반으로 제공됩니다.</p>
+                        <p class="hint">클릭하여 해당 입찰가를 적용할 수 있습니다.</p>
                     </div>
                     
                     <div class="table-wrapper">
@@ -220,23 +217,21 @@
                                 <tr>
                                     <th>키워드</th>
                                     <th class="text-right">현재 입찰가</th>
-                                    <th class="text-right">1위 예상</th>
-                                    <th class="text-right">2~3위 예상</th>
-                                    <th class="text-right">4~5위 예상</th>
+                                    <th class="text-right">월간 검색량</th>
+                                    <th class="text-center">경쟁도</th>
+                                    <th class="text-right">예상 클릭비용</th>
                                     <th class="text-center">추천</th>
                                 </tr>
                             </thead>
-                            <tbody id="bidSuggestionTableBody">
-                                <!-- 동적 생성 -->
-                            </tbody>
+                            <tbody id="bidSuggestionTableBody"></tbody>
                         </table>
                     </div>
                 </section>
             </section>
 
-            <!-- 미구현 플랫폼 콘텐츠 -->
+            <!-- ========== 미구현 플랫폼들 ========== -->
             <section id="instagramContent" class="platform-pane">
-                <div class="coming-soon-container">
+                <div class="coming-soon-box">
                     <div class="coming-soon-icon">📷</div>
                     <h2>인스타그램 광고 관리</h2>
                     <p>준비 중입니다</p>
@@ -245,7 +240,7 @@
             </section>
 
             <section id="daangnContent" class="platform-pane">
-                <div class="coming-soon-container">
+                <div class="coming-soon-box">
                     <div class="coming-soon-icon">🥕</div>
                     <h2>당근마켓 광고 관리</h2>
                     <p>준비 중입니다</p>
@@ -254,7 +249,7 @@
             </section>
 
             <section id="youtubeContent" class="platform-pane">
-                <div class="coming-soon-container">
+                <div class="coming-soon-box">
                     <div class="coming-soon-icon">▶️</div>
                     <h2>유튜브 광고 관리</h2>
                     <p>준비 중입니다</p>
@@ -263,27 +258,25 @@
             </section>
 
             <section id="deliveryContent" class="platform-pane">
-                <div class="coming-soon-container">
+                <div class="coming-soon-box">
                     <div class="coming-soon-icon">🛵</div>
                     <h2>배달 플랫폼 광고 관리</h2>
-                    <p>배달의민족, 요기요, 쿠팡이츠, 땡겨요</p>
+                    <p>배달의민족 · 요기요 · 쿠팡이츠 · 땡겨요</p>
                     <span class="coming-soon-badge">Coming Soon</span>
                 </div>
             </section>
         </div>
 
-        <!-- 입찰가 수정 확인 모달 -->
+        <!-- 입찰가 변경 확인 모달 -->
         <div class="modal" id="confirmModal">
             <div class="modal-content modal-small">
                 <span class="modal-close">&times;</span>
                 <h2>입찰가 변경 확인</h2>
                 <div class="modal-body">
-                    <div class="confirm-summary" id="confirmSummary">
-                        <!-- 변경 내용 요약 -->
-                    </div>
+                    <div class="confirm-list" id="confirmList"></div>
                     <div class="confirm-warning">
                         <span class="warning-icon">⚠️</span>
-                        <span>변경사항은 즉시 네이버 광고에 반영됩니다.</span>
+                        변경사항은 즉시 네이버 광고에 반영됩니다.
                     </div>
                     <div class="modal-actions">
                         <button class="btn btn-outline" id="cancelConfirmBtn">취소</button>
@@ -293,7 +286,7 @@
             </div>
         </div>
 
-        <!-- 처리 중 오버레이 -->
+        <!-- 로딩 오버레이 -->
         <div class="loading-overlay" id="loadingOverlay" style="display: none;">
             <div class="loading-spinner"></div>
             <p>처리 중...</p>
