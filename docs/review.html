@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 관리 - 역대짬뽕</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="review.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 네비게이션 -->
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">발주 리포트</a>
+            <a href="sales.html" class="nav-link">매출 관리</a>
+            <a href="ads.html" class="nav-link">광고 관리</a>
+            <a href="review.html" class="nav-link active">리뷰 관리</a>
+        </nav>
+
+        <header class="header">
+            <h1>리뷰 관리</h1>
+            <p class="update-time" id="updateTime"></p>
+        </header>
+
+        <!-- 플랫폼 선택 탭 -->
+        <nav class="platform-tabs">
+            <button class="platform-tab active" data-platform="naver">
+                <span class="platform-icon">🟢</span>
+                <span class="platform-name">네이버</span>
+            </button>
+            <button class="platform-tab disabled" data-platform="instagram">
+                <span class="platform-icon">📷</span>
+                <span class="platform-name">인스타그램</span>
+                <span class="badge-coming">미구현</span>
+            </button>
+            <button class="platform-tab disabled" data-platform="daangn">
+                <span class="platform-icon">🥕</span>
+                <span class="platform-name">당근마켓</span>
+                <span class="badge-coming">미구현</span>
+            </button>
+            <button class="platform-tab disabled" data-platform="youtube">
+                <span class="platform-icon">▶️</span>
+                <span class="platform-name">유튜브</span>
+                <span class="badge-coming">미구현</span>
+            </button>
+            <button class="platform-tab disabled" data-platform="delivery">
+                <span class="platform-icon">🛵</span>
+                <span class="platform-name">배달</span>
+                <span class="badge-coming">미구현</span>
+            </button>
+        </nav>
+
+        <!-- 배달 하위 탭 -->
+        <nav class="delivery-subtabs" id="deliverySubtabs" style="display: none;">
+            <button class="delivery-tab" data-delivery="baemin">배달의민족</button>
+            <button class="delivery-tab" data-delivery="yogiyo">요기요</button>
+            <button class="delivery-tab" data-delivery="coupang">쿠팡이츠</button>
+            <button class="delivery-tab" data-delivery="ddangyo">땡겨요</button>
+        </nav>
+
+        <!-- 필터 섹션 -->
+        <section class="filter-section">
+            <div class="filter-group">
+                <label>지점 선택</label>
+                <select id="storeSelect" class="filter-select">
+                    <option value="">전체 지점</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>리뷰 타입</label>
+                <select id="reviewTypeSelect" class="filter-select">
+                    <option value="all">전체</option>
+                    <option value="visitor">방문자 리뷰</option>
+                    <option value="blog">블로그 리뷰</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>정렬</label>
+                <select id="sortSelect" class="filter-select">
+                    <option value="recent">최신순</option>
+                    <option value="oldest">오래된순</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>키워드 검색</label>
+                <input type="text" id="searchInput" class="filter-input" placeholder="리뷰 내용 검색...">
+            </div>
+        </section>
+
+        <!-- 플랫폼별 콘텐츠 -->
+        <div class="platform-content">
+            
+            <!-- 네이버 리뷰 -->
+            <section id="naverContent" class="platform-pane active">
+                
+                <!-- 요약 카드 -->
+                <section class="summary-cards">
+                    <div class="card">
+                        <div class="card-label">총 리뷰</div>
+                        <div class="card-value" id="totalReviews">-</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">수집 지점</div>
+                        <div class="card-value" id="totalStores">-</div>
+                    </div>
+                    <div class="card card-visitor">
+                        <div class="card-label">방문자 리뷰</div>
+                        <div class="card-value" id="visitorReviews">-</div>
+                    </div>
+                    <div class="card card-blog">
+                        <div class="card-label">블로그 리뷰</div>
+                        <div class="card-value" id="blogReviews">-</div>
+                    </div>
+                </section>
+
+                <!-- 인기 태그 -->
+                <section class="tag-section">
+                    <h3>인기 태그</h3>
+                    <div class="tag-cloud" id="tagCloud"></div>
+                </section>
+
+                <!-- 리뷰 목록 -->
+                <section class="review-list-section">
+                    <div class="section-header">
+                        <h3>리뷰 목록 <span class="review-count" id="reviewCount"></span></h3>
+                    </div>
+                    <div class="review-list" id="reviewList"></div>
+                </section>
+            </section>
+
+            <!-- 미구현 플랫폼들 -->
+            <section id="instagramContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">📷</div>
+                    <h2>인스타그램 리뷰 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="daangnContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">🥕</div>
+                    <h2>당근마켓 리뷰 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="youtubeContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">▶️</div>
+                    <h2>유튜브 리뷰 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="deliveryContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">🛵</div>
+                    <h2>배달 플랫폼 리뷰 관리</h2>
+                    <p>배달의민족 · 요기요 · 쿠팡이츠 · 땡겨요</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+        </div>
+
+        <!-- 리뷰 상세 모달 -->
+        <div class="modal" id="reviewModal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <div class="modal-body" id="reviewModalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="review.js"></script>
+    <script src="ai-chat.js"></script>
+</body>
+</html>
