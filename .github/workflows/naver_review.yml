@@ -1,27 +1,21 @@
 name: Naver Review Crawler
 
 on:
-  # 수동 실행
   workflow_dispatch:
     inputs:
-      start_date:
-        description: '시작일 (YYYY-MM-DD, 비워두면 전체)'
+      days:
+        description: '수집 기간 (일) - 비워두면 전체'
         required: false
-        default: ''
-      end_date:
-        description: '종료일 (YYYY-MM-DD, 비워두면 현재)'
-        required: false
-        default: ''
+        default: '30'
       max_clicks:
         description: '펼쳐서 더보기 최대 클릭 수'
         required: false
-        default: '100'
+        default: '200'
       store:
         description: '특정 지점만 수집 (비워두면 전체)'
         required: false
         default: ''
   
-  # 자동 실행: 매일 오전 9시 (KST)
   schedule:
     - cron: '0 0 * * *'
 
@@ -58,18 +52,16 @@ jobs:
         run: |
           ARGS=""
           
-          if [ -n "${{ github.event.inputs.start_date }}" ]; then
-            ARGS="$ARGS --start-date ${{ github.event.inputs.start_date }}"
-          fi
-          
-          if [ -n "${{ github.event.inputs.end_date }}" ]; then
-            ARGS="$ARGS --end-date ${{ github.event.inputs.end_date }}"
+          if [ -n "${{ github.event.inputs.days }}" ]; then
+            ARGS="$ARGS --days ${{ github.event.inputs.days }}"
+          else
+            ARGS="$ARGS --days 30"
           fi
           
           if [ -n "${{ github.event.inputs.max_clicks }}" ]; then
             ARGS="$ARGS --max-clicks ${{ github.event.inputs.max_clicks }}"
           else
-            ARGS="$ARGS --max-clicks 100"
+            ARGS="$ARGS --max-clicks 200"
           fi
           
           if [ -n "${{ github.event.inputs.store }}" ]; then
