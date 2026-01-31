@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-네이버 검색광고 API - 데이터 수집
+네이버 검색광고 API - 데이터 수집 v2
+- 순위별 입찰가(CPC) 조회 추가
 """
 
 import os
@@ -83,15 +84,10 @@ class NaverAdsAPI:
         return self._request('GET', '/ncc/keywords', {'nccAdgroupId': adgroup_id}) or []
     
     def get_keyword_stats(self, keywords):
-        """
-        키워드 검색량 조회 (관련키워드도구 API)
-        
-        주의: hintKeywords는 배열이 아니라 문자열로 전달해야 함
-        """
+        """키워드 검색량 조회"""
         if not keywords:
             return None
         
-        # 방법 1: GET 방식으로 시도
         print(f"[API] 검색량 조회 (GET 방식)...", flush=True)
         
         params = {
@@ -99,14 +95,13 @@ class NaverAdsAPI:
             'showDetail': '1'
         }
         
-        result = self._request_get_keywordtool(params)
+        result = self._request('GET', '/keywordstool', params=params)
         
         if result:
             return result
         
-        # 방법 2: POST 방식 (다른 형식)
+        # POST 방식 재시도
         print(f"[API] 검색량 조회 (POST 방식)...", flush=True)
-        
         data = {
             'hintKeywords': ','.join(keywords),
             'showDetail': '1'
@@ -114,35 +109,65 @@ class NaverAdsAPI:
         
         return self._request('POST', '/keywordstool', data=data)
     
-    def _request_get_keywordtool(self, params):
-        """GET 방식 키워드 도구 API"""
-        timestamp = str(int(time.time() * 1000))
-        path = '/keywordstool'
+    def get_rank_bids(self, keyword):
+        """
+        순위별 입찰가 조회 (Average Position Bid API)
+        1~5위까지 PC/모바일 입찰가 조회
+        """
+        uri = '/estimate/average-position-bid/keyword'
         
-        headers = {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'X-Timestamp': timestamp,
-            'X-API-KEY': self.api_key,
-            'X-Customer': str(self.customer_id),
-            'X-Signature': self._sign(timestamp, 'GET', path)
-        }
+        results = {'PC': [], 'MOBILE': []}
         
-        url = f"{self.BASE_URL}{path}"
-        
-        try:
-            r = requests.get(url, headers=headers, params=params, timeout=30)
+        for device in ['MOBILE', 'PC']:
+            # 1~5위까지 조회
+            items = [{"key": keyword, "position": pos} for pos in range(1, 6)]
             
-            print(f"[API] GET {path} -> {r.status_code}", flush=True)
+            payload = {
+                "device": device,
+                "items": items
+            }
             
-            if r.status_code == 200:
-                return r.json() if r.text else {}
-            else:
-                print(f"[API] 응답: {r.text[:300]}", flush=True)
-                return None
+            try:
+                print(f"[API] 순위별 입찰가 조회: {keyword} ({device})", flush=True)
                 
-        except Exception as e:
-            print(f"[ERROR] GET 요청 실패: {e}", flush=True)
-            return None
+                response = self._request('POST', uri, data=payload)
+                
+                if response:
+                    estimates = response.get("estimate", [])
+                    results[device] = estimates
+                    print(f"  → {device}: {len(estimates)}개 결과", flush=True)
+                else:
+                    print(f"  → {device}: 조회 실패", flush=True)
+                    
+            except Exception as e:
+                print(f"[ERROR] {device} 순위 조회 오류: {e}", flush=True)
+        
+        # 결과 정리
+        bid_landscape = []
+        
+        mobile_estimates = results.get('MOBILE', [])
+        pc_estimates = results.get('PC', [])
+        
+        max_len = max(len(mobile_estimates), len(pc_estimates), 5)
+        
+        for i in range(min(max_len, 5)):
+            rank = i + 1
+            mobile_bid = 0
+            pc_bid = 0
+            
+            if i < len(mobile_estimates):
+                mobile_bid = mobile_estimates[i].get('bid', 0)
+            
+            if i < len(pc_estimates):
+                pc_bid = pc_estimates[i].get('bid', 0)
+            
+            bid_landscape.append({
+                "rank": rank,
+                "mobileBid": mobile_bid,
+                "pcBid": pc_bid
+            })
+        
+        return bid_landscape
 
 
 def parse_volume(val):
@@ -162,7 +187,7 @@ def parse_volume(val):
 
 def main():
     print("=" * 60, flush=True)
-    print("네이버 광고 데이터 수집", flush=True)
+    print("네이버 광고 데이터 수집 v2", flush=True)
     print("=" * 60, flush=True)
     
     api = NaverAdsAPI()
@@ -173,6 +198,7 @@ def main():
         'adgroups': [],
         'keywords': [],
         'keyword_stats': {},
+        'keyword_rank_bids': {},  # 순위별 입찰가 추가
         'summary': {
             'total_campaigns': 0,
             'total_adgroups': 0,
@@ -182,14 +208,14 @@ def main():
     }
     
     # 1. 캠페인 조회
-    print("\n[1/3] 캠페인 조회...", flush=True)
+    print("\n[1/4] 캠페인 조회...", flush=True)
     campaigns = api.get_campaigns()
     result['campaigns'] = campaigns
     result['summary']['total_campaigns'] = len(campaigns)
     print(f"  → {len(campaigns)}개 캠페인", flush=True)
     
     # 2. 광고그룹 & 키워드 조회
-    print("\n[2/3] 광고그룹 & 키워드 조회...", flush=True)
+    print("\n[2/4] 광고그룹 & 키워드 조회...", flush=True)
     keyword_texts = []
     
     for camp in campaigns:
@@ -224,13 +250,11 @@ def main():
     result['summary']['total_adgroups'] = len(result['adgroups'])
     result['summary']['total_keywords'] = len(result['keywords'])
     print(f"  → {len(result['adgroups'])}개 광고그룹, {len(result['keywords'])}개 키워드", flush=True)
-    print(f"  → 키워드 목록: {keyword_texts}", flush=True)
     
     # 3. 검색량 조회
-    print(f"\n[3/3] 검색량 조회 ({len(keyword_texts)}개 키워드)...", flush=True)
+    print(f"\n[3/4] 검색량 조회 ({len(keyword_texts)}개 키워드)...", flush=True)
     
     if keyword_texts:
-        # 5개씩 나눠서 조회 (API 제한 고려)
         for i in range(0, len(keyword_texts), 5):
             batch = keyword_texts[i:i+5]
             print(f"  배치 {i//5 + 1}: {batch}", flush=True)
@@ -238,8 +262,6 @@ def main():
             stats = api.get_keyword_stats(batch)
             
             if stats:
-                print(f"  응답 키: {list(stats.keys())}", flush=True)
-                
                 if 'keywordList' in stats:
                     for item in stats['keywordList']:
                         rel_kw = item.get('relKeyword', '')
@@ -249,11 +271,33 @@ def main():
                                 'monthlyMobileQcCnt': parse_volume(item.get('monthlyMobileQcCnt')),
                                 'compIdx': item.get('compIdx', '')
                             }
-                            print(f"    ✓ {rel_kw}: PC={result['keyword_stats'][rel_kw]['monthlyPcQcCnt']}, M={result['keyword_stats'][rel_kw]['monthlyMobileQcCnt']}", flush=True)
             
             time.sleep(0.3)
     
     print(f"  → {len(result['keyword_stats'])}개 검색량 데이터", flush=True)
+    
+    # 4. 순위별 입찰가 조회 (각 키워드별)
+    print(f"\n[4/4] 순위별 입찰가 조회 ({len(keyword_texts)}개 키워드)...", flush=True)
+    
+    for idx, kw_text in enumerate(keyword_texts):
+        print(f"  [{idx+1}/{len(keyword_texts)}] {kw_text}", flush=True)
+        
+        try:
+            bid_landscape = api.get_rank_bids(kw_text)
+            
+            if bid_landscape:
+                result['keyword_rank_bids'][kw_text] = bid_landscape
+                
+                # 1위 입찰가 출력
+                if bid_landscape and len(bid_landscape) > 0:
+                    first = bid_landscape[0]
+                    print(f"    → 1위: PC {first.get('pcBid', 0):,}원 / M {first.get('mobileBid', 0):,}원", flush=True)
+        except Exception as e:
+            print(f"    → 조회 실패: {e}", flush=True)
+        
+        time.sleep(0.5)  # API 부하 방지
+    
+    print(f"  → {len(result['keyword_rank_bids'])}개 순위별 입찰가 데이터", flush=True)
     
     # 저장
     os.makedirs('docs', exist_ok=True)
@@ -272,6 +316,7 @@ def main():
     print(f"  키워드: {result['summary']['total_keywords']}개", flush=True)
     print(f"  활성: {result['summary']['active_keywords']}개", flush=True)
     print(f"  검색량: {len(result['keyword_stats'])}개", flush=True)
+    print(f"  순위별 입찰가: {len(result['keyword_rank_bids'])}개", flush=True)
     print("=" * 60, flush=True)
 
 
