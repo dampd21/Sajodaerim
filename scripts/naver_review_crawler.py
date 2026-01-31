@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-네이버 플레이스 리뷰 크롤러 v4
-- 하이브리드 감성 분석 (키워드 + AI)
-- 성능 최적화
+네이버 플레이스 리뷰 크롤러 v5
+- 자동 수집: 2일 전까지, 더보기 10회
+- 메타태그에서 실제 리뷰수 수집
+- 하이브리드 감성 분석
 """
 
 import os
@@ -16,7 +17,7 @@ import argparse
 from datetime import datetime, timedelta
 
 print("=" * 60, flush=True)
-print("네이버 플레이스 리뷰 크롤러 v4", flush=True)
+print("네이버 플레이스 리뷰 크롤러 v5", flush=True)
 print("=" * 60, flush=True)
 
 try:
@@ -64,24 +65,18 @@ STORE_PLACES = {
 
 # 부정적 키워드 (가중치 포함)
 NEGATIVE_KEYWORDS = {
-    # 강한 부정 (3점)
     "최악": 3, "비추": 3, "후회": 3, "다시 안": 3, "다신 안": 3,
     "재방문 의사 없": 3, "맛없": 3, "맛이 없": 3, "불결": 3,
     "환불": 3, "신고": 3, "사기": 3,
-    
-    # 중간 부정 (2점)
     "실망": 2, "별로": 2, "불친절": 2, "더럽": 2, "위생": 2,
     "비싸": 2, "비쌌": 2, "짜다": 2, "짰": 2, "싱겁": 2,
     "느끼": 2, "식었": 2, "차갑": 2, "늦": 2, "오래 걸": 2,
     "기다": 2, "웨이팅": 2, "퍽퍽": 2, "질겨": 2,
-    
-    # 약한 부정 (1점)
     "아쉽": 1, "아쉬웠": 1, "적었": 1, "적다": 1, "양이 적": 1,
     "그닥": 1, "그저 그": 1, "평범": 1, "보통": 1, "애매": 1,
     "기대 이하": 1, "안 좋": 1, "글쎄": 1
 }
 
-# 긍정적 키워드 (부정 점수 상쇄)
 POSITIVE_KEYWORDS = {
     "맛있": -2, "맛있었": -2, "최고": -3, "추천": -2, "강추": -3,
     "또 올": -2, "또 가": -2, "또 방문": -2, "재방문 의사 있": -2,
@@ -90,12 +85,55 @@ POSITIVE_KEYWORDS = {
     "JMT": -3, "인생": -2
 }
 
-# 부정 무효화 패턴
 NEGATION_PATTERNS = ["않", "안 ", "없", "아니", "못 ", "절대"]
 
-# Gemini API 설정
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+
+
+# ============================================
+# 메타태그에서 리뷰수 수집
+# ============================================
+
+def get_review_counts_from_meta(driver, place_id):
+    """
+    플레이스 홈 페이지의 og:description 메타태그에서 리뷰수 추출
+    예: "방문자리뷰 2,984 · 블로그리뷰 410"
+    """
+    visitor_count = 0
+    blog_count = 0
+    
+    try:
+        home_url = f"https://m.place.naver.com/restaurant/{place_id}/home"
+        print(f"[META] 메타태그 수집: {home_url}", flush=True)
+        
+        driver.get(home_url)
+        time.sleep(2)
+        
+        # og:description 메타태그 찾기
+        try:
+            meta = driver.find_element(By.CSS_SELECTOR, 'meta[property="og:description"]')
+            content = meta.get_attribute('content') or ''
+            print(f"[META] og:description: {content}", flush=True)
+            
+            # "방문자리뷰 2,984 · 블로그리뷰 410" 파싱
+            visitor_match = re.search(r'방문자리뷰\s*([\d,]+)', content)
+            blog_match = re.search(r'블로그리뷰\s*([\d,]+)', content)
+            
+            if visitor_match:
+                visitor_count = int(visitor_match.group(1).replace(',', ''))
+            if blog_match:
+                blog_count = int(blog_match.group(1).replace(',', ''))
+                
+            print(f"[META] 파싱 결과: 방문자 {visitor_count}, 블로그 {blog_count}", flush=True)
+            
+        except NoSuchElementException:
+            print("[META] og:description 메타태그 없음", flush=True)
+            
+    except Exception as e:
+        print(f"[META] 메타태그 수집 오류: {e}", flush=True)
+    
+    return visitor_count, blog_count
 
 
 # ============================================
@@ -103,20 +141,17 @@ GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini
 # ============================================
 
 def calculate_negative_score(review):
-    """키워드 기반 부정 점수 계산"""
     content = (review.get('content') or '').lower()
     tags = review.get('tags') or []
     
     score = 0
     matched_keywords = []
     
-    # 내용에서 부정 키워드 점수 계산
     for keyword, weight in NEGATIVE_KEYWORDS.items():
         if keyword in content:
             idx = content.find(keyword)
             context = content[max(0, idx-15):idx+len(keyword)+15]
             
-            # 부정 무효화 패턴 체크
             negated = False
             for neg in NEGATION_PATTERNS:
                 neg_idx = context.find(neg)
@@ -129,16 +164,13 @@ def calculate_negative_score(review):
                 score += weight
                 matched_keywords.append(f"-{keyword}({weight})")
     
-    # 긍정 키워드로 점수 상쇄
     for keyword, weight in POSITIVE_KEYWORDS.items():
         if keyword in content:
             score += weight
             matched_keywords.append(f"+{keyword}({weight})")
     
-    # 태그 분석
     tag_text = ' '.join(tags).lower()
     
-    # 긍정 태그
     positive_tags = ["맛있어요", "음식이 맛있어요", "양이 많아요", "친절해요", 
                      "재방문 의사 있음", "분위기가 좋아요", "가성비가 좋아요"]
     for pt in positive_tags:
@@ -146,7 +178,6 @@ def calculate_negative_score(review):
             score -= 2
             matched_keywords.append(f"+tag:{pt}")
     
-    # 부정 태그
     for keyword, weight in NEGATIVE_KEYWORDS.items():
         if keyword in tag_text:
             score += weight
@@ -156,7 +187,6 @@ def calculate_negative_score(review):
 
 
 def analyze_with_ai(content, api_key):
-    """Gemini API로 감성 분석"""
     if not requests or not api_key:
         return None
     
@@ -188,7 +218,6 @@ def analyze_with_ai(content, api_key):
             result = response.json()
             text = result.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
             
-            # JSON 추출
             json_match = re.search(r'\{[^}]+\}', text)
             if json_match:
                 data = json.loads(json_match.group())
@@ -202,26 +231,21 @@ def analyze_with_ai(content, api_key):
 
 
 def is_negative_review_hybrid(review, use_ai=True):
-    """하이브리드 부정 리뷰 판별"""
     content = review.get('content') or ''
     
-    # 1차: 키워드 기반 점수 계산
     score, matched = calculate_negative_score(review)
     
-    # 명확한 케이스는 바로 반환
-    if score >= 5:  # 확실히 부정
+    if score >= 5:
         return True, score, "keyword_strong_negative", matched
     
-    if score <= -3:  # 확실히 긍정
+    if score <= -3:
         return False, score, "keyword_strong_positive", matched
     
-    # 2차: 애매한 케이스 (1~4점)는 AI 분석
     if use_ai and GEMINI_API_KEY and 1 <= score <= 4 and len(content) > 20:
         ai_result = analyze_with_ai(content, GEMINI_API_KEY)
         if ai_result is not None:
             return ai_result, score, "ai_analyzed", matched
     
-    # AI 없거나 실패 시 임계값 기준
     is_neg = score >= 2
     return is_neg, score, "keyword_threshold", matched
 
@@ -298,7 +322,8 @@ def scroll_to_bottom(driver):
     time.sleep(1)
 
 
-def load_all_reviews(driver, max_clicks=200):
+def load_all_reviews(driver, max_clicks=10):
+    """더보기 클릭 (기본 10회)"""
     click_count = 0
     no_button_count = 0
     
@@ -335,7 +360,7 @@ def load_all_reviews(driver, max_clicks=200):
                 driver.execute_script("arguments[0].click();", more_button)
                 click_count += 1
                 
-                if click_count % 10 == 0:
+                if click_count % 5 == 0:
                     print(f"[MORE] 클릭 {click_count}회", flush=True)
                 
                 time.sleep(1.0)
@@ -432,35 +457,30 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None, use_ai=True):
             try:
                 review = {'type': 'visitor'}
                 
-                # 작성자
                 try:
                     els, _ = find_elements_safe(item, ['.pui__NMi-Dp', '[class*="NMi-Dp"]'])
                     review['author'] = els[0].text.strip() if els else ''
                 except:
                     review['author'] = ''
                 
-                # 내용
                 try:
                     els, _ = find_elements_safe(item, ['.pui__vn15t2', '[class*="vn15t2"]'])
                     review['content'] = els[0].text.strip() if els else ''
                 except:
                     review['content'] = ''
                 
-                # 키워드
                 try:
                     keyword_els = item.find_elements(By.CSS_SELECTOR, '.pui__V8F9nN em')
                     review['keywords'] = list(set(el.text.strip() for el in keyword_els if el.text.strip()))
                 except:
                     review['keywords'] = []
                 
-                # 태그
                 try:
                     tag_els = item.find_elements(By.CSS_SELECTOR, '.pui__jhpEyP')
                     review['tags'] = [el.text.strip() for el in tag_els if el.text.strip() and not el.text.startswith('+')]
                 except:
                     review['tags'] = []
                 
-                # 날짜
                 try:
                     date_els = item.find_elements(By.CSS_SELECTOR, '.pui__gfuUIT time, time')
                     raw_date = date_els[0].text.strip() if date_els else ''
@@ -473,17 +493,14 @@ def parse_visitor_reviews(driver, start_date=None, end_date=None, use_ai=True):
                 if not is_date_in_range(review['visit_date'], start_date, end_date):
                     continue
                 
-                # 방문 정보
                 try:
                     info_els = item.find_elements(By.CSS_SELECTOR, '.pui__gfuUIT')
                     review['visit_info'] = [el.text.strip() for el in info_els if el.text.strip()][:5]
                 except:
                     review['visit_info'] = []
                 
-                # 이미지
                 review['images'] = get_all_images(item)
                 
-                # 하이브리드 감성 분석
                 is_neg, score, method, matched = is_negative_review_hybrid(review, use_ai)
                 review['is_negative'] = is_neg
                 review['sentiment_score'] = score
@@ -534,42 +551,36 @@ def parse_blog_reviews(driver, start_date=None, end_date=None, use_ai=True):
             try:
                 review = {'type': 'blog'}
                 
-                # 블로그 URL
                 try:
                     link_els = item.find_elements(By.CSS_SELECTOR, 'a.behIY, a[href*="blog.naver.com"]')
                     review['blog_url'] = link_els[0].get_attribute('href') if link_els else ''
                 except:
                     review['blog_url'] = ''
                 
-                # 작성자
                 try:
                     els, _ = find_elements_safe(item, ['.pui__NMi-Dp'])
                     review['author'] = els[0].text.strip() if els else ''
                 except:
                     review['author'] = ''
                 
-                # 블로그명
                 try:
                     els = item.find_elements(By.CSS_SELECTOR, '.XR_ao')
                     review['blog_name'] = els[0].text.strip() if els else ''
                 except:
                     review['blog_name'] = ''
                 
-                # 제목
                 try:
                     els = item.find_elements(By.CSS_SELECTOR, '.pui__dGLDWy')
                     review['title'] = els[0].text.strip() if els else ''
                 except:
                     review['title'] = ''
                 
-                # 내용
                 try:
                     els = item.find_elements(By.CSS_SELECTOR, '.pui__vn15t2')
                     review['content'] = els[0].text.strip() if els else ''
                 except:
                     review['content'] = ''
                 
-                # 날짜
                 try:
                     date_els = item.find_elements(By.CSS_SELECTOR, '.u5XwJ time, time')
                     raw_date = date_els[0].text.strip() if date_els else ''
@@ -586,7 +597,6 @@ def parse_blog_reviews(driver, start_date=None, end_date=None, use_ai=True):
                 review['tags'] = []
                 review['keywords'] = []
                 
-                # 하이브리드 감성 분석
                 is_neg, score, method, matched = is_negative_review_hybrid(review, use_ai)
                 review['is_negative'] = is_neg
                 review['sentiment_score'] = score
@@ -653,10 +663,13 @@ def crawl_with_retry(driver, url, parse_func, start_date, end_date, max_clicks, 
     return [], 0
 
 
-def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=None, max_clicks=200, use_ai=True):
+def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=None, max_clicks=10, use_ai=True):
     print("\n" + "=" * 50, flush=True)
     print(f"[CRAWL] {store_name} (ID: {place_id})", flush=True)
     print("=" * 50, flush=True)
+    
+    # 먼저 메타태그에서 실제 리뷰수 수집
+    meta_visitor, meta_blog = get_review_counts_from_meta(driver, place_id)
     
     store_data = {
         'store_name': store_name,
@@ -665,6 +678,8 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
         'blog_reviews': [],
         'visitor_count': 0,
         'blog_count': 0,
+        'meta_visitor_count': meta_visitor,  # 메타태그에서 수집한 실제 수
+        'meta_blog_count': meta_blog,        # 메타태그에서 수집한 실제 수
         'negative_count': 0,
         'ai_analyzed_count': 0,
         'crawled_at': datetime.now().isoformat()
@@ -701,7 +716,7 @@ def crawl_store_reviews(driver, store_name, place_id, start_date=None, end_date=
     )
     
     total = store_data['visitor_count'] + store_data['blog_count']
-    print(f"[RESULT] {store_name}: 총 {total}개 (부정 {store_data['negative_count']}개, AI분석 {store_data['ai_analyzed_count']}개)", flush=True)
+    print(f"[RESULT] {store_name}: 수집 {total}개, 실제(메타) 방문자 {meta_visitor} / 블로그 {meta_blog}", flush=True)
     
     return store_data
 
@@ -787,17 +802,21 @@ def save_data(data, file_path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--days', type=int, default=0)
-    parser.add_argument('--max-clicks', type=int, default=200)
-    parser.add_argument('--store', type=str)
+    parser.add_argument('--days', type=int, default=2, help='수집 기간 (일) - 기본 2일')
+    parser.add_argument('--max-clicks', type=int, default=10, help='더보기 클릭 횟수 - 기본 10회')
+    parser.add_argument('--store', type=str, help='특정 지점만 수집')
     parser.add_argument('--no-ai', action='store_true', help='AI 분석 비활성화')
     args = parser.parse_args()
     
+    # 기본값: 2일 전부터 오늘까지
     end_date = datetime.now().strftime('%Y-%m-%d')
-    start_date = (datetime.now() - timedelta(days=args.days)).strftime('%Y-%m-%d') if args.days > 0 else None
+    start_date = (datetime.now() - timedelta(days=args.days)).strftime('%Y-%m-%d')
+    
     use_ai = not args.no_ai and bool(GEMINI_API_KEY)
     
     print(f"\n시작: {datetime.now()}", flush=True)
+    print(f"수집 기간: {start_date} ~ {end_date}", flush=True)
+    print(f"더보기 클릭: {args.max_clicks}회", flush=True)
     print(f"AI 분석: {'활성화' if use_ai else '비활성화'}", flush=True)
     
     existing_data = load_existing_data('docs/review_data.json')
@@ -807,9 +826,17 @@ def main():
         'platform': 'naver',
         'stores': [],
         'summary': {
-            'total_stores': 0, 'total_visitor_reviews': 0, 'total_blog_reviews': 0,
-            'total_reviews': 0, 'total_negative': 0, 'total_ai_analyzed': 0,
-            'new_visitor_reviews': 0, 'new_blog_reviews': 0
+            'total_stores': 0, 
+            'total_visitor_reviews': 0, 
+            'total_blog_reviews': 0,
+            'total_reviews': 0, 
+            'total_negative': 0, 
+            'total_ai_analyzed': 0,
+            'new_visitor_reviews': 0, 
+            'new_blog_reviews': 0,
+            # 메타태그에서 수집한 실제 총 리뷰수
+            'meta_total_visitor': 0,
+            'meta_total_blog': 0
         },
         'stats': {}
     }
@@ -852,6 +879,10 @@ def main():
             result['summary']['total_negative'] += store_data['negative_count']
             result['summary']['total_ai_analyzed'] += store_data.get('ai_analyzed_count', 0)
             
+            # 메타태그 총계
+            result['summary']['meta_total_visitor'] += store_data.get('meta_visitor_count', 0)
+            result['summary']['meta_total_blog'] += store_data.get('meta_blog_count', 0)
+            
             time.sleep(5)
         
         result['summary']['total_stores'] = len(result['stores'])
@@ -863,9 +894,9 @@ def main():
         
         print("\n" + "=" * 60, flush=True)
         print("수집 완료!", flush=True)
-        print(f"  총 리뷰: {result['summary']['total_reviews']}개", flush=True)
+        print(f"  수집된 리뷰: {result['summary']['total_reviews']}개", flush=True)
+        print(f"  실제 리뷰(메타): 방문자 {result['summary']['meta_total_visitor']} / 블로그 {result['summary']['meta_total_blog']}", flush=True)
         print(f"  부정적: {result['summary']['total_negative']}개", flush=True)
-        print(f"  AI 분석: {result['summary']['total_ai_analyzed']}개", flush=True)
         print("=" * 60, flush=True)
         
     except Exception as e:
