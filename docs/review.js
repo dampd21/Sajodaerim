@@ -1,8 +1,8 @@
 /**
- * 리뷰 관리 대시보드 v3
- * - 지점 필터 시 요약 카드 연동
+ * 리뷰 관리 대시보드 v4
+ * - 지점 필터 시 메타태그 리뷰수 표시
  * - 이미지 로딩 개선
- * - 무한 스크롤 (페이지네이션)
+ * - 무한 스크롤
  */
 
 let reviewData = null;
@@ -14,7 +14,6 @@ let currentReviewType = 'all';
 let currentSort = 'recent';
 let searchQuery = '';
 
-// 페이지네이션 설정
 const REVIEWS_PER_PAGE = 20;
 let currentPage = 1;
 let isLoading = false;
@@ -68,7 +67,7 @@ function showNoDataMessage() {
 }
 
 // ============================================
-// 무한 스크롤 초기화
+// 무한 스크롤
 // ============================================
 
 function initInfiniteScroll() {
@@ -135,7 +134,6 @@ function showLoadingIndicator(show) {
 // ============================================
 
 function initEventListeners() {
-    // 플랫폼 탭
     document.querySelectorAll('.platform-tab').forEach(tab => {
         tab.addEventListener('click', function() {
             if (this.classList.contains('disabled')) return;
@@ -143,7 +141,6 @@ function initEventListeners() {
         });
     });
     
-    // 지점 선택 - 요약 카드 업데이트 포함
     document.getElementById('storeSelect')?.addEventListener('change', function() {
         currentStore = this.value;
         resetAndRender();
@@ -159,7 +156,6 @@ function initEventListeners() {
         resetAndRender();
     });
     
-    // 검색 (디바운스 적용)
     let searchTimeout;
     document.getElementById('searchInput')?.addEventListener('input', function() {
         clearTimeout(searchTimeout);
@@ -169,7 +165,6 @@ function initEventListeners() {
         }, 300);
     });
     
-    // 모달
     document.querySelector('#reviewModal .modal-close')?.addEventListener('click', closeModal);
     document.getElementById('reviewModal')?.addEventListener('click', function(e) {
         if (e.target.id === 'reviewModal') closeModal();
@@ -220,8 +215,11 @@ function initStoreSelect() {
     select.innerHTML = '<option value="">전체 지점</option>';
     
     stores.forEach(store => {
-        const total = (store.visitor_count || 0) + (store.blog_count || 0);
-        select.innerHTML += `<option value="${store.store_name}">${store.store_name} (${total})</option>`;
+        // 메타태그에서 수집한 실제 리뷰수 사용
+        const metaVisitor = store.meta_visitor_count || 0;
+        const metaBlog = store.meta_blog_count || 0;
+        const total = metaVisitor + metaBlog;
+        select.innerHTML += `<option value="${store.store_name}">${store.store_name} (${formatNumber(total)})</option>`;
     });
 }
 
@@ -237,7 +235,7 @@ function renderDashboard() {
 }
 
 // ============================================
-// 요약 카드 렌더링 (지점 필터 적용)
+// 요약 카드 렌더링 (메타태그 리뷰수 사용)
 // ============================================
 
 function renderSummaryCards() {
@@ -245,48 +243,50 @@ function renderSummaryCards() {
     
     const stores = reviewData.stores || [];
     
-    // 지점 선택 여부에 따라 데이터 계산
     if (currentStore) {
         // 특정 지점 선택 시
         const selectedStore = stores.find(s => s.store_name === currentStore);
         
         if (selectedStore) {
-            const visitorCount = selectedStore.visitor_count || 0;
-            const blogCount = selectedStore.blog_count || 0;
-            const totalReviews = visitorCount + blogCount;
+            // 메타태그에서 수집한 실제 리뷰수
+            const metaVisitor = selectedStore.meta_visitor_count || 0;
+            const metaBlog = selectedStore.meta_blog_count || 0;
+            const totalReviews = metaVisitor + metaBlog;
             
-            // 부정적 리뷰 수 계산
+            // 부정적 리뷰는 수집된 데이터에서 계산
             const negativeCount = countNegativeReviews(selectedStore);
             
             document.getElementById('totalReviews').textContent = formatNumber(totalReviews);
             document.getElementById('totalStores').textContent = selectedStore.store_name;
-            document.getElementById('visitorReviews').textContent = formatNumber(visitorCount);
-            document.getElementById('blogReviews').textContent = formatNumber(blogCount);
+            document.getElementById('visitorReviews').textContent = formatNumber(metaVisitor);
+            document.getElementById('blogReviews').textContent = formatNumber(metaBlog);
             document.getElementById('negativeReviews').textContent = formatNumber(negativeCount);
         }
     } else {
-        // 전체 지점
+        // 전체 지점 - 메타태그 총계 사용
         const summary = reviewData.summary || {};
-        document.getElementById('totalReviews').textContent = formatNumber(summary.total_reviews || 0);
+        
+        // 메타태그에서 수집한 실제 총 리뷰수
+        const metaTotalVisitor = summary.meta_total_visitor || 0;
+        const metaTotalBlog = summary.meta_total_blog || 0;
+        const metaTotal = metaTotalVisitor + metaTotalBlog;
+        
+        document.getElementById('totalReviews').textContent = formatNumber(metaTotal || summary.total_reviews || 0);
         document.getElementById('totalStores').textContent = formatNumber(summary.total_stores || 0);
-        document.getElementById('visitorReviews').textContent = formatNumber(summary.total_visitor_reviews || 0);
-        document.getElementById('blogReviews').textContent = formatNumber(summary.total_blog_reviews || 0);
+        document.getElementById('visitorReviews').textContent = formatNumber(metaTotalVisitor || summary.total_visitor_reviews || 0);
+        document.getElementById('blogReviews').textContent = formatNumber(metaTotalBlog || summary.total_blog_reviews || 0);
         document.getElementById('negativeReviews').textContent = formatNumber(summary.total_negative || 0);
     }
 }
 
-// 특정 지점의 부정적 리뷰 수 계산
 function countNegativeReviews(store) {
     let count = 0;
-    
     (store.visitor_reviews || []).forEach(review => {
         if (review.is_negative) count++;
     });
-    
     (store.blog_reviews || []).forEach(review => {
         if (review.is_negative) count++;
     });
-    
     return count;
 }
 
@@ -331,17 +331,14 @@ function renderChangeIndicator(elementId, changeValue) {
 function filterAndRender() {
     if (!reviewData) return;
     
-    // 요약 카드 업데이트 (지점 필터 반영)
     renderSummaryCards();
     
     let allReviews = [];
     const stores = reviewData.stores || [];
     
     stores.forEach(store => {
-        // 지점 필터
         if (currentStore && store.store_name !== currentStore) return;
         
-        // 방문자 리뷰
         if (currentReviewType !== 'blog') {
             (store.visitor_reviews || []).forEach(review => {
                 const r = { ...review, store_name: store.store_name };
@@ -352,7 +349,6 @@ function filterAndRender() {
             });
         }
         
-        // 블로그 리뷰
         if (currentReviewType !== 'visitor') {
             (store.blog_reviews || []).forEach(review => {
                 const r = { ...review, store_name: store.store_name };
@@ -364,7 +360,6 @@ function filterAndRender() {
         }
     });
     
-    // 검색 필터
     if (searchQuery) {
         const query = searchQuery.toLowerCase();
         allReviews = allReviews.filter(r => {
@@ -379,7 +374,6 @@ function filterAndRender() {
         });
     }
     
-    // 정렬
     allReviews.sort((a, b) => {
         const dateA = a.visit_date || a.write_date || '';
         const dateB = b.visit_date || b.write_date || '';
@@ -434,7 +428,7 @@ function renderTagCloud() {
 }
 
 // ============================================
-// 리뷰 목록 렌더링 (무한 스크롤)
+// 리뷰 목록 렌더링
 // ============================================
 
 function renderInitialReviews() {
@@ -477,8 +471,6 @@ function appendReviewCards(reviews, startIdx) {
     });
     
     container.appendChild(fragment);
-    
-    // 이미지 레이지 로딩 실행
     lazyLoadImages();
 }
 
@@ -531,7 +523,7 @@ function createReviewCard(review, idx) {
 }
 
 // ============================================
-// 이미지 렌더링 (개선된 버전)
+// 이미지 렌더링
 // ============================================
 
 function renderImages(images) {
@@ -550,22 +542,16 @@ function renderImages(images) {
     }
     
     html += '</div>';
-    
     return html;
 }
 
-// 이미지 URL 처리 (네이버 이미지 최적화)
 function processImageUrl(url) {
     if (!url) return '';
     
-    // 네이버 이미지 URL 최적화
     if (url.includes('pstatic.net')) {
-        // 이미 처리된 URL이면 그대로 반환
         if (url.includes('type=')) {
-            // 더 작은 사이즈로 변경 (로딩 속도 개선)
             return url.replace(/type=\w+/, 'type=w300');
         }
-        // type 파라미터 추가
         if (url.includes('?')) {
             return url + '&type=w300';
         }
@@ -575,7 +561,6 @@ function processImageUrl(url) {
     return url;
 }
 
-// 이미지 레이지 로딩 (개선된 버전)
 function lazyLoadImages() {
     const images = document.querySelectorAll('.lazy-image[data-src]');
     
@@ -588,24 +573,18 @@ function lazyLoadImages() {
                     imageObserver.unobserve(img);
                 }
             });
-        }, { 
-            rootMargin: '50px',
-            threshold: 0.01
-        });
+        }, { rootMargin: '50px', threshold: 0.01 });
         
         images.forEach(img => imageObserver.observe(img));
     } else {
-        // IntersectionObserver 미지원 브라우저 폴백
         images.forEach(img => loadImage(img));
     }
 }
 
-// 개별 이미지 로딩
 function loadImage(img) {
     const src = img.dataset.src;
     if (!src) return;
     
-    // 이미지 프리로드
     const tempImg = new Image();
     tempImg.onload = function() {
         img.src = src;
@@ -614,7 +593,6 @@ function loadImage(img) {
         img.classList.add('loaded');
     };
     tempImg.onerror = function() {
-        // 로딩 실패 시 숨김
         img.style.display = 'none';
         img.removeAttribute('data-src');
     };
@@ -644,7 +622,7 @@ function updateReviewCount() {
     if (countEl) {
         const displayed = displayedReviews.length;
         const total = filteredReviews.length;
-        countEl.textContent = `(${displayed}/${total}개)`;
+        countEl.textContent = `(수집된 ${displayed}/${total}개)`;
     }
 }
 
@@ -661,7 +639,6 @@ function showReviewModal(review) {
     const isNegative = review.is_negative;
     const dateRaw = review.visit_date_raw || review.write_date_raw || '';
     
-    // 모달용 이미지는 더 큰 사이즈로
     const modalImages = (review.images || []).map(url => {
         if (url.includes('pstatic.net')) {
             return url.replace(/type=\w+/, 'type=w750');
