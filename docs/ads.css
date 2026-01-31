@@ -459,65 +459,6 @@
     font-size: 1rem;
 }
 
-/* 반응형 */
-@media (max-width: 768px) {
-    .platform-tabs {
-        padding: 8px;
-    }
-    
-    .platform-tab {
-        padding: 10px 12px;
-        font-size: 0.85rem;
-    }
-    
-    .platform-name {
-        display: none;
-    }
-    
-    .platform-tab .platform-icon {
-        font-size: 1.4rem;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .section-actions {
-        width: 100%;
-        flex-direction: column;
-    }
-    
-    .section-actions .search-input {
-        width: 100%;
-    }
-    
-    .bulk-action-bar {
-        flex-direction: column;
-        gap: 12px;
-        padding: 12px;
-    }
-    
-    .bulk-actions {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .bid-input {
-        width: 80px;
-        font-size: 0.8rem;
-    }
-    
-    /* 테이블 스크롤 */
-    #keywordTable th:nth-child(3),
-    #keywordTable td:nth-child(3),
-    #keywordTable th:nth-child(4),
-    #keywordTable td:nth-child(4) {
-        display: none;
-    }
-}
-
 /* ============================================
    순위별 CPC 표시 스타일
    ============================================ */
@@ -575,67 +516,196 @@
     color: #7b2cbf;
 }
 
-/* 입찰가 추천 탭 - 인라인 CPC */
-.rank-bids-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+/* ============================================
+   입찰가 추천 테이블 개선
+   ============================================ */
+
+/* 테이블 전체 */
+#bidSuggestionTable {
+    table-layout: fixed;
+    width: 100%;
 }
 
-.rank-bid-chip {
-    display: inline-block;
-    padding: 2px 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
+/* 2단 헤더 스타일 */
+#bidSuggestionTable thead tr.header-main th {
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+
+#bidSuggestionTable thead tr.header-sub th {
     font-size: 0.7rem;
-    color: #aaa;
+    font-weight: normal;
+    color: #888;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+/* 순위별 입찰가 컬럼들 */
+.col-rank {
+    width: 60px;
+    text-align: center;
+}
+
+/* 순위 셀 스타일 */
+.rank-cell {
+    display: inline-block;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 50px;
+}
+
+.rank-cell:hover {
+    background: rgba(0, 212, 255, 0.15);
+}
+
+.rank-cell.selected {
+    background: rgba(0, 212, 255, 0.25);
+    color: #00d4ff;
+    font-weight: 600;
+    box-shadow: 0 0 0 1px #00d4ff;
+}
+
+.rank-cell.rank-1 { color: #ffd700; }
+.rank-cell.rank-2 { color: #c0c0c0; }
+.rank-cell.rank-3 { color: #cd7f32; }
+.rank-cell.rank-1.selected { color: #ffd700; }
+.rank-cell.rank-2.selected { color: #c0c0c0; }
+.rank-cell.rank-3.selected { color: #cd7f32; }
+
+/* 예상 비용 컬럼 */
+.estimated-cost {
+    font-weight: 600;
+    color: #4ecdc4;
+}
+
+.estimated-cost.calculating {
+    color: #888;
+    font-weight: normal;
+}
+
+.estimated-cost .cost-detail {
+    font-size: 0.65rem;
+    color: #888;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+/* 추천 컬럼 - 작게 */
+.recommendation {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border-radius: 4px;
     white-space: nowrap;
 }
 
-.rank-bid-chip:first-child {
-    background: rgba(255, 215, 0, 0.2);
-    color: #ffd700;
+.recommendation.up {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
 }
 
-.rank-bid-chip:nth-child(2) {
-    background: rgba(192, 192, 192, 0.2);
-    color: #c0c0c0;
+.recommendation.down {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ecdc4;
 }
 
-.rank-bid-chip:nth-child(3) {
-    background: rgba(205, 127, 50, 0.2);
-    color: #cd7f32;
+.recommendation.ok {
+    background: rgba(255, 255, 255, 0.1);
+    color: #888;
 }
 
-/* 추천 하이라이트 */
-.recommendation.highlight {
-    color: #ffe66d;
-    font-weight: 600;
-}
-
-/* 입찰가 추천 테이블 확장 */
-#bidSuggestionTable th:nth-child(5),
-#bidSuggestionTable td:nth-child(5) {
-    min-width: 200px;
+/* 선택 안내 */
+.select-hint {
+    font-size: 0.7rem;
+    color: #666;
+    font-style: italic;
 }
 
 /* 반응형 */
-@media (max-width: 768px) {
-    .rank-bids-list {
-        flex-direction: column;
-    }
-    
-    .rank-bid-item {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .rank-bids-inline {
-        flex-direction: column;
-    }
-    
-    #bidSuggestionTable th:nth-child(5),
-    #bidSuggestionTable td:nth-child(5) {
+@media (max-width: 1200px) {
+    #bidSuggestionTable th.col-rank-4,
+    #bidSuggestionTable td.col-rank-4,
+    #bidSuggestionTable th.col-rank-5,
+    #bidSuggestionTable td.col-rank-5 {
         display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .platform-tabs {
+        padding: 8px;
+    }
+    
+    .platform-tab {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .platform-name {
+        display: none;
+    }
+    
+    .platform-tab .platform-icon {
+        font-size: 1.4rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .section-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .section-actions .search-input {
+        width: 100%;
+    }
+    
+    .bulk-action-bar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    .bulk-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .bid-input {
+        width: 80px;
+        font-size: 0.8rem;
+    }
+    
+    /* 테이블 스크롤 */
+    #keywordTable th:nth-child(3),
+    #keywordTable td:nth-child(3),
+    #keywordTable th:nth-child(4),
+    #keywordTable td:nth-child(4) {
+        display: none;
+    }
+    
+    #bidSuggestionTable th.col-rank-2,
+    #bidSuggestionTable td.col-rank-2,
+    #bidSuggestionTable th.col-rank-3,
+    #bidSuggestionTable td.col-rank-3 {
+        display: none;
+    }
+    
+    .recommendation {
+        font-size: 0.65rem;
+        padding: 2px 4px;
+    }
+    
+    .rank-cell {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+        min-width: 40px;
     }
 }
