@@ -4,19 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       days:
-        description: '수집 기간 (일) - 비워두면 전체'
+        description: '수집 기간 (일) - 기본 2일'
         required: false
-        default: '30'
+        default: '2'
       max_clicks:
-        description: '펼쳐서 더보기 최대 클릭 수'
+        description: '펼쳐서 더보기 최대 클릭 수 - 기본 10회'
         required: false
-        default: '200'
+        default: '10'
       store:
         description: '특정 지점만 수집 (비워두면 전체)'
         required: false
         default: ''
   
   schedule:
+    # 매일 오전 9시 (KST) = UTC 00:00
     - cron: '0 0 * * *'
 
 env:
@@ -46,22 +47,26 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install selenium webdriver-manager
+          pip install selenium webdriver-manager requests
 
       - name: Crawl Naver Reviews
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           ARGS=""
           
+          # 기본값: 2일 전까지
           if [ -n "${{ github.event.inputs.days }}" ]; then
             ARGS="$ARGS --days ${{ github.event.inputs.days }}"
           else
-            ARGS="$ARGS --days 30"
+            ARGS="$ARGS --days 2"
           fi
           
+          # 기본값: 더보기 10회
           if [ -n "${{ github.event.inputs.max_clicks }}" ]; then
             ARGS="$ARGS --max-clicks ${{ github.event.inputs.max_clicks }}"
           else
-            ARGS="$ARGS --max-clicks 200"
+            ARGS="$ARGS --max-clicks 10"
           fi
           
           if [ -n "${{ github.event.inputs.store }}" ]; then
