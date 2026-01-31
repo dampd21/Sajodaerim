@@ -1,8 +1,7 @@
 /**
- * 광고 관리 대시보드
- * - 네이버 검색광고 키워드 관리
- * - 입찰가 조회/수정
- * - 검색량 분석
+ * 광고 관리 대시보드 v2
+ * - 순위별 CPC 단가 표시
+ * - 키워드 테이블 하단에 1~5위 CPC 표시
  */
 
 let adsData = null;
@@ -12,12 +11,10 @@ let selectedKeywords = new Set();
 let currentPlatform = 'naver';
 let currentSort = { column: 'bidAmt', direction: 'desc' };
 
-// 차트 인스턴스
 let searchVolumeChart = null;
 let deviceChart = null;
 let compChart = null;
 
-// 지점 목록
 const STORE_LIST = [
     "역대짬뽕 본점",
     "역대짬뽕 오산시청점",
@@ -68,6 +65,7 @@ async function loadData() {
         
         adsData = await response.json();
         console.log('Ads data loaded:', adsData.summary);
+        console.log('Rank bids available:', Object.keys(adsData.keyword_rank_bids || {}).length);
         
         if (adsData.generated_at) {
             const date = new Date(adsData.generated_at);
@@ -102,7 +100,6 @@ function showNoDataMessage() {
 // ============================================
 
 function initEventListeners() {
-    // 플랫폼 탭
     document.querySelectorAll('.platform-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             if (tab.classList.contains('disabled')) return;
@@ -110,7 +107,6 @@ function initEventListeners() {
         });
     });
     
-    // 배달 하위 탭
     document.querySelectorAll('.delivery-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.delivery-tab').forEach(t => t.classList.remove('active'));
@@ -118,14 +114,12 @@ function initEventListeners() {
         });
     });
     
-    // 네이버 내부 탭
     document.querySelectorAll('.tabs .tab').forEach(tab => {
         tab.addEventListener('click', () => {
             switchTab(tab.dataset.tab);
         });
     });
     
-    // 필터
     document.getElementById('storeSelect')?.addEventListener('change', filterAndRender);
     document.getElementById('campaignSelect')?.addEventListener('change', () => {
         initAdgroupSelect();
@@ -134,40 +128,32 @@ function initEventListeners() {
     document.getElementById('adgroupSelect')?.addEventListener('change', filterAndRender);
     document.getElementById('statusSelect')?.addEventListener('change', filterAndRender);
     
-    // 키워드 검색
     document.getElementById('keywordSearch')?.addEventListener('input', (e) => {
         filterAndRender(e.target.value);
     });
     
-    // 전체 선택
     document.getElementById('selectAll')?.addEventListener('change', (e) => {
         toggleSelectAll(e.target.checked);
     });
     
-    // 변경사항 저장
     document.getElementById('saveChangesBtn')?.addEventListener('click', showConfirmModal);
     
-    // 일괄 작업
     document.getElementById('bulkApplyBtn')?.addEventListener('click', applyBulkBid);
     document.getElementById('bulkIncreaseBtn')?.addEventListener('click', () => adjustBulkBid(1.1));
     document.getElementById('bulkDecreaseBtn')?.addEventListener('click', () => adjustBulkBid(0.9));
     
-    // 모달
     document.querySelector('#confirmModal .modal-close')?.addEventListener('click', closeConfirmModal);
     document.getElementById('cancelConfirmBtn')?.addEventListener('click', closeConfirmModal);
     document.getElementById('applyConfirmBtn')?.addEventListener('click', applyChanges);
     
-    // 모달 외부 클릭
     document.getElementById('confirmModal')?.addEventListener('click', (e) => {
         if (e.target.id === 'confirmModal') closeConfirmModal();
     });
     
-    // ESC 키
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeConfirmModal();
     });
     
-    // 테이블 정렬
     document.querySelectorAll('#keywordTable .sortable-header').forEach(header => {
         header.addEventListener('click', () => {
             handleSort(header.dataset.sort);
@@ -292,7 +278,6 @@ function filterAndRender(searchTerm = '') {
     
     let keywords = adsData.keywords || [];
     
-    // 캠페인 필터
     if (campaignId) {
         keywords = keywords.filter(kw => {
             const adgroup = (adsData.adgroups || []).find(ag => ag.nccAdgroupId === kw.nccAdgroupId);
@@ -300,19 +285,16 @@ function filterAndRender(searchTerm = '') {
         });
     }
     
-    // 광고그룹 필터
     if (adgroupId) {
         keywords = keywords.filter(kw => kw.nccAdgroupId === adgroupId);
     }
     
-    // 상태 필터
     if (status === 'active') {
         keywords = keywords.filter(kw => !kw.userLock);
     } else if (status === 'paused') {
         keywords = keywords.filter(kw => kw.userLock);
     }
     
-    // 검색 필터
     if (search) {
         const term = search.toLowerCase();
         keywords = keywords.filter(kw => 
@@ -322,7 +304,6 @@ function filterAndRender(searchTerm = '') {
         );
     }
     
-    // 정렬
     keywords = sortKeywords(keywords);
     filteredKeywords = keywords;
     
@@ -399,7 +380,7 @@ function updateSortIcons() {
 }
 
 // ============================================
-// 키워드 테이블 렌더링
+// 키워드 테이블 렌더링 (CPC 정보 추가)
 // ============================================
 
 function renderKeywordTable() {
@@ -414,6 +395,7 @@ function renderKeywordTable() {
                 </td>
             </tr>
         `;
+        removeRankBidsFooter();
         return;
     }
     
@@ -426,26 +408,31 @@ function renderKeywordTable() {
         const isChanged = changedKeywords[keywordId] !== undefined;
         const newBid = changedKeywords[keywordId] || '';
         
-        // 검색량 데이터
         const stats = adsData.keyword_stats?.[keyword] || {};
         const pcVolume = stats.monthlyPcQcCnt || 0;
         const mobileVolume = stats.monthlyMobileQcCnt || 0;
         const totalVolume = pcVolume + mobileVolume;
         const compIdx = stats.compIdx || '-';
         
-        // 경쟁도 클래스
         let compClass = '';
         if (compIdx === '높음') compClass = 'comp-high';
         else if (compIdx === '중간') compClass = 'comp-medium';
         else if (compIdx === '낮음') compClass = 'comp-low';
         
+        // 순위별 CPC 정보 가져오기
+        const rankBids = adsData.keyword_rank_bids?.[keyword] || [];
+        const rank1Bid = rankBids[0]?.mobileBid || 0;
+        
         return `
-            <tr data-keyword-id="${keywordId}">
+            <tr data-keyword-id="${keywordId}" data-keyword="${escapeHtml(keyword)}">
                 <td class="col-checkbox">
                     <input type="checkbox" class="keyword-checkbox" 
                            data-id="${keywordId}" ${isSelected ? 'checked' : ''}>
                 </td>
-                <td>${escapeHtml(keyword)}</td>
+                <td>
+                    ${escapeHtml(keyword)}
+                    ${rank1Bid > 0 ? `<span class="rank1-hint" title="1위 입찰가">(1위: ${formatNumber(rank1Bid)}원)</span>` : ''}
+                </td>
                 <td>${escapeHtml(kw.campaignName || '-')}</td>
                 <td>${escapeHtml(kw.adgroupName || '-')}</td>
                 <td class="text-right">${formatCurrency(bidAmt)}</td>
@@ -474,7 +461,7 @@ function renderKeywordTable() {
         `;
     }).join('');
     
-    // 체크박스 이벤트 바인딩
+    // 체크박스 이벤트
     tbody.querySelectorAll('.keyword-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
             const id = e.target.dataset.id;
@@ -484,10 +471,11 @@ function renderKeywordTable() {
                 selectedKeywords.delete(id);
             }
             updateBulkActionBar();
+            updateRankBidsFooter();
         });
     });
     
-    // 입찰가 입력 이벤트 바인딩
+    // 입찰가 입력 이벤트
     tbody.querySelectorAll('.bid-input').forEach(input => {
         input.addEventListener('input', (e) => {
             const id = e.target.dataset.id;
@@ -506,7 +494,83 @@ function renderKeywordTable() {
         });
     });
     
+    // 행 클릭 시 CPC 정보 표시
+    tbody.querySelectorAll('tr[data-keyword]').forEach(row => {
+        row.addEventListener('click', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            const keyword = row.dataset.keyword;
+            showKeywordRankBids(keyword);
+        });
+    });
+    
     updateSortIcons();
+    updateRankBidsFooter();
+}
+
+// ============================================
+// 선택된 키워드의 순위별 CPC 표시 (테이블 하단)
+// ============================================
+
+function updateRankBidsFooter() {
+    removeRankBidsFooter();
+    
+    if (selectedKeywords.size === 0) return;
+    
+    // 첫 번째 선택된 키워드의 CPC 표시
+    const firstSelectedId = [...selectedKeywords][0];
+    const selectedKw = filteredKeywords.find(kw => kw.nccKeywordId === firstSelectedId);
+    
+    if (!selectedKw) return;
+    
+    const keyword = selectedKw.keyword;
+    const rankBids = adsData.keyword_rank_bids?.[keyword] || [];
+    
+    if (rankBids.length === 0) return;
+    
+    const footer = document.createElement('div');
+    footer.id = 'rankBidsFooter';
+    footer.className = 'rank-bids-footer';
+    
+    let html = `<div class="rank-bids-title">📊 "${escapeHtml(keyword)}" 순위별 CPC 단가</div>`;
+    html += '<div class="rank-bids-list">';
+    
+    rankBids.slice(0, 5).forEach(item => {
+        const rank = item.rank;
+        const pcBid = item.pcBid || 0;
+        const mobileBid = item.mobileBid || 0;
+        
+        html += `
+            <div class="rank-bid-item">
+                <span class="rank-label">${rank}위</span>
+                <span class="rank-pc">PC: ${formatNumber(pcBid)}원</span>
+                <span class="rank-mobile">M: ${formatNumber(mobileBid)}원</span>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    footer.innerHTML = html;
+    
+    const tableContainer = document.querySelector('#keywords .table-wrapper');
+    if (tableContainer) {
+        tableContainer.parentNode.insertBefore(footer, tableContainer.nextSibling);
+    }
+}
+
+function removeRankBidsFooter() {
+    const existing = document.getElementById('rankBidsFooter');
+    if (existing) existing.remove();
+}
+
+function showKeywordRankBids(keyword) {
+    const rankBids = adsData.keyword_rank_bids?.[keyword] || [];
+    
+    if (rankBids.length === 0) {
+        console.log(`No rank bids for: ${keyword}`);
+        return;
+    }
+    
+    console.log(`Rank bids for ${keyword}:`, rankBids);
 }
 
 // ============================================
@@ -525,6 +589,7 @@ function toggleSelectAll(checked) {
     });
     
     updateBulkActionBar();
+    updateRankBidsFooter();
 }
 
 function updateBulkActionBar() {
@@ -536,7 +601,6 @@ function updateBulkActionBar() {
         document.getElementById('selectedCount').textContent = count;
     }
     
-    // 전체 선택 체크박스 상태
     const selectAll = document.getElementById('selectAll');
     if (selectAll) {
         selectAll.checked = count > 0 && count === filteredKeywords.length;
@@ -623,18 +687,12 @@ async function applyChanges() {
     try {
         const changes = Object.entries(changedKeywords);
         
-        // GitHub Actions workflow_dispatch를 통한 업데이트
-        // 실제로는 각 키워드별로 워크플로우를 트리거하거나
-        // 일괄 업데이트를 위한 별도 로직 필요
-        
         console.log('변경 요청:', changes);
         
-        // 시뮬레이션: 실제 구현 시 서버 API 호출
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        alert(`${changes.length}개 키워드 입찰가 변경 요청이 완료되었습니다.\n\n※ 실제 반영은 GitHub Actions 워크플로우를 통해 처리됩니다.\n잠시 후 데이터가 업데이트됩니다.`);
+        alert(`${changes.length}개 키워드 입찰가 변경 요청이 완료되었습니다.\n\n※ 실제 반영은 GitHub Actions 워크플로우를 통해 처리됩니다.`);
         
-        // 변경사항 초기화
         changedKeywords = {};
         selectedKeywords.clear();
         renderKeywordTable();
@@ -675,7 +733,6 @@ function renderSearchVolumeChart() {
     const ctx = recreateCanvas('searchVolumeChartContainer', 'searchVolumeChart');
     if (!ctx) return;
     
-    // 검색량 TOP 20
     const keywordsWithVolume = filteredKeywords.map(kw => {
         const stats = adsData.keyword_stats?.[kw.keyword] || {};
         return {
@@ -688,9 +745,7 @@ function renderSearchVolumeChart() {
       .sort((a, b) => b.total - a.total)
       .slice(0, 20);
     
-    if (keywordsWithVolume.length === 0) {
-        return;
-    }
+    if (keywordsWithVolume.length === 0) return;
     
     searchVolumeChart = new Chart(ctx, {
         type: 'bar',
@@ -754,7 +809,6 @@ function renderDeviceChart() {
     const ctx = recreateCanvas('deviceChartContainer', 'deviceChart');
     if (!ctx) return;
     
-    // PC vs 모바일 총 검색량
     let totalPc = 0;
     let totalMobile = 0;
     
@@ -764,9 +818,7 @@ function renderDeviceChart() {
         totalMobile += stats.monthlyMobileQcCnt || 0;
     });
     
-    if (totalPc === 0 && totalMobile === 0) {
-        return;
-    }
+    if (totalPc === 0 && totalMobile === 0) return;
     
     deviceChart = new Chart(ctx, {
         type: 'doughnut',
@@ -809,7 +861,6 @@ function renderCompChart() {
     const ctx = recreateCanvas('compChartContainer', 'compChart');
     if (!ctx) return;
     
-    // 경쟁도 분포
     const compCounts = { '높음': 0, '중간': 0, '낮음': 0 };
     
     filteredKeywords.forEach(kw => {
@@ -821,9 +872,7 @@ function renderCompChart() {
     });
     
     const total = compCounts['높음'] + compCounts['중간'] + compCounts['낮음'];
-    if (total === 0) {
-        return;
-    }
+    if (total === 0) return;
     
     compChart = new Chart(ctx, {
         type: 'doughnut',
@@ -857,17 +906,17 @@ function renderCompChart() {
 }
 
 // ============================================
-// 입찰가 추천 테이블
+// 입찰가 추천 테이블 (순위별 CPC 기반)
 // ============================================
 
 function renderBidSuggestionTable() {
     const tbody = document.getElementById('bidSuggestionTableBody');
     if (!tbody) return;
     
-    // 검색량 있는 키워드만 정렬
-    const keywordsWithStats = filteredKeywords.filter(kw => {
+    const keywordsWithData = filteredKeywords.filter(kw => {
         const stats = adsData.keyword_stats?.[kw.keyword] || {};
-        return (stats.monthlyPcQcCnt || 0) + (stats.monthlyMobileQcCnt || 0) > 0;
+        const rankBids = adsData.keyword_rank_bids?.[kw.keyword] || [];
+        return (stats.monthlyPcQcCnt || 0) + (stats.monthlyMobileQcCnt || 0) > 0 || rankBids.length > 0;
     }).sort((a, b) => {
         const aStats = adsData.keyword_stats?.[a.keyword] || {};
         const bStats = adsData.keyword_stats?.[b.keyword] || {};
@@ -876,54 +925,73 @@ function renderBidSuggestionTable() {
         return bVol - aVol;
     });
     
-    if (keywordsWithStats.length === 0) {
+    if (keywordsWithData.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="6" class="text-center" style="padding: 40px; color: #666;">
-                    검색량 데이터가 있는 키워드가 없습니다.
+                <td colspan="7" class="text-center" style="padding: 40px; color: #666;">
+                    데이터가 있는 키워드가 없습니다.
                 </td>
             </tr>
         `;
         return;
     }
     
-    tbody.innerHTML = keywordsWithStats.map(kw => {
+    tbody.innerHTML = keywordsWithData.map(kw => {
         const stats = adsData.keyword_stats?.[kw.keyword] || {};
         const totalVolume = (stats.monthlyPcQcCnt || 0) + (stats.monthlyMobileQcCnt || 0);
         const compIdx = stats.compIdx || '-';
         const bidAmt = kw.bidAmt || 0;
         
-        // 경쟁도 클래스
+        // 순위별 CPC
+        const rankBids = adsData.keyword_rank_bids?.[kw.keyword] || [];
+        
         let compClass = '';
         if (compIdx === '높음') compClass = 'comp-high';
         else if (compIdx === '중간') compClass = 'comp-medium';
         else if (compIdx === '낮음') compClass = 'comp-low';
         
-        // 추천 입찰가 계산 (간단한 로직)
-        let suggestedBid = bidAmt;
-        let recommendation = '';
-        
-        if (compIdx === '높음' && bidAmt < 500) {
-            suggestedBid = Math.min(bidAmt * 1.5, 1000);
-            recommendation = '입찰가 상향 권장';
-        } else if (compIdx === '낮음' && bidAmt > 300) {
-            suggestedBid = Math.max(bidAmt * 0.7, 70);
-            recommendation = '입찰가 하향 가능';
+        // 순위별 CPC 정보 생성
+        let rankBidsHtml = '';
+        if (rankBids.length > 0) {
+            rankBidsHtml = '<div class="rank-bids-inline">';
+            rankBids.slice(0, 5).forEach(item => {
+                const mobileBid = item.mobileBid || 0;
+                rankBidsHtml += `<span class="rank-bid-chip">${item.rank}위: ${formatNumber(mobileBid)}원</span>`;
+            });
+            rankBidsHtml += '</div>';
         } else {
-            recommendation = '적정';
+            rankBidsHtml = '<span style="color: #666;">-</span>';
+        }
+        
+        // 추천 입찰가 (3위 기준)
+        const rank3Bid = rankBids[2]?.mobileBid || 0;
+        let recommendation = '';
+        let recommendedBid = bidAmt;
+        
+        if (rank3Bid > 0) {
+            if (bidAmt < rank3Bid * 0.8) {
+                recommendation = '입찰가 상향 권장';
+                recommendedBid = rank3Bid;
+            } else if (bidAmt > rank3Bid * 1.5) {
+                recommendation = '입찰가 하향 가능';
+                recommendedBid = Math.round(rank3Bid * 1.2);
+            } else {
+                recommendation = '적정';
+            }
         }
         
         return `
             <tr>
                 <td>${escapeHtml(kw.keyword)}</td>
                 <td class="text-right">${formatCurrency(bidAmt)}</td>
-                <td class="text-right">${formatNumber(totalVolume)}</td>
+                <td class="text-right">${totalVolume > 0 ? formatNumber(totalVolume) : '-'}</td>
                 <td class="text-center">
                     <span class="comp-badge ${compClass}">${compIdx}</span>
                 </td>
-                <td class="text-right">${formatCurrency(Math.round(suggestedBid))}</td>
+                <td>${rankBidsHtml}</td>
+                <td class="text-right">${rank3Bid > 0 ? formatCurrency(recommendedBid) : '-'}</td>
                 <td class="text-center">
-                    <span class="recommendation ${recommendation === '적정' ? '' : 'highlight'}">${recommendation}</span>
+                    <span class="recommendation ${recommendation === '적정' ? '' : 'highlight'}">${recommendation || '-'}</span>
                 </td>
             </tr>
         `;
