@@ -1,12 +1,13 @@
 name: Naver Ads Data Collector
 
 on:
-  # 수동 실행
   workflow_dispatch:
 
-  # 자동 실행: 매일 오전 6시, 오후 6시 (KST)
   schedule:
+    # 6시간마다 실행 (KST 기준: 00시, 06시, 12시, 18시)
+    - cron: '0 15 * * *'   # KST 00:00 (자정)
     - cron: '0 21 * * *'   # KST 06:00
+    - cron: '0 3 * * *'    # KST 12:00 (정오)
     - cron: '0 9 * * *'    # KST 18:00
 
 env:
