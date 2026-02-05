@@ -67,36 +67,6 @@
     color: #fff;
 }
 
-/* 배달 하위 탭 */
-.delivery-subtabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    padding-left: 20px;
-}
-
-.delivery-tab {
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: #888;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.delivery-tab:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.delivery-tab.active {
-    background: rgba(0, 212, 255, 0.2);
-    border-color: #00d4ff;
-    color: #00d4ff;
-}
-
 /* 플랫폼 콘텐츠 */
 .platform-content {
     min-height: 500px;
@@ -125,7 +95,7 @@
 }
 
 .coming-soon-box .coming-soon-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 20px;
     opacity: 0.5;
     color: #888;
@@ -163,53 +133,6 @@
 
 .card-negative .card-value {
     color: #ff6b6b;
-}
-
-/* 통계 카드 (증감율) */
-.stats-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.stats-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stats-card .stats-label {
-    color: #888;
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-}
-
-.stats-card .stats-value {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 8px;
-}
-
-.stats-card .stats-change {
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.stats-card .stats-change.positive {
-    color: #4ecdc4;
-}
-
-.stats-card .stats-change.negative {
-    color: #ff6b6b;
-}
-
-.stats-card .stats-change.neutral {
-    color: #888;
 }
 
 /* 태그 섹션 */
@@ -289,11 +212,6 @@
     margin-left: 8px;
 }
 
-/* 레이아웃 토글 - 숨김 (2단만 사용) */
-.layout-toggle {
-    display: none;
-}
-
 /* 리뷰 리스트 - 항상 2단 그리드 */
 .review-list {
     display: grid;
@@ -324,6 +242,14 @@
 
 .review-card.visitor-review {
     border-left: 3px solid #4ecdc4;
+}
+
+.review-card.baemin-review {
+    border-left: 3px solid #2AC1BC;
+}
+
+.review-card.coupang-review {
+    border-left: 3px solid #FF5722;
 }
 
 .review-card.negative-review {
@@ -424,6 +350,16 @@
     color: #ff6b6b;
 }
 
+.type-baemin {
+    background: rgba(42, 193, 188, 0.2);
+    color: #2AC1BC;
+}
+
+.type-coupang {
+    background: rgba(255, 87, 34, 0.2);
+    color: #FF5722;
+}
+
 /* 지점 배지 */
 .store-badge {
     padding: 3px 8px;
@@ -490,22 +426,6 @@
     overflow: hidden;
 }
 
-/* 리뷰 키워드 */
-.review-keywords {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 8px;
-}
-
-.keyword-badge {
-    padding: 3px 8px;
-    background: rgba(123, 44, 191, 0.2);
-    border-radius: 10px;
-    color: #b794f6;
-    font-size: 0.7rem;
-}
-
 /* 리뷰 태그 */
 .review-tags {
     display: flex;
@@ -522,6 +442,40 @@
     border-radius: 14px;
     color: #4ecdc4;
     font-size: 0.75rem;
+}
+
+/* 메뉴 배지 (배달 플랫폼용) */
+.review-menus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.menu-badge {
+    padding: 4px 10px;
+    background: rgba(123, 44, 191, 0.2);
+    border-radius: 12px;
+    color: #b794f6;
+    font-size: 0.75rem;
+}
+
+.review-menus-detail {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.review-menus-detail h4 {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.menus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 /* 블로그 링크 */
@@ -569,7 +523,7 @@
 }
 
 .empty-reviews .empty-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 16px;
     opacity: 0.5;
 }
@@ -594,91 +548,33 @@
     margin-bottom: 20px;
 }
 
-/* 반응형 */
-@media (max-width: 1024px) {
-    .review-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* 별점 표시 */
+.rating-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 8px;
 }
 
-@media (max-width: 768px) {
-    .platform-tabs {
-        padding: 8px;
-    }
-    
-    .platform-tab {
-        padding: 10px 12px;
-        font-size: 0.85rem;
-    }
-    
-    .platform-name {
-        display: none;
-    }
-    
-    .platform-tab .platform-icon {
-        font-size: 1.4rem;
-    }
-    
-    /* 모바일에서도 2단 유지 */
-    .review-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-    
-    .review-card {
-        padding: 12px;
-    }
-    
-    .review-images {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .author-avatar {
-        width: 32px;
-        height: 32px;
-        font-size: 0.7rem;
-    }
-    
-    .stats-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.rating-stars .star {
+    font-size: 0.9rem;
+    line-height: 1;
 }
 
-@media (max-width: 480px) {
-    /* 아주 작은 화면에서도 2단 유지하되 카드 더 작게 */
-    .review-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    
-    .review-card {
-        padding: 10px;
-    }
-    
-    .review-content {
-        -webkit-line-clamp: 2;
-        font-size: 0.8rem;
-    }
-    
-    .review-images {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .stats-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .author-name {
-        font-size: 0.8rem;
-    }
-    
-    .review-title {
-        font-size: 0.85rem;
-        -webkit-line-clamp: 1;
-    }
+.rating-stars .star.full {
+    color: #ffd700;
 }
 
-/* 리뷰 카드 푸터 */
+.rating-stars .star.half {
+    color: #ffd700;
+    opacity: 0.6;
+}
+
+.rating-stars .star.empty {
+    color: #444;
+}
+
+/* 리뷰 푸터 */
 .review-footer {
     display: flex;
     justify-content: space-between;
@@ -733,58 +629,84 @@
     opacity: 1;
 }
 
-/* 감성 점수 배지 */
-.sentiment-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.65rem;
-    font-weight: bold;
-}
-
-.sentiment-badge.neg {
-    background: rgba(255, 107, 107, 0.3);
-    color: #ff6b6b;
-}
-
-.sentiment-badge.pos {
-    background: rgba(78, 205, 196, 0.3);
-    color: #4ecdc4;
-}
-
-/* 감성 정보 (모달) */
-.sentiment-info {
-    display: flex;
-    gap: 16px;
-    margin-top: 16px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-/* 리뷰 푸터 */
-.review-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.75rem;
-    color: #666;
-}
-
-.visit-info {
-    color: #888;
-}
-
 /* 스크롤 센티널 */
 #scrollSentinel {
     height: 1px;
     visibility: hidden;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+    .review-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .platform-tabs {
+        padding: 8px;
+    }
+    
+    .platform-tab {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .platform-name {
+        display: none;
+    }
+    
+    .platform-tab .platform-icon {
+        font-size: 1.4rem;
+    }
+    
+    /* 모바일에서도 2단 유지 */
+    .review-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .review-card {
+        padding: 12px;
+    }
+    
+    .review-images {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .author-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 아주 작은 화면에서도 2단 유지하되 카드 더 작게 */
+    .review-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .review-card {
+        padding: 10px;
+    }
+    
+    .review-content {
+        -webkit-line-clamp: 2;
+        font-size: 0.8rem;
+    }
+    
+    .review-images {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .author-name {
+        font-size: 0.8rem;
+    }
+    
+    .review-title {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 1;
+    }
 }
