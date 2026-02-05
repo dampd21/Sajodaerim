@@ -59,56 +59,31 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
 
 def setup_driver():
-    """Chrome 드라이버 설정 - Cloudflare 우회 시도"""
+    """Chrome 드라이버 설정"""
     print("[SETUP] Chrome 드라이버 설정 중...", flush=True)
     
     options = Options()
-    
-    # 기본 설정
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=ko-KR")
-    
-    # Headless 모드 (새 버전)
     options.add_argument("--headless=new")
-    
-    # 자동화 감지 우회
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-    
-    # 실제 브라우저처럼 보이게
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36")
-    options.add_argument("--accept-lang=ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
-    
-    # 추가 우회 설정
-    options.add_argument("--disable-infobars")
-    options.add_argument("--disable-extensions")
-    options.add_argument("--disable-popup-blocking")
-    options.add_argument("--ignore-certificate-errors")
-    options.add_argument("--disable-notifications")
     
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     
-    # JavaScript로 자동화 속성 숨기기
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
             Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
             Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
             Object.defineProperty(navigator, 'languages', { get: () => ['ko-KR', 'ko', 'en-US', 'en'] });
             window.chrome = { runtime: {} };
-            Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
         """
-    })
-    
-    # Network 조건 설정
-    driver.execute_cdp_cmd("Network.setUserAgentOverride", {
-        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
-        "acceptLanguage": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-        "platform": "Win32"
     })
     
     driver.set_page_load_timeout(60)
@@ -123,73 +98,68 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
     print(f"  [LOGIN] 로그인 시도 중...", flush=True)
     
     try:
-        # 먼저 메인 페이지 방문하여 초기 쿠키 획득
-        print(f"  [LOGIN] 초기 쿠키 획득 중...", flush=True)
-        driver.get("https://biz-member.baemin.com")
-        time.sleep(5)
-        
         # 로그인 페이지 이동
         print(f"  [LOGIN] 로그인 페이지 이동", flush=True)
         driver.get(LOGIN_URL)
-        time.sleep(10)
+        time.sleep(8)
         
         current_url = driver.current_url
         print(f"  [LOGIN] 현재 URL: {current_url}", flush=True)
         
-        # 페이지 소스 확인
-        page_source = driver.page_source
-        print(f"  [LOGIN] 페이지 길이: {len(page_source)}", flush=True)
+        # 페이지 타이틀 확인
+        title = driver.title
+        print(f"  [LOGIN] 페이지 타이틀: {title}", flush=True)
         
-        if "올바르지 않은 요청" in page_source:
-            print(f"  [LOGIN] Cloudflare 차단 감지", flush=True)
-            
-            # 재시도
-            driver.delete_all_cookies()
-            time.sleep(2)
-            driver.get("https://biz-member.baemin.com")
-            time.sleep(5)
-            driver.get(LOGIN_URL)
-            time.sleep(15)
-            
-            page_source = driver.page_source
-            if "올바르지 않은 요청" in page_source:
-                print(f"  [LOGIN] 재시도 후에도 차단됨", flush=True)
-                return None
-        
-        # 입력 필드 대기
-        max_wait = 40
-        elapsed = 0
-        while elapsed < max_wait:
-            inputs = driver.find_elements(By.TAG_NAME, "input")
-            print(f"  [LOGIN] 대기 중... input: {len(inputs)} ({elapsed}초)", flush=True)
-            
-            if len(inputs) >= 2:
-                break
-            
-            time.sleep(2)
-            elapsed += 2
-        
+        # 입력 필드 찾기 시도
         inputs = driver.find_elements(By.TAG_NAME, "input")
-        print(f"  [LOGIN] 최종 input 요소 수: {len(inputs)}", flush=True)
+        forms = driver.find_elements(By.TAG_NAME, "form")
+        print(f"  [LOGIN] input: {len(inputs)}, form: {len(forms)}", flush=True)
         
+        # input이 없으면 대기
+        if len(inputs) == 0:
+            print(f"  [LOGIN] 입력 필드 대기 중...", flush=True)
+            max_wait = 30
+            elapsed = 0
+            while elapsed < max_wait:
+                time.sleep(2)
+                elapsed += 2
+                inputs = driver.find_elements(By.TAG_NAME, "input")
+                print(f"  [LOGIN] 대기 {elapsed}초... input: {len(inputs)}", flush=True)
+                if len(inputs) >= 2:
+                    break
+        
+        # 여전히 없으면 body 내용 확인
         if len(inputs) < 2:
-            body_html = driver.find_element(By.TAG_NAME, "body").get_attribute("innerHTML")[:1500]
-            print(f"  [DEBUG] body HTML: {body_html}", flush=True)
+            body = driver.find_element(By.TAG_NAME, "body")
+            body_text = body.text[:500] if body.text else "(empty)"
+            print(f"  [LOGIN] body text: {body_text}", flush=True)
+            
+            # body innerHTML 일부
+            body_html = body.get_attribute("innerHTML")[:2000]
+            print(f"  [LOGIN] body HTML: {body_html}", flush=True)
             return None
         
         # 입력 필드 정보 출력
-        for i, inp in enumerate(inputs):
-            print(f"    input[{i}]: type={inp.get_attribute('type')}, name={inp.get_attribute('name')}", flush=True)
+        for i, inp in enumerate(inputs[:5]):
+            inp_type = inp.get_attribute('type')
+            inp_name = inp.get_attribute('name')
+            inp_placeholder = inp.get_attribute('placeholder')
+            print(f"    input[{i}]: type={inp_type}, name={inp_name}, placeholder={inp_placeholder}", flush=True)
         
-        # ID 입력
+        # ID 입력 필드 찾기
         id_input = None
         for inp in inputs:
-            if inp.get_attribute('type') == 'text' or inp.get_attribute('name') == 'id':
+            inp_type = inp.get_attribute('type')
+            inp_name = inp.get_attribute('name')
+            inp_testid = inp.get_attribute('data-testid')
+            if inp_type == 'text' or inp_name == 'id' or inp_testid == 'id':
                 id_input = inp
                 break
+        
         if not id_input:
             id_input = inputs[0]
         
+        # 아이디 입력
         id_input.click()
         time.sleep(0.3)
         id_input.clear()
@@ -197,15 +167,21 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 아이디 입력 완료", flush=True)
         time.sleep(0.5)
         
-        # PW 입력
+        # 비밀번호 필드 찾기
         pwd_input = None
         for inp in inputs:
             if inp.get_attribute('type') == 'password':
                 pwd_input = inp
                 break
-        if not pwd_input:
+        
+        if not pwd_input and len(inputs) > 1:
             pwd_input = inputs[1]
         
+        if not pwd_input:
+            print(f"  [LOGIN] 비밀번호 필드를 찾을 수 없음", flush=True)
+            return None
+        
+        # 비밀번호 입력
         pwd_input.click()
         time.sleep(0.3)
         pwd_input.clear()
@@ -213,14 +189,17 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
         time.sleep(0.5)
         
-        # 로그인 버튼
+        # 로그인 버튼 찾기
         buttons = driver.find_elements(By.TAG_NAME, "button")
+        print(f"  [LOGIN] button 개수: {len(buttons)}", flush=True)
+        
         login_btn = None
         for btn in buttons:
             btn_type = btn.get_attribute('type')
             btn_text = btn.text or ""
             if btn_type == 'submit' or '로그인' in btn_text:
                 login_btn = btn
+                print(f"  [LOGIN] 로그인 버튼 발견: type={btn_type}, text={btn_text[:20]}", flush=True)
                 break
         
         if login_btn:
@@ -232,19 +211,25 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         
         time.sleep(10)
         
+        # 로그인 후 URL 확인
         current_url = driver.current_url
         print(f"  [LOGIN] 로그인 후 URL: {current_url}", flush=True)
         
-        if "login" in current_url.lower() or "biz-member" in current_url.lower():
+        # 로그인 성공 여부 확인
+        if "login" in current_url.lower():
             # 에러 메시지 확인
-            errors = driver.find_elements(By.CSS_SELECTOR, ".is-danger, .error, [role='alert'], .help")
+            errors = driver.find_elements(By.CSS_SELECTOR, ".is-danger, .error, [role='alert'], .help, p.help")
             for err in errors:
                 if err.text:
                     print(f"  [LOGIN] 에러: {err.text}", flush=True)
+            print(f"  [LOGIN] 로그인 실패: 여전히 로그인 페이지", flush=True)
             return None
+        
+        print(f"  [LOGIN] 로그인 성공!", flush=True)
         
         # 리뷰 페이지 이동
         review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
+        print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
         driver.get(review_url)
         time.sleep(5)
         
@@ -253,7 +238,7 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
         
         if cookie_dict:
-            print(f"  [LOGIN] 로그인 성공, 쿠키 {len(cookie_dict)}개 획득", flush=True)
+            print(f"  [LOGIN] 쿠키 {len(cookie_dict)}개 획득", flush=True)
             return cookie_dict
         
         return None
