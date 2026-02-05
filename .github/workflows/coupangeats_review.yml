@@ -1,0 +1,68 @@
+name: Coupang Eats Review Crawler
+
+on:
+  schedule:
+    # 매일 23:00 KST = 14:00 UTC
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '수집 모드'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - initial
+          - current_year
+
+env:
+  TZ: Asia/Seoul
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install selenium webdriver-manager requests
+      
+      - name: Run crawler
+        env:
+          CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
+          COUPANG_ID_MAIN: ${{ secrets.COUPANG_ID_MAIN }}
+          COUPANG_PWD_MAIN: ${{ secrets.COUPANG_PWD_MAIN }}
+          COUPANG_ID_DASAN: ${{ secrets.COUPANG_ID_DASAN }}
+          COUPANG_PWD_DASAN: ${{ secrets.COUPANG_PWD_DASAN }}
+          COUPANG_ID_SONGPA: ${{ secrets.COUPANG_ID_SONGPA }}
+          COUPANG_PWD_SONGPA: ${{ secrets.COUPANG_PWD_SONGPA }}
+          COUPANG_ID_DUJEONG: ${{ secrets.COUPANG_ID_DUJEONG }}
+          COUPANG_PWD_DUJEONG: ${{ secrets.COUPANG_PWD_DUJEONG }}
+        run: |
+          python scripts/coupangeats_review_crawler.py
+      
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/review_coupangeats_data.json
+          git diff --staged --quiet || git commit -m "Update coupangeats reviews: $(date +'%Y-%m-%d %H:%M') KST"
+          git push
