@@ -27,30 +27,20 @@
             <button class="platform-tab active" data-platform="naver">
                 <span class="platform-name">네이버</span>
             </button>
+            <button class="platform-tab" data-platform="baemin">
+                <span class="platform-name">배달의민족</span>
+            </button>
+            <button class="platform-tab" data-platform="coupangeats">
+                <span class="platform-name">쿠팡이츠</span>
+            </button>
             <button class="platform-tab disabled" data-platform="instagram">
                 <span class="platform-name">인스타그램</span>
-                <span class="badge-coming">미구현</span>
-            </button>
-            <button class="platform-tab disabled" data-platform="daangn">
-                <span class="platform-name">당근마켓</span>
-                <span class="badge-coming">미구현</span>
+                <span class="badge-coming">예정</span>
             </button>
             <button class="platform-tab disabled" data-platform="youtube">
                 <span class="platform-name">유튜브</span>
-                <span class="badge-coming">미구현</span>
+                <span class="badge-coming">예정</span>
             </button>
-            <button class="platform-tab disabled" data-platform="delivery">
-                <span class="platform-name">배달</span>
-                <span class="badge-coming">미구현</span>
-            </button>
-        </nav>
-
-        <!-- 배달 하위 탭 -->
-        <nav class="delivery-subtabs" id="deliverySubtabs" style="display: none;">
-            <button class="delivery-tab" data-delivery="baemin">배달의민족</button>
-            <button class="delivery-tab" data-delivery="yogiyo">요기요</button>
-            <button class="delivery-tab" data-delivery="coupang">쿠팡이츠</button>
-            <button class="delivery-tab" data-delivery="ddangyo">땡겨요</button>
         </nav>
 
         <!-- 필터 섹션 -->
@@ -75,6 +65,8 @@
                 <select id="sortSelect" class="filter-select">
                     <option value="recent">최신순</option>
                     <option value="oldest">오래된순</option>
+                    <option value="rating_high">별점 높은순</option>
+                    <option value="rating_low">별점 낮은순</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -113,63 +105,103 @@
                     </div>
                 </section>
 
-                <!-- 리뷰 증감 통계 -->
-                <section class="stats-cards">
-                    <div class="stats-card">
-                        <div class="stats-label">오늘 리뷰</div>
-                        <div class="stats-value" id="todayReviews">-</div>
-                        <div class="stats-change" id="dailyChange">
-                            <span>전일 대비</span>
-                            <span class="change-value">-</span>
-                        </div>
-                    </div>
-                    <div class="stats-card">
-                        <div class="stats-label">이번 주 리뷰</div>
-                        <div class="stats-value" id="weeklyReviews">-</div>
-                        <div class="stats-change" id="weeklyChange">
-                            <span>전주 대비</span>
-                            <span class="change-value">-</span>
-                        </div>
-                    </div>
-                    <div class="stats-card">
-                        <div class="stats-label">이번 달 리뷰</div>
-                        <div class="stats-value" id="monthlyReviews">-</div>
-                        <div class="stats-change" id="monthlyChange">
-                            <span>전월 대비</span>
-                            <span class="change-value">-</span>
-                        </div>
-                    </div>
-                </section>
-
                 <!-- 인기 태그 -->
                 <section class="tag-section">
                     <h3>인기 태그</h3>
                     <div class="tag-cloud" id="tagCloud"></div>
                 </section>
 
-                <!-- 리뷰 목록 (2단 그리드 고정) -->
+                <!-- 리뷰 목록 -->
                 <section class="review-list-section">
                     <div class="section-header">
                         <h3>리뷰 목록 <span class="review-count" id="reviewCount"></span></h3>
                     </div>
                     <div class="review-list" id="reviewList"></div>
+                    <div id="scrollSentinel"></div>
+                </section>
+            </section>
+
+            <!-- 배달의민족 리뷰 -->
+            <section id="baeminContent" class="platform-pane">
+                
+                <!-- 요약 카드 -->
+                <section class="summary-cards">
+                    <div class="card">
+                        <div class="card-label">총 리뷰</div>
+                        <div class="card-value" id="baeminTotalReviews">-</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">수집 지점</div>
+                        <div class="card-value" id="baeminTotalStores">-</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">평균 별점</div>
+                        <div class="card-value" id="baeminAvgRating">-</div>
+                    </div>
+                    <div class="card card-negative">
+                        <div class="card-label">부정적 리뷰</div>
+                        <div class="card-value" id="baeminNegativeReviews">-</div>
+                    </div>
+                </section>
+
+                <!-- 인기 메뉴 -->
+                <section class="tag-section">
+                    <h3>인기 메뉴</h3>
+                    <div class="tag-cloud" id="baeminMenuCloud"></div>
+                </section>
+
+                <!-- 리뷰 목록 -->
+                <section class="review-list-section">
+                    <div class="section-header">
+                        <h3>리뷰 목록 <span class="review-count" id="baeminReviewCount"></span></h3>
+                    </div>
+                    <div class="review-list" id="baeminReviewList"></div>
+                </section>
+            </section>
+
+            <!-- 쿠팡이츠 리뷰 -->
+            <section id="coupangeatsContent" class="platform-pane">
+                
+                <!-- 요약 카드 -->
+                <section class="summary-cards">
+                    <div class="card">
+                        <div class="card-label">총 리뷰</div>
+                        <div class="card-value" id="coupangTotalReviews">-</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">수집 지점</div>
+                        <div class="card-value" id="coupangTotalStores">-</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">평균 별점</div>
+                        <div class="card-value" id="coupangAvgRating">-</div>
+                    </div>
+                    <div class="card card-negative">
+                        <div class="card-label">부정적 리뷰</div>
+                        <div class="card-value" id="coupangNegativeReviews">-</div>
+                    </div>
+                </section>
+
+                <!-- 인기 메뉴 -->
+                <section class="tag-section">
+                    <h3>인기 메뉴</h3>
+                    <div class="tag-cloud" id="coupangMenuCloud"></div>
+                </section>
+
+                <!-- 리뷰 목록 -->
+                <section class="review-list-section">
+                    <div class="section-header">
+                        <h3>리뷰 목록 <span class="review-count" id="coupangReviewCount"></span></h3>
+                    </div>
+                    <div class="review-list" id="coupangReviewList"></div>
                 </section>
             </section>
 
             <!-- 미구현 플랫폼들 -->
             <section id="instagramContent" class="platform-pane">
                 <div class="coming-soon-box">
-                    <div class="coming-soon-icon">📷</div>
+                    <div class="coming-soon-icon">Instagram</div>
                     <h2>인스타그램 리뷰 관리</h2>
-                    <p>준비 중입니다</p>
-                    <span class="coming-soon-badge">Coming Soon</span>
-                </div>
-            </section>
-
-            <section id="daangnContent" class="platform-pane">
-                <div class="coming-soon-box">
-                    <div class="coming-soon-icon">🥕</div>
-                    <h2>당근마켓 리뷰 관리</h2>
                     <p>준비 중입니다</p>
                     <span class="coming-soon-badge">Coming Soon</span>
                 </div>
@@ -177,18 +209,9 @@
 
             <section id="youtubeContent" class="platform-pane">
                 <div class="coming-soon-box">
-                    <div class="coming-soon-icon">▶️</div>
+                    <div class="coming-soon-icon">YouTube</div>
                     <h2>유튜브 리뷰 관리</h2>
                     <p>준비 중입니다</p>
-                    <span class="coming-soon-badge">Coming Soon</span>
-                </div>
-            </section>
-
-            <section id="deliveryContent" class="platform-pane">
-                <div class="coming-soon-box">
-                    <div class="coming-soon-icon">🛵</div>
-                    <h2>배달 플랫폼 리뷰 관리</h2>
-                    <p>배달의민족 / 요기요 / 쿠팡이츠 / 땡겨요</p>
                     <span class="coming-soon-badge">Coming Soon</span>
                 </div>
             </section>
