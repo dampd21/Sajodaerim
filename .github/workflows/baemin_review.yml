@@ -1,0 +1,68 @@
+name: Baemin Review Crawler
+
+on:
+  schedule:
+    # 매일 22:30 KST = 13:30 UTC
+    - cron: '30 13 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '수집 모드'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - initial
+          - current_year
+
+env:
+  TZ: Asia/Seoul
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install selenium webdriver-manager requests
+      
+      - name: Run crawler
+        env:
+          CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
+          BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
+          BAEMIN_PWD_MAIN: ${{ secrets.BAEMIN_PWD_MAIN }}
+          BAEMIN_ID_DASAN: ${{ secrets.BAEMIN_ID_DASAN }}
+          BAEMIN_PWD_DASAN: ${{ secrets.BAEMIN_PWD_DASAN }}
+          BAEMIN_ID_SONGPA: ${{ secrets.BAEMIN_ID_SONGPA }}
+          BAEMIN_PWD_SONGPA: ${{ secrets.BAEMIN_PWD_SONGPA }}
+          BAEMIN_ID_DUJEONG: ${{ secrets.BAEMIN_ID_DUJEONG }}
+          BAEMIN_PWD_DUJEONG: ${{ secrets.BAEMIN_PWD_DUJEONG }}
+        run: |
+          python scripts/baemin_review_crawler.py
+      
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/review_baemin_data.json
+          git diff --staged --quiet || git commit -m "Update baemin reviews: $(date +'%Y-%m-%d %H:%M') KST"
+          git push
