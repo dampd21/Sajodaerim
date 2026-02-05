@@ -50,7 +50,7 @@ STORES = [
 
 # API 설정
 API_BASE_URL = "https://self-api.baemin.com/v1/review/shops"
-LOGIN_URL = "https://self.baemin.com/login"
+LOGIN_URL = "https://biz-member.baemin.com/login"
 
 # 출력 경로
 OUTPUT_DIR = "docs"
@@ -78,31 +78,42 @@ def setup_driver():
 def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
     """로그인하여 세션 쿠키 획득"""
     print(f"  [LOGIN] 로그인 시도 중...", flush=True)
+    print(f"  [LOGIN] URL: {LOGIN_URL}", flush=True)
     
     try:
         driver.get(LOGIN_URL)
         time.sleep(3)
         
-        # 아이디 입력
-        id_input = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='id']"))
+        # 페이지 로드 확인
+        print(f"  [LOGIN] 현재 URL: {driver.current_url}", flush=True)
+        
+        # 아이디 입력 (data-testid="id" 사용)
+        id_input = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[data-testid='id']"))
         )
         id_input.clear()
         id_input.send_keys(login_id)
+        print(f"  [LOGIN] 아이디 입력 완료", flush=True)
         
-        # 비밀번호 입력
-        pwd_input = driver.find_element(By.CSS_SELECTOR, "input[name='password']")
+        # 비밀번호 입력 (data-testid="password" 사용)
+        pwd_input = driver.find_element(By.CSS_SELECTOR, "input[data-testid='password']")
         pwd_input.clear()
         pwd_input.send_keys(login_pwd)
+        print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
         
-        # 로그인 버튼 클릭
+        # 로그인 버튼 클릭 (button type="submit" 찾기)
         login_btn = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
         login_btn.click()
+        print(f"  [LOGIN] 로그인 버튼 클릭", flush=True)
         
         time.sleep(5)
         
-        # 리뷰 페이지로 이동하여 세션 확인
+        # 로그인 후 URL 확인
+        print(f"  [LOGIN] 로그인 후 URL: {driver.current_url}", flush=True)
+        
+        # 셀프서비스 페이지로 이동
         review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
+        print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
         driver.get(review_url)
         time.sleep(3)
         
@@ -119,6 +130,12 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             
     except Exception as e:
         print(f"  [LOGIN] 로그인 오류: {e}", flush=True)
+        # 현재 페이지 소스 일부 출력 (디버깅용)
+        try:
+            page_source = driver.page_source[:1000]
+            print(f"  [DEBUG] 페이지 소스 일부: {page_source}", flush=True)
+        except:
+            pass
         return None
 
 
@@ -172,6 +189,7 @@ def fetch_reviews_api(cookies, shop_id, from_date, to_date):
                 break
             else:
                 print(f"    [API] 오류: {response.status_code}", flush=True)
+                print(f"    [API] 응답: {response.text[:500]}", flush=True)
                 break
                 
         except Exception as e:
