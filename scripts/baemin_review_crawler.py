@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 배달의민족 리뷰 크롤러
-- undetected-chromedriver로 Cloudflare 우회
+- Selenium으로 로그인하여 세션 쿠키 획득
 - API로 리뷰 데이터 수집
 - 지점별 계정 분리
 """
@@ -12,22 +12,14 @@ import json
 import time
 import requests
 from datetime import datetime, timedelta
-
-# undetected-chromedriver 사용
-try:
-    import undetected_chromedriver as uc
-    USE_UNDETECTED = True
-except ImportError:
-    from selenium import webdriver
-    from selenium.webdriver.chrome.service import Service
-    from selenium.webdriver.chrome.options import Options
-    from webdriver_manager.chrome import ChromeDriverManager
-    USE_UNDETECTED = False
-
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
 # 지점 정보
 STORES = [
@@ -67,40 +59,57 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
 
 def setup_driver():
-    """Chrome 드라이버 설정"""
-    print(f"[SETUP] Chrome 드라이버 설정 중... (undetected: {USE_UNDETECTED})", flush=True)
+    """Chrome 드라이버 설정 - Cloudflare 우회 시도"""
+    print("[SETUP] Chrome 드라이버 설정 중...", flush=True)
     
-    if USE_UNDETECTED:
-        options = uc.ChromeOptions()
-        options.add_argument("--headless=new")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--window-size=1920,1080")
-        options.add_argument("--lang=ko-KR")
-        
-        driver = uc.Chrome(options=options, use_subprocess=True)
-    else:
-        options = Options()
-        options.add_argument("--headless=new")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument("--window-size=1920,1080")
-        options.add_argument("--lang=ko-KR")
-        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option("useAutomationExtension", False)
-        
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
-        
-        driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-            "source": """
-                Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            """
-        })
+    options = Options()
+    
+    # 기본 설정
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--lang=ko-KR")
+    
+    # Headless 모드 (새 버전)
+    options.add_argument("--headless=new")
+    
+    # 자동화 감지 우회
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("useAutomationExtension", False)
+    
+    # 실제 브라우저처럼 보이게
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36")
+    options.add_argument("--accept-lang=ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+    
+    # 추가 우회 설정
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-popup-blocking")
+    options.add_argument("--ignore-certificate-errors")
+    options.add_argument("--disable-notifications")
+    
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+    
+    # JavaScript로 자동화 속성 숨기기
+    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+        "source": """
+            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+            Object.defineProperty(navigator, 'languages', { get: () => ['ko-KR', 'ko', 'en-US', 'en'] });
+            window.chrome = { runtime: {} };
+            Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
+        """
+    })
+    
+    # Network 조건 설정
+    driver.execute_cdp_cmd("Network.setUserAgentOverride", {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+        "acceptLanguage": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+        "platform": "Win32"
+    })
     
     driver.set_page_load_timeout(60)
     driver.implicitly_wait(10)
@@ -114,10 +123,14 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
     print(f"  [LOGIN] 로그인 시도 중...", flush=True)
     
     try:
+        # 먼저 메인 페이지 방문하여 초기 쿠키 획득
+        print(f"  [LOGIN] 초기 쿠키 획득 중...", flush=True)
+        driver.get("https://biz-member.baemin.com")
+        time.sleep(5)
+        
+        # 로그인 페이지 이동
         print(f"  [LOGIN] 로그인 페이지 이동", flush=True)
         driver.get(LOGIN_URL)
-        
-        # Cloudflare challenge 통과 대기
         time.sleep(10)
         
         current_url = driver.current_url
@@ -125,12 +138,26 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         
         # 페이지 소스 확인
         page_source = driver.page_source
-        if "올바르지 않은 요청" in page_source or "challenge" in page_source.lower():
-            print(f"  [LOGIN] Cloudflare 차단 감지, 추가 대기...", flush=True)
+        print(f"  [LOGIN] 페이지 길이: {len(page_source)}", flush=True)
+        
+        if "올바르지 않은 요청" in page_source:
+            print(f"  [LOGIN] Cloudflare 차단 감지", flush=True)
+            
+            # 재시도
+            driver.delete_all_cookies()
+            time.sleep(2)
+            driver.get("https://biz-member.baemin.com")
+            time.sleep(5)
+            driver.get(LOGIN_URL)
             time.sleep(15)
+            
+            page_source = driver.page_source
+            if "올바르지 않은 요청" in page_source:
+                print(f"  [LOGIN] 재시도 후에도 차단됨", flush=True)
+                return None
         
         # 입력 필드 대기
-        max_wait = 30
+        max_wait = 40
         elapsed = 0
         while elapsed < max_wait:
             inputs = driver.find_elements(By.TAG_NAME, "input")
@@ -146,9 +173,13 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 최종 input 요소 수: {len(inputs)}", flush=True)
         
         if len(inputs) < 2:
-            body_html = driver.find_element(By.TAG_NAME, "body").get_attribute("innerHTML")[:1000]
+            body_html = driver.find_element(By.TAG_NAME, "body").get_attribute("innerHTML")[:1500]
             print(f"  [DEBUG] body HTML: {body_html}", flush=True)
-            raise Exception("입력 필드를 찾을 수 없음")
+            return None
+        
+        # 입력 필드 정보 출력
+        for i, inp in enumerate(inputs):
+            print(f"    input[{i}]: type={inp.get_attribute('type')}, name={inp.get_attribute('name')}", flush=True)
         
         # ID 입력
         id_input = None
@@ -186,7 +217,9 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         buttons = driver.find_elements(By.TAG_NAME, "button")
         login_btn = None
         for btn in buttons:
-            if btn.get_attribute('type') == 'submit' or '로그인' in (btn.text or ''):
+            btn_type = btn.get_attribute('type')
+            btn_text = btn.text or ""
+            if btn_type == 'submit' or '로그인' in btn_text:
                 login_btn = btn
                 break
         
@@ -203,7 +236,11 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 로그인 후 URL: {current_url}", flush=True)
         
         if "login" in current_url.lower() or "biz-member" in current_url.lower():
-            print(f"  [LOGIN] 로그인 실패", flush=True)
+            # 에러 메시지 확인
+            errors = driver.find_elements(By.CSS_SELECTOR, ".is-danger, .error, [role='alert'], .help")
+            for err in errors:
+                if err.text:
+                    print(f"  [LOGIN] 에러: {err.text}", flush=True)
             return None
         
         # 리뷰 페이지 이동
@@ -236,11 +273,11 @@ def fetch_reviews_api(cookies, shop_id, from_date, to_date):
     
     headers = {
         "accept": "application/json, text/plain, */*",
-        "accept-language": "ko-KR,ko;q=0.9",
+        "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
         "origin": "https://self.baemin.com",
         "referer": "https://self.baemin.com/",
         "service-channel": "SELF_SERVICE_PC",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
     }
     
     cookie_str = "; ".join([f"{k}={v}" for k, v in cookies.items()])
