@@ -14,6 +14,7 @@ import requests
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -62,15 +63,28 @@ def setup_driver():
     print("[SETUP] Chrome 드라이버 설정 중...", flush=True)
     
     options = Options()
-    options.add_argument("--headless")
+    options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("useAutomationExtension", False)
     
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
+    
+    # 자동화 감지 우회
+    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+        "source": """
+            Object.defineProperty(navigator, 'webdriver', {
+                get: () => undefined
+            })
+        """
+    })
+    
     print("[SETUP] Chrome 드라이버 설정 완료", flush=True)
     return driver
 
@@ -81,27 +95,86 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
     
     try:
         driver.get(LOGIN_URL)
-        time.sleep(3)
-        
-        # 아이디 입력 (id="loginId")
-        id_input = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "loginId"))
-        )
-        id_input.clear()
-        id_input.send_keys(login_id)
-        
-        # 비밀번호 입력 (id="password")
-        pwd_input = driver.find_element(By.ID, "password")
-        pwd_input.clear()
-        pwd_input.send_keys(login_pwd)
-        
-        # 로그인 버튼 클릭
-        login_btn = driver.find_element(By.CSS_SELECTOR, "button[type='submit'].merchant-submit-btn")
-        login_btn.click()
-        
+        print(f"  [LOGIN] 페이지 로드 완료", flush=True)
         time.sleep(5)
         
-        # 리뷰 페이지로 이동하여 세션 확인
+        # 현재 URL 확인
+        print(f"  [LOGIN] 현재 URL: {driver.current_url}", flush=True)
+        
+        # 페이지 소스 일부 출력 (디버깅)
+        page_source = driver.page_source
+        if "loginId" in page_source:
+            print(f"  [LOGIN] loginId 필드 발견", flush=True)
+        else:
+            print(f"  [LOGIN] loginId 필드 없음, 페이지 확인 필요", flush=True)
+        
+        # 아이디 입력 - 여러 방법 시도
+        id_input = None
+        try:
+            id_input = WebDriverWait(driver, 15).until(
+                EC.presence_of_element_located((By.ID, "loginId"))
+            )
+            print(f"  [LOGIN] ID 필드 찾음 (By.ID)", flush=True)
+        except:
+            try:
+                id_input = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "input#loginId"))
+                )
+                print(f"  [LOGIN] ID 필드 찾음 (By.CSS_SELECTOR)", flush=True)
+            except:
+                try:
+                    id_input = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.XPATH, "//input[@id='loginId']"))
+                    )
+                    print(f"  [LOGIN] ID 필드 찾음 (By.XPATH)", flush=True)
+                except:
+                    # 모든 input 요소 찾기
+                    inputs = driver.find_elements(By.TAG_NAME, "input")
+                    print(f"  [LOGIN] 페이지의 input 요소 수: {len(inputs)}", flush=True)
+                    for i, inp in enumerate(inputs):
+                        print(f"    input[{i}]: id={inp.get_attribute('id')}, type={inp.get_attribute('type')}, placeholder={inp.get_attribute('placeholder')}", flush=True)
+                    raise Exception("ID 입력 필드를 찾을 수 없음")
+        
+        # 입력 필드가 보이고 활성화될 때까지 대기
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "loginId")))
+        
+        id_input.clear()
+        time.sleep(0.5)
+        id_input.send_keys(login_id)
+        print(f"  [LOGIN] 아이디 입력 완료", flush=True)
+        time.sleep(0.5)
+        
+        # 비밀번호 입력
+        pwd_input = driver.find_element(By.ID, "password")
+        pwd_input.clear()
+        time.sleep(0.5)
+        pwd_input.send_keys(login_pwd)
+        print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
+        time.sleep(0.5)
+        
+        # 로그인 버튼 클릭
+        login_btn = driver.find_element(By.CSS_SELECTOR, "button.merchant-submit-btn")
+        login_btn.click()
+        print(f"  [LOGIN] 로그인 버튼 클릭", flush=True)
+        
+        time.sleep(7)
+        
+        # 로그인 후 URL 확인
+        current_url = driver.current_url
+        print(f"  [LOGIN] 로그인 후 URL: {current_url}", flush=True)
+        
+        # 로그인 실패 체크
+        if "login" in current_url.lower():
+            # 에러 메시지 확인
+            try:
+                error_msg = driver.find_element(By.CSS_SELECTOR, ".field-error, .login-error, .error-message")
+                print(f"  [LOGIN] 에러 메시지: {error_msg.text}", flush=True)
+            except:
+                pass
+            print(f"  [LOGIN] 로그인 실패: 여전히 로그인 페이지", flush=True)
+            return None
+        
+        # 리뷰 페이지로 이동
         review_url = "https://store.coupangeats.com/merchant/management/reviews"
         driver.get(review_url)
         time.sleep(3)
@@ -109,6 +182,8 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
         # 쿠키 추출
         cookies = driver.get_cookies()
         cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+        
+        print(f"  [LOGIN] 쿠키 목록: {list(cookie_dict.keys())}", flush=True)
         
         if cookie_dict:
             print(f"  [LOGIN] 로그인 성공, 쿠키 {len(cookie_dict)}개 획득", flush=True)
@@ -119,6 +194,16 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
             
     except Exception as e:
         print(f"  [LOGIN] 로그인 오류: {e}", flush=True)
+        import traceback
+        traceback.print_exc()
+        
+        # 스크린샷 저장 시도
+        try:
+            driver.save_screenshot("/tmp/coupang_error.png")
+            print(f"  [LOGIN] 스크린샷 저장됨: /tmp/coupang_error.png", flush=True)
+        except:
+            pass
+        
         return None
 
 
@@ -160,12 +245,12 @@ def fetch_reviews_api(cookies, store_id, from_date, to_date):
                 total = content.get("total", 0)
                 
                 if not review_list:
+                    print(f"    [API] 리뷰 없음", flush=True)
                     break
                 
                 reviews.extend(review_list)
                 print(f"    [API] 수집: page={page}, 개수={len(review_list)}, 전체={total}", flush=True)
                 
-                # 다음 페이지 확인
                 if len(reviews) >= total:
                     break
                 
@@ -177,6 +262,7 @@ def fetch_reviews_api(cookies, store_id, from_date, to_date):
                 break
             else:
                 print(f"    [API] 오류: {response.status_code}", flush=True)
+                print(f"    [API] 응답: {response.text[:500]}", flush=True)
                 break
                 
         except Exception as e:
@@ -189,13 +275,9 @@ def fetch_reviews_api(cookies, store_id, from_date, to_date):
 def parse_review(review, store_name):
     """리뷰 데이터 파싱"""
     
-    # 이미지 URL
     images = review.get("images", [])
-    
-    # 메뉴명 추출
     menus = [item.get("dishName", "") for item in review.get("orderInfo", []) if item.get("dishName")]
     
-    # 날짜 파싱
     created_at = review.get("createdAt", "")
     created_date = ""
     if created_at:
@@ -204,7 +286,6 @@ def parse_review(review, store_name):
         except:
             pass
     
-    # 별점에 따른 부정적 리뷰 판단
     rating = review.get("rating", 5.0)
     is_negative = rating <= 3.0
     
@@ -228,13 +309,11 @@ def get_date_ranges(mode="daily"):
     today = datetime.now()
     
     if mode == "daily":
-        # 2일 전 데이터만 (exclusiveEndDateTime이므로 +1일)
         target_date = today - timedelta(days=2)
         end_date = target_date + timedelta(days=1)
         return [(target_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"))]
     
     elif mode == "initial":
-        # 2025년 전체
         ranges = [
             ("2025-01-01", "2025-07-01"),
             ("2025-07-01", "2026-01-01"),
@@ -250,7 +329,6 @@ def get_date_ranges(mode="daily"):
         return ranges
     
     elif mode == "current_year":
-        # 올해 전체 (6개월 단위)
         year_start = datetime(today.year, 1, 1)
         ranges = []
         
