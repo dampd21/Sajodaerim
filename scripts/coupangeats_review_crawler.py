@@ -76,7 +76,6 @@ def setup_driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     
-    # 자동화 감지 우회
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
             Object.defineProperty(navigator, 'webdriver', {
@@ -94,116 +93,87 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
     print(f"  [LOGIN] 로그인 시도 중...", flush=True)
     
     try:
+        print(f"  [LOGIN] 로그인 페이지 이동: {LOGIN_URL}", flush=True)
         driver.get(LOGIN_URL)
-        print(f"  [LOGIN] 페이지 로드 중...", flush=True)
         time.sleep(5)
         
         current_url = driver.current_url
         print(f"  [LOGIN] 현재 URL: {current_url}", flush=True)
         
-        # 페이지 완전 로드 대기
-        WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
+        # JavaScript 렌더링 대기
+        time.sleep(5)
         
-        # input 요소들 찾기 시도
-        print(f"  [LOGIN] 입력 필드 찾는 중...", flush=True)
+        # 모든 input 확인
+        inputs = driver.find_elements(By.TAG_NAME, "input")
+        print(f"  [LOGIN] input 요소 수: {len(inputs)}", flush=True)
         
-        # 여러 셀렉터 시도
-        id_selectors = [
-            (By.ID, "loginId"),
-            (By.CSS_SELECTOR, "input#loginId"),
-            (By.CSS_SELECTOR, "input[placeholder='아이디']"),
-            (By.XPATH, "//input[@id='loginId']"),
-            (By.XPATH, "//label[contains(text(),'아이디')]/following::input[1]"),
-        ]
-        
-        id_input = None
-        for selector_type, selector in id_selectors:
-            try:
-                id_input = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((selector_type, selector))
-                )
-                print(f"  [LOGIN] ID 필드 찾음: {selector}", flush=True)
-                break
-            except:
-                continue
-        
-        if not id_input:
-            # 모든 input 요소 출력
+        if len(inputs) == 0:
+            print(f"  [LOGIN] JavaScript 렌더링 추가 대기...", flush=True)
+            time.sleep(10)
             inputs = driver.find_elements(By.TAG_NAME, "input")
-            print(f"  [LOGIN] 페이지 내 input 요소 수: {len(inputs)}", flush=True)
+            print(f"  [LOGIN] 재확인 input 요소 수: {len(inputs)}", flush=True)
+        
+        # 입력 필드 찾기
+        id_input = None
+        
+        try:
+            id_input = WebDriverWait(driver, 15).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "input#loginId, input[placeholder='아이디']"))
+            )
+            print(f"  [LOGIN] ID 필드 찾음", flush=True)
+        except:
+            # 모든 input 출력
             for i, inp in enumerate(inputs):
-                print(f"    [{i}] id={inp.get_attribute('id')}, type={inp.get_attribute('type')}, placeholder={inp.get_attribute('placeholder')}", flush=True)
+                attrs = {
+                    'type': inp.get_attribute('type'),
+                    'name': inp.get_attribute('name'),
+                    'id': inp.get_attribute('id'),
+                    'placeholder': inp.get_attribute('placeholder')
+                }
+                print(f"    input[{i}]: {attrs}", flush=True)
             raise Exception("ID 입력 필드를 찾을 수 없음")
         
         # 아이디 입력
         id_input.clear()
         time.sleep(0.3)
-        id_input.send_keys(login_id)
+        for char in login_id:
+            id_input.send_keys(char)
+            time.sleep(0.05)
         print(f"  [LOGIN] 아이디 입력 완료", flush=True)
         time.sleep(0.5)
         
         # 비밀번호 필드 찾기
-        pwd_selectors = [
-            (By.ID, "password"),
-            (By.CSS_SELECTOR, "input#password"),
-            (By.CSS_SELECTOR, "input[type='password']"),
-        ]
-        
-        pwd_input = None
-        for selector_type, selector in pwd_selectors:
-            try:
-                pwd_input = driver.find_element(selector_type, selector)
-                print(f"  [LOGIN] PW 필드 찾음: {selector}", flush=True)
-                break
-            except:
-                continue
-        
-        if not pwd_input:
+        try:
+            pwd_input = driver.find_element(By.CSS_SELECTOR, "input#password, input[type='password']")
+            print(f"  [LOGIN] PW 필드 찾음", flush=True)
+        except:
             raise Exception("비밀번호 입력 필드를 찾을 수 없음")
         
         pwd_input.clear()
         time.sleep(0.3)
-        pwd_input.send_keys(login_pwd)
+        for char in login_pwd:
+            pwd_input.send_keys(char)
+            time.sleep(0.05)
         print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
         time.sleep(0.5)
         
-        # 로그인 버튼 찾기
-        btn_selectors = [
-            (By.CSS_SELECTOR, "button.merchant-submit-btn"),
-            (By.CSS_SELECTOR, "button[type='submit']"),
-            (By.XPATH, "//button[contains(text(), '로그인')]"),
-        ]
-        
-        login_btn = None
-        for selector_type, selector in btn_selectors:
-            try:
-                login_btn = driver.find_element(selector_type, selector)
-                print(f"  [LOGIN] 로그인 버튼 찾음: {selector}", flush=True)
-                break
-            except:
-                continue
-        
-        if not login_btn:
-            # Enter 키로 로그인 시도
-            pwd_input.send_keys(Keys.RETURN)
-            print(f"  [LOGIN] Enter 키로 로그인 시도", flush=True)
-        else:
+        # 로그인 버튼 클릭
+        try:
+            login_btn = driver.find_element(By.CSS_SELECTOR, "button.merchant-submit-btn, button[type='submit']")
             login_btn.click()
             print(f"  [LOGIN] 로그인 버튼 클릭", flush=True)
+        except:
+            pwd_input.send_keys(Keys.RETURN)
+            print(f"  [LOGIN] Enter 키로 로그인", flush=True)
         
         time.sleep(7)
         
-        # 로그인 후 URL 확인
         current_url = driver.current_url
         print(f"  [LOGIN] 로그인 후 URL: {current_url}", flush=True)
         
-        # 로그인 성공 여부 확인
         if "login" in current_url.lower():
-            # 에러 메시지 확인
             try:
-                error_elements = driver.find_elements(By.CSS_SELECTOR, ".field-error, .error, [role='alert']")
+                error_elements = driver.find_elements(By.CSS_SELECTOR, ".field-error, .error")
                 for elem in error_elements:
                     if elem.text:
                         print(f"  [LOGIN] 에러: {elem.text}", flush=True)
@@ -222,8 +192,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
         cookies = driver.get_cookies()
         cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
         
-        print(f"  [LOGIN] 쿠키 목록: {list(cookie_dict.keys())[:10]}...", flush=True)
-        
         if cookie_dict:
             print(f"  [LOGIN] 로그인 성공, 쿠키 {len(cookie_dict)}개 획득", flush=True)
             return cookie_dict
@@ -236,16 +204,14 @@ def login_and_get_cookies(driver, login_id, login_pwd, store_id):
         import traceback
         traceback.print_exc()
         
-        # 스크린샷 저장
         try:
             driver.save_screenshot("/tmp/coupang_error.png")
             print(f"  [DEBUG] 스크린샷 저장됨", flush=True)
         except:
             pass
         
-        # 페이지 소스 일부 출력
         try:
-            page_source = driver.page_source[:2000]
+            page_source = driver.page_source[:3000]
             print(f"  [DEBUG] 페이지 소스: {page_source}", flush=True)
         except:
             pass
@@ -307,7 +273,6 @@ def fetch_reviews_api(cookies, store_id, from_date, to_date):
                 break
             else:
                 print(f"    [API] 오류: {response.status_code}", flush=True)
-                print(f"    [API] 응답: {response.text[:500]}", flush=True)
                 break
                 
         except Exception as e:
