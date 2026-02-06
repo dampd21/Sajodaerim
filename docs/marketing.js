@@ -22,7 +22,7 @@ const STORE_LIST = [
 ];
 
 // Cloudflare Workers 프록시 URL
-const PROXY_URL = "https://naver-place-proxy.your-name.workers.dev";
+const PROXY_URL = "https://naver-place-proxy.dampd21.workers.dev/";
 
 // ============================================
 // 초기화
