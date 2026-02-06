@@ -1,7 +1,7 @@
 /**
  * 마케팅 관리 대시보드
  * - 순위 추적
- * - 경쟁사 분석 (브라우저에서 직접 네이버 API 호출)
+ * - 경쟁사 분석 (Cloudflare Workers 프록시 경유)
  * - 키워드 설정 (localStorage 저장)
  */
 
@@ -21,18 +21,30 @@ const STORE_LIST = [
     "역대짬뽕 여수국동점"
 ];
 
-const NAVER_GRAPHQL_URL = "https://api.place.naver.com/graphql";
+// Cloudflare Workers 프록시 URL (여기에 본인 Workers URL 입력)
+const PROXY_URL = "https://naver-place-proxy.dampd21.workers.dev/";
 
 // ============================================
 // 초기화
 // ============================================
 
 document.addEventListener('DOMContentLoaded', async () => {
+    loadProxyUrl();
     await loadData();
     initEventListeners();
     initFilters();
     renderDashboard();
 });
+
+function loadProxyUrl() {
+    // localStorage에서 프록시 URL 로드 (설정 가능하도록)
+    var saved = localStorage.getItem('marketing_proxy_url');
+    if (saved) {
+        window.NAVER_PROXY_URL = saved;
+    } else {
+        window.NAVER_PROXY_URL = PROXY_URL;
+    }
+}
 
 function recreateCanvas(containerId, canvasId) {
     const container = document.getElementById(containerId);
@@ -77,7 +89,7 @@ async function loadData() {
     }
 
     // config 로드: localStorage > 서버 파일 > 기본값
-    const localConfig = localStorage.getItem('marketing_config');
+    var localConfig = localStorage.getItem('marketing_config');
     if (localConfig) {
         try {
             configData = JSON.parse(localConfig);
@@ -110,51 +122,67 @@ async function loadData() {
 
 function initEventListeners() {
     // 탭 전환
-    document.querySelectorAll('.tabs .tab').forEach(tab => {
-        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    document.querySelectorAll('.tabs .tab').forEach(function(tab) {
+        tab.addEventListener('click', function() { switchTab(tab.dataset.tab); });
     });
 
     // 필터
-    document.getElementById('storeSelect')?.addEventListener('change', () => {
-        updateKeywordFilter();
-        filterAndRender();
-    });
-    document.getElementById('keywordSelect')?.addEventListener('change', filterAndRender);
-    document.getElementById('periodSelect')?.addEventListener('change', filterAndRender);
+    var storeSelect = document.getElementById('storeSelect');
+    if (storeSelect) {
+        storeSelect.addEventListener('change', function() {
+            updateKeywordFilter();
+            filterAndRender();
+        });
+    }
+
+    var keywordSelect = document.getElementById('keywordSelect');
+    if (keywordSelect) keywordSelect.addEventListener('change', filterAndRender);
+
+    var periodSelect = document.getElementById('periodSelect');
+    if (periodSelect) periodSelect.addEventListener('change', filterAndRender);
 
     // 뷰 토글
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchView(btn.dataset.view));
+    document.querySelectorAll('.view-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() { switchView(btn.dataset.view); });
     });
 
     // 경쟁사 분석
-    document.getElementById('runAnalysisBtn')?.addEventListener('click', runCompetitorAnalysis);
+    var runBtn = document.getElementById('runAnalysisBtn');
+    if (runBtn) runBtn.addEventListener('click', runCompetitorAnalysis);
 
-    // Enter 키로 분석 시작
-    document.getElementById('analysisKeyword')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') runCompetitorAnalysis();
-    });
+    var analysisInput = document.getElementById('analysisKeyword');
+    if (analysisInput) {
+        analysisInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') runCompetitorAnalysis();
+        });
+    }
 
     // 키워드 설정 저장
-    document.getElementById('saveSettingsBtn')?.addEventListener('click', saveKeywordSettings);
+    var saveBtn = document.getElementById('saveSettingsBtn');
+    if (saveBtn) saveBtn.addEventListener('click', saveKeywordSettings);
 
     // 모달 닫기
-    document.querySelector('#detailModal .modal-close')?.addEventListener('click', closeModal);
-    document.getElementById('detailModal')?.addEventListener('click', (e) => {
-        if (e.target.id === 'detailModal') closeModal();
-    });
+    var modalClose = document.querySelector('#detailModal .modal-close');
+    if (modalClose) modalClose.addEventListener('click', closeModal);
 
-    document.addEventListener('keydown', (e) => {
+    var modal = document.getElementById('detailModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target.id === 'detailModal') closeModal();
+        });
+    }
+
+    document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeModal();
     });
 }
 
 function switchTab(tabId) {
-    document.querySelectorAll('.tabs .tab').forEach(t => {
+    document.querySelectorAll('.tabs .tab').forEach(function(t) {
         t.classList.toggle('active', t.dataset.tab === tabId);
     });
 
-    document.querySelectorAll('.tab-pane').forEach(pane => {
+    document.querySelectorAll('.tab-pane').forEach(function(pane) {
         pane.classList.toggle('active', pane.id === tabId);
     });
 
@@ -166,19 +194,20 @@ function switchTab(tabId) {
 }
 
 function switchView(view) {
-    document.querySelectorAll('.view-btn').forEach(btn => {
+    document.querySelectorAll('.view-btn').forEach(function(btn) {
         btn.classList.toggle('active', btn.dataset.view === view);
     });
 
-    const cardView = document.getElementById('historyCardView');
-    const tableView = document.getElementById('historyTableView');
+    var cardView = document.getElementById('historyCardView');
+    var tableView = document.getElementById('historyTableView');
 
     if (cardView) cardView.style.display = view === 'card' ? 'grid' : 'none';
     if (tableView) tableView.style.display = view === 'table' ? 'block' : 'none';
 }
 
 function closeModal() {
-    document.getElementById('detailModal')?.classList.remove('show');
+    var modal = document.getElementById('detailModal');
+    if (modal) modal.classList.remove('show');
 }
 
 // ============================================
@@ -186,12 +215,12 @@ function closeModal() {
 // ============================================
 
 function initFilters() {
-    const storeSelect = document.getElementById('storeSelect');
+    var storeSelect = document.getElementById('storeSelect');
 
     if (storeSelect) {
         storeSelect.innerHTML = '<option value="">전체 지점</option>';
-        STORE_LIST.forEach(store => {
-            storeSelect.innerHTML += `<option value="${store}">${store}</option>`;
+        STORE_LIST.forEach(function(store) {
+            storeSelect.innerHTML += '<option value="' + store + '">' + store + '</option>';
         });
     }
 
@@ -199,23 +228,26 @@ function initFilters() {
 }
 
 function updateKeywordFilter() {
-    const keywordSelect = document.getElementById('keywordSelect');
-    const storeFilter = document.getElementById('storeSelect')?.value;
+    var keywordSelect = document.getElementById('keywordSelect');
+    var storeEl = document.getElementById('storeSelect');
+    var storeFilter = storeEl ? storeEl.value : '';
 
     if (!keywordSelect || !marketingData) return;
 
-    const keywords = new Set();
+    var keywords = new Set();
 
-    Object.keys(marketingData.tracking_history || {}).forEach(key => {
-        const [store, keyword] = key.split('|');
+    Object.keys(marketingData.tracking_history || {}).forEach(function(key) {
+        var parts = key.split('|');
+        var store = parts[0];
+        var keyword = parts[1];
         if (!storeFilter || store === storeFilter) {
             keywords.add(keyword);
         }
     });
 
     keywordSelect.innerHTML = '<option value="">전체 키워드</option>';
-    [...keywords].sort().forEach(kw => {
-        keywordSelect.innerHTML += `<option value="${kw}">${kw}</option>`;
+    Array.from(keywords).sort().forEach(function(kw) {
+        keywordSelect.innerHTML += '<option value="' + kw + '">' + kw + '</option>';
     });
 }
 
@@ -229,27 +261,35 @@ function renderDashboard() {
 }
 
 function filterAndRender() {
-    const storeFilter = document.getElementById('storeSelect')?.value;
-    const keywordFilter = document.getElementById('keywordSelect')?.value;
-    const periodDays = parseInt(document.getElementById('periodSelect')?.value || '30');
+    var storeEl = document.getElementById('storeSelect');
+    var keywordEl = document.getElementById('keywordSelect');
+    var periodEl = document.getElementById('periodSelect');
 
-    const filteredData = [];
+    var storeFilter = storeEl ? storeEl.value : '';
+    var keywordFilter = keywordEl ? keywordEl.value : '';
+    var periodDays = parseInt(periodEl ? periodEl.value : '30');
 
-    Object.entries(marketingData.tracking_history || {}).forEach(([key, data]) => {
-        const [store, keyword] = key.split('|');
+    var filteredData = [];
+
+    Object.entries(marketingData.tracking_history || {}).forEach(function(entry) {
+        var key = entry[0];
+        var data = entry[1];
+        var parts = key.split('|');
+        var store = parts[0];
+        var keyword = parts[1];
 
         if (storeFilter && store !== storeFilter) return;
         if (keywordFilter && keyword !== keywordFilter) return;
 
-        const history = (data.history || []).slice(0, periodDays);
+        var history = (data.history || []).slice(0, periodDays);
 
         if (history.length > 0) {
             filteredData.push({
-                key,
+                key: key,
                 store_name: store,
-                keyword,
+                keyword: keyword,
                 place_id: data.place_id,
-                history
+                history: history
             });
         }
     });
@@ -270,20 +310,20 @@ function renderSummaryCards(data) {
         return;
     }
 
-    let totalRank = 0;
-    let rankCount = 0;
-    let rankUp = 0;
-    let rankDown = 0;
+    var totalRank = 0;
+    var rankCount = 0;
+    var rankUp = 0;
+    var rankDown = 0;
 
-    data.forEach(item => {
-        const latest = item.history[0];
-        const previous = item.history[1];
+    data.forEach(function(item) {
+        var latest = item.history[0];
+        var previous = item.history[1];
 
-        if (latest?.rank) {
+        if (latest && latest.rank) {
             totalRank += latest.rank;
             rankCount++;
 
-            if (previous?.rank) {
+            if (previous && previous.rank) {
                 if (latest.rank < previous.rank) rankUp++;
                 else if (latest.rank > previous.rank) rankDown++;
             }
@@ -302,23 +342,23 @@ function renderRankChart(data) {
         rankChart = null;
     }
 
-    const ctx = recreateCanvas('rankChartContainer', 'rankChart');
+    var ctx = recreateCanvas('rankChartContainer', 'rankChart');
     if (!ctx || data.length === 0) return;
 
-    const dateSet = new Set();
-    data.forEach(item => {
-        item.history.forEach(h => dateSet.add(h.date));
+    var dateSet = new Set();
+    data.forEach(function(item) {
+        item.history.forEach(function(h) { dateSet.add(h.date); });
     });
-    const dates = [...dateSet].sort().reverse().slice(0, 30).reverse();
+    var dates = Array.from(dateSet).sort().reverse().slice(0, 30).reverse();
 
-    const colors = ['#00d4ff', '#7b2cbf', '#4ecdc4', '#ff6b6b', '#ffe66d', '#51cf66', '#f59f00', '#e64980'];
+    var colors = ['#00d4ff', '#7b2cbf', '#4ecdc4', '#ff6b6b', '#ffe66d', '#51cf66', '#f59f00', '#e64980'];
 
-    const datasets = data.slice(0, 8).map((item, idx) => {
+    var datasets = data.slice(0, 8).map(function(item, idx) {
         return {
             label: item.store_name.replace('역대짬뽕 ', '') + ' | ' + item.keyword,
-            data: dates.map(date => {
-                const found = item.history.find(h => h.date === date);
-                return found?.rank || null;
+            data: dates.map(function(date) {
+                var found = item.history.find(function(h) { return h.date === date; });
+                return found && found.rank ? found.rank : null;
             }),
             borderColor: colors[idx % colors.length],
             backgroundColor: colors[idx % colors.length] + '20',
@@ -334,11 +374,11 @@ function renderRankChart(data) {
     rankChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: dates.map(d => {
-                const date = new Date(d);
+            labels: dates.map(function(d) {
+                var date = new Date(d);
                 return (date.getMonth() + 1) + '.' + date.getDate();
             }),
-            datasets
+            datasets: datasets
         },
         options: {
             responsive: true,
@@ -359,7 +399,9 @@ function renderRankChart(data) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: (ctx) => ctx.dataset.label + ': ' + (ctx.raw ? ctx.raw + '위' : '-')
+                        label: function(ctx) {
+                            return ctx.dataset.label + ': ' + (ctx.raw ? ctx.raw + '위' : '-');
+                        }
                     }
                 },
                 zoom: {
@@ -381,7 +423,7 @@ function renderRankChart(data) {
                     min: 1,
                     ticks: {
                         color: '#888',
-                        callback: (v) => v + '위'
+                        callback: function(v) { return v + '위'; }
                     },
                     grid: { color: 'rgba(255,255,255,0.05)' }
                 }
@@ -391,7 +433,7 @@ function renderRankChart(data) {
 }
 
 function renderHistoryCards(data) {
-    const container = document.getElementById('historyCardView');
+    var container = document.getElementById('historyCardView');
     if (!container) return;
 
     if (data.length === 0) {
@@ -399,13 +441,13 @@ function renderHistoryCards(data) {
         return;
     }
 
-    container.innerHTML = data.map(item => {
-        const latest = item.history[0];
-        const previous = item.history[1];
+    container.innerHTML = data.map(function(item) {
+        var latest = item.history[0];
+        var previous = item.history[1];
 
-        let changeHtml = '';
-        if (latest?.rank && previous?.rank) {
-            const diff = previous.rank - latest.rank;
+        var changeHtml = '';
+        if (latest && latest.rank && previous && previous.rank) {
+            var diff = previous.rank - latest.rank;
             if (diff > 0) {
                 changeHtml = '<span class="rank-change up">+' + diff + '</span>';
             } else if (diff < 0) {
@@ -415,10 +457,10 @@ function renderHistoryCards(data) {
             }
         }
 
-        const timelineHtml = item.history.slice(0, 14).map(h => {
-            const date = new Date(h.date);
-            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-            const wd = weekdays[date.getDay()];
+        var timelineHtml = item.history.slice(0, 14).map(function(h) {
+            var date = new Date(h.date);
+            var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+            var wd = weekdays[date.getDay()];
 
             return '<div class="timeline-item">' +
                 '<div class="timeline-date">' +
@@ -440,7 +482,7 @@ function renderHistoryCards(data) {
                 '<div class="history-card-keyword">' + item.keyword + '</div>' +
             '</div>' +
             '<div class="history-card-rank">' +
-                '<span class="rank-number">' + (latest?.rank || '-') + '</span>' +
+                '<span class="rank-number">' + (latest && latest.rank ? latest.rank : '-') + '</span>' +
                 changeHtml +
                 '<div class="rank-label">현재 순위</div>' +
             '</div>' +
@@ -450,13 +492,13 @@ function renderHistoryCards(data) {
 }
 
 function renderHistoryTable(data) {
-    const tbody = document.getElementById('historyTableBody');
+    var tbody = document.getElementById('historyTableBody');
     if (!tbody) return;
 
-    const rows = [];
+    var rows = [];
 
-    data.forEach(item => {
-        item.history.slice(0, 7).forEach(h => {
+    data.forEach(function(item) {
+        item.history.slice(0, 7).forEach(function(h) {
             rows.push({
                 date: h.date,
                 weekday: h.weekday,
@@ -471,15 +513,15 @@ function renderHistoryTable(data) {
         });
     });
 
-    rows.sort((a, b) => b.date.localeCompare(a.date));
+    rows.sort(function(a, b) { return b.date.localeCompare(a.date); });
 
     if (rows.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" class="text-center">데이터가 없습니다.</td></tr>';
         return;
     }
 
-    tbody.innerHTML = rows.slice(0, 100).map(row =>
-        '<tr>' +
+    tbody.innerHTML = rows.slice(0, 100).map(function(row) {
+        return '<tr>' +
             '<td>' + row.date + ' ' + (row.weekday || '') + '</td>' +
             '<td>' + row.store + '</td>' +
             '<td>' + row.keyword + '</td>' +
@@ -488,16 +530,16 @@ function renderHistoryTable(data) {
             '<td class="text-right">' + (formatNumber(row.visitor) || '-') + '</td>' +
             '<td class="text-right">' + (row.save || '-') + '</td>' +
             '<td class="text-center">' + (row.score || '-') + '</td>' +
-        '</tr>'
-    ).join('');
+        '</tr>';
+    }).join('');
 }
 
 // ============================================
-// 경쟁사 분석 (브라우저에서 직접 API 호출)
+// 경쟁사 분석 (Cloudflare Workers 프록시 경유)
 // ============================================
 
 async function searchNaverPlace(keyword, maxResults) {
-    const payload = [{
+    var payload = [{
         "operationName": "getRestaurantList",
         "variables": {
             "restaurantListInput": {
@@ -513,14 +555,17 @@ async function searchNaverPlace(keyword, maxResults) {
         "query": "query getRestaurantList($restaurantListInput: RestaurantListInput) { restaurants: restaurantList(input: $restaurantListInput) { items { id name category roadAddress phone totalReviewCount blogCafeReviewCount visitorReviewCount visitorReviewScore saveCount } total } }"
     }];
 
-    const response = await fetch(NAVER_GRAPHQL_URL, {
+    var proxyUrl = window.NAVER_PROXY_URL || PROXY_URL;
+
+    // 프록시 URL 체크
+    if (!proxyUrl || proxyUrl.indexOf('your-name') !== -1) {
+        throw new Error('PROXY_NOT_SET');
+    }
+
+    var response = await fetch(proxyUrl, {
         method: 'POST',
         headers: {
-            'accept': '*/*',
-            'accept-language': 'ko',
-            'content-type': 'application/json',
-            'origin': 'https://m.place.naver.com',
-            'referer': 'https://m.place.naver.com/'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
     });
@@ -529,31 +574,33 @@ async function searchNaverPlace(keyword, maxResults) {
         throw new Error('API 요청 실패: ' + response.status);
     }
 
-    const data = await response.json();
-    return data[0]?.data?.restaurants || { items: [], total: 0 };
+    var data = await response.json();
+    return data[0] && data[0].data && data[0].data.restaurants
+        ? data[0].data.restaurants
+        : { items: [], total: 0 };
 }
 
 async function runCompetitorAnalysis() {
-    const keywordInput = document.getElementById('analysisKeyword');
-    const keyword = keywordInput?.value.trim();
-    const topN = parseInt(document.getElementById('analysisTopN')?.value || '10');
+    var keywordInput = document.getElementById('analysisKeyword');
+    var keyword = keywordInput ? keywordInput.value.trim() : '';
+    var topN = parseInt(document.getElementById('analysisTopN').value || '10');
 
     if (!keyword) {
         showToast('검색 키워드를 입력해주세요.', 'error');
-        keywordInput?.focus();
+        if (keywordInput) keywordInput.focus();
         return;
     }
 
-    const btn = document.getElementById('runAnalysisBtn');
+    var btn = document.getElementById('runAnalysisBtn');
     btn.disabled = true;
     btn.textContent = '분석 중...';
 
-    showAnalysisProgress(true, '네이버 플레이스 검색 중...', 0);
+    showAnalysisProgress(true, '"' + keyword + '" 검색 중...', 10);
 
     try {
         // 1단계: 검색
-        showAnalysisProgress(true, '"' + keyword + '" 검색 중...', 20);
-        const result = await searchNaverPlace(keyword, topN);
+        showAnalysisProgress(true, '네이버 플레이스 검색 중...', 30);
+        var result = await searchNaverPlace(keyword, topN);
 
         if (!result.items || result.items.length === 0) {
             showToast('검색 결과가 없습니다.', 'error');
@@ -566,20 +613,22 @@ async function runCompetitorAnalysis() {
         showAnalysisProgress(true, result.items.length + '개 업체 발견, 분석 중...', 60);
 
         // 2단계: 결과 가공
-        const competitors = result.items.map((item, idx) => ({
-            rank: idx + 1,
-            place_id: String(item.id),
-            name: item.name || '',
-            category: item.category || '',
-            blog_reviews: String(item.blogCafeReviewCount || 0),
-            visitor_reviews: String(item.visitorReviewCount || 0),
-            save_count: String(item.saveCount || 0),
-            score: item.visitorReviewScore || 0,
-            total_reviews: item.totalReviewCount || 0,
-            keywords: []
-        }));
+        var competitors = result.items.map(function(item, idx) {
+            return {
+                rank: idx + 1,
+                place_id: String(item.id),
+                name: item.name || '',
+                category: item.category || '',
+                blog_reviews: String(item.blogCafeReviewCount || 0),
+                visitor_reviews: String(item.visitorReviewCount || 0),
+                save_count: String(item.saveCount || 0),
+                score: item.visitorReviewScore || 0,
+                total_reviews: item.totalReviewCount || 0,
+                keywords: []
+            };
+        });
 
-        const analysisResult = {
+        var analysisResult = {
             keyword: keyword,
             analyzed_at: new Date().toISOString(),
             total_results: result.total,
@@ -587,10 +636,10 @@ async function runCompetitorAnalysis() {
             keyword_volumes: {}
         };
 
-        showAnalysisProgress(true, '분석 완료! 결과 저장 중...', 90);
+        showAnalysisProgress(true, '결과 저장 중...', 90);
 
         // 3단계: 결과 저장
-        const savedKey = keyword + '_' + topN;
+        var savedKey = keyword + '_' + topN;
         if (!marketingData.competitor_analysis) {
             marketingData.competitor_analysis = {};
         }
@@ -600,7 +649,7 @@ async function runCompetitorAnalysis() {
         try {
             localStorage.setItem('marketing_competitor_' + savedKey, JSON.stringify(analysisResult));
         } catch (e) {
-            console.log('localStorage 저장 실패 (용량 초과 가능)', e);
+            console.log('localStorage 저장 실패', e);
         }
 
         showAnalysisProgress(true, '완료!', 100);
@@ -608,7 +657,6 @@ async function runCompetitorAnalysis() {
         await delay(500);
         showAnalysisProgress(false);
 
-        // 결과 렌더링
         renderAnalysisResult(analysisResult);
         renderSavedAnalysis();
 
@@ -616,23 +664,91 @@ async function runCompetitorAnalysis() {
 
     } catch (error) {
         console.error('Analysis failed:', error);
+        showAnalysisProgress(false);
 
-        // CORS 에러일 가능성
-        if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
-            showToast('네이버 API 접근이 차단되었습니다. 잠시 후 다시 시도해주세요.', 'error');
+        if (error.message === 'PROXY_NOT_SET') {
+            showProxySetupGuide();
+        } else if (error.message.indexOf('Failed to fetch') !== -1) {
+            showToast('프록시 서버 연결 실패. 프록시 URL을 확인해주세요.', 'error');
         } else {
             showToast('분석 중 오류: ' + error.message, 'error');
         }
-
-        showAnalysisProgress(false);
     }
 
     btn.disabled = false;
     btn.textContent = '분석 시작';
 }
 
+function showProxySetupGuide() {
+    var modal = document.getElementById('detailModal');
+    var title = document.getElementById('modalTitle');
+    var body = document.getElementById('modalBody');
+
+    if (!modal || !title || !body) return;
+
+    title.textContent = '프록시 설정 필요';
+
+    body.innerHTML =
+        '<div style="color:#ccc; line-height:1.8;">' +
+            '<p>경쟁사 분석을 위해 CORS 프록시 설정이 필요합니다.</p>' +
+            '<p style="color:#888; font-size:0.85rem; margin-top:8px;">' +
+                '네이버 API는 다른 도메인에서의 직접 호출을 차단합니다.<br>' +
+                'Cloudflare Workers (무료)를 프록시로 사용하면 해결됩니다.' +
+            '</p>' +
+            '<div style="margin-top:20px;">' +
+                '<p style="font-weight:600; color:#00d4ff; margin-bottom:8px;">프록시 URL 직접 입력:</p>' +
+                '<div style="display:flex; gap:8px;">' +
+                    '<input type="text" id="proxyUrlInput" class="form-input" ' +
+                        'placeholder="https://your-worker.workers.dev" ' +
+                        'value="' + (localStorage.getItem('marketing_proxy_url') || '') + '" ' +
+                        'style="flex:1;">' +
+                    '<button class="btn btn-primary" onclick="saveProxyUrl()">저장</button>' +
+                '</div>' +
+            '</div>' +
+            '<div style="margin-top:20px; padding:16px; background:rgba(0,0,0,0.2); border-radius:8px;">' +
+                '<p style="font-weight:600; color:#ffe66d; margin-bottom:8px;">Cloudflare Workers 설정 방법:</p>' +
+                '<ol style="padding-left:20px; color:#aaa; font-size:0.83rem;">' +
+                    '<li>dash.cloudflare.com 접속 (무료 가입)</li>' +
+                    '<li>Workers & Pages > Create Worker 클릭</li>' +
+                    '<li>프록시 코드를 붙여넣고 Deploy</li>' +
+                    '<li>생성된 URL을 위 입력란에 붙여넣기</li>' +
+                '</ol>' +
+            '</div>' +
+        '</div>';
+
+    modal.classList.add('show');
+}
+
+function saveProxyUrl() {
+    var input = document.getElementById('proxyUrlInput');
+    if (!input) return;
+
+    var url = input.value.trim();
+    if (!url) {
+        showToast('프록시 URL을 입력해주세요.', 'error');
+        return;
+    }
+
+    // URL 형식 검증
+    if (url.indexOf('http') !== 0) {
+        showToast('올바른 URL을 입력해주세요. (https://...)', 'error');
+        return;
+    }
+
+    // 끝에 / 제거
+    if (url.endsWith('/')) {
+        url = url.slice(0, -1);
+    }
+
+    localStorage.setItem('marketing_proxy_url', url);
+    window.NAVER_PROXY_URL = url;
+
+    closeModal();
+    showToast('프록시 URL이 저장되었습니다. 다시 분석을 시작해주세요.', 'success');
+}
+
 function showAnalysisProgress(show, text, percent) {
-    let container = document.getElementById('analysisProgress');
+    var container = document.getElementById('analysisProgress');
 
     if (!show) {
         if (container) container.remove();
@@ -644,8 +760,8 @@ function showAnalysisProgress(show, text, percent) {
         container.id = 'analysisProgress';
         container.className = 'analysis-progress';
 
-        const resultEl = document.getElementById('analysisResult');
-        if (resultEl) {
+        var resultEl = document.getElementById('analysisResult');
+        if (resultEl && resultEl.parentNode) {
             resultEl.parentNode.insertBefore(container, resultEl);
         }
     }
@@ -658,14 +774,14 @@ function showAnalysisProgress(show, text, percent) {
 }
 
 function renderAnalysisResult(result) {
-    const container = document.getElementById('analysisResult');
+    var container = document.getElementById('analysisResult');
     if (!container) return;
 
     container.style.display = 'block';
 
-    document.getElementById('competitorCount').textContent = result.competitors?.length || 0;
+    document.getElementById('competitorCount').textContent = result.competitors ? result.competitors.length : 0;
 
-    const competitorsList = document.getElementById('competitorsList');
+    var competitorsList = document.getElementById('competitorsList');
     if (competitorsList && result.competitors) {
         competitorsList.innerHTML = result.competitors.map(function(comp, idx) {
             var rankClass = '';
@@ -680,18 +796,18 @@ function renderAnalysisResult(result) {
                     '<div class="competitor-category">' + escapeHtml(comp.category || '') + '</div>' +
                 '</div>' +
                 '<div class="competitor-stats">' +
-                    '<span>블로그 ' + (comp.blog_reviews || 0) + '</span>' +
+                    '<span>블로그 ' + formatNumber(comp.blog_reviews || 0) + '</span>' +
                     '<span>방문자 ' + formatNumber(comp.visitor_reviews || 0) + '</span>' +
-                    '<span>저장 ' + (comp.save_count || 0) + '</span>' +
+                    '<span>저장 ' + formatNumber(comp.save_count || 0) + '</span>' +
                     '<span>평점 ' + (comp.score || '-') + '</span>' +
                 '</div>' +
             '</div>';
         }).join('');
 
-        competitorsList.querySelectorAll('.competitor-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const placeId = item.dataset.placeId;
-                const comp = result.competitors.find(c => c.place_id === placeId);
+        competitorsList.querySelectorAll('.competitor-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                var placeId = item.dataset.placeId;
+                var comp = result.competitors.find(function(c) { return c.place_id === placeId; });
                 if (comp) showCompetitorDetail(comp, result.keyword_volumes);
             });
         });
@@ -701,11 +817,11 @@ function renderAnalysisResult(result) {
 }
 
 function renderKeywordsAnalysis(result) {
-    const keywordCounts = {};
-    const keywordVolumes = result.keyword_volumes || {};
+    var keywordCounts = {};
+    var keywordVolumes = result.keyword_volumes || {};
 
-    (result.competitors || []).forEach(comp => {
-        (comp.keywords || []).forEach(kw => {
+    (result.competitors || []).forEach(function(comp) {
+        (comp.keywords || []).forEach(function(kw) {
             if (!keywordCounts[kw]) {
                 keywordCounts[kw] = {
                     keyword: kw,
@@ -717,34 +833,34 @@ function renderKeywordsAnalysis(result) {
         });
     });
 
-    const keywordList = Object.values(keywordCounts)
-        .sort((a, b) => (b.volume?.total || 0) - (a.volume?.total || 0));
+    var keywordList = Object.values(keywordCounts)
+        .sort(function(a, b) { return (b.volume ? b.volume.total || 0 : 0) - (a.volume ? a.volume.total || 0 : 0); });
 
     document.getElementById('totalRepKeywords').textContent = keywordList.length;
 
-    const avgVolume = keywordList.length > 0
-        ? keywordList.reduce((sum, k) => sum + (k.volume?.total || 0), 0) / keywordList.length
+    var avgVolume = keywordList.length > 0
+        ? keywordList.reduce(function(sum, k) { return sum + (k.volume ? k.volume.total || 0 : 0); }, 0) / keywordList.length
         : 0;
     document.getElementById('avgSearchVolume').textContent = formatNumber(Math.round(avgVolume));
 
-    const tbody = document.getElementById('keywordsTableBody');
+    var tbody = document.getElementById('keywordsTableBody');
     if (tbody) {
         if (keywordList.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666; padding:24px;">대표 키워드 데이터가 없습니다. (GitHub Actions 크롤링 필요)</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666; padding:24px;">대표 키워드 데이터가 아직 없습니다.</td></tr>';
             return;
         }
 
-        tbody.innerHTML = keywordList.map(item => {
-            const volume = item.volume;
-            let compClass = '';
-            if (volume?.comp === '높음') compClass = 'comp-high';
-            else if (volume?.comp === '중간') compClass = 'comp-medium';
-            else if (volume?.comp === '낮음') compClass = 'comp-low';
+        tbody.innerHTML = keywordList.map(function(item) {
+            var volume = item.volume;
+            var compClass = '';
+            if (volume && volume.comp === '높음') compClass = 'comp-high';
+            else if (volume && volume.comp === '중간') compClass = 'comp-medium';
+            else if (volume && volume.comp === '낮음') compClass = 'comp-low';
 
             return '<tr>' +
                 '<td>' + escapeHtml(item.keyword) + '</td>' +
-                '<td class="text-right">' + (volume?.total ? formatNumber(volume.total) : '-') + '</td>' +
-                '<td class="text-center"><span class="comp-badge ' + compClass + '">' + (volume?.comp || '-') + '</span></td>' +
+                '<td class="text-right">' + (volume && volume.total ? formatNumber(volume.total) : '-') + '</td>' +
+                '<td class="text-center"><span class="comp-badge ' + compClass + '">' + (volume && volume.comp ? volume.comp : '-') + '</span></td>' +
                 '<td class="text-right">' + item.count + '개</td>' +
             '</tr>';
         }).join('');
@@ -752,16 +868,16 @@ function renderKeywordsAnalysis(result) {
 }
 
 function showCompetitorDetail(comp, volumes) {
-    const modal = document.getElementById('detailModal');
-    const title = document.getElementById('modalTitle');
-    const body = document.getElementById('modalBody');
+    var modal = document.getElementById('detailModal');
+    var title = document.getElementById('modalTitle');
+    var body = document.getElementById('modalBody');
 
     if (!modal || !title || !body) return;
 
     title.textContent = comp.name;
 
-    const keywordsHtml = (comp.keywords || []).map(kw => {
-        const vol = volumes?.[kw];
+    var keywordsHtml = (comp.keywords || []).map(function(kw) {
+        var vol = volumes ? volumes[kw] : null;
         return '<div class="keyword-item">' +
             '<span class="keyword-name">' + escapeHtml(kw) + '</span>' +
             (vol ? '<span class="keyword-volume">' + formatNumber(vol.total) + '</span>' : '') +
@@ -778,7 +894,7 @@ function showCompetitorDetail(comp, volumes) {
             '<div class="detail-item"><div class="detail-label">저장수</div><div class="detail-value">' + formatNumber(comp.save_count || 0) + '</div></div>' +
         '</div>' +
         '<div class="detail-keywords-section">' +
-            '<h4>대표 키워드 (' + (comp.keywords?.length || 0) + '개)</h4>' +
+            '<h4>대표 키워드 (' + (comp.keywords ? comp.keywords.length : 0) + '개)</h4>' +
             '<div class="keywords-grid">' +
                 (keywordsHtml || '<p class="no-data" style="margin:0; font-size:0.85rem;">대표 키워드 없음</p>') +
             '</div>' +
@@ -788,19 +904,19 @@ function showCompetitorDetail(comp, volumes) {
 }
 
 function renderSavedAnalysis() {
-    const container = document.getElementById('savedAnalysisList');
+    var container = document.getElementById('savedAnalysisList');
     if (!container) return;
 
-    const analyses = Object.entries(marketingData.competitor_analysis || {});
+    var analyses = Object.entries(marketingData.competitor_analysis || {});
 
     // localStorage에서 추가 데이터 로드
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('marketing_competitor_')) {
-            const savedKey = key.replace('marketing_competitor_', '');
-            if (!marketingData.competitor_analysis?.[savedKey]) {
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf('marketing_competitor_') === 0) {
+            var savedKey = key.replace('marketing_competitor_', '');
+            if (!marketingData.competitor_analysis || !marketingData.competitor_analysis[savedKey]) {
                 try {
-                    const data = JSON.parse(localStorage.getItem(key));
+                    var data = JSON.parse(localStorage.getItem(key));
                     if (!marketingData.competitor_analysis) marketingData.competitor_analysis = {};
                     marketingData.competitor_analysis[savedKey] = data;
                     analyses.push([savedKey, data]);
@@ -810,20 +926,22 @@ function renderSavedAnalysis() {
     }
 
     if (analyses.length === 0) {
-        container.innerHTML = '<div class="no-data">저장된 분석 결과가 없습니다.<br>위 검색에서 키워드를 입력하고 분석을 시작하세요.</div>';
+        container.innerHTML = '<div class="no-data">저장된 분석 결과가 없습니다.<br>위에서 키워드를 입력하고 분석을 시작해보세요.</div>';
         return;
     }
 
     // 최신순 정렬
-    analyses.sort((a, b) => {
-        const dateA = a[1].analyzed_at || '';
-        const dateB = b[1].analyzed_at || '';
+    analyses.sort(function(a, b) {
+        var dateA = a[1].analyzed_at || '';
+        var dateB = b[1].analyzed_at || '';
         return dateB.localeCompare(dateA);
     });
 
-    container.innerHTML = analyses.map(([key, data]) => {
-        const date = data.analyzed_at ? formatDateTime(new Date(data.analyzed_at)) : '-';
-        const competitorCount = data.competitors?.length || 0;
+    container.innerHTML = analyses.map(function(entry) {
+        var key = entry[0];
+        var data = entry[1];
+        var date = data.analyzed_at ? formatDateTime(new Date(data.analyzed_at)) : '-';
+        var competitorCount = data.competitors ? data.competitors.length : 0;
 
         return '<div class="saved-item" data-key="' + key + '">' +
             '<div class="saved-item-info">' +
@@ -834,10 +952,10 @@ function renderSavedAnalysis() {
         '</div>';
     }).join('');
 
-    container.querySelectorAll('.saved-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const key = item.dataset.key;
-            const data = marketingData.competitor_analysis[key];
+    container.querySelectorAll('.saved-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            var key = item.dataset.key;
+            var data = marketingData.competitor_analysis[key];
             if (data) {
                 document.getElementById('analysisKeyword').value = data.keyword || '';
                 renderAnalysisResult(data);
@@ -852,20 +970,20 @@ function renderSavedAnalysis() {
 // ============================================
 
 function renderKeywordSettings() {
-    const container = document.getElementById('storeKeywordSettings');
+    var container = document.getElementById('storeKeywordSettings');
     if (!container) return;
 
-    const trackingKeywords = configData?.tracking_keywords || {};
+    var trackingKeywords = configData ? configData.tracking_keywords || {} : {};
 
-    container.innerHTML = STORE_LIST.map(store => {
-        const keywords = trackingKeywords[store] || [];
+    container.innerHTML = STORE_LIST.map(function(store) {
+        var keywords = trackingKeywords[store] || [];
 
-        const keywordTagsHtml = keywords.map(kw =>
-            '<span class="keyword-tag" data-store="' + store + '" data-keyword="' + escapeHtml(kw) + '">' +
+        var keywordTagsHtml = keywords.map(function(kw) {
+            return '<span class="keyword-tag" data-store="' + store + '" data-keyword="' + escapeHtml(kw) + '">' +
                 escapeHtml(kw) +
                 '<button class="remove-btn" title="삭제">x</button>' +
-            '</span>'
-        ).join('');
+            '</span>';
+        }).join('');
 
         return '<div class="store-setting-item" data-store="' + store + '">' +
             '<div class="store-setting-header">' +
@@ -883,11 +1001,11 @@ function renderKeywordSettings() {
         '</div>';
     }).join('');
 
-    // 이벤트 바인딩
-    container.querySelectorAll('.add-keyword-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const store = btn.dataset.store;
-            const wrapper = container.querySelector('.keyword-input-wrapper[data-store="' + store + '"]');
+    // 이벤트 바인딩 - 추가 버튼
+    container.querySelectorAll('.add-keyword-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var store = btn.dataset.store;
+            var wrapper = container.querySelector('.keyword-input-wrapper[data-store="' + store + '"]');
             if (wrapper) {
                 wrapper.style.display = 'flex';
                 wrapper.querySelector('.keyword-input').focus();
@@ -895,9 +1013,10 @@ function renderKeywordSettings() {
         });
     });
 
-    container.querySelectorAll('.cancel-add-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const wrapper = btn.closest('.keyword-input-wrapper');
+    // 취소 버튼
+    container.querySelectorAll('.cancel-add-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var wrapper = btn.closest('.keyword-input-wrapper');
             if (wrapper) {
                 wrapper.style.display = 'none';
                 wrapper.querySelector('.keyword-input').value = '';
@@ -905,13 +1024,14 @@ function renderKeywordSettings() {
         });
     });
 
-    container.querySelectorAll('.confirm-add-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const wrapper = btn.closest('.keyword-input-wrapper');
-            const store = wrapper?.dataset.store;
-            const input = wrapper?.querySelector('.keyword-input');
+    // 확인 버튼
+    container.querySelectorAll('.confirm-add-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var wrapper = btn.closest('.keyword-input-wrapper');
+            var store = wrapper ? wrapper.dataset.store : null;
+            var input = wrapper ? wrapper.querySelector('.keyword-input') : null;
 
-            if (store && input?.value.trim()) {
+            if (store && input && input.value.trim()) {
                 addKeywordToStore(store, input.value.trim());
                 input.value = '';
                 wrapper.style.display = 'none';
@@ -919,11 +1039,12 @@ function renderKeywordSettings() {
         });
     });
 
-    container.querySelectorAll('.keyword-input').forEach(input => {
-        input.addEventListener('keydown', (e) => {
+    // Enter 키
+    container.querySelectorAll('.keyword-input').forEach(function(input) {
+        input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                const wrapper = input.closest('.keyword-input-wrapper');
-                const store = wrapper?.dataset.store;
+                var wrapper = input.closest('.keyword-input-wrapper');
+                var store = wrapper ? wrapper.dataset.store : null;
 
                 if (store && input.value.trim()) {
                     addKeywordToStore(store, input.value.trim());
@@ -931,21 +1052,22 @@ function renderKeywordSettings() {
                     wrapper.style.display = 'none';
                 }
             } else if (e.key === 'Escape') {
-                const wrapper = input.closest('.keyword-input-wrapper');
-                if (wrapper) {
-                    wrapper.style.display = 'none';
+                var wrapper2 = input.closest('.keyword-input-wrapper');
+                if (wrapper2) {
+                    wrapper2.style.display = 'none';
                     input.value = '';
                 }
             }
         });
     });
 
-    container.querySelectorAll('.keyword-tag .remove-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    // 삭제 버튼
+    container.querySelectorAll('.keyword-tag .remove-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
             e.stopPropagation();
-            const tag = btn.closest('.keyword-tag');
-            const store = tag?.dataset.store;
-            const keyword = tag?.dataset.keyword;
+            var tag = btn.closest('.keyword-tag');
+            var store = tag ? tag.dataset.store : null;
+            var keyword = tag ? tag.dataset.keyword : null;
 
             if (store && keyword) {
                 removeKeywordFromStore(store, keyword);
@@ -962,7 +1084,7 @@ function addKeywordToStore(store, keyword) {
         configData.tracking_keywords[store] = [];
     }
 
-    if (!configData.tracking_keywords[store].includes(keyword)) {
+    if (configData.tracking_keywords[store].indexOf(keyword) === -1) {
         configData.tracking_keywords[store].push(keyword);
         saveConfigToLocalStorage();
         renderKeywordSettings();
@@ -973,8 +1095,8 @@ function addKeywordToStore(store, keyword) {
 }
 
 function removeKeywordFromStore(store, keyword) {
-    if (configData.tracking_keywords?.[store]) {
-        configData.tracking_keywords[store] = configData.tracking_keywords[store].filter(k => k !== keyword);
+    if (configData.tracking_keywords && configData.tracking_keywords[store]) {
+        configData.tracking_keywords[store] = configData.tracking_keywords[store].filter(function(k) { return k !== keyword; });
         saveConfigToLocalStorage();
         renderKeywordSettings();
         showToast('"' + keyword + '" 키워드가 삭제되었습니다.', 'success');
@@ -989,7 +1111,7 @@ function saveConfigToLocalStorage() {
     }
 }
 
-async function saveKeywordSettings() {
+function saveKeywordSettings() {
     saveConfigToLocalStorage();
     showToast('키워드 설정이 저장되었습니다.', 'success');
 }
@@ -999,24 +1121,21 @@ async function saveKeywordSettings() {
 // ============================================
 
 function showToast(message, type) {
-    // 기존 토스트 제거
-    const existing = document.querySelector('.toast');
+    var existing = document.querySelector('.toast');
     if (existing) existing.remove();
 
-    const toast = document.createElement('div');
+    var toast = document.createElement('div');
     toast.className = 'toast' + (type ? ' toast-' + type : '');
     toast.textContent = message;
     document.body.appendChild(toast);
 
-    // 표시
-    requestAnimationFrame(() => {
+    requestAnimationFrame(function() {
         toast.classList.add('show');
     });
 
-    // 자동 숨김
-    setTimeout(() => {
+    setTimeout(function() {
         toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(function() { toast.remove(); }, 300);
     }, 3000);
 }
 
@@ -1054,12 +1173,12 @@ function escapeHtml(text) {
 }
 
 function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(function(resolve) { setTimeout(resolve, ms); });
 }
 
 function showLoading(show, text) {
-    const overlay = document.getElementById('loadingOverlay');
-    const loadingText = document.getElementById('loadingText');
+    var overlay = document.getElementById('loadingOverlay');
+    var loadingText = document.getElementById('loadingText');
 
     if (overlay) overlay.style.display = show ? 'flex' : 'none';
     if (loadingText) loadingText.textContent = text || '처리 중...';
