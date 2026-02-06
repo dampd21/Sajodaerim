@@ -1,0 +1,588 @@
+/* ===========================================
+   마케팅 관리 페이지 전용 스타일
+   =========================================== */
+
+/* 순위 트렌드 색상 */
+.trend-up {
+    color: #4ecdc4 !important;
+}
+
+.trend-down {
+    color: #ff6b6b !important;
+}
+
+.trend-same {
+    color: #888 !important;
+}
+
+/* 뷰 토글 */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.table-header h3 {
+    margin: 0;
+}
+
+.view-toggle {
+    display: flex;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+    color: #fff;
+}
+
+.view-btn.active {
+    background: rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+}
+
+/* ============================================
+   순위 히스토리 카드뷰
+   ============================================ */
+
+.history-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.history-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.history-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.history-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-card-store {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.history-card-keyword {
+    font-size: 0.8rem;
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.15);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.history-card-rank {
+    text-align: center;
+}
+
+.rank-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00d4ff;
+    line-height: 1;
+}
+
+.rank-label {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.rank-change {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+}
+
+.rank-change.up {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ecdc4;
+}
+
+.rank-change.down {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+}
+
+.rank-change.same {
+    background: rgba(136, 136, 136, 0.2);
+    color: #888;
+}
+
+/* 순위 히스토리 타임라인 */
+.history-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.timeline-item {
+    display: grid;
+    grid-template-columns: 80px 50px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.timeline-date {
+    color: #888;
+}
+
+.timeline-date .weekday {
+    font-size: 0.7rem;
+    color: #666;
+    margin-left: 4px;
+}
+
+.timeline-rank {
+    font-weight: 600;
+    color: #00d4ff;
+    text-align: center;
+}
+
+.timeline-stats {
+    display: flex;
+    gap: 12px;
+    color: #888;
+    font-size: 0.75rem;
+}
+
+.timeline-stats span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-label {
+    color: #666;
+}
+
+/* ============================================
+   경쟁사 분석
+   ============================================ */
+
+.analysis-search {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-form {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group label {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.form-input,
+.form-select {
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+}
+
+.form-select option {
+    background: #1a1a2e;
+}
+
+/* 경쟁사 목록 */
+.competitors-section,
+.keywords-section {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.competitors-section h3,
+.keywords-section h3 {
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.competitors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.competitor-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.competitor-item:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.competitor-rank {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 50%;
+    font-weight: 700;
+    color: #00d4ff;
+}
+
+.competitor-rank.rank-1 {
+    background: rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+}
+
+.competitor-rank.rank-2 {
+    background: rgba(192, 192, 192, 0.2);
+    color: #c0c0c0;
+}
+
+.competitor-rank.rank-3 {
+    background: rgba(205, 127, 50, 0.2);
+    color: #cd7f32;
+}
+
+.competitor-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.competitor-name {
+    font-weight: 600;
+    color: #fff;
+}
+
+.competitor-category {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.competitor-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.competitor-stats span {
+    white-space: nowrap;
+}
+
+/* 키워드 분석 요약 */
+.keywords-summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.keywords-summary .summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.keywords-summary .label {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.keywords-summary .value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #00d4ff;
+}
+
+/* 저장된 분석 */
+.saved-analysis {
+    margin-top: 24px;
+}
+
+.saved-analysis h3 {
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.saved-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.saved-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.saved-item:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.saved-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.saved-item-keyword {
+    font-weight: 600;
+    color: #fff;
+}
+
+.saved-item-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.saved-item-count {
+    font-size: 0.85rem;
+    color: #00d4ff;
+}
+
+/* ============================================
+   키워드 설정
+   ============================================ */
+
+.settings-container {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-header h3 {
+    margin: 0;
+    color: #fff;
+}
+
+.store-settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.store-setting-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.store-setting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.store-setting-name {
+    font-weight: 600;
+    color: #fff;
+}
+
+.add-keyword-btn {
+    padding: 6px 12px;
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    border-radius: 6px;
+    color: #00d4ff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-keyword-btn:hover {
+    background: rgba(0, 212, 255, 0.3);
+}
+
+.keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.keyword-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(123, 44, 191, 0.2);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #b794f6;
+}
+
+.keyword-tag .remove-btn {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 107, 107, 0.3);
+    border-radius: 50%;
+    color: #ff6b6b;
+    font-size: 0.7rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.keyword-tag .remove-btn:hover {
+    background: rgba(255, 107, 107, 0.5);
+}
+
+.keyword-input-wrapper {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.keyword-input {
+    flex: 1;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.keyword-input:focus {
+    outline: none;
+    border-color: #00d4ff;
+}
+
+/* ============================================
+   반응형
+   ============================================ */
+
+@media (max-width: 768px) {
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .form-group {
+        width: 100%;
+    }
+    
+    .history-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline-item {
+        grid-template-columns: 70px 40px 1fr;
+        gap: 8px;
+    }
+    
+    .competitor-item {
+        grid-template-columns: 36px 1fr;
+    }
+    
+    .competitor-stats {
+        display: none;
+    }
+    
+    .keywords-summary {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .table-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}
