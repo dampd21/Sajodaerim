@@ -1,0 +1,46 @@
+name: Marketing Tracker
+
+on:
+  schedule:
+    # 매일 09:00 KST (00:00 UTC)
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      run_competitor_analysis:
+        description: '경쟁사 분석 실행'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  track-rankings:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+      
+      - name: Run daily tracking
+        env:
+          NAVER_AD_API_KEY: ${{ secrets.NAVER_AD_API_KEY }}
+          NAVER_AD_SECRET_KEY: ${{ secrets.NAVER_AD_SECRET_KEY }}
+          NAVER_AD_CUSTOMER_ID: ${{ secrets.NAVER_AD_CUSTOMER_ID }}
+        run: |
+          python scripts/naver_place_tracker.py
+      
+      - name: Commit and push data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/marketing_data.json
+          git diff --staged --quiet || git commit -m "Update marketing data $(date +'%Y-%m-%d %H:%M')"
+          git push
