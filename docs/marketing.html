@@ -11,7 +11,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- 네비게이션 -->
         <nav class="main-nav">
             <a href="index.html" class="nav-link">발주 리포트</a>
             <a href="sales.html" class="nav-link">매출 관리</a>
@@ -25,7 +24,6 @@
             <p class="update-time" id="updateTime"></p>
         </header>
 
-        <!-- 탭 -->
         <nav class="tabs">
             <button class="tab active" data-tab="rankTracking">순위 추적</button>
             <button class="tab" data-tab="competitorAnalysis">경쟁사 분석</button>
@@ -34,7 +32,7 @@
 
         <!-- ========== 순위 추적 탭 ========== -->
         <section id="rankTracking" class="tab-pane active">
-            
+
             <!-- 필터 -->
             <section class="filter-section">
                 <div class="filter-group">
@@ -58,6 +56,15 @@
                         <option value="90">최근 90일</option>
                     </select>
                 </div>
+                <div class="filter-group filter-group-btn">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-refresh" id="refreshRankBtn" title="실시간 순위 새로고침">
+                        <svg class="refresh-icon" id="refreshIcon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.65 2.35A7.96 7.96 0 008 0C3.58 0 .01 3.58.01 8S3.58 16 8 16c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 018 14 6 6 0 012 8a6 6 0 016-6c1.66 0 3.14.69 4.22 1.78L9 7h7V0l-2.35 2.35z" fill="currentColor"/>
+                        </svg>
+                        <span id="refreshBtnText">새로고침</span>
+                    </button>
+                </div>
             </section>
 
             <!-- 요약 카드 -->
@@ -80,6 +87,14 @@
                 </div>
             </section>
 
+            <!-- 새로고침 진행률 -->
+            <div id="refreshProgress" class="refresh-progress" style="display:none;">
+                <div class="progress-text" id="refreshProgressText">순위 조회 중...</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="refreshProgressBar" style="width:0%"></div>
+                </div>
+            </div>
+
             <!-- 순위 추이 차트 -->
             <div class="chart-container">
                 <h3>순위 추이</h3>
@@ -88,7 +103,7 @@
                 </div>
             </div>
 
-            <!-- 순위 히스토리 테이블 -->
+            <!-- 순위 히스토리 -->
             <div class="data-table-container">
                 <div class="table-header">
                     <h3>순위 히스토리</h3>
@@ -97,12 +112,8 @@
                         <button class="view-btn" data-view="table">테이블뷰</button>
                     </div>
                 </div>
-                
-                <!-- 카드뷰 -->
                 <div id="historyCardView" class="history-cards"></div>
-                
-                <!-- 테이블뷰 -->
-                <div id="historyTableView" class="table-wrapper" style="display: none;">
+                <div id="historyTableView" class="table-wrapper" style="display:none;">
                     <table class="data-table" id="historyTable">
                         <thead>
                             <tr>
@@ -124,8 +135,6 @@
 
         <!-- ========== 경쟁사 분석 탭 ========== -->
         <section id="competitorAnalysis" class="tab-pane">
-            
-            <!-- 검색 섹션 -->
             <div class="analysis-search">
                 <div class="search-form">
                     <div class="form-group">
@@ -144,16 +153,11 @@
                 </div>
             </div>
 
-            <!-- 분석 결과 -->
-            <div id="analysisResult" class="analysis-result" style="display: none;">
-                
-                <!-- 경쟁사 목록 -->
+            <div id="analysisResult" class="analysis-result" style="display:none;">
                 <div class="competitors-section">
                     <h3>경쟁 업체 (<span id="competitorCount">0</span>개)</h3>
                     <div id="competitorsList" class="competitors-list"></div>
                 </div>
-
-                <!-- 대표키워드 분석 -->
                 <div class="keywords-section">
                     <h3>대표 키워드 분석</h3>
                     <div class="keywords-summary">
@@ -166,7 +170,6 @@
                             <span class="value" id="avgSearchVolume">0</span>
                         </div>
                     </div>
-                    
                     <div class="table-wrapper">
                         <table class="data-table" id="keywordsTable">
                             <thead>
@@ -183,7 +186,6 @@
                 </div>
             </div>
 
-            <!-- 저장된 분석 결과 -->
             <div class="saved-analysis">
                 <h3>저장된 분석 결과</h3>
                 <div id="savedAnalysisList" class="saved-list"></div>
@@ -197,12 +199,11 @@
                     <h3>추적 키워드 설정</h3>
                     <button class="btn btn-primary" id="saveSettingsBtn">설정 저장</button>
                 </div>
-                
                 <div id="storeKeywordSettings" class="store-settings-list"></div>
             </div>
         </section>
 
-        <!-- 상세 모달 -->
+        <!-- 모달 -->
         <div class="modal" id="detailModal">
             <div class="modal-content modal-large">
                 <span class="modal-close">&times;</span>
@@ -211,8 +212,8 @@
             </div>
         </div>
 
-        <!-- 로딩 오버레이 -->
-        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <!-- 로딩 -->
+        <div class="loading-overlay" id="loadingOverlay" style="display:none;">
             <div class="loading-spinner"></div>
             <p id="loadingText">데이터 로딩 중...</p>
         </div>
