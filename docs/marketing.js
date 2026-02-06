@@ -247,10 +247,8 @@ async function refreshRanking() {
     var proxyUrl = getProxyUrl();
     if (!proxyUrl) { showProxySetupGuide(); return; }
 
-    // 현재 필터에 맞는 지점/키워드 목록 수집
     var storeFilter = (document.getElementById('storeSelect') || {}).value || '';
     var keywordFilter = (document.getElementById('keywordSelect') || {}).value || '';
-
     var trackingKeywords = configData ? configData.tracking_keywords || {} : {};
     var tasks = [];
 
@@ -258,19 +256,14 @@ async function refreshRanking() {
         if (storeFilter && store !== storeFilter) return;
         var placeId = STORE_PLACES[store];
         if (!placeId) return;
-
         trackingKeywords[store].forEach(function(keyword) {
             if (keywordFilter && keyword !== keywordFilter) return;
             tasks.push({ store: store, placeId: placeId, keyword: keyword });
         });
     });
 
-    if (tasks.length === 0) {
-        showToast('추적할 키워드가 없습니다. 키워드 설정을 확인해주세요.', 'error');
-        return;
-    }
+    if (!tasks.length) { showToast('추적할 키워드가 없습니다.', 'error'); return; }
 
-    // UI 상태 변경
     btn.disabled = true;
     btn.classList.add('refreshing');
     btnText.textContent = '조회 중...';
@@ -278,99 +271,46 @@ async function refreshRanking() {
 
     var today = new Date();
     var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-    var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-    var weekday = weekdays[today.getDay()];
-
-    var successCount = 0;
-    var failCount = 0;
+    var weekday = ['일','월','화','수','목','금','토'][today.getDay()];
+    var ok = 0, fail = 0;
 
     for (var i = 0; i < tasks.length; i++) {
         var task = tasks[i];
-        var pct = Math.round(((i) / tasks.length) * 100);
         progressText.textContent = '(' + (i + 1) + '/' + tasks.length + ') ' + task.store.replace('역대짬뽕 ', '') + ' - ' + task.keyword;
-        progressBar.style.width = pct + '%';
+        progressBar.style.width = Math.round((i / tasks.length) * 100) + '%';
 
         try {
             var result = await searchNaverPlace(task.keyword, 100);
+            var rank = null, matchedItem = null;
+            if (result.items) { for (var j = 0; j < result.items.length; j++) { if (String(result.items[j].id) === task.placeId) { rank = j + 1; matchedItem = result.items[j]; break; } } }
 
-            var rank = null;
-            var matchedItem = null;
-
-            if (result.items) {
-                for (var j = 0; j < result.items.length; j++) {
-                    if (String(result.items[j].id) === task.placeId) {
-                        rank = j + 1;
-                        matchedItem = result.items[j];
-                        break;
-                    }
-                }
-            }
-
-            // 히스토리에 추가
-            var historyKey = task.store + '|' + task.keyword;
+            var hk = task.store + '|' + task.keyword;
             if (!marketingData.tracking_history) marketingData.tracking_history = {};
-            if (!marketingData.tracking_history[historyKey]) {
-                marketingData.tracking_history[historyKey] = {
-                    store_name: task.store,
-                    place_id: task.placeId,
-                    keyword: task.keyword,
-                    history: []
-                };
-            }
+            if (!marketingData.tracking_history[hk]) marketingData.tracking_history[hk] = { store_name: task.store, place_id: task.placeId, keyword: task.keyword, history: [] };
 
-            var todayData = {
-                date: dateStr,
-                weekday: weekday,
-                rank: rank,
+            var td = { date: dateStr, weekday: weekday, rank: rank,
                 blog_reviews: matchedItem ? String(matchedItem.blogCafeReviewCount || 0) : '0',
                 visitor_reviews: matchedItem ? String(matchedItem.visitorReviewCount || 0) : '0',
                 save_count: matchedItem ? String(matchedItem.saveCount || 0) : '0',
-                score: matchedItem ? (matchedItem.visitorReviewScore || 0) : 0,
-                method: 'browser_refresh'
-            };
+                score: matchedItem ? (matchedItem.visitorReviewScore || 0) : 0, method: 'browser_refresh' };
 
-            var history = marketingData.tracking_history[historyKey].history;
-
-            // 오늘 데이터가 있으면 교체, 없으면 추가
-            if (history.length > 0 && history[0].date === dateStr) {
-                history[0] = todayData;
-            } else {
-                history.unshift(todayData);
-                if (history.length > 90) history.length = 90;
-            }
-
-            successCount++;
-
-        } catch (e) {
-            console.log('Refresh failed for ' + task.keyword + ':', e.message);
-            failCount++;
-        }
-
-        // 요청 간 딜레이
+            var hist = marketingData.tracking_history[hk].history;
+            if (hist.length > 0 && hist[0].date === dateStr) hist[0] = td;
+            else { hist.unshift(td); if (hist.length > 90) hist.length = 90; }
+            ok++;
+        } catch (e) { fail++; }
         if (i < tasks.length - 1) await delay(800);
     }
 
-    // 완료
     progressBar.style.width = '100%';
-    progressText.textContent = '완료! (성공 ' + successCount + ' / 실패 ' + failCount + ')';
-
-    // 데이터 갱신 시간 업데이트
+    progressText.textContent = '완료! (성공 ' + ok + ' / 실패 ' + fail + ')';
     marketingData.generated_at = new Date().toISOString();
     document.getElementById('updateTime').textContent = 'Last update: ' + formatDateTime(new Date());
-
-    // 화면 갱신
     filterAndRender();
 
-    // UI 복원
-    setTimeout(function() {
-        progressEl.style.display = 'none';
-        btn.disabled = false;
-        btn.classList.remove('refreshing');
-        btnText.textContent = '새로고침';
-    }, 2000);
-
-    if (successCount > 0) showToast(successCount + '개 키워드 순위 업데이트 완료', 'success');
-    else showToast('순위 조회에 실패했습니다. 프록시 설정을 확인해주세요.', 'error');
+    setTimeout(function() { progressEl.style.display = 'none'; btn.disabled = false; btn.classList.remove('refreshing'); btnText.textContent = '새로고침'; }, 2000);
+    if (ok > 0) showToast(ok + '개 키워드 순위 업데이트 완료', 'success');
+    else showToast('순위 조회 실패', 'error');
 }
 
 // ============================================
@@ -393,26 +333,57 @@ async function proxyGraphQL(payload) {
 
 async function searchNaverPlace(keyword, maxResults) {
     var payload = [{ "operationName": "getRestaurantList", "variables": { "restaurantListInput": { "query": keyword, "x": "126.9783882", "y": "37.5666103", "start": 1, "display": maxResults, "isNmap": false, "deviceType": "pc" } },
-        "query": "query getRestaurantList($restaurantListInput: RestaurantListInput) { restaurants: restaurantList(input: $restaurantListInput) { items { id name category roadAddress phone totalReviewCount blogCafeReviewCount visitorReviewCount visitorReviewScore saveCount } total } }" }];
+        "query": "query getRestaurantList($restaurantListInput: RestaurantListInput) { restaurants: restaurantList(input: $restaurantListInput) { items { id name category roadAddress phone totalReviewCount blogCafeReviewCount visitorReviewCount visitorReviewScore saveCount imageCount } total } }" }];
     var data = await proxyGraphQL(payload);
     return data[0] && data[0].data && data[0].data.restaurants ? data[0].data.restaurants : { items: [], total: 0 };
 }
 
 async function getPlaceKeywords(placeId) {
-    var payload = [{ "operationName": "getDetail", "variables": { "id": placeId, "deviceType": "pc", "includeVisitorReviewPhotos": false, "includeClips": false },
-        "query": "query getDetail($id: String!, $deviceType: String, $includeVisitorReviewPhotos: Boolean = false, $includeClips: Boolean = false) { business: placeDetail(input: {id: $id, isNx: false, deviceType: $deviceType}) { base { id name visitorReviewsTotal visitorReviewsScore microReviews } informationTab(providerSource: [pbp]) { keywordList } visitorReviewStats { analysis { themes { code label count } votedKeyword { totalCount details { displayName count } } } } } }" }];
+    /**
+     * HTML 페이지를 프록시로 가져와서 keywordList를 정규식으로 파싱
+     * Python 코드의 get_place_keywords와 동일한 방식
+     */
+    var proxyUrl = getProxyUrl();
+    if (!proxyUrl) return [];
+
+    var targetUrl = 'https://m.place.naver.com/restaurant/' + placeId;
+
     try {
-        var data = await proxyGraphQL(payload);
-        if (!data || !data[0] || !data[0].data || !data[0].data.business) return { keywords: [], themes: [], votedKeywords: [] };
-        var b = data[0].data.business, result = { keywords: [], themes: [], votedKeywords: [] };
-        if (b.informationTab && b.informationTab.keywordList) result.keywords = b.informationTab.keywordList;
-        var s = b.visitorReviewStats;
-        if (s && s.analysis) {
-            if (s.analysis.themes) result.themes = s.analysis.themes.map(function(t) { return { label: t.label, count: t.count }; });
-            if (s.analysis.votedKeyword && s.analysis.votedKeyword.details) result.votedKeywords = s.analysis.votedKeyword.details.map(function(d) { return { name: d.displayName, count: d.count }; });
+        var response = await fetch(proxyUrl + '?url=' + encodeURIComponent(targetUrl), {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            console.log('HTML fetch failed for ' + placeId + ': ' + response.status);
+            return [];
         }
-        return result;
-    } catch (e) { return { keywords: [], themes: [], votedKeywords: [] }; }
+
+        var html = await response.text();
+
+        // "keywordList":["키워드1","키워드2",...] 패턴 추출
+        var match = html.match(/"keywordList"\s*:\s*(\[[^\]]*\])/);
+
+        if (match && match[1]) {
+            try {
+                var keywords = JSON.parse(match[1]);
+                if (Array.isArray(keywords)) {
+                    return keywords.slice(0, 5);
+                }
+            } catch (e) {
+                // JSON 파싱 실패 시 정규식으로 개별 추출
+                var kwMatch = match[1].match(/"([^"]+)"/g);
+                if (kwMatch) {
+                    return kwMatch.map(function(k) { return k.replace(/"/g, ''); }).slice(0, 5);
+                }
+            }
+        }
+
+        return [];
+
+    } catch (e) {
+        console.log('getPlaceKeywords error for ' + placeId + ':', e.message);
+        return [];
+    }
 }
 
 // ============================================
@@ -437,30 +408,70 @@ async function runCompetitorAnalysis() {
         var total = result.items.length;
         showAnalysisProgress(true, total + '개 업체 발견, 대표키워드 수집 중...', 15);
 
-        var competitors = [], allKw = {}, allThemes = {}, allVoted = {};
+        var competitors = [];
+        var allKw = {};
+
         for (var i = 0; i < result.items.length; i++) {
-            var item = result.items[i], pid = String(item.id), nm = item.name || '';
-            showAnalysisProgress(true, '대표키워드 수집 (' + (i+1) + '/' + total + ') ' + nm, 15 + Math.round((i / total) * 70));
-            var pd = await getPlaceKeywords(pid);
-            pd.keywords.forEach(function(k) { if (!allKw[k]) allKw[k] = { keyword: k, count: 0 }; allKw[k].count++; });
-            pd.themes.forEach(function(t) { if (!allThemes[t.label]) allThemes[t.label] = { label: t.label, totalCount: 0, storeCount: 0 }; allThemes[t.label].totalCount += t.count; allThemes[t.label].storeCount++; });
-            pd.votedKeywords.forEach(function(v) { if (!allVoted[v.name]) allVoted[v.name] = { name: v.name, totalCount: 0, storeCount: 0 }; allVoted[v.name].totalCount += v.count; allVoted[v.name].storeCount++; });
-            competitors.push({ rank: i+1, place_id: pid, name: nm, category: item.category || '', blog_reviews: String(item.blogCafeReviewCount || 0), visitor_reviews: String(item.visitorReviewCount || 0), save_count: String(item.saveCount || 0), score: item.visitorReviewScore || 0, total_reviews: item.totalReviewCount || 0, keywords: pd.keywords, themes: pd.themes, votedKeywords: pd.votedKeywords });
-            if (i < result.items.length - 1) await delay(600);
+            var item = result.items[i];
+            var pid = String(item.id);
+            var nm = item.name || '';
+
+            var pct = 15 + Math.round((i / total) * 70);
+            showAnalysisProgress(true, '대표키워드 수집 (' + (i+1) + '/' + total + ') ' + nm, pct);
+
+            // HTML 페이지에서 keywordList 파싱
+            var keywords = await getPlaceKeywords(pid);
+
+            keywords.forEach(function(k) {
+                if (!allKw[k]) allKw[k] = { keyword: k, count: 0 };
+                allKw[k].count++;
+            });
+
+            competitors.push({
+                rank: i + 1,
+                place_id: pid,
+                name: nm,
+                category: item.category || '',
+                blog_reviews: String(item.blogCafeReviewCount || 0),
+                visitor_reviews: String(item.visitorReviewCount || 0),
+                save_count: String(item.saveCount || 0),
+                score: item.visitorReviewScore || 0,
+                total_reviews: item.totalReviewCount || 0,
+                image_count: item.imageCount || 0,
+                keywords: keywords
+            });
+
+            // 요청 간 딜레이 (차단 방지)
+            if (i < result.items.length - 1) await delay(500);
         }
 
         showAnalysisProgress(true, '저장 중...', 92);
+
         var kv = loadSavedKeywordVolumes(Object.keys(allKw));
-        var ar = { keyword: keyword, analyzed_at: new Date().toISOString(), total_results: result.total, competitors: competitors, keyword_volumes: kv, all_keywords: allKw, all_themes: allThemes, all_voted_keywords: allVoted };
+
+        var ar = {
+            keyword: keyword,
+            analyzed_at: new Date().toISOString(),
+            total_results: result.total,
+            competitors: competitors,
+            keyword_volumes: kv,
+            all_keywords: allKw
+        };
+
         var sk = keyword + '_' + topN;
         if (!marketingData.competitor_analysis) marketingData.competitor_analysis = {};
         marketingData.competitor_analysis[sk] = ar;
         try { localStorage.setItem('marketing_competitor_' + sk, JSON.stringify(ar)); } catch (e) {}
 
         showAnalysisProgress(true, '완료!', 100);
-        await delay(500); showAnalysisProgress(false);
-        renderAnalysisResult(ar); renderSavedAnalysis();
-        showToast(competitors.length + '개 업체, ' + Object.keys(allKw).length + '개 대표키워드 분석 완료', 'success');
+        await delay(500);
+        showAnalysisProgress(false);
+        renderAnalysisResult(ar);
+        renderSavedAnalysis();
+
+        var kwCount = Object.keys(allKw).length;
+        showToast(competitors.length + '개 업체, ' + kwCount + '개 대표키워드 분석 완료', 'success');
+
     } catch (error) {
         showAnalysisProgress(false);
         if (error.message === 'PROXY_NOT_SET') showProxySetupGuide();
@@ -479,7 +490,7 @@ function showProxySetupGuide() {
     var modal = document.getElementById('detailModal'), title = document.getElementById('modalTitle'), body = document.getElementById('modalBody');
     if (!modal || !title || !body) return;
     title.textContent = '프록시 설정 필요';
-    body.innerHTML = '<div style="color:#ccc;line-height:1.8;"><p>순위 조회/경쟁사 분석을 위해 프록시 URL 설정이 필요합니다.</p><div style="margin-top:16px;"><p style="font-weight:600;color:#00d4ff;margin-bottom:8px;">프록시 URL:</p><div style="display:flex;gap:8px;"><input type="text" id="proxyUrlInput" class="form-input" placeholder="https://xxx.workers.dev" value="' + (localStorage.getItem('marketing_proxy_url') || '') + '" style="flex:1;"><button class="btn btn-primary" onclick="saveProxyUrl()">저장</button></div></div></div>';
+    body.innerHTML = '<div style="color:#ccc;line-height:1.8;"><p>프록시 URL 설정이 필요합니다.</p><div style="margin-top:16px;"><p style="font-weight:600;color:#00d4ff;margin-bottom:8px;">프록시 URL:</p><div style="display:flex;gap:8px;"><input type="text" id="proxyUrlInput" class="form-input" placeholder="https://xxx.workers.dev" value="' + (localStorage.getItem('marketing_proxy_url') || '') + '" style="flex:1;"><button class="btn btn-primary" onclick="saveProxyUrl()">저장</button></div></div></div>';
     modal.classList.add('show');
 }
 
@@ -507,41 +518,77 @@ function renderAnalysisResult(result) {
     var c = document.getElementById('analysisResult'); if (!c) return;
     c.style.display = 'block';
     document.getElementById('competitorCount').textContent = result.competitors ? result.competitors.length : 0;
+
     var cl = document.getElementById('competitorsList');
     if (cl && result.competitors) {
         cl.innerHTML = result.competitors.map(function(comp, idx) {
             var rc = idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : '';
-            var kb = comp.keywords && comp.keywords.length > 0 ? ' <span style="font-size:0.7rem;color:#7b2cbf;background:rgba(123,44,191,0.1);padding:2px 6px;border-radius:4px;">' + comp.keywords.length + '개 키워드</span>' : '';
-            return '<div class="competitor-item" data-place-id="' + comp.place_id + '"><div class="competitor-rank ' + rc + '">' + comp.rank + '</div><div class="competitor-info"><div class="competitor-name">' + escapeHtml(comp.name) + kb + '</div><div class="competitor-category">' + escapeHtml(comp.category || '') + '</div></div><div class="competitor-stats"><span>블로그 ' + formatNumber(comp.blog_reviews || 0) + '</span><span>방문자 ' + formatNumber(comp.visitor_reviews || 0) + '</span><span>저장 ' + formatNumber(comp.save_count || 0) + '</span><span>평점 ' + (comp.score || '-') + '</span></div></div>';
+            var kb = comp.keywords && comp.keywords.length > 0
+                ? ' <span style="font-size:0.7rem;color:#7b2cbf;background:rgba(123,44,191,0.1);padding:2px 6px;border-radius:4px;">' + comp.keywords.join(', ') + '</span>' : '';
+
+            return '<div class="competitor-item" data-place-id="' + comp.place_id + '">' +
+                '<div class="competitor-rank ' + rc + '">' + comp.rank + '</div>' +
+                '<div class="competitor-info"><div class="competitor-name">' + escapeHtml(comp.name) + kb + '</div><div class="competitor-category">' + escapeHtml(comp.category || '') + '</div></div>' +
+                '<div class="competitor-stats"><span>블로그 ' + formatNumber(comp.blog_reviews || 0) + '</span><span>방문자 ' + formatNumber(comp.visitor_reviews || 0) + '</span><span>저장 ' + formatNumber(comp.save_count || 0) + '</span><span>평점 ' + (comp.score || '-') + '</span></div></div>';
         }).join('');
-        cl.querySelectorAll('.competitor-item').forEach(function(item) { item.addEventListener('click', function() { var pid = item.dataset.placeId; var comp = result.competitors.find(function(c) { return c.place_id === pid; }); if (comp) showCompetitorDetail(comp, result.keyword_volumes); }); });
+
+        cl.querySelectorAll('.competitor-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                var pid = item.dataset.placeId;
+                var comp = result.competitors.find(function(c) { return c.place_id === pid; });
+                if (comp) showCompetitorDetail(comp, result.keyword_volumes);
+            });
+        });
     }
     renderKeywordsAnalysis(result);
 }
 
 function renderKeywordsAnalysis(result) {
-    var kc = result.all_keywords || {}, kv = result.keyword_volumes || {};
+    var kc = result.all_keywords || {};
+    var kv = result.keyword_volumes || {};
     var kl = Object.values(kc).sort(function(a, b) { return b.count - a.count; });
+
     document.getElementById('totalRepKeywords').textContent = kl.length;
-    var tv = 0, vc = 0; kl.forEach(function(k) { var v = kv[k.keyword]; if (v && v.total) { tv += v.total; vc++; } });
+
+    var tv = 0, vc = 0;
+    kl.forEach(function(k) { var v = kv[k.keyword]; if (v && v.total) { tv += v.total; vc++; } });
     document.getElementById('avgSearchVolume').textContent = vc > 0 ? formatNumber(Math.round(tv / vc)) : '-';
+
     var tb = document.getElementById('keywordsTableBody'); if (!tb) return;
     if (!kl.length) { tb.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666;padding:24px;">대표 키워드를 찾지 못했습니다.</td></tr>'; return; }
-    tb.innerHTML = kl.map(function(i) { var v = kv[i.keyword]; var cc = v && v.comp === '높음' ? 'comp-high' : v && v.comp === '중간' ? 'comp-medium' : v && v.comp === '낮음' ? 'comp-low' : '';
-        return '<tr><td>' + escapeHtml(i.keyword) + '</td><td class="text-right">' + (v && v.total ? formatNumber(v.total) : '-') + '</td><td class="text-center"><span class="comp-badge ' + cc + '">' + (v && v.comp ? v.comp : '-') + '</span></td><td class="text-right">' + i.count + '개</td></tr>'; }).join('');
+
+    tb.innerHTML = kl.map(function(i) {
+        var v = kv[i.keyword];
+        var cc = v && v.comp === '높음' ? 'comp-high' : v && v.comp === '중간' ? 'comp-medium' : v && v.comp === '낮음' ? 'comp-low' : '';
+        return '<tr><td>' + escapeHtml(i.keyword) + '</td><td class="text-right">' + (v && v.total ? formatNumber(v.total) : '-') + '</td><td class="text-center"><span class="comp-badge ' + cc + '">' + (v && v.comp ? v.comp : '-') + '</span></td><td class="text-right">' + i.count + '개</td></tr>';
+    }).join('');
 }
 
 function showCompetitorDetail(comp, volumes) {
     var modal = document.getElementById('detailModal'), title = document.getElementById('modalTitle'), body = document.getElementById('modalBody');
     if (!modal || !title || !body) return;
     title.textContent = comp.name;
-    var kwH = (comp.keywords || []).map(function(k) { var v = volumes ? volumes[k] : null; return '<div class="keyword-item"><span class="keyword-name">' + escapeHtml(k) + '</span>' + (v ? '<span class="keyword-volume">' + formatNumber(v.total) + '</span>' : '') + '</div>'; }).join('');
-    var thH = (comp.themes || []).slice(0, 10).map(function(t) { return '<span style="display:inline-block;padding:4px 10px;background:rgba(78,205,196,0.1);border:1px solid rgba(78,205,196,0.2);border-radius:6px;font-size:0.8rem;color:#4ecdc4;margin:3px;">' + escapeHtml(t.label) + ' <span style="color:#888;font-size:0.7rem;">' + t.count + '</span></span>'; }).join('');
-    var vtH = (comp.votedKeywords || []).slice(0, 10).map(function(v) { return '<span style="display:inline-block;padding:4px 10px;background:rgba(255,230,109,0.1);border:1px solid rgba(255,230,109,0.2);border-radius:6px;font-size:0.8rem;color:#ffe66d;margin:3px;">' + escapeHtml(v.name) + ' <span style="color:#888;font-size:0.7rem;">' + v.count + '</span></span>'; }).join('');
-    body.innerHTML = '<div class="detail-grid"><div class="detail-item"><div class="detail-label">순위</div><div class="detail-value">' + comp.rank + '위</div></div><div class="detail-item"><div class="detail-label">카테고리</div><div class="detail-value">' + escapeHtml(comp.category || '-') + '</div></div><div class="detail-item"><div class="detail-label">평점</div><div class="detail-value">' + (comp.score || '-') + '</div></div><div class="detail-item"><div class="detail-label">블로그</div><div class="detail-value">' + formatNumber(comp.blog_reviews || 0) + '</div></div><div class="detail-item"><div class="detail-label">방문자</div><div class="detail-value">' + formatNumber(comp.visitor_reviews || 0) + '</div></div><div class="detail-item"><div class="detail-label">저장수</div><div class="detail-value">' + formatNumber(comp.save_count || 0) + '</div></div></div>' +
-        '<div class="detail-keywords-section" style="margin-top:16px;"><h4>대표 키워드 (' + (comp.keywords ? comp.keywords.length : 0) + '개)</h4><div class="keywords-grid">' + (kwH || '<p class="no-data" style="margin:0;font-size:0.85rem;">없음</p>') + '</div></div>' +
-        (thH ? '<div style="margin-top:16px;"><h4 style="color:#ccc;font-size:0.9rem;margin-bottom:8px;">리뷰 테마</h4><div>' + thH + '</div></div>' : '') +
-        (vtH ? '<div style="margin-top:16px;"><h4 style="color:#ccc;font-size:0.9rem;margin-bottom:8px;">투표 키워드</h4><div>' + vtH + '</div></div>' : '');
+
+    var kwH = (comp.keywords || []).map(function(k) {
+        var v = volumes ? volumes[k] : null;
+        return '<div class="keyword-item"><span class="keyword-name">' + escapeHtml(k) + '</span>' +
+            (v ? '<span class="keyword-volume">' + formatNumber(v.total) + '</span>' : '') + '</div>';
+    }).join('');
+
+    body.innerHTML =
+        '<div class="detail-grid">' +
+            '<div class="detail-item"><div class="detail-label">순위</div><div class="detail-value">' + comp.rank + '위</div></div>' +
+            '<div class="detail-item"><div class="detail-label">카테고리</div><div class="detail-value">' + escapeHtml(comp.category || '-') + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">평점</div><div class="detail-value">' + (comp.score || '-') + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">블로그</div><div class="detail-value">' + formatNumber(comp.blog_reviews || 0) + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">방문자</div><div class="detail-value">' + formatNumber(comp.visitor_reviews || 0) + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">저장수</div><div class="detail-value">' + formatNumber(comp.save_count || 0) + '</div></div>' +
+        '</div>' +
+        '<div class="detail-keywords-section" style="margin-top:16px;">' +
+            '<h4>대표 키워드 (' + (comp.keywords ? comp.keywords.length : 0) + '개)</h4>' +
+            '<div class="keywords-grid">' + (kwH || '<p class="no-data" style="margin:0;font-size:0.85rem;">없음</p>') + '</div>' +
+        '</div>';
+
     modal.classList.add('show');
 }
 
