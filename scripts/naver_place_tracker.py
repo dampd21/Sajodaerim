@@ -1,9 +1,9 @@
 """
 네이버 플레이스 순위 추적 및 대표키워드 수집
+- Selenium으로 세션/쿠키 획득 후 GraphQL API 호출
 - 키워드별 순위 추적
 - 업체 상세 정보 (리뷰수, 저장수 등)
 - 대표키워드 및 검색량 조회
-- 세션 초기화 + HTML 폴백 포함
 """
 
 import requests
@@ -17,29 +17,21 @@ import hmac as hmac_module
 from datetime import datetime, timedelta
 from pathlib import Path
 
+# Selenium
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 class NaverPlaceTracker:
     def __init__(self):
         self.graphql_url = "https://api.place.naver.com/graphql"
         self.session = requests.Session()
-        self.session_initialized = False
-
-        self.base_headers = {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 13; SM-S908B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36",
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json",
-            "Origin": "https://m.place.naver.com",
-            "Referer": "https://m.place.naver.com/",
-            "Connection": "keep-alive",
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-site",
-            "Sec-Ch-Ua": '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
-            "Sec-Ch-Ua-Mobile": "?1",
-            "Sec-Ch-Ua-Platform": '"Android"',
-        }
+        self.cookies_ready = False
+        self.driver = None
 
         # 지점별 Place ID
         self.store_places = {
@@ -54,286 +46,294 @@ class NaverPlaceTracker:
             "역대짬뽕 여수국동점": "1773140342",
         }
 
-    def _init_session(self):
-        """세션 초기화 - 쿠키 획득"""
-        if self.session_initialized:
+    def _init_browser(self):
+        """Selenium 브라우저 초기화 및 쿠키 획득"""
+        if self.cookies_ready:
             return True
 
+        print("[BROWSER] Selenium 브라우저 초기화 중...", flush=True)
+
         try:
-            print("[SESSION] 세션 초기화 중...", flush=True)
-
-            # 1단계: 모바일 플레이스 메인 페이지 방문
-            init_headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "none",
-            }
-
-            resp = self.session.get(
-                "https://m.place.naver.com/",
-                headers=init_headers,
-                timeout=15,
-                allow_redirects=True
+            chrome_options = Options()
+            chrome_options.add_argument("--headless=new")
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--window-size=1920,1080")
+            chrome_options.add_argument(
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
             )
-            print(f"[SESSION] 메인 페이지: {resp.status_code}", flush=True)
-            time.sleep(1)
+            chrome_options.add_argument("--lang=ko-KR")
+            chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+            chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-            # 2단계: 임의의 검색 페이지 방문하여 추가 쿠키 획득
-            search_headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Referer": "https://m.place.naver.com/",
-                "Connection": "keep-alive",
-            }
+            # GitHub Actions 환경
+            chrome_binary = os.environ.get("CHROME_BIN")
+            if chrome_binary:
+                chrome_options.binary_location = chrome_binary
 
-            resp2 = self.session.get(
-                "https://m.place.naver.com/restaurant/list?query=%EC%A7%AC%EB%BD%95",
-                headers=search_headers,
-                timeout=15,
-                allow_redirects=True
-            )
-            print(f"[SESSION] 검색 페이지: {resp2.status_code}", flush=True)
-            time.sleep(1)
+            chromedriver_path = os.environ.get("CHROMEDRIVER_PATH")
+            if chromedriver_path:
+                service = Service(chromedriver_path)
+            else:
+                try:
+                    from webdriver_manager.chrome import ChromeDriverManager
+                    service = Service(ChromeDriverManager().install())
+                except Exception:
+                    service = Service()
 
-            # 3단계: 특정 플레이스 페이지 방문
-            place_headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Referer": "https://m.place.naver.com/",
-                "Connection": "keep-alive",
-            }
+            self.driver = webdriver.Chrome(service=service, options=chrome_options)
+            self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+                "source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            })
 
-            resp3 = self.session.get(
-                "https://m.place.naver.com/restaurant/1542530224/home",
-                headers=place_headers,
-                timeout=15,
-                allow_redirects=True
-            )
-            print(f"[SESSION] 플레이스 페이지: {resp3.status_code}", flush=True)
-            time.sleep(1)
+            # 1단계: 네이버 플레이스 검색 페이지 방문
+            print("[BROWSER] 네이버 플레이스 페이지 로딩...", flush=True)
+            self.driver.get("https://m.place.naver.com/restaurant/list?query=%EC%A7%AC%EB%BD%95")
+            time.sleep(3)
 
-            cookies = dict(self.session.cookies)
-            print(f"[SESSION] 쿠키 수: {len(cookies)}", flush=True)
+            # 2단계: 특정 플레이스 페이지 방문 (추가 쿠키 획득)
+            print("[BROWSER] 플레이스 상세 페이지 로딩...", flush=True)
+            self.driver.get("https://m.place.naver.com/restaurant/1542530224/home")
+            time.sleep(3)
 
-            self.session_initialized = True
+            # 3단계: 브라우저 쿠키를 requests 세션으로 복사
+            browser_cookies = self.driver.get_cookies()
+            print(f"[BROWSER] 브라우저 쿠키 수: {len(browser_cookies)}", flush=True)
+
+            for cookie in browser_cookies:
+                self.session.cookies.set(
+                    cookie['name'],
+                    cookie['value'],
+                    domain=cookie.get('domain', ''),
+                    path=cookie.get('path', '/')
+                )
+
+            cookie_names = [c['name'] for c in browser_cookies]
+            print(f"[BROWSER] 쿠키 목록: {', '.join(cookie_names[:10])}", flush=True)
+
+            self.cookies_ready = True
+            print("[BROWSER] 쿠키 획득 완료!", flush=True)
             return True
 
         except Exception as e:
-            print(f"[SESSION] 세션 초기화 실패: {e}", flush=True)
+            print(f"[BROWSER] 초기화 실패: {e}", flush=True)
             return False
 
-    def _make_wtm_header(self, arg, business_type="restaurant"):
-        """x-wtm-graphql 헤더 생성"""
-        data = {"arg": arg, "type": business_type, "source": "place"}
-        return base64.b64encode(json.dumps(data).encode()).decode()
-
-    def _graphql_request(self, payload, wtm_arg, referer=None):
-        """GraphQL 요청 (세션 사용, 재시도 포함)"""
-        self._init_session()
-
-        headers = {**self.base_headers}
-        headers["x-wtm-graphql"] = self._make_wtm_header(wtm_arg)
-        if referer:
-            headers["Referer"] = referer
-
-        max_retries = 3
-        for attempt in range(max_retries):
+    def _close_browser(self):
+        """브라우저 종료"""
+        if self.driver:
             try:
-                response = self.session.post(
-                    self.graphql_url,
-                    headers=headers,
-                    json=payload,
-                    timeout=30
-                )
+                self.driver.quit()
+            except Exception:
+                pass
+            self.driver = None
 
-                if response.status_code == 200:
-                    return response.json()
+    def _get_graphql_headers(self, wtm_arg, referer=None):
+        """GraphQL 요청 헤더 생성"""
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            "Accept-Language": "ko",
+            "Origin": "https://m.place.naver.com",
+            "Referer": referer or "https://m.place.naver.com/",
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+            ),
+        }
 
-                if response.status_code == 400:
-                    print(f"  [RETRY {attempt+1}/{max_retries}] 400 에러, 재시도...", flush=True)
+        # x-wtm-graphql 헤더 (없어도 되는 경우 있지만 포함)
+        if wtm_arg:
+            wtm_data = {"arg": wtm_arg, "type": "restaurant", "source": "place"}
+            headers["x-wtm-graphql"] = base64.b64encode(
+                json.dumps(wtm_data).encode()
+            ).decode()
 
-                    # 세션 재초기화
-                    if attempt < max_retries - 1:
-                        self.session_initialized = False
-                        self.session = requests.Session()
-                        self._init_session()
-                        time.sleep(2)
-                        continue
+        return headers
 
-                response.raise_for_status()
+    def _graphql_request(self, payload, wtm_arg=None, referer=None):
+        """GraphQL API 요청 (세션 쿠키 사용)"""
+        if not self.cookies_ready:
+            self._init_browser()
 
-            except requests.exceptions.HTTPError as e:
-                if attempt < max_retries - 1:
-                    print(f"  [RETRY {attempt+1}/{max_retries}] HTTP 에러: {e}", flush=True)
-                    time.sleep(2)
-                    continue
-                raise
-            except Exception as e:
-                if attempt < max_retries - 1:
-                    print(f"  [RETRY {attempt+1}/{max_retries}] 오류: {e}", flush=True)
-                    time.sleep(2)
-                    continue
-                raise
+        headers = self._get_graphql_headers(wtm_arg, referer)
+
+        try:
+            response = self.session.post(
+                self.graphql_url,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+
+            if response.status_code == 200:
+                return response.json()
+
+            # 400/403 에러 시 쿠키 재획득 시도
+            if response.status_code in [400, 403]:
+                print(f"  [GraphQL] HTTP {response.status_code}, 쿠키 재획득 시도...", flush=True)
+
+                # 응답 내용 로깅 (디버깅용)
+                try:
+                    resp_text = response.text[:200]
+                    print(f"  [GraphQL] 응답: {resp_text}", flush=True)
+                except Exception:
+                    pass
+
+                self.cookies_ready = False
+                self._close_browser()
+                time.sleep(2)
+
+                if self._init_browser():
+                    headers = self._get_graphql_headers(wtm_arg, referer)
+                    response = self.session.post(
+                        self.graphql_url,
+                        headers=headers,
+                        json=payload,
+                        timeout=30
+                    )
+                    if response.status_code == 200:
+                        return response.json()
+
+                print(f"  [GraphQL] 재시도 후에도 실패: HTTP {response.status_code}", flush=True)
+                return None
+
+            response.raise_for_status()
+
+        except requests.exceptions.HTTPError as e:
+            print(f"  [GraphQL] HTTP 오류: {e}", flush=True)
+            return None
+        except Exception as e:
+            print(f"  [GraphQL] 요청 오류: {e}", flush=True)
+            return None
 
         return None
+
+    def _execute_in_browser(self, keyword, max_results=100):
+        """
+        Selenium 브라우저 내에서 직접 GraphQL 호출 (최후의 수단)
+        브라우저 콘솔에서 실행하는 것과 동일한 방식
+        """
+        if not self.driver:
+            if not self._init_browser():
+                return None
+
+        print(f"  [BROWSER-EXEC] 브라우저 내 직접 실행: {keyword}", flush=True)
+
+        # JavaScript 코드를 브라우저에서 직접 실행
+        js_code = """
+        return new Promise((resolve, reject) => {
+            const searchQuery = arguments[0];
+            const maxResults = arguments[1];
+
+            fetch('https://api.place.naver.com/graphql', {
+                method: 'POST',
+                headers: {
+                    'accept': '*/*',
+                    'accept-language': 'ko',
+                    'content-type': 'application/json',
+                    'origin': 'https://m.place.naver.com',
+                    'referer': 'https://m.place.naver.com/'
+                },
+                body: JSON.stringify([{
+                    "operationName": "getRestaurantList",
+                    "variables": {
+                        "restaurantListInput": {
+                            "query": searchQuery,
+                            "x": "126.9783882",
+                            "y": "37.5666103",
+                            "start": 1,
+                            "display": maxResults,
+                            "isNmap": false,
+                            "deviceType": "pc"
+                        }
+                    },
+                    "query": `query getRestaurantList($restaurantListInput: RestaurantListInput) {
+                        restaurants: restaurantList(input: $restaurantListInput) {
+                            items {
+                                id
+                                name
+                                category
+                                roadAddress
+                                phone
+                                totalReviewCount
+                                blogCafeReviewCount
+                                visitorReviewCount
+                                visitorReviewScore
+                                saveCount
+                            }
+                            total
+                        }
+                    }`
+                }])
+            })
+            .then(r => r.json())
+            .then(data => {
+                resolve(JSON.stringify(data));
+            })
+            .catch(e => {
+                reject(e.message);
+            });
+        });
+        """
+
+        try:
+            # 네이버 플레이스 도메인에서 실행해야 CORS 통과
+            current_url = self.driver.current_url
+            if "place.naver.com" not in current_url:
+                self.driver.get("https://m.place.naver.com/restaurant/list?query=" + keyword)
+                time.sleep(2)
+
+            result = self.driver.execute_async_script(js_code, keyword, max_results)
+            data = json.loads(result)
+
+            items = data[0].get('data', {}).get('restaurants', {}).get('items', [])
+            total = data[0].get('data', {}).get('restaurants', {}).get('total', 0)
+
+            if items:
+                print(f"  [BROWSER-EXEC] {len(items)}개 결과 (총 {total}개)", flush=True)
+                return {
+                    "success": True,
+                    "total": total,
+                    "items": items,
+                    "method": "browser_exec"
+                }
+            else:
+                print(f"  [BROWSER-EXEC] 결과 없음", flush=True)
+                return None
+
+        except Exception as e:
+            print(f"  [BROWSER-EXEC] 실행 실패: {e}", flush=True)
+            return None
 
     def search_keyword_ranking(self, keyword, max_results=100):
         """
         키워드로 검색하여 순위 목록 가져오기
-        GraphQL 실패 시 HTML 파싱으로 폴백
+        1차: requests + 쿠키 (GraphQL)
+        2차: Selenium 브라우저 내 직접 실행
         """
-        # 방법 1: GraphQL API
+        # 방법 1: GraphQL API (requests + 쿠키)
         result = self._search_via_graphql(keyword, max_results)
         if result and result.get("success"):
             return result
 
-        print(f"  [FALLBACK] HTML 파싱으로 전환 ({keyword})", flush=True)
         time.sleep(1)
 
-        # 방법 2: HTML 파싱 폴백
-        result = self._search_via_html(keyword)
-        if result and result.get("success"):
-            return result
-
-        # 방법 3: 네이버 검색 API 폴백
-        print(f"  [FALLBACK] 네이버 검색으로 전환 ({keyword})", flush=True)
-        time.sleep(1)
-        result = self._search_via_naver_search(keyword)
+        # 방법 2: 브라우저 내 직접 JavaScript 실행 (콘솔과 동일)
+        result = self._execute_in_browser(keyword, max_results)
         if result and result.get("success"):
             return result
 
         return {"success": False, "total": 0, "items": []}
 
     def _search_via_graphql(self, keyword, max_results=100):
-        """GraphQL API로 검색"""
-        # 쿼리 v1: 간단한 버전
-        query_v1 = """
-        query getRestaurantList($input: RestaurantListInput) {
-            restaurants: restaurantList(input: $input) {
-                total
-                items {
-                    id
-                    name
-                    category
-                    roadAddress
-                    commonAddress
-                    blogCafeReviewCount
-                    visitorReviewCount
-                    visitorReviewScore
-                    saveCount
-                }
-            }
-        }
-        """
+        """GraphQL API로 검색 (브라우저 콘솔 코드와 동일한 형식)"""
 
-        payload_v1 = [{
+        # 브라우저 콘솔에서 성공한 것과 완전히 동일한 payload
+        payload = [{
             "operationName": "getRestaurantList",
-            "variables": {
-                "input": {
-                    "query": keyword,
-                    "start": 1,
-                    "display": max_results,
-                    "deviceType": "mobile",
-                    "isPcmap": False
-                }
-            },
-            "query": query_v1
-        }]
-
-        try:
-            data = self._graphql_request(payload_v1, keyword)
-            if data:
-                items = data[0].get('data', {}).get('restaurants', {}).get('items', [])
-                total = data[0].get('data', {}).get('restaurants', {}).get('total', 0)
-
-                if items:
-                    return {
-                        "success": True,
-                        "total": total,
-                        "items": items,
-                        "method": "graphql_v1"
-                    }
-        except Exception as e:
-            print(f"  [GraphQL v1] 실패: {e}", flush=True)
-
-        # 쿼리 v2: 다른 형식 시도
-        query_v2 = """
-        query getPlacesList($input: PlacesInput) {
-            places: placesList(input: $input) {
-                total
-                items {
-                    id
-                    name
-                    category
-                    roadAddress
-                    blogCafeReviewCount
-                    visitorReviewCount
-                    visitorReviewScore
-                    saveCount
-                }
-            }
-        }
-        """
-
-        payload_v2 = [{
-            "operationName": "getPlacesList",
-            "variables": {
-                "input": {
-                    "query": keyword,
-                    "start": 1,
-                    "display": max_results,
-                    "deviceType": "mobile"
-                }
-            },
-            "query": query_v2
-        }]
-
-        try:
-            data = self._graphql_request(payload_v2, keyword)
-            if data:
-                items = data[0].get('data', {}).get('places', {}).get('items', [])
-                total = data[0].get('data', {}).get('places', {}).get('total', 0)
-
-                if items:
-                    return {
-                        "success": True,
-                        "total": total,
-                        "items": items,
-                        "method": "graphql_v2"
-                    }
-        except Exception as e:
-            print(f"  [GraphQL v2] 실패: {e}", flush=True)
-
-        # 쿼리 v3: restaurantFilter 방식
-        query_v3 = """
-        query getRestaurants($restaurantListInput: RestaurantListInput, $isNmap: Boolean!, $isBounds: Boolean!) {
-            restaurants: restaurantList(input: $restaurantListInput) @skip(if: $isNmap) {
-                total
-                items {
-                    id
-                    name
-                    category
-                    roadAddress
-                    blogCafeReviewCount
-                    visitorReviewCount
-                    visitorReviewScore
-                    saveCount
-                }
-            }
-        }
-        """
-
-        payload_v3 = [{
-            "operationName": "getRestaurants",
             "variables": {
                 "restaurantListInput": {
                     "query": keyword,
@@ -341,265 +341,49 @@ class NaverPlaceTracker:
                     "y": "37.5666103",
                     "start": 1,
                     "display": max_results,
-                    "deviceType": "mobile",
-                    "isPcmap": False
-                },
-                "isNmap": False,
-                "isBounds": False
+                    "isNmap": False,
+                    "deviceType": "pc"
+                }
             },
-            "query": query_v3
+            "query": (
+                "query getRestaurantList($restaurantListInput: RestaurantListInput) {\n"
+                "  restaurants: restaurantList(input: $restaurantListInput) {\n"
+                "    items {\n"
+                "      id\n"
+                "      name\n"
+                "      category\n"
+                "      roadAddress\n"
+                "      phone\n"
+                "      totalReviewCount\n"
+                "      blogCafeReviewCount\n"
+                "      visitorReviewCount\n"
+                "      visitorReviewScore\n"
+                "      saveCount\n"
+                "    }\n"
+                "    total\n"
+                "  }\n"
+                "}\n"
+            )
         }]
 
         try:
-            data = self._graphql_request(payload_v3, keyword)
+            data = self._graphql_request(payload, keyword)
             if data:
                 items = data[0].get('data', {}).get('restaurants', {}).get('items', [])
                 total = data[0].get('data', {}).get('restaurants', {}).get('total', 0)
 
                 if items:
+                    print(f"  [GraphQL] {len(items)}개 결과 (총 {total}개)", flush=True)
                     return {
                         "success": True,
                         "total": total,
                         "items": items,
-                        "method": "graphql_v3"
+                        "method": "graphql"
                     }
         except Exception as e:
-            print(f"  [GraphQL v3] 실패: {e}", flush=True)
+            print(f"  [GraphQL] 실패: {e}", flush=True)
 
         return None
-
-    def _search_via_html(self, keyword):
-        """HTML 파싱으로 검색 결과 추출"""
-        try:
-            import urllib.parse
-            encoded_keyword = urllib.parse.quote(keyword)
-
-            url = f"https://m.place.naver.com/restaurant/list?query={encoded_keyword}"
-
-            headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Referer": "https://m.naver.com/",
-            }
-
-            response = self.session.get(url, headers=headers, timeout=15, allow_redirects=True)
-
-            if response.status_code != 200:
-                print(f"  [HTML] HTTP {response.status_code}", flush=True)
-                return None
-
-            html = response.text
-
-            # __NEXT_DATA__ 에서 JSON 추출
-            items = []
-
-            # 방법 1: __NEXT_DATA__ script 태그에서 추출
-            next_data_match = re.search(
-                r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-                html, re.DOTALL
-            )
-
-            if next_data_match:
-                try:
-                    next_data = json.loads(next_data_match.group(1))
-                    # 여러 경로 시도
-                    props = next_data.get('props', {}).get('pageProps', {})
-
-                    # 경로 1
-                    initial_data = props.get('initialState', {})
-                    place_list = initial_data.get('place', {}).get('list', [])
-
-                    if place_list:
-                        for item in place_list:
-                            items.append({
-                                "id": str(item.get('id', '')),
-                                "name": item.get('name', ''),
-                                "category": item.get('category', ''),
-                                "roadAddress": item.get('roadAddress', ''),
-                                "blogCafeReviewCount": str(item.get('blogCafeReviewCount', '0')),
-                                "visitorReviewCount": str(item.get('visitorReviewCount', '0')),
-                                "visitorReviewScore": item.get('visitorReviewScore', 0),
-                                "saveCount": str(item.get('saveCount', '0')),
-                            })
-
-                    # 경로 2
-                    if not items:
-                        search_result = props.get('searchResult', {})
-                        result_items = search_result.get('result', {}).get('items', [])
-
-                        for item in result_items:
-                            items.append({
-                                "id": str(item.get('id', '')),
-                                "name": item.get('name', ''),
-                                "category": item.get('category', ''),
-                                "roadAddress": item.get('roadAddress', ''),
-                                "blogCafeReviewCount": str(item.get('blogCafeReviewCount', '0')),
-                                "visitorReviewCount": str(item.get('visitorReviewCount', '0')),
-                                "visitorReviewScore": item.get('visitorReviewScore', 0),
-                                "saveCount": str(item.get('saveCount', '0')),
-                            })
-
-                except json.JSONDecodeError:
-                    print(f"  [HTML] __NEXT_DATA__ JSON 파싱 실패", flush=True)
-
-            # 방법 2: window.__APOLLO_STATE__ 에서 추출
-            if not items:
-                apollo_match = re.search(
-                    r'window\.__APOLLO_STATE__\s*=\s*(\{.*?\});',
-                    html, re.DOTALL
-                )
-
-                if apollo_match:
-                    try:
-                        apollo_data = json.loads(apollo_match.group(1))
-
-                        for key, value in apollo_data.items():
-                            if isinstance(value, dict) and value.get('__typename') in ['Restaurant', 'Place']:
-                                items.append({
-                                    "id": str(value.get('id', '')),
-                                    "name": value.get('name', ''),
-                                    "category": value.get('category', ''),
-                                    "roadAddress": value.get('roadAddress', ''),
-                                    "blogCafeReviewCount": str(value.get('blogCafeReviewCount', '0')),
-                                    "visitorReviewCount": str(value.get('visitorReviewCount', '0')),
-                                    "visitorReviewScore": value.get('visitorReviewScore', 0),
-                                    "saveCount": str(value.get('saveCount', '0')),
-                                })
-                    except json.JSONDecodeError:
-                        print(f"  [HTML] APOLLO_STATE JSON 파싱 실패", flush=True)
-
-            # 방법 3: 정규식으로 place ID 및 이름 추출
-            if not items:
-                place_links = re.findall(
-                    r'/restaurant/(\d+)/home[^"]*"[^>]*>([^<]+)',
-                    html
-                )
-
-                for place_id, name in place_links:
-                    if place_id and name.strip():
-                        items.append({
-                            "id": place_id,
-                            "name": name.strip(),
-                            "category": "",
-                            "roadAddress": "",
-                            "blogCafeReviewCount": "0",
-                            "visitorReviewCount": "0",
-                            "visitorReviewScore": 0,
-                            "saveCount": "0",
-                        })
-
-            if items:
-                # 중복 제거
-                seen = set()
-                unique_items = []
-                for item in items:
-                    if item["id"] not in seen and item["id"]:
-                        seen.add(item["id"])
-                        unique_items.append(item)
-
-                print(f"  [HTML] {len(unique_items)}개 업체 발견", flush=True)
-                return {
-                    "success": True,
-                    "total": len(unique_items),
-                    "items": unique_items,
-                    "method": "html"
-                }
-
-            print(f"  [HTML] 검색 결과 없음", flush=True)
-            return None
-
-        except Exception as e:
-            print(f"  [HTML] 파싱 실패: {e}", flush=True)
-            return None
-
-    def _search_via_naver_search(self, keyword):
-        """네이버 통합검색 플레이스 영역에서 추출"""
-        try:
-            import urllib.parse
-            encoded_keyword = urllib.parse.quote(keyword)
-
-            url = f"https://m.search.naver.com/search.naver?query={encoded_keyword}&where=nexearch&sm=top_hty&fbm=0"
-
-            headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Referer": "https://m.naver.com/",
-            }
-
-            response = self.session.get(url, headers=headers, timeout=15, allow_redirects=True)
-
-            if response.status_code != 200:
-                return None
-
-            html = response.text
-            items = []
-
-            # 네이버 검색 결과에서 플레이스 ID와 이름 추출
-            # 패턴 1: data-sid 속성
-            sid_matches = re.findall(
-                r'data-sid="(\d+)"[^>]*>.*?class="[^"]*tit[^"]*"[^>]*>([^<]+)',
-                html, re.DOTALL
-            )
-
-            for place_id, name in sid_matches:
-                items.append({
-                    "id": place_id,
-                    "name": name.strip(),
-                    "category": "",
-                    "roadAddress": "",
-                    "blogCafeReviewCount": "0",
-                    "visitorReviewCount": "0",
-                    "visitorReviewScore": 0,
-                    "saveCount": "0",
-                })
-
-            # 패턴 2: place.naver.com 링크
-            if not items:
-                place_matches = re.findall(
-                    r'place\.naver\.com/restaurant/(\d+)',
-                    html
-                )
-                name_matches = re.findall(
-                    r'class="[^"]*(?:place_bluelink|tit|name)[^"]*"[^>]*>([^<]+)',
-                    html
-                )
-
-                for i, place_id in enumerate(place_matches):
-                    name = name_matches[i] if i < len(name_matches) else f"업체{i+1}"
-                    items.append({
-                        "id": place_id,
-                        "name": name.strip(),
-                        "category": "",
-                        "roadAddress": "",
-                        "blogCafeReviewCount": "0",
-                        "visitorReviewCount": "0",
-                        "visitorReviewScore": 0,
-                        "saveCount": "0",
-                    })
-
-            if items:
-                seen = set()
-                unique_items = []
-                for item in items:
-                    if item["id"] not in seen:
-                        seen.add(item["id"])
-                        unique_items.append(item)
-
-                print(f"  [SEARCH] {len(unique_items)}개 업체 발견", flush=True)
-                return {
-                    "success": True,
-                    "total": len(unique_items),
-                    "items": unique_items,
-                    "method": "naver_search"
-                }
-
-            return None
-
-        except Exception as e:
-            print(f"  [SEARCH] 검색 실패: {e}", flush=True)
-            return None
 
     def find_store_rank(self, keyword, place_id):
         """
@@ -628,214 +412,148 @@ class NaverPlaceTracker:
             "method": result.get("method", "unknown")
         }
 
-    def get_place_detail(self, place_id):
+    def get_place_detail_via_browser(self, place_id):
         """
-        플레이스 상세 정보 및 대표키워드 조회
-        GraphQL 실패 시 HTML 폴백
+        Selenium 브라우저에서 플레이스 상세 페이지 방문하여 정보 추출
         """
-        # 방법 1: GraphQL
-        detail = self._get_detail_via_graphql(place_id)
-        if detail and detail.get("success"):
-            return detail
+        if not self.driver:
+            if not self._init_browser():
+                return {"success": False}
 
-        print(f"  [FALLBACK] 상세 HTML 파싱 ({place_id})", flush=True)
-        time.sleep(1)
+        try:
+            url = f"https://m.place.naver.com/restaurant/{place_id}/home"
+            self.driver.get(url)
+            time.sleep(3)
 
-        # 방법 2: HTML 폴백
-        detail = self._get_detail_via_html(place_id)
-        if detail and detail.get("success"):
-            return detail
+            # __NEXT_DATA__에서 추출
+            try:
+                next_data_el = self.driver.find_element(By.ID, "__NEXT_DATA__")
+                next_data = json.loads(next_data_el.get_attribute("textContent"))
+
+                props = next_data.get('props', {}).get('pageProps', {})
+                initial = props.get('initialState', {})
+
+                # 여러 경로 시도
+                place = None
+
+                # 경로 1: place.detail
+                place_data = initial.get('place', {})
+                if isinstance(place_data, dict):
+                    place = place_data.get('detail', {})
+
+                # 경로 2: props 직접
+                if not place:
+                    place = props.get('detail', {})
+
+                # 경로 3: initialState 직접
+                if not place:
+                    for key, val in initial.items():
+                        if isinstance(val, dict) and val.get('id') == place_id:
+                            place = val
+                            break
+
+                if place and isinstance(place, dict):
+                    return {
+                        "success": True,
+                        "id": place.get('id', place_id),
+                        "name": place.get('name', ''),
+                        "category": place.get('category', ''),
+                        "address": place.get('roadAddress', ''),
+                        "visitor_reviews": place.get('visitorReviewsTotal', 0),
+                        "review_score": place.get('visitorReviewsScore', 0),
+                        "save_count": str(place.get('saveCount', '0')),
+                        "keywords": place.get('keywords', [])
+                    }
+            except Exception as e:
+                print(f"  [Detail-NEXT_DATA] 파싱 실패: {e}", flush=True)
+
+            # JavaScript로 페이지 정보 추출
+            try:
+                page_data = self.driver.execute_script("""
+                    try {
+                        var data = window.__APOLLO_STATE__ || {};
+                        var keys = Object.keys(data);
+                        for (var i = 0; i < keys.length; i++) {
+                            var val = data[keys[i]];
+                            if (val && val.__typename === 'RestaurantBase') {
+                                return JSON.stringify(val);
+                            }
+                        }
+                    } catch(e) {}
+                    return null;
+                """)
+
+                if page_data:
+                    info = json.loads(page_data)
+                    return {
+                        "success": True,
+                        "id": info.get('id', place_id),
+                        "name": info.get('name', ''),
+                        "category": info.get('category', ''),
+                        "address": info.get('roadAddress', ''),
+                        "visitor_reviews": info.get('visitorReviewsTotal', 0),
+                        "review_score": info.get('visitorReviewsScore', 0),
+                        "save_count": str(info.get('saveCount', '0')),
+                        "keywords": info.get('keywords', [])
+                    }
+            except Exception as e:
+                print(f"  [Detail-APOLLO] 파싱 실패: {e}", flush=True)
+
+            # 기본 정보 추출 (제목만이라도)
+            try:
+                title = self.driver.title
+                name = title.replace(" : 네이버", "").replace(" - 네이버", "").strip()
+                return {
+                    "success": True,
+                    "id": place_id,
+                    "name": name,
+                    "category": "",
+                    "address": "",
+                    "visitor_reviews": 0,
+                    "review_score": 0,
+                    "save_count": "0",
+                    "keywords": []
+                }
+            except Exception:
+                pass
+
+        except Exception as e:
+            print(f"  [Detail] 실패: {e}", flush=True)
 
         return {"success": False}
 
-    def _get_detail_via_graphql(self, place_id):
-        """GraphQL로 상세 정보 조회"""
-        query = """
-        query getRestaurantDetail($input: RestaurantDetailInput) {
-            restaurant: restaurantDetail(input: $input) {
-                id
-                name
-                category
-                roadAddress
-                visitorReviewsTotal
-                visitorReviewsScore
-                saveCount
-                keywords
-            }
-        }
-        """
-
-        payload = [{
-            "operationName": "getRestaurantDetail",
-            "variables": {
-                "input": {
-                    "id": place_id,
-                    "deviceType": "mobile"
-                }
-            },
-            "query": query
-        }]
-
-        try:
-            data = self._graphql_request(
-                payload,
-                place_id,
-                referer=f"https://m.place.naver.com/restaurant/{place_id}/home"
-            )
-
-            if data:
-                restaurant = data[0].get('data', {}).get('restaurant', {})
-                if restaurant:
-                    return {
-                        "success": True,
-                        "id": restaurant.get('id'),
-                        "name": restaurant.get('name'),
-                        "category": restaurant.get('category'),
-                        "address": restaurant.get('roadAddress'),
-                        "visitor_reviews": restaurant.get('visitorReviewsTotal', 0),
-                        "review_score": restaurant.get('visitorReviewsScore', 0),
-                        "save_count": restaurant.get('saveCount', '0'),
-                        "keywords": restaurant.get('keywords', [])
-                    }
-        except Exception as e:
-            print(f"  [GraphQL Detail] 실패: {e}", flush=True)
-
-        return None
-
-    def _get_detail_via_html(self, place_id):
-        """HTML에서 상세 정보 추출"""
-        try:
-            url = f"https://m.place.naver.com/restaurant/{place_id}/home"
-
-            headers = {
-                "User-Agent": self.base_headers["User-Agent"],
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-                "Referer": "https://m.place.naver.com/",
-            }
-
-            response = self.session.get(url, headers=headers, timeout=15, allow_redirects=True)
-
-            if response.status_code != 200:
-                return None
-
-            html = response.text
-            result = {
-                "success": False,
-                "id": place_id,
-                "name": "",
-                "category": "",
-                "address": "",
-                "visitor_reviews": 0,
-                "review_score": 0,
-                "save_count": "0",
-                "keywords": []
-            }
-
-            # __NEXT_DATA__에서 추출
-            next_data_match = re.search(
-                r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-                html, re.DOTALL
-            )
-
-            if next_data_match:
-                try:
-                    next_data = json.loads(next_data_match.group(1))
-                    props = next_data.get('props', {}).get('pageProps', {})
-
-                    # initialState에서 찾기
-                    initial = props.get('initialState', {})
-                    place = initial.get('place', {}).get('detail', {})
-
-                    if not place:
-                        place = props.get('detail', {})
-
-                    if place:
-                        result["name"] = place.get('name', '')
-                        result["category"] = place.get('category', '')
-                        result["address"] = place.get('roadAddress', '')
-                        result["visitor_reviews"] = place.get('visitorReviewsTotal', 0)
-                        result["review_score"] = place.get('visitorReviewsScore', 0)
-                        result["save_count"] = str(place.get('saveCount', '0'))
-                        result["keywords"] = place.get('keywords', [])
-                        result["success"] = True
-
-                except json.JSONDecodeError:
-                    pass
-
-            # APOLLO_STATE에서 추출
-            if not result["success"]:
-                apollo_match = re.search(
-                    r'window\.__APOLLO_STATE__\s*=\s*(\{.*?\});',
-                    html, re.DOTALL
-                )
-
-                if apollo_match:
-                    try:
-                        apollo_data = json.loads(apollo_match.group(1))
-
-                        for key, value in apollo_data.items():
-                            if isinstance(value, dict) and str(value.get('id')) == str(place_id):
-                                result["name"] = value.get('name', '')
-                                result["category"] = value.get('category', '')
-                                result["address"] = value.get('roadAddress', '')
-                                result["visitor_reviews"] = value.get('visitorReviewsTotal', 0)
-                                result["review_score"] = value.get('visitorReviewsScore', 0)
-                                result["save_count"] = str(value.get('saveCount', '0'))
-                                result["keywords"] = value.get('keywords', [])
-                                result["success"] = True
-                                break
-                    except json.JSONDecodeError:
-                        pass
-
-            # 기본 정보라도 HTML 태그에서 추출
-            if not result["success"]:
-                name_match = re.search(r'<title>([^<]+)</title>', html)
-                if name_match:
-                    title = name_match.group(1)
-                    result["name"] = title.replace(" : 네이버", "").strip()
-                    result["success"] = True
-
-            return result
-
-        except Exception as e:
-            print(f"  [HTML Detail] 실패: {e}", flush=True)
-            return None
-
     def get_review_stats(self, place_id):
         """
-        리뷰 통계 조회
+        리뷰 통계 조회 (GraphQL)
         """
-        query = """
-        query getVisitorReviewStats($id: String, $businessType: String = "restaurant") {
-            visitorReviewStats(input: {businessId: $id, businessType: $businessType}) {
-                id
-                name
-                review {
-                    avgRating
-                    totalCount
-                    imageReviewCount
-                    starDistribution { count score }
-                }
-                analysis {
-                    themes { code label count }
-                    votedKeyword {
-                        details { displayName count }
-                    }
-                }
-                visitorReviewsTotal
-                ratingReviewsTotal
-            }
-        }
-        """
-
         payload = [{
             "operationName": "getVisitorReviewStats",
             "variables": {
                 "businessType": "restaurant",
                 "id": place_id
             },
-            "query": query
+            "query": (
+                "query getVisitorReviewStats($id: String, $businessType: String = \"restaurant\") {\n"
+                "  visitorReviewStats(input: {businessId: $id, businessType: $businessType}) {\n"
+                "    id\n"
+                "    name\n"
+                "    review {\n"
+                "      avgRating\n"
+                "      totalCount\n"
+                "      imageReviewCount\n"
+                "      starDistribution { count score }\n"
+                "    }\n"
+                "    analysis {\n"
+                "      themes { code label count }\n"
+                "      votedKeyword {\n"
+                "        details { displayName count }\n"
+                "      }\n"
+                "    }\n"
+                "    visitorReviewsTotal\n"
+                "    ratingReviewsTotal\n"
+                "  }\n"
+                "}\n"
+            )
         }]
 
         try:
@@ -848,9 +566,11 @@ class NaverPlaceTracker:
             if data:
                 stats = data[0].get('data', {}).get('visitorReviewStats', {})
                 if stats:
-                    review = stats.get('review', {})
-                    analysis = stats.get('analysis', {})
-                    voted = analysis.get('votedKeyword', {}).get('details', []) if analysis else []
+                    review = stats.get('review', {}) or {}
+                    analysis = stats.get('analysis', {}) or {}
+                    voted = []
+                    if analysis.get('votedKeyword'):
+                        voted = analysis['votedKeyword'].get('details', [])
 
                     return {
                         "success": True,
@@ -899,7 +619,6 @@ class NaverPlaceTracker:
 
         result = {}
 
-        # 키워드 5개씩 배치 처리
         for i in range(0, len(keywords), 5):
             batch = keywords[i:i+5]
             params = {
@@ -954,13 +673,12 @@ class NaverPlaceTracker:
         all_keywords = set()
 
         for idx, item in enumerate(result["items"][:top_n], 1):
-            place_id = item.get("id")
+            place_id = str(item.get("id"))
             name = item.get("name", "")
 
             print(f"  [{idx}/{top_n}] {name} 분석 중...", flush=True)
 
-            # 상세 정보 및 대표키워드 조회
-            detail = self.get_place_detail(place_id)
+            detail = self.get_place_detail_via_browser(place_id)
             time.sleep(1)
 
             if detail.get("success"):
@@ -991,7 +709,6 @@ class NaverPlaceTracker:
                     "keywords": []
                 })
 
-        # 대표키워드들의 검색량 조회
         keyword_volumes = {}
         if all_keywords:
             print(f"  검색량 조회 중... ({len(all_keywords)}개 키워드)", flush=True)
@@ -1015,7 +732,6 @@ def load_tracking_config():
         with open(config_path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
-    # 기본 설정
     default_config = {
         "tracking_keywords": {
             "역대짬뽕 본점": ["수원 짬뽕", "장안구 중국집", "수원역 짬뽕"],
@@ -1030,7 +746,6 @@ def load_tracking_config():
         }
     }
 
-    # 기본 설정 파일 저장
     config_path.parent.mkdir(parents=True, exist_ok=True)
     with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(default_config, f, ensure_ascii=False, indent=2)
@@ -1083,79 +798,77 @@ def run_daily_tracking():
     success_count = 0
     fail_count = 0
 
-    # 각 지점별 키워드 순위 추적
-    for store_name, place_id in tracker.store_places.items():
-        keywords = config.get("tracking_keywords", {}).get(store_name, [])
+    try:
+        for store_name, place_id in tracker.store_places.items():
+            keywords = config.get("tracking_keywords", {}).get(store_name, [])
 
-        if not keywords:
-            continue
+            if not keywords:
+                continue
 
-        print(f"[{store_name}] 추적 중...", flush=True)
+            print(f"[{store_name}] 추적 중...", flush=True)
 
-        # 리뷰 통계 조회 (지점당 1회)
-        review_stats = tracker.get_review_stats(place_id)
-        time.sleep(1)
+            # 리뷰 통계 조회 (지점당 1회)
+            review_stats = tracker.get_review_stats(place_id)
+            time.sleep(1)
 
-        for keyword in keywords:
-            print(f"  키워드: {keyword}", flush=True)
+            for keyword in keywords:
+                print(f"  키워드: {keyword}", flush=True)
 
-            # 순위 찾기
-            rank_result = tracker.find_store_rank(keyword, place_id)
-            time.sleep(1.5)  # 요청 간 딜레이
+                # 순위 찾기
+                rank_result = tracker.find_store_rank(keyword, place_id)
+                time.sleep(2)
 
-            if rank_result is not None:
-                rank = rank_result.get("rank")
-                item = rank_result.get("item", {})
-                method = rank_result.get("method", "unknown")
+                if rank_result is not None:
+                    rank = rank_result.get("rank")
+                    item = rank_result.get("item", {})
+                    method = rank_result.get("method", "unknown")
 
-                # 히스토리 키 생성
-                history_key = f"{store_name}|{keyword}"
+                    history_key = f"{store_name}|{keyword}"
 
-                if history_key not in data["tracking_history"]:
-                    data["tracking_history"][history_key] = {
-                        "store_name": store_name,
-                        "place_id": place_id,
-                        "keyword": keyword,
-                        "history": []
+                    if history_key not in data["tracking_history"]:
+                        data["tracking_history"][history_key] = {
+                            "store_name": store_name,
+                            "place_id": place_id,
+                            "keyword": keyword,
+                            "history": []
+                        }
+
+                    today_data = {
+                        "date": today,
+                        "weekday": weekday,
+                        "rank": rank,
+                        "blog_reviews": str(item.get("blogCafeReviewCount", "0")) if item else "0",
+                        "visitor_reviews": str(item.get("visitorReviewCount", "0")) if item else "0",
+                        "save_count": str(item.get("saveCount", "0")) if item else "0",
+                        "score": item.get("visitorReviewScore", 0) if item else 0,
+                        "method": method
                     }
 
-                # 오늘 데이터 생성
-                today_data = {
-                    "date": today,
-                    "weekday": weekday,
-                    "rank": rank,
-                    "blog_reviews": str(item.get("blogCafeReviewCount", "0")) if item else "0",
-                    "visitor_reviews": str(item.get("visitorReviewCount", "0")) if item else "0",
-                    "save_count": str(item.get("saveCount", "0")) if item else "0",
-                    "score": item.get("visitorReviewScore", 0) if item else 0,
-                    "method": method
-                }
+                    if review_stats.get("success"):
+                        today_data["review_stats"] = {
+                            "total": review_stats.get("total_reviews", 0),
+                            "avg_rating": review_stats.get("avg_rating", 0),
+                            "themes": review_stats.get("themes", [])[:5],
+                            "voted_keywords": review_stats.get("voted_keywords", [])[:5]
+                        }
 
-                # 리뷰 통계 추가
-                if review_stats.get("success"):
-                    today_data["review_stats"] = {
-                        "total": review_stats.get("total_reviews", 0),
-                        "avg_rating": review_stats.get("avg_rating", 0),
-                        "themes": review_stats.get("themes", [])[:5],
-                        "voted_keywords": review_stats.get("voted_keywords", [])[:5]
-                    }
+                    history = data["tracking_history"][history_key]["history"]
+                    if not history or history[0].get("date") != today:
+                        history.insert(0, today_data)
+                        data["tracking_history"][history_key]["history"] = history[:90]
+                    else:
+                        history[0] = today_data
 
-                # 중복 체크 후 추가
-                history = data["tracking_history"][history_key]["history"]
-                if not history or history[0].get("date") != today:
-                    history.insert(0, today_data)
-                    # 최근 90일만 유지
-                    data["tracking_history"][history_key]["history"] = history[:90]
+                    rank_str = f"{rank}위" if rank else "100위 밖"
+                    print(f"    -> {rank_str} ({method})", flush=True)
+                    success_count += 1
                 else:
-                    # 같은 날 데이터 업데이트
-                    history[0] = today_data
+                    print(f"    -> 조회 실패", flush=True)
+                    fail_count += 1
 
-                rank_str = f"{rank}위" if rank else "100위 밖"
-                print(f"    -> {rank_str} ({method})", flush=True)
-                success_count += 1
-            else:
-                print(f"    -> 조회 실패", flush=True)
-                fail_count += 1
+    finally:
+        # 브라우저 종료
+        tracker._close_browser()
 
     # 저장
     data["generated_at"] = datetime.now().isoformat()
