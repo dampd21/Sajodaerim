@@ -21,14 +21,14 @@ const STORE_LIST = [
     "역대짬뽕 여수국동점"
 ];
 
-// Cloudflare Workers 프록시 URL (여기에 본인 Workers URL 입력)
-const PROXY_URL = "https://naver-place-proxy.dampd21.workers.dev/";
+// Cloudflare Workers 프록시 URL
+const PROXY_URL = "https://naver-place-proxy.your-name.workers.dev";
 
 // ============================================
 // 초기화
 // ============================================
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async function() {
     loadProxyUrl();
     await loadData();
     initEventListeners();
@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function loadProxyUrl() {
-    // localStorage에서 프록시 URL 로드 (설정 가능하도록)
     var saved = localStorage.getItem('marketing_proxy_url');
     if (saved) {
         window.NAVER_PROXY_URL = saved;
@@ -47,13 +46,13 @@ function loadProxyUrl() {
 }
 
 function recreateCanvas(containerId, canvasId) {
-    const container = document.getElementById(containerId);
+    var container = document.getElementById(containerId);
     if (!container) return null;
 
-    const oldCanvas = document.getElementById(canvasId);
+    var oldCanvas = document.getElementById(canvasId);
     if (oldCanvas) oldCanvas.remove();
 
-    const newCanvas = document.createElement('canvas');
+    var newCanvas = document.createElement('canvas');
     newCanvas.id = canvasId;
     container.appendChild(newCanvas);
 
@@ -66,13 +65,13 @@ function recreateCanvas(containerId, canvasId) {
 
 async function loadData() {
     try {
-        const dataResponse = await fetch('marketing_data.json?t=' + Date.now());
+        var dataResponse = await fetch('marketing_data.json?t=' + Date.now());
         if (dataResponse.ok) {
             marketingData = await dataResponse.json();
             console.log('Marketing data loaded:', marketingData);
 
             if (marketingData.generated_at) {
-                const date = new Date(marketingData.generated_at);
+                var date = new Date(marketingData.generated_at);
                 document.getElementById('updateTime').textContent =
                     'Last update: ' + formatDateTime(date);
             }
@@ -88,7 +87,6 @@ async function loadData() {
         };
     }
 
-    // config 로드: localStorage > 서버 파일 > 기본값
     var localConfig = localStorage.getItem('marketing_config');
     if (localConfig) {
         try {
@@ -101,7 +99,7 @@ async function loadData() {
 
     if (!configData) {
         try {
-            const configResponse = await fetch('marketing_config.json?t=' + Date.now());
+            var configResponse = await fetch('marketing_config.json?t=' + Date.now());
             if (configResponse.ok) {
                 configData = await configResponse.json();
                 console.log('Config loaded from server');
@@ -121,12 +119,10 @@ async function loadData() {
 // ============================================
 
 function initEventListeners() {
-    // 탭 전환
     document.querySelectorAll('.tabs .tab').forEach(function(tab) {
         tab.addEventListener('click', function() { switchTab(tab.dataset.tab); });
     });
 
-    // 필터
     var storeSelect = document.getElementById('storeSelect');
     if (storeSelect) {
         storeSelect.addEventListener('change', function() {
@@ -141,12 +137,10 @@ function initEventListeners() {
     var periodSelect = document.getElementById('periodSelect');
     if (periodSelect) periodSelect.addEventListener('change', filterAndRender);
 
-    // 뷰 토글
     document.querySelectorAll('.view-btn').forEach(function(btn) {
         btn.addEventListener('click', function() { switchView(btn.dataset.view); });
     });
 
-    // 경쟁사 분석
     var runBtn = document.getElementById('runAnalysisBtn');
     if (runBtn) runBtn.addEventListener('click', runCompetitorAnalysis);
 
@@ -157,11 +151,9 @@ function initEventListeners() {
         });
     }
 
-    // 키워드 설정 저장
     var saveBtn = document.getElementById('saveSettingsBtn');
     if (saveBtn) saveBtn.addEventListener('click', saveKeywordSettings);
 
-    // 모달 닫기
     var modalClose = document.querySelector('#detailModal .modal-close');
     if (modalClose) modalClose.addEventListener('click', closeModal);
 
@@ -383,19 +375,11 @@ function renderRankChart(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
+            interaction: { mode: 'index', intersect: false },
             plugins: {
                 legend: {
                     position: 'top',
-                    labels: {
-                        color: '#e0e0e0',
-                        font: { size: 11 },
-                        boxWidth: 12,
-                        padding: 12
-                    }
+                    labels: { color: '#e0e0e0', font: { size: 11 }, boxWidth: 12, padding: 12 }
                 },
                 tooltip: {
                     callbacks: {
@@ -406,25 +390,15 @@ function renderRankChart(data) {
                 },
                 zoom: {
                     pan: { enabled: true, mode: 'x' },
-                    zoom: {
-                        wheel: { enabled: true },
-                        pinch: { enabled: true },
-                        mode: 'x'
-                    }
+                    zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
                 }
             },
             scales: {
-                x: {
-                    ticks: { color: '#888' },
-                    grid: { display: false }
-                },
+                x: { ticks: { color: '#888' }, grid: { display: false } },
                 y: {
                     reverse: true,
                     min: 1,
-                    ticks: {
-                        color: '#888',
-                        callback: function(v) { return v + '위'; }
-                    },
+                    ticks: { color: '#888', callback: function(v) { return v + '위'; } },
                     grid: { color: 'rgba(255,255,255,0.05)' }
                 }
             }
@@ -448,13 +422,9 @@ function renderHistoryCards(data) {
         var changeHtml = '';
         if (latest && latest.rank && previous && previous.rank) {
             var diff = previous.rank - latest.rank;
-            if (diff > 0) {
-                changeHtml = '<span class="rank-change up">+' + diff + '</span>';
-            } else if (diff < 0) {
-                changeHtml = '<span class="rank-change down">' + diff + '</span>';
-            } else {
-                changeHtml = '<span class="rank-change same">-</span>';
-            }
+            if (diff > 0) changeHtml = '<span class="rank-change up">+' + diff + '</span>';
+            else if (diff < 0) changeHtml = '<span class="rank-change down">' + diff + '</span>';
+            else changeHtml = '<span class="rank-change same">-</span>';
         }
 
         var timelineHtml = item.history.slice(0, 14).map(function(h) {
@@ -500,15 +470,9 @@ function renderHistoryTable(data) {
     data.forEach(function(item) {
         item.history.slice(0, 7).forEach(function(h) {
             rows.push({
-                date: h.date,
-                weekday: h.weekday,
-                store: item.store_name,
-                keyword: item.keyword,
-                rank: h.rank,
-                blog: h.blog_reviews,
-                visitor: h.visitor_reviews,
-                save: h.save_count,
-                score: h.score
+                date: h.date, weekday: h.weekday, store: item.store_name,
+                keyword: item.keyword, rank: h.rank, blog: h.blog_reviews,
+                visitor: h.visitor_reviews, save: h.save_count, score: h.score
             });
         });
     });
@@ -535,8 +499,31 @@ function renderHistoryTable(data) {
 }
 
 // ============================================
-// 경쟁사 분석 (Cloudflare Workers 프록시 경유)
+// 네이버 플레이스 API (프록시 경유)
 // ============================================
+
+function getProxyUrl() {
+    var url = window.NAVER_PROXY_URL || PROXY_URL;
+    if (!url || url.indexOf('your-name') !== -1) return null;
+    return url;
+}
+
+async function proxyGraphQL(payload) {
+    var proxyUrl = getProxyUrl();
+    if (!proxyUrl) throw new Error('PROXY_NOT_SET');
+
+    var response = await fetch(proxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error('API ' + response.status);
+    }
+
+    return await response.json();
+}
 
 async function searchNaverPlace(keyword, maxResults) {
     var payload = [{
@@ -555,30 +542,139 @@ async function searchNaverPlace(keyword, maxResults) {
         "query": "query getRestaurantList($restaurantListInput: RestaurantListInput) { restaurants: restaurantList(input: $restaurantListInput) { items { id name category roadAddress phone totalReviewCount blogCafeReviewCount visitorReviewCount visitorReviewScore saveCount } total } }"
     }];
 
-    var proxyUrl = window.NAVER_PROXY_URL || PROXY_URL;
-
-    // 프록시 URL 체크
-    if (!proxyUrl || proxyUrl.indexOf('your-name') !== -1) {
-        throw new Error('PROXY_NOT_SET');
-    }
-
-    var response = await fetch(proxyUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-        throw new Error('API 요청 실패: ' + response.status);
-    }
-
-    var data = await response.json();
+    var data = await proxyGraphQL(payload);
     return data[0] && data[0].data && data[0].data.restaurants
         ? data[0].data.restaurants
         : { items: [], total: 0 };
 }
+
+async function getPlaceKeywords(placeId) {
+    /**
+     * 업체 상세 정보에서 대표키워드 추출
+     * 여러 쿼리를 시도하여 키워드를 가져옴
+     */
+
+    // 방법 1: 간단한 상세 쿼리
+    try {
+        var payload1 = [{
+            "operationName": "getRestaurantDetail",
+            "variables": {
+                "input": {
+                    "id": placeId,
+                    "deviceType": "pc",
+                    "isNmap": false
+                }
+            },
+            "query": "query getRestaurantDetail($input: RestaurantDetailInput) { restaurant: restaurantDetail(input: $input) { id name keywords visitorReviewsTotal visitorReviewsScore saveCount microReview } }"
+        }];
+
+        var data1 = await proxyGraphQL(payload1);
+        var restaurant1 = data1[0] && data1[0].data && data1[0].data.restaurant;
+        if (restaurant1 && restaurant1.keywords && restaurant1.keywords.length > 0) {
+            return restaurant1.keywords;
+        }
+    } catch (e) {
+        console.log('Detail query 1 failed for ' + placeId + ':', e.message);
+    }
+
+    // 방법 2: placeDetail 쿼리
+    try {
+        var payload2 = [{
+            "operationName": "getDetail",
+            "variables": {
+                "id": placeId,
+                "deviceType": "pc"
+            },
+            "query": "query getDetail($id: String!, $deviceType: String) { business: placeDetail(input: {id: $id, deviceType: $deviceType}) { base { id name keywords } } }"
+        }];
+
+        var data2 = await proxyGraphQL(payload2);
+        var base2 = data2[0] && data2[0].data && data2[0].data.business && data2[0].data.business.base;
+        if (base2 && base2.keywords && base2.keywords.length > 0) {
+            return base2.keywords;
+        }
+    } catch (e) {
+        console.log('Detail query 2 failed for ' + placeId + ':', e.message);
+    }
+
+    // 방법 3: visitorReview에서 votedKeyword 추출 (대표키워드와 비슷)
+    try {
+        var payload3 = [{
+            "operationName": "getVisitorReviewStats",
+            "variables": {
+                "businessType": "restaurant",
+                "id": placeId
+            },
+            "query": "query getVisitorReviewStats($id: String, $businessType: String = \"restaurant\") { visitorReviewStats(input: {businessId: $id, businessType: $businessType}) { analysis { votedKeyword { details { displayName count } } themes { label count } } } }"
+        }];
+
+        var data3 = await proxyGraphQL(payload3);
+        var stats3 = data3[0] && data3[0].data && data3[0].data.visitorReviewStats;
+        if (stats3 && stats3.analysis) {
+            var keywords = [];
+
+            // votedKeyword에서 추출
+            var voted = stats3.analysis.votedKeyword;
+            if (voted && voted.details) {
+                voted.details.forEach(function(d) {
+                    if (d.displayName) keywords.push(d.displayName);
+                });
+            }
+
+            // themes에서 추출
+            var themes = stats3.analysis.themes;
+            if (themes) {
+                themes.forEach(function(t) {
+                    if (t.label && keywords.indexOf(t.label) === -1) {
+                        keywords.push(t.label);
+                    }
+                });
+            }
+
+            if (keywords.length > 0) {
+                return keywords.slice(0, 15);
+            }
+        }
+    } catch (e) {
+        console.log('Review stats query failed for ' + placeId + ':', e.message);
+    }
+
+    // 방법 4: microReview에서 해시태그 추출
+    try {
+        var payload4 = [{
+            "operationName": "getRestaurantList",
+            "variables": {
+                "restaurantListInput": {
+                    "query": placeId,
+                    "x": "126.9783882",
+                    "y": "37.5666103",
+                    "start": 1,
+                    "display": 1,
+                    "isNmap": false,
+                    "deviceType": "pc"
+                }
+            },
+            "query": "query getRestaurantList($restaurantListInput: RestaurantListInput) { restaurants: restaurantList(input: $restaurantListInput) { items { id name keywords microReview } total } }"
+        }];
+
+        var data4 = await proxyGraphQL(payload4);
+        var items4 = data4[0] && data4[0].data && data4[0].data.restaurants && data4[0].data.restaurants.items;
+        if (items4 && items4.length > 0) {
+            var item4 = items4[0];
+            if (item4.keywords && item4.keywords.length > 0) {
+                return item4.keywords;
+            }
+        }
+    } catch (e) {
+        console.log('Search-based keyword query failed:', e.message);
+    }
+
+    return [];
+}
+
+// ============================================
+// 경쟁사 분석
+// ============================================
 
 async function runCompetitorAnalysis() {
     var keywordInput = document.getElementById('analysisKeyword');
@@ -595,11 +691,11 @@ async function runCompetitorAnalysis() {
     btn.disabled = true;
     btn.textContent = '분석 중...';
 
-    showAnalysisProgress(true, '"' + keyword + '" 검색 중...', 10);
+    showAnalysisProgress(true, '"' + keyword + '" 검색 중...', 5);
 
     try {
         // 1단계: 검색
-        showAnalysisProgress(true, '네이버 플레이스 검색 중...', 30);
+        showAnalysisProgress(true, '네이버 플레이스 검색 중...', 10);
         var result = await searchNaverPlace(keyword, topN);
 
         if (!result.items || result.items.length === 0) {
@@ -610,42 +706,83 @@ async function runCompetitorAnalysis() {
             return;
         }
 
-        showAnalysisProgress(true, result.items.length + '개 업체 발견, 분석 중...', 60);
+        var totalItems = result.items.length;
+        showAnalysisProgress(true, totalItems + '개 업체 발견, 대표키워드 분석 중...', 15);
 
-        // 2단계: 결과 가공
-        var competitors = result.items.map(function(item, idx) {
-            return {
-                rank: idx + 1,
-                place_id: String(item.id),
-                name: item.name || '',
+        // 2단계: 각 업체별 대표키워드 수집
+        var competitors = [];
+        var allKeywords = {};
+
+        for (var i = 0; i < result.items.length; i++) {
+            var item = result.items[i];
+            var placeId = String(item.id);
+            var name = item.name || '';
+
+            var progress = 15 + Math.round((i / totalItems) * 65);
+            showAnalysisProgress(true,
+                '대표키워드 수집 중... (' + (i + 1) + '/' + totalItems + ') ' + name,
+                progress
+            );
+
+            // 대표키워드 조회
+            var keywords = [];
+            try {
+                keywords = await getPlaceKeywords(placeId);
+            } catch (e) {
+                console.log('Keywords fetch failed for ' + name + ':', e.message);
+            }
+
+            // 키워드 카운트
+            keywords.forEach(function(kw) {
+                if (!allKeywords[kw]) {
+                    allKeywords[kw] = { keyword: kw, count: 0 };
+                }
+                allKeywords[kw].count++;
+            });
+
+            competitors.push({
+                rank: i + 1,
+                place_id: placeId,
+                name: name,
                 category: item.category || '',
                 blog_reviews: String(item.blogCafeReviewCount || 0),
                 visitor_reviews: String(item.visitorReviewCount || 0),
                 save_count: String(item.saveCount || 0),
                 score: item.visitorReviewScore || 0,
                 total_reviews: item.totalReviewCount || 0,
-                keywords: []
-            };
-        });
+                keywords: keywords
+            });
+
+            // 요청 간 딜레이 (차단 방지)
+            if (i < result.items.length - 1) {
+                await delay(800);
+            }
+        }
+
+        showAnalysisProgress(true, '키워드 검색량 조회 중...', 85);
+
+        // 3단계: 네이버 광고 API로 키워드 검색량 조회 (서버에서만 가능하므로 스킵)
+        // 대신 이전에 저장된 검색량 데이터가 있으면 활용
+        var keywordVolumes = loadSavedKeywordVolumes(Object.keys(allKeywords));
+
+        showAnalysisProgress(true, '결과 저장 중...', 95);
 
         var analysisResult = {
             keyword: keyword,
             analyzed_at: new Date().toISOString(),
             total_results: result.total,
             competitors: competitors,
-            keyword_volumes: {}
+            keyword_volumes: keywordVolumes,
+            all_keywords: allKeywords
         };
 
-        showAnalysisProgress(true, '결과 저장 중...', 90);
-
-        // 3단계: 결과 저장
+        // 저장
         var savedKey = keyword + '_' + topN;
         if (!marketingData.competitor_analysis) {
             marketingData.competitor_analysis = {};
         }
         marketingData.competitor_analysis[savedKey] = analysisResult;
 
-        // localStorage에 저장
         try {
             localStorage.setItem('marketing_competitor_' + savedKey, JSON.stringify(analysisResult));
         } catch (e) {
@@ -653,14 +790,14 @@ async function runCompetitorAnalysis() {
         }
 
         showAnalysisProgress(true, '완료!', 100);
-
         await delay(500);
         showAnalysisProgress(false);
 
         renderAnalysisResult(analysisResult);
         renderSavedAnalysis();
 
-        showToast(competitors.length + '개 업체 분석 완료', 'success');
+        var kwCount = Object.keys(allKeywords).length;
+        showToast(competitors.length + '개 업체, ' + kwCount + '개 대표키워드 분석 완료', 'success');
 
     } catch (error) {
         console.error('Analysis failed:', error);
@@ -669,7 +806,7 @@ async function runCompetitorAnalysis() {
         if (error.message === 'PROXY_NOT_SET') {
             showProxySetupGuide();
         } else if (error.message.indexOf('Failed to fetch') !== -1) {
-            showToast('프록시 서버 연결 실패. 프록시 URL을 확인해주세요.', 'error');
+            showToast('프록시 서버 연결 실패. URL을 확인해주세요.', 'error');
         } else {
             showToast('분석 중 오류: ' + error.message, 'error');
         }
@@ -677,6 +814,25 @@ async function runCompetitorAnalysis() {
 
     btn.disabled = false;
     btn.textContent = '분석 시작';
+}
+
+function loadSavedKeywordVolumes(keywords) {
+    /**
+     * 이전 분석에서 저장된 검색량 데이터 재활용
+     */
+    var volumes = {};
+    var analyses = marketingData.competitor_analysis || {};
+
+    Object.values(analyses).forEach(function(analysis) {
+        var saved = analysis.keyword_volumes || {};
+        Object.keys(saved).forEach(function(kw) {
+            if (keywords.indexOf(kw) !== -1 && !volumes[kw]) {
+                volumes[kw] = saved[kw];
+            }
+        });
+    });
+
+    return volumes;
 }
 
 function showProxySetupGuide() {
@@ -692,11 +848,11 @@ function showProxySetupGuide() {
         '<div style="color:#ccc; line-height:1.8;">' +
             '<p>경쟁사 분석을 위해 CORS 프록시 설정이 필요합니다.</p>' +
             '<p style="color:#888; font-size:0.85rem; margin-top:8px;">' +
-                '네이버 API는 다른 도메인에서의 직접 호출을 차단합니다.<br>' +
-                'Cloudflare Workers (무료)를 프록시로 사용하면 해결됩니다.' +
+                '네이버 API는 다른 도메인에서 직접 호출이 차단됩니다.<br>' +
+                'Cloudflare Workers (무료)를 프록시로 사용합니다.' +
             '</p>' +
             '<div style="margin-top:20px;">' +
-                '<p style="font-weight:600; color:#00d4ff; margin-bottom:8px;">프록시 URL 직접 입력:</p>' +
+                '<p style="font-weight:600; color:#00d4ff; margin-bottom:8px;">프록시 URL 입력:</p>' +
                 '<div style="display:flex; gap:8px;">' +
                     '<input type="text" id="proxyUrlInput" class="form-input" ' +
                         'placeholder="https://your-worker.workers.dev" ' +
@@ -706,12 +862,12 @@ function showProxySetupGuide() {
                 '</div>' +
             '</div>' +
             '<div style="margin-top:20px; padding:16px; background:rgba(0,0,0,0.2); border-radius:8px;">' +
-                '<p style="font-weight:600; color:#ffe66d; margin-bottom:8px;">Cloudflare Workers 설정 방법:</p>' +
+                '<p style="font-weight:600; color:#ffe66d; margin-bottom:8px;">Cloudflare Workers 설정:</p>' +
                 '<ol style="padding-left:20px; color:#aaa; font-size:0.83rem;">' +
                     '<li>dash.cloudflare.com 접속 (무료 가입)</li>' +
-                    '<li>Workers & Pages > Create Worker 클릭</li>' +
-                    '<li>프록시 코드를 붙여넣고 Deploy</li>' +
-                    '<li>생성된 URL을 위 입력란에 붙여넣기</li>' +
+                    '<li>Workers & Pages > Create Worker</li>' +
+                    '<li>프록시 코드 붙여넣기 후 Deploy</li>' +
+                    '<li>생성된 URL을 위에 입력</li>' +
                 '</ol>' +
             '</div>' +
         '</div>';
@@ -729,22 +885,18 @@ function saveProxyUrl() {
         return;
     }
 
-    // URL 형식 검증
     if (url.indexOf('http') !== 0) {
         showToast('올바른 URL을 입력해주세요. (https://...)', 'error');
         return;
     }
 
-    // 끝에 / 제거
-    if (url.endsWith('/')) {
-        url = url.slice(0, -1);
-    }
+    if (url.endsWith('/')) url = url.slice(0, -1);
 
     localStorage.setItem('marketing_proxy_url', url);
     window.NAVER_PROXY_URL = url;
 
     closeModal();
-    showToast('프록시 URL이 저장되었습니다. 다시 분석을 시작해주세요.', 'success');
+    showToast('프록시 URL 저장 완료. 다시 분석을 시작해주세요.', 'success');
 }
 
 function showAnalysisProgress(show, text, percent) {
@@ -773,13 +925,18 @@ function showAnalysisProgress(show, text, percent) {
         '</div>';
 }
 
+// ============================================
+// 분석 결과 렌더링
+// ============================================
+
 function renderAnalysisResult(result) {
     var container = document.getElementById('analysisResult');
     if (!container) return;
 
     container.style.display = 'block';
 
-    document.getElementById('competitorCount').textContent = result.competitors ? result.competitors.length : 0;
+    document.getElementById('competitorCount').textContent =
+        result.competitors ? result.competitors.length : 0;
 
     var competitorsList = document.getElementById('competitorsList');
     if (competitorsList && result.competitors) {
@@ -789,10 +946,14 @@ function renderAnalysisResult(result) {
             else if (idx === 1) rankClass = 'rank-2';
             else if (idx === 2) rankClass = 'rank-3';
 
+            var kwBadge = comp.keywords && comp.keywords.length > 0
+                ? '<span style="font-size:0.7rem; color:#7b2cbf; margin-left:6px;">' + comp.keywords.length + '개 키워드</span>'
+                : '';
+
             return '<div class="competitor-item" data-place-id="' + comp.place_id + '">' +
                 '<div class="competitor-rank ' + rankClass + '">' + comp.rank + '</div>' +
                 '<div class="competitor-info">' +
-                    '<div class="competitor-name">' + escapeHtml(comp.name) + '</div>' +
+                    '<div class="competitor-name">' + escapeHtml(comp.name) + kwBadge + '</div>' +
                     '<div class="competitor-category">' + escapeHtml(comp.category || '') + '</div>' +
                 '</div>' +
                 '<div class="competitor-stats">' +
@@ -823,30 +984,49 @@ function renderKeywordsAnalysis(result) {
     (result.competitors || []).forEach(function(comp) {
         (comp.keywords || []).forEach(function(kw) {
             if (!keywordCounts[kw]) {
-                keywordCounts[kw] = {
-                    keyword: kw,
-                    count: 0,
-                    volume: keywordVolumes[kw] || null
-                };
+                keywordCounts[kw] = { keyword: kw, count: 0, volume: keywordVolumes[kw] || null };
             }
             keywordCounts[kw].count++;
         });
     });
 
-    var keywordList = Object.values(keywordCounts)
-        .sort(function(a, b) { return (b.volume ? b.volume.total || 0 : 0) - (a.volume ? a.volume.total || 0 : 0); });
+    // all_keywords 데이터도 병합
+    var allKw = result.all_keywords || {};
+    Object.keys(allKw).forEach(function(kw) {
+        if (!keywordCounts[kw]) {
+            keywordCounts[kw] = {
+                keyword: kw,
+                count: allKw[kw].count || 0,
+                volume: keywordVolumes[kw] || null
+            };
+        }
+    });
+
+    var keywordList = Object.values(keywordCounts).sort(function(a, b) {
+        // 사용 업체수 > 검색량 순으로 정렬
+        if (b.count !== a.count) return b.count - a.count;
+        var volA = a.volume ? a.volume.total || 0 : 0;
+        var volB = b.volume ? b.volume.total || 0 : 0;
+        return volB - volA;
+    });
 
     document.getElementById('totalRepKeywords').textContent = keywordList.length;
 
-    var avgVolume = keywordList.length > 0
-        ? keywordList.reduce(function(sum, k) { return sum + (k.volume ? k.volume.total || 0 : 0); }, 0) / keywordList.length
-        : 0;
-    document.getElementById('avgSearchVolume').textContent = formatNumber(Math.round(avgVolume));
+    var totalVolume = 0;
+    var volumeCount = 0;
+    keywordList.forEach(function(k) {
+        if (k.volume && k.volume.total) {
+            totalVolume += k.volume.total;
+            volumeCount++;
+        }
+    });
+    var avgVolume = volumeCount > 0 ? Math.round(totalVolume / volumeCount) : 0;
+    document.getElementById('avgSearchVolume').textContent = avgVolume > 0 ? formatNumber(avgVolume) : '-';
 
     var tbody = document.getElementById('keywordsTableBody');
     if (tbody) {
         if (keywordList.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666; padding:24px;">대표 키워드 데이터가 아직 없습니다.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666; padding:24px;">대표 키워드를 찾지 못했습니다.</td></tr>';
             return;
         }
 
@@ -857,10 +1037,13 @@ function renderKeywordsAnalysis(result) {
             else if (volume && volume.comp === '중간') compClass = 'comp-medium';
             else if (volume && volume.comp === '낮음') compClass = 'comp-low';
 
+            var volumeText = volume && volume.total ? formatNumber(volume.total) : '-';
+            var compText = volume && volume.comp ? volume.comp : '-';
+
             return '<tr>' +
                 '<td>' + escapeHtml(item.keyword) + '</td>' +
-                '<td class="text-right">' + (volume && volume.total ? formatNumber(volume.total) : '-') + '</td>' +
-                '<td class="text-center"><span class="comp-badge ' + compClass + '">' + (volume && volume.comp ? volume.comp : '-') + '</span></td>' +
+                '<td class="text-right">' + volumeText + '</td>' +
+                '<td class="text-center"><span class="comp-badge ' + compClass + '">' + compText + '</span></td>' +
                 '<td class="text-right">' + item.count + '개</td>' +
             '</tr>';
         }).join('');
@@ -876,13 +1059,16 @@ function showCompetitorDetail(comp, volumes) {
 
     title.textContent = comp.name;
 
-    var keywordsHtml = (comp.keywords || []).map(function(kw) {
-        var vol = volumes ? volumes[kw] : null;
-        return '<div class="keyword-item">' +
-            '<span class="keyword-name">' + escapeHtml(kw) + '</span>' +
-            (vol ? '<span class="keyword-volume">' + formatNumber(vol.total) + '</span>' : '') +
-        '</div>';
-    }).join('');
+    var keywordsHtml = '';
+    if (comp.keywords && comp.keywords.length > 0) {
+        keywordsHtml = comp.keywords.map(function(kw) {
+            var vol = volumes ? volumes[kw] : null;
+            return '<div class="keyword-item">' +
+                '<span class="keyword-name">' + escapeHtml(kw) + '</span>' +
+                (vol ? '<span class="keyword-volume">' + formatNumber(vol.total) + '</span>' : '') +
+            '</div>';
+        }).join('');
+    }
 
     body.innerHTML =
         '<div class="detail-grid">' +
@@ -909,7 +1095,7 @@ function renderSavedAnalysis() {
 
     var analyses = Object.entries(marketingData.competitor_analysis || {});
 
-    // localStorage에서 추가 데이터 로드
+    // localStorage에서 추가 로드
     for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);
         if (key && key.indexOf('marketing_competitor_') === 0) {
@@ -930,7 +1116,6 @@ function renderSavedAnalysis() {
         return;
     }
 
-    // 최신순 정렬
     analyses.sort(function(a, b) {
         var dateA = a[1].analyzed_at || '';
         var dateB = b[1].analyzed_at || '';
@@ -941,14 +1126,25 @@ function renderSavedAnalysis() {
         var key = entry[0];
         var data = entry[1];
         var date = data.analyzed_at ? formatDateTime(new Date(data.analyzed_at)) : '-';
-        var competitorCount = data.competitors ? data.competitors.length : 0;
+        var compCount = data.competitors ? data.competitors.length : 0;
+        var kwCount = 0;
+
+        if (data.all_keywords) {
+            kwCount = Object.keys(data.all_keywords).length;
+        } else if (data.competitors) {
+            var kwSet = new Set();
+            data.competitors.forEach(function(c) {
+                (c.keywords || []).forEach(function(k) { kwSet.add(k); });
+            });
+            kwCount = kwSet.size;
+        }
 
         return '<div class="saved-item" data-key="' + key + '">' +
             '<div class="saved-item-info">' +
                 '<div class="saved-item-keyword">' + escapeHtml(data.keyword || key) + '</div>' +
                 '<div class="saved-item-date">' + date + '</div>' +
             '</div>' +
-            '<div class="saved-item-count">' + competitorCount + '개 업체</div>' +
+            '<div class="saved-item-count">' + compCount + '개 업체 / ' + kwCount + '개 키워드</div>' +
         '</div>';
     }).join('');
 
@@ -1001,7 +1197,7 @@ function renderKeywordSettings() {
         '</div>';
     }).join('');
 
-    // 이벤트 바인딩 - 추가 버튼
+    // 추가 버튼
     container.querySelectorAll('.add-keyword-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var store = btn.dataset.store;
@@ -1013,7 +1209,7 @@ function renderKeywordSettings() {
         });
     });
 
-    // 취소 버튼
+    // 취소
     container.querySelectorAll('.cancel-add-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var wrapper = btn.closest('.keyword-input-wrapper');
@@ -1024,7 +1220,7 @@ function renderKeywordSettings() {
         });
     });
 
-    // 확인 버튼
+    // 확인
     container.querySelectorAll('.confirm-add-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var wrapper = btn.closest('.keyword-input-wrapper');
@@ -1039,7 +1235,7 @@ function renderKeywordSettings() {
         });
     });
 
-    // Enter 키
+    // Enter
     container.querySelectorAll('.keyword-input').forEach(function(input) {
         input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
@@ -1061,7 +1257,7 @@ function renderKeywordSettings() {
         });
     });
 
-    // 삭제 버튼
+    // 삭제
     container.querySelectorAll('.keyword-tag .remove-btn').forEach(function(btn) {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -1077,18 +1273,14 @@ function renderKeywordSettings() {
 }
 
 function addKeywordToStore(store, keyword) {
-    if (!configData.tracking_keywords) {
-        configData.tracking_keywords = {};
-    }
-    if (!configData.tracking_keywords[store]) {
-        configData.tracking_keywords[store] = [];
-    }
+    if (!configData.tracking_keywords) configData.tracking_keywords = {};
+    if (!configData.tracking_keywords[store]) configData.tracking_keywords[store] = [];
 
     if (configData.tracking_keywords[store].indexOf(keyword) === -1) {
         configData.tracking_keywords[store].push(keyword);
         saveConfigToLocalStorage();
         renderKeywordSettings();
-        showToast('"' + keyword + '" 키워드가 추가되었습니다.', 'success');
+        showToast('"' + keyword + '" 추가됨', 'success');
     } else {
         showToast('이미 등록된 키워드입니다.', 'error');
     }
@@ -1099,7 +1291,7 @@ function removeKeywordFromStore(store, keyword) {
         configData.tracking_keywords[store] = configData.tracking_keywords[store].filter(function(k) { return k !== keyword; });
         saveConfigToLocalStorage();
         renderKeywordSettings();
-        showToast('"' + keyword + '" 키워드가 삭제되었습니다.', 'success');
+        showToast('"' + keyword + '" 삭제됨', 'success');
     }
 }
 
@@ -1117,7 +1309,7 @@ function saveKeywordSettings() {
 }
 
 // ============================================
-// 토스트 알림
+// 토스트
 // ============================================
 
 function showToast(message, type) {
@@ -1129,9 +1321,7 @@ function showToast(message, type) {
     toast.textContent = message;
     document.body.appendChild(toast);
 
-    requestAnimationFrame(function() {
-        toast.classList.add('show');
-    });
+    requestAnimationFrame(function() { toast.classList.add('show'); });
 
     setTimeout(function() {
         toast.classList.remove('show');
@@ -1140,28 +1330,20 @@ function showToast(message, type) {
 }
 
 // ============================================
-// 유틸리티 함수
+// 유틸리티
 // ============================================
 
 function formatNumber(num) {
     if (num === null || num === undefined || num === '') return null;
-
-    var n = num;
-    if (typeof num === 'string') {
-        n = parseInt(num.replace(/,/g, ''));
-    }
+    var n = typeof num === 'string' ? parseInt(num.replace(/,/g, '')) : num;
     if (isNaN(n)) return null;
-
     return new Intl.NumberFormat('ko-KR').format(n);
 }
 
 function formatDateTime(date) {
     return date.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
     });
 }
 
@@ -1179,7 +1361,6 @@ function delay(ms) {
 function showLoading(show, text) {
     var overlay = document.getElementById('loadingOverlay');
     var loadingText = document.getElementById('loadingText');
-
     if (overlay) overlay.style.display = show ? 'flex' : 'none';
     if (loadingText) loadingText.textContent = text || '처리 중...';
 }
