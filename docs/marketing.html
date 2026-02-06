@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마케팅 관리 - 역대짬뽕</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="marketing.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 네비게이션 -->
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">발주 리포트</a>
+            <a href="sales.html" class="nav-link">매출 관리</a>
+            <a href="ads.html" class="nav-link">광고 관리</a>
+            <a href="review.html" class="nav-link">리뷰 관리</a>
+            <a href="marketing.html" class="nav-link active">마케팅 관리</a>
+        </nav>
+
+        <header class="header">
+            <h1>마케팅 관리</h1>
+            <p class="update-time" id="updateTime"></p>
+        </header>
+
+        <!-- 탭 -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="rankTracking">순위 추적</button>
+            <button class="tab" data-tab="competitorAnalysis">경쟁사 분석</button>
+            <button class="tab" data-tab="keywordSettings">키워드 설정</button>
+        </nav>
+
+        <!-- ========== 순위 추적 탭 ========== -->
+        <section id="rankTracking" class="tab-pane active">
+            
+            <!-- 필터 -->
+            <section class="filter-section">
+                <div class="filter-group">
+                    <label>지점 선택</label>
+                    <select id="storeSelect" class="filter-select">
+                        <option value="">전체 지점</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>키워드 선택</label>
+                    <select id="keywordSelect" class="filter-select">
+                        <option value="">전체 키워드</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>기간</label>
+                    <select id="periodSelect" class="filter-select">
+                        <option value="7">최근 7일</option>
+                        <option value="14">최근 14일</option>
+                        <option value="30" selected>최근 30일</option>
+                        <option value="90">최근 90일</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- 요약 카드 -->
+            <section class="summary-cards">
+                <div class="card">
+                    <div class="card-label">추적 키워드</div>
+                    <div class="card-value" id="totalKeywords">-</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">평균 순위</div>
+                    <div class="card-value" id="avgRank">-</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">순위 상승</div>
+                    <div class="card-value trend-up" id="rankUp">-</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">순위 하락</div>
+                    <div class="card-value trend-down" id="rankDown">-</div>
+                </div>
+            </section>
+
+            <!-- 순위 추이 차트 -->
+            <div class="chart-container">
+                <h3>순위 추이</h3>
+                <div id="rankChartContainer" class="chart-canvas-container">
+                    <canvas id="rankChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 순위 히스토리 테이블 -->
+            <div class="data-table-container">
+                <div class="table-header">
+                    <h3>순위 히스토리</h3>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="card">카드뷰</button>
+                        <button class="view-btn" data-view="table">테이블뷰</button>
+                    </div>
+                </div>
+                
+                <!-- 카드뷰 -->
+                <div id="historyCardView" class="history-cards"></div>
+                
+                <!-- 테이블뷰 -->
+                <div id="historyTableView" class="table-wrapper" style="display: none;">
+                    <table class="data-table" id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>지점</th>
+                                <th>키워드</th>
+                                <th class="text-center">순위</th>
+                                <th class="text-right">블로그</th>
+                                <th class="text-right">방문자</th>
+                                <th class="text-right">저장</th>
+                                <th class="text-center">평점</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 경쟁사 분석 탭 ========== -->
+        <section id="competitorAnalysis" class="tab-pane">
+            
+            <!-- 검색 섹션 -->
+            <div class="analysis-search">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label>검색 키워드</label>
+                        <input type="text" id="analysisKeyword" class="form-input" placeholder="예: 송파 짬뽕">
+                    </div>
+                    <div class="form-group">
+                        <label>분석 순위</label>
+                        <select id="analysisTopN" class="form-select">
+                            <option value="5">상위 5개</option>
+                            <option value="10" selected>상위 10개</option>
+                            <option value="20">상위 20개</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="runAnalysisBtn">분석 시작</button>
+                </div>
+            </div>
+
+            <!-- 분석 결과 -->
+            <div id="analysisResult" class="analysis-result" style="display: none;">
+                
+                <!-- 경쟁사 목록 -->
+                <div class="competitors-section">
+                    <h3>경쟁 업체 (<span id="competitorCount">0</span>개)</h3>
+                    <div id="competitorsList" class="competitors-list"></div>
+                </div>
+
+                <!-- 대표키워드 분석 -->
+                <div class="keywords-section">
+                    <h3>대표 키워드 분석</h3>
+                    <div class="keywords-summary">
+                        <div class="summary-item">
+                            <span class="label">총 키워드</span>
+                            <span class="value" id="totalRepKeywords">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">평균 검색량</span>
+                            <span class="value" id="avgSearchVolume">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrapper">
+                        <table class="data-table" id="keywordsTable">
+                            <thead>
+                                <tr>
+                                    <th>키워드</th>
+                                    <th class="text-right">월간 검색량</th>
+                                    <th class="text-center">경쟁도</th>
+                                    <th class="text-right">사용 업체수</th>
+                                </tr>
+                            </thead>
+                            <tbody id="keywordsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 저장된 분석 결과 -->
+            <div class="saved-analysis">
+                <h3>저장된 분석 결과</h3>
+                <div id="savedAnalysisList" class="saved-list"></div>
+            </div>
+        </section>
+
+        <!-- ========== 키워드 설정 탭 ========== -->
+        <section id="keywordSettings" class="tab-pane">
+            <div class="settings-container">
+                <div class="settings-header">
+                    <h3>추적 키워드 설정</h3>
+                    <button class="btn btn-primary" id="saveSettingsBtn">설정 저장</button>
+                </div>
+                
+                <div id="storeKeywordSettings" class="store-settings-list"></div>
+            </div>
+        </section>
+
+        <!-- 상세 모달 -->
+        <div class="modal" id="detailModal">
+            <div class="modal-content modal-large">
+                <span class="modal-close">&times;</span>
+                <h2 id="modalTitle">상세 정보</h2>
+                <div class="modal-body" id="modalBody"></div>
+            </div>
+        </div>
+
+        <!-- 로딩 오버레이 -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">데이터 로딩 중...</p>
+        </div>
+    </div>
+
+    <script src="marketing.js"></script>
+    <script src="ai-chat.js"></script>
+</body>
+</html>
