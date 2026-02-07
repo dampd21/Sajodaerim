@@ -29,12 +29,16 @@ const STORE_PLACES = {
 
 const PROXY_URL = "https://naver-place-proxy.dampd21.workers.dev";
 
+// 메모 저장소
+let memoData = {};
+
 // ============================================
 // 초기화
 // ============================================
 
 document.addEventListener('DOMContentLoaded', async function() {
     loadProxyUrl();
+    loadMemos();
     await loadData();
     initEventListeners();
     initFilters();
@@ -44,6 +48,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 function loadProxyUrl() {
     var saved = localStorage.getItem('marketing_proxy_url');
     window.NAVER_PROXY_URL = saved || PROXY_URL;
+}
+
+function loadMemos() {
+    try {
+        var saved = localStorage.getItem('marketing_memos');
+        if (saved) memoData = JSON.parse(saved);
+    } catch (e) {}
+}
+
+function saveMemos() {
+    try { localStorage.setItem('marketing_memos', JSON.stringify(memoData)); } catch (e) {}
 }
 
 function recreateCanvas(containerId, canvasId) {
@@ -125,8 +140,10 @@ function switchTab(id) {
 
 function switchView(v) {
     document.querySelectorAll('.view-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.view === v); });
+    var tlv = document.getElementById('historyTimelineView');
     var cv = document.getElementById('historyCardView');
     var tv = document.getElementById('historyTableView');
+    if (tlv) tlv.style.display = v === 'timeline' ? 'block' : 'none';
     if (cv) cv.style.display = v === 'card' ? 'grid' : 'none';
     if (tv) tv.style.display = v === 'table' ? 'block' : 'none';
 }
@@ -173,6 +190,7 @@ function filterAndRender() {
     });
     renderSummaryCards(fd);
     renderRankChart(fd);
+    renderTimelineView(fd);
     renderHistoryCards(fd);
     renderHistoryTable(fd);
 }
@@ -209,6 +227,181 @@ function renderRankChart(data) {
             scales: { x: { ticks: { color: '#888' }, grid: { display: false } },
                 y: { reverse: true, min: 1, ticks: { color: '#888', callback: function(v) { return v + '위'; } }, grid: { color: 'rgba(255,255,255,0.05)' } } } } });
 }
+
+// ============================================
+// 타임라인 뷰 (참고 UI 스타일 적용)
+// ============================================
+
+function renderTimelineView(data) {
+    var container = document.getElementById('historyTimelineView');
+    if (!container) return;
+
+    if (!data.length) {
+        container.innerHTML = '<div class="no-data">추적 중인 키워드가 없습니다.</div>';
+        return;
+    }
+
+    var today = new Date();
+    var todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+
+    container.innerHTML = data.map(function(item) {
+        var latest = item.history[0];
+        var prev = item.history[1];
+        var currentRank = latest && latest.rank ? latest.rank : null;
+
+        // 현재 순위 뱃지
+        var rankBadgeClass = 'rank-out';
+        var rankBadgeText = '순위권 밖';
+        if (currentRank) {
+            rankBadgeText = '현재 ' + currentRank + '위';
+            if (currentRank <= 10) rankBadgeClass = 'rank-good';
+            else if (currentRank <= 30) rankBadgeClass = 'rank-normal';
+            else rankBadgeClass = 'rank-bad';
+        }
+
+        // 전일 대비 변동
+        var changeHtml = '';
+        if (currentRank && prev && prev.rank) {
+            var diff = prev.rank - currentRank;
+            if (diff > 0) changeHtml = '<span class="tl-chg up">▲' + diff + '</span>';
+            else if (diff < 0) changeHtml = '<span class="tl-chg dn">▼' + Math.abs(diff) + '</span>';
+        }
+
+        // 요약 통계
+        var ranks = item.history.filter(function(h) { return h.rank; }).map(function(h) { return h.rank; });
+        var bestRank = ranks.length ? Math.min.apply(null, ranks) : '-';
+        var worstRank = ranks.length ? Math.max.apply(null, ranks) : '-';
+        var avgRank = ranks.length ? (ranks.reduce(function(a, b) { return a + b; }, 0) / ranks.length).toFixed(1) : '-';
+
+        // 기본 표시 개수 (7개), 나머지는 펼치기
+        var defaultShow = 7;
+        var hasMore = item.history.length > defaultShow;
+
+        // 날짜별 카드 생성
+        var cards = item.history.map(function(h, idx) {
+            var dt = new Date(h.date);
+            var mm = String(dt.getMonth() + 1).padStart(2, '0');
+            var dd = String(dt.getDate()).padStart(2, '0');
+            var wd = ['일','월','화','수','목','금','토'][dt.getDay()];
+            var isToday = h.date === todayStr ? ' tl-today' : '';
+            var hiddenClass = idx >= defaultShow ? ' tl-card-hidden' : '';
+
+            // 순위
+            var rankHtml = '';
+            if (h.rank) {
+                rankHtml = '<span class="tl-num">' + h.rank + '</span><span class="tl-sfx">위</span>';
+            } else {
+                rankHtml = '<span class="tl-num rank-out">순위권밖</span>';
+            }
+
+            // 변동 표시
+            var dayChgHtml = '';
+            var nextItem = item.history[idx + 1];
+            if (h.rank && nextItem && nextItem.rank) {
+                var dayDiff = nextItem.rank - h.rank;
+                if (dayDiff > 0) dayChgHtml = '<span class="tl-chg up">▲' + dayDiff + '</span>';
+                else if (dayDiff < 0) dayChgHtml = '<span class="tl-chg dn">▼' + Math.abs(dayDiff) + '</span>';
+                else dayChgHtml = '<span class="tl-chg same">-</span>';
+            }
+
+            // 부가 정보
+            var statsHtml = '';
+            if (h.blog_reviews || h.visitor_reviews || h.save_count) {
+                statsHtml = '<div class="tl-stats">';
+                if (h.blog_reviews) statsHtml += '<span><span class="tl-lbl">블</span> ' + h.blog_reviews + '</span>';
+                if (h.visitor_reviews) statsHtml += '<span><span class="tl-lbl">방</span> ' + formatNumber(h.visitor_reviews) + '</span>';
+                if (h.save_count) statsHtml += '<span><span class="tl-lbl">저</span> ' + h.save_count + '</span>';
+                statsHtml += '</div>';
+            }
+
+            return '<div class="tl-card' + isToday + hiddenClass + '" data-idx="' + idx + '">' +
+                '<div class="tl-date">' + mm + '.' + dd + ' <span class="tl-wd">' + wd + '</span></div>' +
+                '<div class="tl-rank">' + rankHtml + dayChgHtml + '</div>' +
+                statsHtml +
+                '</div>';
+        }).join('');
+
+        // 펼치기 버튼
+        var expandBtnHtml = '';
+        if (hasMore) {
+            expandBtnHtml = '<button class="tl-expand-btn" data-key="' + item.key + '" onclick="toggleTimelineExpand(this)">' +
+                '<span>더보기 (+' + (item.history.length - defaultShow) + '일) <span class="tl-arrow">▼</span></span>' +
+                '</button>';
+        }
+
+        // 메모
+        var memoValue = memoData[item.key] || '';
+        var memoHtml = '<div class="tl-memo">' +
+            '<label>메모</label>' +
+            '<input type="text" placeholder="메모를 입력해주세요" value="' + escapeHtml(memoValue) + '" data-key="' + item.key + '">' +
+            '<button class="btn-memo" onclick="saveMemo(this)">저장</button>' +
+            '</div>';
+
+        return '<div class="tl-row">' +
+            '<div class="tl-hdr">' +
+                '<div class="tl-info">' +
+                    '<span class="tl-store">' + item.store_name + '</span>' +
+                    '<span class="tl-kw">' + item.keyword + '</span>' +
+                    '<span class="tl-pid" title="Place ID: ' + (item.place_id || '') + '">' + (item.place_id || '') + '</span>' +
+                    '<span class="tl-current-rank ' + rankBadgeClass + '">' + rankBadgeText + '</span>' +
+                    changeHtml +
+                '</div>' +
+                '<div class="tl-smry">' +
+                    '<div class="tl-sg">' +
+                        '<span class="best">최고 ' + bestRank + '위</span>' +
+                        '<span class="avg">평균 ' + avgRank + '위</span>' +
+                        '<span class="wrst">최저 ' + worstRank + '위</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="tl-scroll">' + cards + '</div>' +
+            expandBtnHtml +
+            memoHtml +
+            '</div>';
+    }).join('');
+}
+
+// 펼치기/접기
+function toggleTimelineExpand(btn) {
+    var row = btn.closest('.tl-row');
+    var hiddenCards = row.querySelectorAll('.tl-card-hidden');
+    var isExpanded = btn.classList.contains('expanded');
+
+    if (isExpanded) {
+        // 접기
+        hiddenCards.forEach(function(card) { card.style.display = 'none'; });
+        btn.classList.remove('expanded');
+        var key = btn.dataset.key;
+        var totalHidden = row.querySelectorAll('.tl-card-hidden').length;
+        btn.querySelector('span').innerHTML = '더보기 (+' + totalHidden + '일) <span class="tl-arrow">▼</span>';
+    } else {
+        // 펼치기
+        hiddenCards.forEach(function(card) { card.style.display = ''; });
+        btn.classList.add('expanded');
+        btn.querySelector('span').innerHTML = '접기 <span class="tl-arrow">▼</span>';
+    }
+}
+
+// 숨김 카드 초기 숨김 처리
+function initHiddenCards() {
+    document.querySelectorAll('.tl-card-hidden').forEach(function(card) {
+        card.style.display = 'none';
+    });
+}
+
+// 메모 저장
+function saveMemo(btn) {
+    var memoDiv = btn.closest('.tl-memo');
+    var input = memoDiv.querySelector('input');
+    var key = input.dataset.key;
+    memoData[key] = input.value;
+    saveMemos();
+    showToast('메모 저장 완료', 'success');
+}
+
+// ============================================
+// 카드뷰 (기존 유지)
+// ============================================
 
 function renderHistoryCards(data) {
     var c = document.getElementById('historyCardView');
@@ -307,6 +500,8 @@ async function refreshRanking() {
     marketingData.generated_at = new Date().toISOString();
     document.getElementById('updateTime').textContent = 'Last update: ' + formatDateTime(new Date());
     filterAndRender();
+    // 숨김 카드 초기화
+    setTimeout(initHiddenCards, 100);
 
     setTimeout(function() { progressEl.style.display = 'none'; btn.disabled = false; btn.classList.remove('refreshing'); btnText.textContent = '새로고침'; }, 2000);
     if (ok > 0) showToast(ok + '개 키워드 순위 업데이트 완료', 'success');
@@ -339,51 +534,25 @@ async function searchNaverPlace(keyword, maxResults) {
 }
 
 async function getPlaceKeywords(placeId) {
-    /**
-     * HTML 페이지를 프록시로 가져와서 keywordList를 정규식으로 파싱
-     * Python 코드의 get_place_keywords와 동일한 방식
-     */
     var proxyUrl = getProxyUrl();
     if (!proxyUrl) return [];
-
     var targetUrl = 'https://m.place.naver.com/restaurant/' + placeId;
-
     try {
-        var response = await fetch(proxyUrl + '?url=' + encodeURIComponent(targetUrl), {
-            method: 'GET',
-        });
-
-        if (!response.ok) {
-            console.log('HTML fetch failed for ' + placeId + ': ' + response.status);
-            return [];
-        }
-
+        var response = await fetch(proxyUrl + '?url=' + encodeURIComponent(targetUrl), { method: 'GET' });
+        if (!response.ok) return [];
         var html = await response.text();
-
-        // "keywordList":["키워드1","키워드2",...] 패턴 추출
         var match = html.match(/"keywordList"\s*:\s*(\[[^\]]*\])/);
-
         if (match && match[1]) {
             try {
                 var keywords = JSON.parse(match[1]);
-                if (Array.isArray(keywords)) {
-                    return keywords.slice(0, 5);
-                }
+                if (Array.isArray(keywords)) return keywords.slice(0, 5);
             } catch (e) {
-                // JSON 파싱 실패 시 정규식으로 개별 추출
                 var kwMatch = match[1].match(/"([^"]+)"/g);
-                if (kwMatch) {
-                    return kwMatch.map(function(k) { return k.replace(/"/g, ''); }).slice(0, 5);
-                }
+                if (kwMatch) return kwMatch.map(function(k) { return k.replace(/"/g, ''); }).slice(0, 5);
             }
         }
-
         return [];
-
-    } catch (e) {
-        console.log('getPlaceKeywords error for ' + placeId + ':', e.message);
-        return [];
-    }
+    } catch (e) { return []; }
 }
 
 // ============================================
@@ -419,7 +588,6 @@ async function runCompetitorAnalysis() {
             var pct = 15 + Math.round((i / total) * 70);
             showAnalysisProgress(true, '대표키워드 수집 (' + (i+1) + '/' + total + ') ' + nm, pct);
 
-            // HTML 페이지에서 keywordList 파싱
             var keywords = await getPlaceKeywords(pid);
 
             keywords.forEach(function(k) {
@@ -428,9 +596,7 @@ async function runCompetitorAnalysis() {
             });
 
             competitors.push({
-                rank: i + 1,
-                place_id: pid,
-                name: nm,
+                rank: i + 1, place_id: pid, name: nm,
                 category: item.category || '',
                 blog_reviews: String(item.blogCafeReviewCount || 0),
                 visitor_reviews: String(item.visitorReviewCount || 0),
@@ -441,7 +607,6 @@ async function runCompetitorAnalysis() {
                 keywords: keywords
             });
 
-            // 요청 간 딜레이 (차단 방지)
             if (i < result.items.length - 1) await delay(500);
         }
 
@@ -450,12 +615,9 @@ async function runCompetitorAnalysis() {
         var kv = loadSavedKeywordVolumes(Object.keys(allKw));
 
         var ar = {
-            keyword: keyword,
-            analyzed_at: new Date().toISOString(),
-            total_results: result.total,
-            competitors: competitors,
-            keyword_volumes: kv,
-            all_keywords: allKw
+            keyword: keyword, analyzed_at: new Date().toISOString(),
+            total_results: result.total, competitors: competitors,
+            keyword_volumes: kv, all_keywords: allKw
         };
 
         var sk = keyword + '_' + topN;
