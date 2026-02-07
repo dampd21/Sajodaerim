@@ -154,7 +154,146 @@
 .view-btn:hover { color: #ccc; }
 .view-btn.active { background: rgba(0, 212, 255, 0.15); color: #00d4ff; }
 
-/* 히스토리 카드뷰 */
+/* ============================================
+   타임라인 뷰
+   ============================================ */
+
+.tl-row {
+    background: #1a2744;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tl-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tl-info { display: flex; align-items: center; gap: 10px; }
+.tl-store { font-size: 0.92rem; font-weight: 600; color: #e0e0e0; }
+
+.tl-kw {
+    font-size: 0.78rem;
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.tl-smry { display: flex; align-items: center; gap: 14px; }
+
+.tl-sg {
+    display: flex;
+    gap: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tl-sg .best { color: #4ecdc4; }
+.tl-sg .avg { color: #aaa; }
+.tl-sg .wrst { color: #ff6b6b; }
+
+.tl-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.tl-scroll::-webkit-scrollbar { height: 4px; }
+.tl-scroll::-webkit-scrollbar-track { background: transparent; }
+.tl-scroll::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.15); border-radius: 2px; }
+
+.tl-card {
+    flex-shrink: 0;
+    width: 100px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    cursor: default;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.tl-card:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    background: rgba(0, 212, 255, 0.02);
+}
+
+.tl-date {
+    text-align: center;
+    padding: 6px 4px;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #aaa;
+}
+
+.tl-wd { color: #666; font-size: 0.65rem; margin-left: 2px; }
+
+.tl-rank {
+    text-align: center;
+    padding: 10px 4px 6px;
+    line-height: 1;
+}
+
+.tl-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #00d4ff;
+}
+
+.tl-num.rank-out { font-size: 0.9rem; color: #555; }
+
+.tl-sfx {
+    font-size: 0.6rem;
+    color: #666;
+    font-weight: 600;
+    margin-left: 1px;
+}
+
+.tl-chg {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    margin-left: 3px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+
+.tl-chg.up { color: #4ecdc4; background: rgba(78, 205, 196, 0.12); }
+.tl-chg.dn { color: #ff6b6b; background: rgba(255, 107, 107, 0.12); }
+
+.tl-stats {
+    padding: 6px 8px 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.68rem;
+    color: #888;
+}
+
+.tl-lbl {
+    display: inline-block;
+    width: 12px;
+    color: #555;
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+
+/* ============================================
+   히스토리 카드뷰 (기존)
+   ============================================ */
+
 .history-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -665,6 +804,10 @@
     .detail-grid { grid-template-columns: repeat(2, 1fr); }
     .tabs .tab { padding: 10px 8px; font-size: 0.8rem; }
     .keywords-summary { flex-direction: column; gap: 12px; }
+    .tl-hdr { flex-direction: column; align-items: flex-start; }
+    .tl-smry { width: 100%; justify-content: space-between; }
+    .tl-card { width: 90px; }
+    .tl-num { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
