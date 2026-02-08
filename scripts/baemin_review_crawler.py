@@ -3,8 +3,9 @@
 """
 배달의민족 리뷰 크롤러
 - Selenium으로 로그인하여 세션 생성
-- API 호출은 requests 없이, 브라우저 컨텍스트(fetch)로만 수행
-- 지점별 계정 분리
+- API 호출은 requests 없이, 브라우저 컨텍스트로만 수행
+  1) 기본: fetch(credentials: include)
+  2) fetch가 TypeError(Failed to fetch)로 실패하면: 새 탭에서 API URL 직접 열어 JSON 읽기 fallback
 """
 
 import os
@@ -26,42 +27,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 # 지점 정보
 STORES = [
-    {
-        "name": "역대짬뽕 본점",
-        "shop_id": "13352293",
-        "id_env": "BAEMIN_ID_MAIN",
-        "pwd_env": "BAEMIN_PWD_MAIN"
-    },
-    {
-        "name": "역대짬뽕 다산1호점",
-        "shop_id": "14232160",
-        "id_env": "BAEMIN_ID_DASAN",
-        "pwd_env": "BAEMIN_PWD_DASAN"
-    },
-    {
-        "name": "역대짬뽕 송파점",
-        "shop_id": "14811818",
-        "id_env": "BAEMIN_ID_SONGPA",
-        "pwd_env": "BAEMIN_PWD_SONGPA"
-    },
-    {
-        "name": "역대짬뽕 두정점",
-        "shop_id": "14830987",
-        "id_env": "BAEMIN_ID_DUJEONG",
-        "pwd_env": "BAEMIN_PWD_DUJEONG"
-    }
+    {"name": "역대짬뽕 본점", "shop_id": "13352293", "id_env": "BAEMIN_ID_MAIN", "pwd_env": "BAEMIN_PWD_MAIN"},
+    {"name": "역대짬뽕 다산1호점", "shop_id": "14232160", "id_env": "BAEMIN_ID_DASAN", "pwd_env": "BAEMIN_PWD_DASAN"},
+    {"name": "역대짬뽕 송파점", "shop_id": "14811818", "id_env": "BAEMIN_ID_SONGPA", "pwd_env": "BAEMIN_PWD_SONGPA"},
+    {"name": "역대짬뽕 두정점", "shop_id": "14830987", "id_env": "BAEMIN_ID_DUJEONG", "pwd_env": "BAEMIN_PWD_DUJEONG"},
 ]
 
-# API/로그인 설정
 API_BASE_URL = "https://self-api.baemin.com/v1/review/shops"
 LOGIN_URL = "https://biz-member.baemin.com/login?returnUrl=https%3A%2F%2Fself.baemin.com"
 
-# 출력 경로
 OUTPUT_DIR = "docs"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
-# 크롬 프로필 저장 위치(한글/특수문자 경로 이슈 피하려고 고정)
 CHROME_PROFILE_BASE = os.environ.get("CHROME_PROFILE_BASE", r"C:\actions-runner\_chrome_profiles")
+
+# 속도/안정화 튜닝(필요하면 env로 조절 가능)
+API_LIMIT = int(os.environ.get("API_LIMIT", "50"))
+API_SLEEP_SEC = float(os.environ.get("API_SLEEP_SEC", "0.8"))          # 페이지당 sleep
+STORE_COOLDOWN_SEC = float(os.environ.get("STORE_COOLDOWN_SEC", "3"))  # 매장별 sleep
 
 
 def setup_driver():
@@ -136,10 +119,7 @@ def setup_driver():
 
 
 def login_and_prepare(driver, login_id, login_pwd, shop_id):
-    """
-    로그인 후, 리뷰 페이지까지 이동해 브라우저 fetch가 가능한 상태로 만듦.
-    반환: True/False
-    """
+    """로그인 후 리뷰 페이지까지 이동"""
     print("  [LOGIN] 로그인 시도 중...", flush=True)
 
     try:
@@ -154,22 +134,8 @@ def login_and_prepare(driver, login_id, login_pwd, shop_id):
         forms = driver.find_elements(By.TAG_NAME, "form")
         print(f"  [LOGIN] input: {len(inputs)}, form: {len(forms)}", flush=True)
 
-        if len(inputs) == 0:
-            print("  [LOGIN] 입력 필드 대기 중...", flush=True)
-            max_wait = 30
-            elapsed = 0
-            while elapsed < max_wait:
-                time.sleep(2)
-                elapsed += 2
-                inputs = driver.find_elements(By.TAG_NAME, "input")
-                print(f"  [LOGIN] 대기 {elapsed}초... input: {len(inputs)}", flush=True)
-                if len(inputs) >= 2:
-                    break
-
         if len(inputs) < 2:
-            body = driver.find_element(By.TAG_NAME, "body")
-            body_text = body.text[:500] if body.text else "(empty)"
-            print(f"  [LOGIN] body text: {body_text}", flush=True)
+            print("  [LOGIN] 입력 필드 부족", flush=True)
             return False
 
         for i, inp in enumerate(inputs[:5]):
@@ -241,13 +207,13 @@ def login_and_prepare(driver, login_id, login_pwd, shop_id):
 
         print("  [LOGIN] 로그인 성공!", flush=True)
 
-        # 리뷰 페이지 이동(여기서 fetch가 잘 먹도록)
         review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
         print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
         driver.get(review_url)
         time.sleep(5)
+        print(f"  [LOGIN] 리뷰페이지 URL: {driver.current_url}", flush=True)
+        print(f"  [LOGIN] 리뷰페이지 Title: {driver.title}", flush=True)
 
-        # 쿠키 로그(참고)
         cookies = driver.get_cookies()
         print(f"  [LOGIN] 쿠키 {len(cookies)}개 획득", flush=True)
         return True
@@ -259,51 +225,65 @@ def login_and_prepare(driver, login_id, login_pwd, shop_id):
         return False
 
 
-def _common_api_headers():
-    return {
-        "accept": "application/json, text/plain, */*",
-        "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-        "origin": "https://self.baemin.com",
-        "service-channel": "SELF_SERVICE_PC",
-        "user-agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
-        ),
-    }
-
-
-def _browser_fetch(driver, url, headers):
-    """Selenium 브라우저 컨텍스트에서 fetch 수행. 반환: dict(status:int, text:str)"""
+def _browser_fetch(driver, url):
+    """브라우저 컨텍스트 fetch. (headers 최소화해서 preflight/CORS 변수 줄임)"""
     script = r"""
         const url = arguments[0];
-        const headers = arguments[1];
         const cb = arguments[arguments.length - 1];
 
-        fetch(url, { method: "GET", credentials: "include", headers: headers })
+        fetch(url, { method: "GET", credentials: "include", cache: "no-store" })
           .then(async (r) => {
             const text = await r.text();
             cb({ status: r.status, text: text });
           })
           .catch((e) => cb({ status: -1, text: String(e) }));
     """
-    return driver.execute_async_script(script, url, headers)
+    return driver.execute_async_script(script, url)
+
+
+def _open_api_in_new_tab_and_read(driver, url):
+    """
+    fetch가 Failed to fetch로 죽는 경우(CSP/CORS/네트워크 등) 대비:
+    새 탭에서 API URL을 직접 열고 body 텍스트(JSON)를 읽어옴.
+    """
+    cur_handle = driver.current_window_handle
+    before_handles = driver.window_handles
+
+    driver.execute_script("window.open('about:blank','_blank');")
+    time.sleep(0.3)
+    after_handles = driver.window_handles
+    new_handle = [h for h in after_handles if h not in before_handles][-1]
+
+    try:
+        driver.switch_to.window(new_handle)
+        driver.get(url)
+        time.sleep(1.0)
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        return body_text
+    finally:
+        try:
+            driver.close()
+        except Exception:
+            pass
+        driver.switch_to.window(cur_handle)
 
 
 def fetch_reviews_api(driver, shop_id, from_date, to_date):
-    """브라우저 fetch로 리뷰 데이터 수집"""
+    """브라우저 기반으로 리뷰 데이터 수집 (fetch + 실패 시 새 탭 직접열기 fallback)"""
     reviews = []
     offset = 0
-    limit = 50
-    headers = _common_api_headers()
+    limit = API_LIMIT
 
     print(f"    [API/browser] 기간: {from_date} ~ {to_date}", flush=True)
 
     while True:
         url = f"{API_BASE_URL}/{shop_id}/reviews?from={from_date}&to={to_date}&offset={offset}&limit={limit}"
-        resp = _browser_fetch(driver, url, headers)
+
+        resp = _browser_fetch(driver, url)
         status = resp.get("status")
         text = resp.get("text", "")
 
+        # 1) fetch 성공
         if status == 200:
             try:
                 data = json.loads(text)
@@ -311,31 +291,51 @@ def fetch_reviews_api(driver, shop_id, from_date, to_date):
                 print(f"    [API/browser] JSON 파싱 실패: {e} text={(text or '')[:300]}", flush=True)
                 break
 
-            review_list = data.get("reviews", [])
-            has_next = data.get("next", False)
-
-            if not review_list:
+        # 2) fetch가 네트워크/CORS/CSP 등으로 실패(-1) => 새 탭 직접열기 fallback
+        elif status == -1:
+            msg = (text or "")[:200]
+            print(f"    [API/browser] fetch 실패(-1): {msg}  -> 새 탭 직접열기 fallback", flush=True)
+            try:
+                raw = _open_api_in_new_tab_and_read(driver, url)
+                data = json.loads(raw)
+            except Exception as e:
+                snippet = (raw if 'raw' in locals() else text)[:300].replace("\n", " ")
+                print(f"    [API/browser] fallback 실패: {e} body={snippet}", flush=True)
                 break
 
-            reviews.extend(review_list)
-            print(f"    [API/browser] 수집: offset={offset}, 개수={len(review_list)}", flush=True)
+        # 3) HTTP 에러(403/401/429 등)
+        else:
+            snippet = (text or "")[:300].replace("\n", " ")
+            print(f"    [API/browser] 오류: {status} body={snippet}", flush=True)
 
-            if not has_next:
-                break
+            # 429면 잠깐 쉬고 1번 더 재시도(간단 백오프)
+            if status == 429:
+                wait_sec = 10
+                print(f"    [API/browser] 429 -> {wait_sec}s 대기 후 재시도", flush=True)
+                time.sleep(wait_sec)
+                continue
 
-            offset += limit
-            time.sleep(1)
-            continue
+            break
 
-        snippet = (text or "")[:500].replace("\n", " ")
-        print(f"    [API/browser] 오류: {status} body={snippet}", flush=True)
-        break
+        review_list = data.get("reviews", [])
+        has_next = data.get("next", False)
+
+        if not review_list:
+            break
+
+        reviews.extend(review_list)
+        print(f"    [API/browser] 수집: offset={offset}, 개수={len(review_list)}", flush=True)
+
+        if not has_next:
+            break
+
+        offset += limit
+        time.sleep(API_SLEEP_SEC)
 
     return reviews
 
 
 def parse_review(review, store_name):
-    """리뷰 데이터 파싱"""
     images = []
     for img in review.get("images", []):
         if img.get("displayStatus") == "DISPLAY":
@@ -358,7 +358,7 @@ def parse_review(review, store_name):
         "images": images,
         "created_at": created_at,
         "created_date": created_date,
-        "is_negative": rating <= 3.0
+        "is_negative": rating <= 3.0,
     }
 
 
@@ -564,7 +564,7 @@ def main():
             except Exception:
                 pass
 
-        time.sleep(2)
+        time.sleep(STORE_COOLDOWN_SEC)
 
     summary = calculate_summary(all_stores)
     summary["new_reviews"] = total_new_reviews
