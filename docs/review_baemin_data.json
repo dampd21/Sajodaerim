@@ -1,34 +1,466 @@
 {
-  "generated_at": "2026-02-09T03:39:39.245544",
+  "generated_at": "2026-02-09T04:03:51.736294",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
     {
       "store_name": "역대짬뽕 본점",
       "shop_id": "13352293",
-      "reviews": [],
-      "review_count": 0,
-      "negative_count": 0,
-      "average_rating": 0,
-      "crawled_at": "2026-02-09T03:37:47.342819"
+      "reviews": [
+        {
+          "id": "2026020702872248",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "또따띠리또",
+          "rating": 5.0,
+          "content": "맛있게 잘 먹었습니다.",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgw1qqsm9vgx5a3n2ynay0z1.jpg"
+          ],
+          "created_at": "2026-02-07T21:37:56.74343",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702612631",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "넬님",
+          "rating": 5.0,
+          "content": "맛있게 잘먹었습니다.",
+          "menus": [
+            "미니탕수육",
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvvxj8rmbt7sqpzqtns07ef.jpg"
+          ],
+          "created_at": "2026-02-07T19:56:16.273383",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702472530",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "호주타조",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "SET 2. 찹쌀탕수육+짜장+짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T19:00:42.451745",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701959959",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "수능특강",
+          "rating": 5.0,
+          "content": "맛잇읍니다",
+          "menus": [
+            "역대짜장면"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvdbmefebnczvej89cdq2zs.jpg"
+          ],
+          "created_at": "2026-02-07T15:41:48.569368",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701603613",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "김성욱",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "잡채밥",
+            "깐풍기(소)"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T12:53:29.659213",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701516885",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "segyeCom",
+          "rating": 2.0,
+          "content": "짬뽕이 기본맛인데 넘 맵고 시큼하고\n리뷰가 많아서 시켰는데 \n가격에 비해 넘 실망스럽네요",
+          "menus": [
+            "잡채밥",
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T12:24:10.909987",
+          "created_date": "2026-02-07",
+          "is_negative": true
+        },
+        {
+          "id": "2026020701443384",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "맛있는음힉",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짜장밥"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T11:40:44.839454",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020700885726",
+          "store_name": "역대짬뽕 본점",
+          "platform": "baemin",
+          "nickname": "동초쌤",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕",
+            "마라만두"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T08:51:06.439306",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        }
+      ],
+      "review_count": 8,
+      "negative_count": 1,
+      "average_rating": 4.62,
+      "crawled_at": "2026-02-09T04:01:57.985974"
     },
     {
       "store_name": "역대짬뽕 다산1호점",
       "shop_id": "14232160",
-      "reviews": [],
-      "review_count": 0,
-      "negative_count": 0,
-      "average_rating": 0,
-      "crawled_at": "2026-02-09T03:38:23.307251"
+      "reviews": [
+        {
+          "id": "2026020702709443",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "dodo0123",
+          "rating": 1.0,
+          "content": "이건뭐죠?",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvy1tb331k1pv3dqg69pxdh.jpg"
+          ],
+          "created_at": "2026-02-07T20:33:32.719157",
+          "created_date": "2026-02-07",
+          "is_negative": true
+        },
+        {
+          "id": "2026020700121421",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "최고리뷰어",
+          "rating": 1.0,
+          "content": "면이 ㅋㅋㅋ 다뿔어서 개열받네요 받자마자 ^^",
+          "menus": [
+            "나홀로 세트(식사미포함)"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgsvzehtmd2rwkvaewpnaz66.jpg"
+          ],
+          "created_at": "2026-02-07T01:18:49.093354",
+          "created_date": "2026-02-07",
+          "is_negative": true
+        }
+      ],
+      "review_count": 2,
+      "negative_count": 2,
+      "average_rating": 1.0,
+      "crawled_at": "2026-02-09T04:02:34.085568"
     },
     {
       "store_name": "역대짬뽕 송파점",
       "shop_id": "14811818",
-      "reviews": [],
-      "review_count": 0,
+      "reviews": [
+        {
+          "id": "2026020703088468",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "순심이",
+          "rating": 4.0,
+          "content": "잘먹었습니다~포장랩뜯자마자 불향이~ㅎㅎ 화유맛이 조금났어요..불맛나는거 좋아하시는분들에겐 딱일듯합니다\n서비스 군만두는 겉바속촉 맛있어요",
+          "menus": [
+            "역대 쟁반짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgw74x1rmkgtpzsqbngs16bj.jpg"
+          ],
+          "created_at": "2026-02-07T23:12:31.014379",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020703039319",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "카드값줘체리",
+          "rating": 5.0,
+          "content": "맛있습니다.",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgw5pydbkyy2kdxb3jgv7rft.jpg"
+          ],
+          "created_at": "2026-02-07T22:47:25.079569",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702802780",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "Kevin",
+          "rating": 5.0,
+          "content": "너무 맛있게 잘 먹었습니다! 자주 주문하겠습니다!",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgw0mbyq84ka41qnxm2s5vf5.jpg"
+          ],
+          "created_at": "2026-02-07T21:18:37.722281",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702709256",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "ryna",
+          "rating": 5.0,
+          "content": "맛있어요👍",
+          "menus": [
+            "SET 2. 찹쌀탕수육+짜장+짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvxxwa2cda0r3krqmjkfm7n.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvxxwa4mh4qayk3k4vwc4gw.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvxxwab3wr6c97xhyd1nvb3.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvxxwaacwc6azxh406rhx5k.jpg"
+          ],
+          "created_at": "2026-02-07T20:31:23.723617",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702520366",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "wvwvwvwv",
+          "rating": 5.0,
+          "content": "👍👍👍👍👍👍👍👍👍👍👍",
+          "menus": [
+            "찹쌀탕수육",
+            "삼선간짜장",
+            "새우볶음밥"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvsmh5gfjqz87at4axhmkf2.jpg"
+          ],
+          "created_at": "2026-02-07T19:16:23.07044",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702344931",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "jhj5354",
+          "rating": 5.0,
+          "content": "맛있어요!!!!!!!!! 최고",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvp9er1pnzcyc03vtnw1bh7.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvp9er0m1r55amcq6wpbe8f.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvp9eqzd1z5han27cfbpwdm.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvp9er8twnjc8rmaq8bdy9n.jpg"
+          ],
+          "created_at": "2026-02-07T18:17:54.431252",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702282948",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "마라탕탕탕",
+          "rating": 5.0,
+          "content": "짬뽕 시켜먹은 곳 중에 제일 맛있었어효오~~ 2단계도 얼큰하니 충분히 맵고 간도 딱 좋았습니당 ✨\n\n탕수육 소스를 조아하는데 소스가 안와서.. 또 주문할테니 다음에는 탕수육 소스 꼭 챙겨주세요🥺💗",
+          "menus": [
+            "미니탕수육",
+            "역대짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgvn1gs2727kmqcm3sjq1jes.jpg"
+          ],
+          "created_at": "2026-02-07T17:56:05.741451",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702076827",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "성일",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T16:28:21.01099",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020702037739",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "제은",
+          "rating": 5.0,
+          "content": "나눠드렸는데 엄마도 맛있대요 굿굿",
+          "menus": [
+            "역대짬뽕",
+            "군만두"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T16:09:34.90327",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701668653",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "꼰녕",
+          "rating": 5.0,
+          "content": "맛나요 굿굿",
+          "menus": [
+            "굴짬뽕(겨울한정)",
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgv593cces9mpz9ss8xb5dmh.jpg"
+          ],
+          "created_at": "2026-02-07T13:20:37.008835",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701644236",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "근엄한바디워시",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-07T12:59:55.977666",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701432377",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "쑤쑤쑤지니",
+          "rating": 5.0,
+          "content": "어제 리뷰를 못 남겨서 이제 남겨요. 처음 주문해 봤는데, 짬뽕, 짜장, 탕수육 다 맛있네요.면 양도 많고, 탕수육 고기도 두툼해서 배부르게 먹었습니다.😄",
+          "menus": [
+            "역대짬뽕",
+            "역대짜장면",
+            "찹쌀탕수육"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtzab493376p44qtvtqvd0s.jpg"
+          ],
+          "created_at": "2026-02-07T11:36:26.194611",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701337429",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "띠용띠용",
+          "rating": 5.0,
+          "content": "첫 주문인데 삼선간짜장 면이 살짝 얇고 맛이 있습니다\n미니 탕수육도 맛있고 서비스 군만두고 좋네요\n당분간 짜장 정착합니다\n아 맞다 짬뽕국물 추가했는데 매콤합니다",
+          "menus": [
+            "삼선간짜장",
+            "미니탕수육"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtxaz6fajs1f1bqhn2vrch6.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtxaz6fw6q0mwaqkwzfx509.jpg",
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtxaz6fkvnmbtbgjnek7q11.jpg"
+          ],
+          "created_at": "2026-02-07T11:01:49.62205",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020701184080",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "유바바",
+          "rating": 5.0,
+          "content": "고딩아들이 먹었는데 푸짐하고 맛있대요!!!",
+          "menus": [
+            "나홀로 새우볶음밥세트"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtr4cm0p3t5k3bwk3zecr4r.jpg"
+          ],
+          "created_at": "2026-02-07T09:30:51.121479",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        },
+        {
+          "id": "2026020700906592",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "신선한거ㅡ맛난거",
+          "rating": 5.0,
+          "content": "요청사항 잘 들어주셔서 감사해요\n잘 먹었습니다~",
+          "menus": [
+            "나홀로 삼선간짜장세트"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/7/01kgtmte2zv2v2zbsh7dgzhfbn.jpg"
+          ],
+          "created_at": "2026-02-07T08:32:59.222358",
+          "created_date": "2026-02-07",
+          "is_negative": false
+        }
+      ],
+      "review_count": 15,
       "negative_count": 0,
-      "average_rating": 0,
-      "crawled_at": "2026-02-09T03:38:59.058335"
+      "average_rating": 4.93,
+      "crawled_at": "2026-02-09T04:03:10.841564"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -37,15 +469,56 @@
       "review_count": 0,
       "negative_count": 0,
       "average_rating": 0,
-      "crawled_at": "2026-02-09T03:39:34.946827"
+      "crawled_at": "2026-02-09T04:03:47.406985"
     }
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 0,
-    "total_negative": 0,
-    "average_rating": 0,
-    "popular_menus": [],
-    "new_reviews": 0
+    "total_reviews": 25,
+    "total_negative": 3,
+    "average_rating": 4.52,
+    "popular_menus": [
+      {
+        "name": "삼선간짜장",
+        "count": 7
+      },
+      {
+        "name": "역대짬뽕",
+        "count": 7
+      },
+      {
+        "name": "미니탕수육",
+        "count": 3
+      },
+      {
+        "name": "역대 초당순두부짬뽕",
+        "count": 2
+      },
+      {
+        "name": "SET 2. 찹쌀탕수육+짜장+짬뽕",
+        "count": 2
+      },
+      {
+        "name": "역대짜장면",
+        "count": 2
+      },
+      {
+        "name": "잡채밥",
+        "count": 2
+      },
+      {
+        "name": "찹쌀탕수육",
+        "count": 2
+      },
+      {
+        "name": "깐풍기(소)",
+        "count": 1
+      },
+      {
+        "name": "역대짜장밥",
+        "count": 1
+      }
+    ],
+    "new_reviews": 25
   }
 }
