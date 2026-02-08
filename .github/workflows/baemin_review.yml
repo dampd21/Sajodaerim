@@ -15,7 +15,7 @@ on:
           - initial
           - current_year
       store:
-        description: '지점 선택'
+        description: '지점 선택 (initial은 all 금지)'
         required: true
         default: 'all'
         type: choice
@@ -34,19 +34,45 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  prepare:
+    name: Prepare (validate & matrix)
+    runs-on: ubuntu-latest
+    outputs:
+      stores: ${{ steps.set.outputs.stores }}
+      mode: ${{ steps.set.outputs.mode }}
+    steps:
+      - id: set
+        shell: bash
+        run: |
+          MODE="${{ github.event.inputs.mode || 'daily' }}"
+          STORE="${{ github.event.inputs.store || 'all' }}"
+
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+
+          # initial 모드에서는 all 금지 (지점 1개 강제)
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "$MODE" == "initial" && "$STORE" == "all" ]]; then
+            echo "::error::initial 모드에서는 store=all 실행을 금지합니다. main/dasan/songpa/dujeong 중 하나를 선택해서 실행하세요."
+            exit 1
+          fi
+
+          # workflow_dispatch + store가 all이 아니면 단일 지점만 실행
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "$STORE" != "all" ]]; then
+            echo "stores=[\"$STORE\"]" >> "$GITHUB_OUTPUT"
+          else
+            # schedule 이거나 store=all이면 4지점 순차 실행(아래 crawl job에서 max-parallel=1)
+            echo 'stores=["main","dasan","songpa","dujeong"]' >> "$GITHUB_OUTPUT"
+          fi
+
   crawl:
     name: Crawl - ${{ matrix.store }}
+    needs: prepare
     runs-on: [self-hosted, baemin]
 
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        store: ${{ fromJSON(
-          github.event_name == 'workflow_dispatch' && github.event.inputs.store != 'all'
-          && format('["{0}"]', github.event.inputs.store)
-          || '["main","dasan","songpa","dujeong"]'
-        ) }}
+        store: ${{ fromJSON(needs.prepare.outputs.stores) }}
 
     defaults:
       run:
@@ -85,12 +111,12 @@ jobs:
           PYTHONUTF8: "1"
           CHROME_PROFILE_BASE: "C:\\actions-runner\\_chrome_profiles"
 
-          # 속도(필요시 조절)
+          # 속도 (필요 시 조절)
           API_SLEEP_SEC: "1.2"
           STORE_COOLDOWN_SEC: "6"
           API_LIMIT: "50"
 
-          CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
+          CRAWL_MODE: ${{ needs.prepare.outputs.mode }}
           TARGET_STORE: ${{ matrix.store }}
 
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
