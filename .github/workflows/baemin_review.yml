@@ -49,17 +49,17 @@ jobs:
 
           echo "mode=$MODE" >> "$GITHUB_OUTPUT"
 
-          # initial 모드에서는 all 금지 (지점 1개 강제)
+          # initial 모드에서는 all 금지
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "$MODE" == "initial" && "$STORE" == "all" ]]; then
             echo "::error::initial 모드에서는 store=all 실행을 금지합니다. main/dasan/songpa/dujeong 중 하나를 선택해서 실행하세요."
             exit 1
           fi
 
-          # workflow_dispatch + store가 all이 아니면 단일 지점만 실행
+          # workflow_dispatch + store 단일 선택이면 1개만
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "$STORE" != "all" ]]; then
             echo "stores=[\"$STORE\"]" >> "$GITHUB_OUTPUT"
           else
-            # schedule 이거나 store=all이면 4지점 순차 실행(아래 crawl job에서 max-parallel=1)
+            # schedule 또는 store=all이면 4지점 순차 실행
             echo 'stores=["main","dasan","songpa","dujeong"]' >> "$GITHUB_OUTPUT"
           fi
 
@@ -83,10 +83,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          clean: true
 
-      - name: Pull latest changes (best-effort)
-        run: git pull origin main --rebase
-        continue-on-error: true
+      - name: Ensure main branch (avoid detached HEAD issues)
+        run: |
+          chcp 65001>nul
+          git fetch origin main
+          git checkout -B main origin/main
 
       - name: Show Python/Pip
         run: |
@@ -100,18 +103,26 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install selenium webdriver-manager
 
-      - name: Cleanup stale chrome/chromedriver (best-effort)
+      - name: Cleanup stale chrome/chromedriver (best-effort, never fail)
+        continue-on-error: true
         run: |
           chcp 65001>nul
-          taskkill /F /IM chromedriver.exe /T >nul 2>nul || echo chromedriver not running
-          taskkill /F /IM chrome.exe /T >nul 2>nul || echo chrome not running
+          for %%P in (chromedriver.exe chrome.exe) do (
+            taskkill /F /IM %%P /T >nul 2>nul
+            if errorlevel 1 (
+              echo %%P not running
+            ) else (
+              echo %%P killed
+            )
+          )
+          exit /b 0
 
       - name: Run crawler (per-store)
         env:
           PYTHONUTF8: "1"
           CHROME_PROFILE_BASE: "C:\\actions-runner\\_chrome_profiles"
 
-          # 속도 (필요 시 조절)
+          # 속도 (원하면 더 늦춰도 됨)
           API_SLEEP_SEC: "1.2"
           STORE_COOLDOWN_SEC: "6"
           API_LIMIT: "50"
@@ -132,6 +143,8 @@ jobs:
           python -X utf8 scripts/baemin_review_crawler.py
 
       - name: Commit and push
+        env:
+          GIT_TERMINAL_PROMPT: "0"
         run: |
           chcp 65001>nul
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -143,4 +156,4 @@ jobs:
           git diff --staged --quiet || git commit -m "Update baemin reviews - %TS% - ${{ matrix.store }}"
 
           git pull origin main --rebase || echo pull skipped
-          git push
+          git push || (git pull origin main --rebase && git push)
