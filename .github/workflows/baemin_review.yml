@@ -19,25 +19,23 @@ jobs:
   crawl:
     runs-on: [self-hosted, baemin]
 
+    defaults:
+      run:
+        shell: powershell
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Mark workspace as safe (git)
-        shell: pwsh
-        run: |
-          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
+      # actions/checkout 이 이미 safe.directory 처리해주므로 삭제해도 됩니다.
 
       - name: Pull latest changes (best-effort)
-        shell: pwsh
-        run: |
-          git pull origin main --rebase
+        run: git pull origin main --rebase
         continue-on-error: true
 
       - name: Install dependencies
-        shell: pwsh
         run: |
           python --version
           python -m pip --version
@@ -45,7 +43,6 @@ jobs:
           python -m pip install selenium webdriver-manager requests
 
       - name: Run crawler
-        shell: pwsh
         env:
           CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
@@ -56,11 +53,9 @@ jobs:
           BAEMIN_PWD_SONGPA: ${{ secrets.BAEMIN_PWD_SONGPA }}
           BAEMIN_ID_DUJEONG: ${{ secrets.BAEMIN_ID_DUJEONG }}
           BAEMIN_PWD_DUJEONG: ${{ secrets.BAEMIN_PWD_DUJEONG }}
-        run: |
-          python scripts/baemin_review_crawler.py
+        run: python scripts/baemin_review_crawler.py
 
       - name: Commit and push
-        shell: pwsh
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -79,6 +74,4 @@ jobs:
         continue-on-error: true
 
       - name: Push
-        shell: pwsh
-        run: |
-          git push
+        run: git push
