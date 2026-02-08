@@ -15,6 +15,9 @@ on:
           - initial
           - current_year
 
+permissions:
+  contents: write
+
 jobs:
   crawl:
     runs-on: [self-hosted, baemin]
