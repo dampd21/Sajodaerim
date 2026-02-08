@@ -6,6 +6,8 @@
 - API 호출은 requests 없이, 브라우저 컨텍스트(fetch)로만 수행
 - 핵심: 리뷰 페이지가 실제로 self-api를 호출할 때의 동적 헤더(x-e-request 등)를
        Chrome performance log에서 캡처하여 동일 헤더로 API를 호출한다.
+
+주의: 본인 계정/권한 범위 내에서만 사용하세요.
 """
 
 import os
@@ -26,7 +28,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 # -----------------------------
-# 설정
+# 지점/계정 설정
 # -----------------------------
 STORES = [
     {"name": "역대짬뽕 본점", "shop_id": "13352293", "id_env": "BAEMIN_ID_MAIN", "pwd_env": "BAEMIN_PWD_MAIN"},
@@ -41,30 +43,28 @@ LOGIN_URL = "https://biz-member.baemin.com/login?returnUrl=https%3A%2F%2Fself.ba
 OUTPUT_DIR = "docs"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
+# 크롬 프로필 저장 위치(한글 경로/권한 이슈 회피용)
 CHROME_PROFILE_BASE = os.environ.get("CHROME_PROFILE_BASE", r"C:\actions-runner\_chrome_profiles")
 
+# 페이지네이션/속도 튜닝 (워크플로우 env로 조절)
 API_LIMIT = int(os.environ.get("API_LIMIT", "50"))
 API_SLEEP_SEC = float(os.environ.get("API_SLEEP_SEC", "1.2"))
 STORE_COOLDOWN_SEC = float(os.environ.get("STORE_COOLDOWN_SEC", "6"))
 
-# 헤더는 대량 호출 중간에 만료/변화할 수 있어 주기적으로 재캡처
-HEADER_REFRESH_EVERY = int(os.environ.get("HEADER_REFRESH_EVERY", "200"))  # API 페이지 요청 200번마다 재캡처
-HEADER_CAPTURE_TIMEOUT = int(os.environ.get("HEADER_CAPTURE_TIMEOUT", "20"))  # 초
+# 오래 돌 때 동적 헤더가 바뀌거나 만료될 수 있어서 주기적으로 재캡처
+HEADER_REFRESH_EVERY = int(os.environ.get("HEADER_REFRESH_EVERY", "200"))  # API 페이지 요청 N번마다 헤더 갱신
+HEADER_CAPTURE_TIMEOUT = int(os.environ.get("HEADER_CAPTURE_TIMEOUT", "20"))  # 헤더 캡처 타임아웃(초)
 
 
 # -----------------------------
-# 유틸
+# 공통 유틸
 # -----------------------------
-def _mask(s: str, keep: int = 10) -> str:
+def _mask(s: str, keep: int = 16) -> str:
     if not s:
         return ""
     if len(s) <= keep:
         return s
     return s[:keep] + "..."
-
-
-def _safe_json_loads(text: str):
-    return json.loads(text)
 
 
 def _clear_performance_logs(driver):
@@ -82,12 +82,9 @@ def _read_performance_logs(driver):
 
 
 def _extract_msg(entry):
-    """
-    performance log entry -> dict 형태의 CDP message
-    """
+    """performance log entry -> dict 형태의 CDP message"""
     try:
-        msg = json.loads(entry.get("message", "{}")).get("message", {})
-        return msg
+        return json.loads(entry.get("message", "{}")).get("message", {}) or {}
     except Exception:
         return {}
 
@@ -95,12 +92,40 @@ def _extract_msg(entry):
 def _is_target_reviews_api(url: str, shop_id: str) -> bool:
     if not url:
         return False
-    prefix = f"{API_BASE_URL}/{shop_id}/reviews"
-    return url.startswith(prefix)
+    return url.startswith(f"{API_BASE_URL}/{shop_id}/reviews")
+
+
+def _pick_needed_headers(raw_headers: dict) -> dict:
+    """
+    raw_headers: CDP에서 받은 headers(dict)
+    필요한 헤더만 case-insensitive로 추출하여 lower-case key로 리턴
+    """
+    out = {}
+    if not raw_headers:
+        return out
+
+    lower = {str(k).lower(): v for k, v in raw_headers.items()}
+
+    # 실제로 DevTools에서 확인한 핵심 헤더들
+    keys = [
+        "accept",
+        "accept-language",
+        "service-channel",
+        "x-e-request",
+        "x-pathname-trace-key",
+        "x-web-version",
+    ]
+
+    for k in keys:
+        v = lower.get(k)
+        if v:
+            out[k] = v
+
+    return out
 
 
 # -----------------------------
-# 드라이버 / 로그인
+# Driver / 로그인
 # -----------------------------
 def setup_driver():
     """Chrome 드라이버 설정 (Windows self-hosted 안정화 + performance log 활성화)"""
@@ -128,7 +153,7 @@ def setup_driver():
     options.add_argument(f"--user-data-dir={profile_dir}")
     options.add_argument("--remote-debugging-pipe")
 
-    # ★ performance log 활성화(네트워크 요청에서 헤더 캡처하기 위함)
+    # ★ performance log 활성화(네트워크 요청에서 동적 헤더 캡처)
     options.set_capability("goog:loggingPrefs", {"performance": "ALL"})
 
     service = Service(ChromeDriverManager().install())
@@ -191,15 +216,21 @@ def login_and_open_review_page(driver, login_id, login_pwd, shop_id):
         print("  [LOGIN] 입력 필드 부족", flush=True)
         return False
 
-    # id/pw 찾기
+    # id/pw 찾기(최대한 보수적으로)
     id_input = None
     pwd_input = None
     for inp in inputs:
         if inp.get_attribute("type") == "password":
             pwd_input = inp
-        if inp.get_attribute("name") == "id" or inp.get_attribute("data-testid") == "id" or inp.get_attribute("type") == "text":
-            if id_input is None:
+        if inp.get_attribute("name") == "id" or inp.get_attribute("data-testid") == "id":
+            id_input = inp
+
+    if id_input is None:
+        # fallback
+        for inp in inputs:
+            if inp.get_attribute("type") == "text":
                 id_input = inp
+                break
 
     id_input = id_input or inputs[0]
     pwd_input = pwd_input or inputs[1]
@@ -238,7 +269,7 @@ def login_and_open_review_page(driver, login_id, login_pwd, shop_id):
     review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
     print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
 
-    # ★ 헤더 캡처를 위해: 이동 전 performance log 비우기
+    # ★ 캡처 성공률 올리려고: 이동 직전 로그 비우기
     _clear_performance_logs(driver)
 
     driver.get(review_url)
@@ -247,107 +278,105 @@ def login_and_open_review_page(driver, login_id, login_pwd, shop_id):
     print(f"  [LOGIN] 리뷰페이지 URL: {driver.current_url}", flush=True)
     print(f"  [LOGIN] 리뷰페이지 Title: {driver.title}", flush=True)
     print(f"  [LOGIN] 쿠키 {len(driver.get_cookies())}개 획득", flush=True)
+
     return True
 
 
 # -----------------------------
-# 동적 헤더 캡처
+# 동적 헤더 캡처 (중요)
 # -----------------------------
 def capture_api_headers_from_page(driver, shop_id, timeout=HEADER_CAPTURE_TIMEOUT):
     """
     리뷰 페이지가 self-api를 호출할 때의 request headers에서 필요한 값을 캡처한다.
-    반환 dict 예:
-      {
-        "accept": "...",
-        "accept-language": "...",
-        "service-channel": "SELF_SERVICE_PC",
-        "x-e-request": "...",
-        "x-pathname-trace-key": "/shops/reviews",
-        "x-web-version": "v...."
-      }
+    - Network.requestWillBeSent 로 URL(requestId)을 잡고
+    - Network.requestWillBeSentExtraInfo 로 헤더를 requestId에 결합한다.
     """
     print("    [HDR] self-api 요청 헤더 캡처 시도...", flush=True)
 
     start = time.time()
-    best = {}
+
+    # requestId -> url / headers 조합
+    target_reqids = set()
+    headers_by_id = {}
 
     while time.time() - start < timeout:
         logs = _read_performance_logs(driver)
+
         for entry in logs:
             msg = _extract_msg(entry)
             if not msg:
                 continue
 
             method = msg.get("method")
-            params = msg.get("params", {})
+            params = msg.get("params", {}) or {}
 
-            if method != "Network.requestWillBeSent":
-                continue
+            # 1) URL/reqid 식별
+            if method == "Network.requestWillBeSent":
+                rid = params.get("requestId")
+                req = params.get("request", {}) or {}
+                url = req.get("url", "")
 
-            req = params.get("request", {})
-            url = req.get("url", "")
-            if not _is_target_reviews_api(url, shop_id):
-                continue
+                if rid and _is_target_reviews_api(url, shop_id):
+                    target_reqids.add(rid)
 
-            hdrs = req.get("headers", {}) or {}
+                    # 가끔 requestWillBeSent에도 headers 일부가 담겨옴
+                    hdrs = req.get("headers", {}) or {}
+                    picked = _pick_needed_headers(hdrs)
+                    if picked:
+                        headers_by_id.setdefault(rid, {}).update(picked)
 
-            # 필요한 것만 뽑기 (fetch에서 설정 가능한 헤더만)
-            cand = {}
-            for k in [
-                "accept",
-                "accept-language",
-                "service-channel",
-                "x-e-request",
-                "x-pathname-trace-key",
-                "x-web-version",
-            ]:
-                # headers key는 대소문자 섞여올 수 있어서 케이스 무시로 탐색
-                val = None
-                for hk, hv in hdrs.items():
-                    if hk.lower() == k.lower():
-                        val = hv
-                        break
-                if val:
-                    cand[k] = val
+            # 2) 헤더 extra info (여기에 x-e-request가 오는 케이스가 많음)
+            elif method == "Network.requestWillBeSentExtraInfo":
+                rid = params.get("requestId")
+                if rid and rid in target_reqids:
+                    hdrs = params.get("headers", {}) or {}
+                    picked = _pick_needed_headers(hdrs)
+                    if picked:
+                        headers_by_id.setdefault(rid, {}).update(picked)
 
-            # 최소 기준: service-channel / x-web-version / x-pathname-trace-key / x-e-request 중 일부라도
-            if cand:
-                best.update(cand)
+        # 성공 조건: x-e-request만 잡혀도(가장 중요) 성공으로 처리
+        for rid in list(target_reqids):
+            h = headers_by_id.get(rid, {})
+            if h.get("x-e-request"):
+                # 기본값 보정(없으면 넣어줌)
+                h.setdefault("accept", "application/json, text/plain, */*")
+                h.setdefault("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+                h.setdefault("service-channel", "SELF_SERVICE_PC")
+                h.setdefault("x-pathname-trace-key", "/shops/reviews")
 
-        if best:
-            break
+                print(
+                    "    [HDR] 캡처 성공: "
+                    f"x-web-version={h.get('x-web-version')} "
+                    f"x-pathname-trace-key={h.get('x-pathname-trace-key')} "
+                    f"x-e-request={_mask(h.get('x-e-request'))}",
+                    flush=True
+                )
+                return h
 
         time.sleep(0.2)
 
-    if not best:
-        print("    [HDR] 캡처 실패(페이지에서 self-api 호출을 못 잡음).", flush=True)
-        return None
-
-    # 보정/기본값
-    best.setdefault("accept", "application/json, text/plain, */*")
-    best.setdefault("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
-    best.setdefault("service-channel", "SELF_SERVICE_PC")
-    best.setdefault("x-pathname-trace-key", "/shops/reviews")
-
-    # 로그는 마스킹해서 출력
-    print(
-        "    [HDR] 캡처 성공: "
-        f"service-channel={best.get('service-channel')} "
-        f"x-web-version={best.get('x-web-version')} "
-        f"x-pathname-trace-key={best.get('x-pathname-trace-key')} "
-        f"x-e-request={_mask(best.get('x-e-request'), 16)}",
-        flush=True
-    )
-    return best
+    print("    [HDR] 캡처 실패(페이지에서 self-api 호출을 못 잡음).", flush=True)
+    return None
 
 
-def ensure_api_headers(driver, shop_id):
+def prime_api_headers(driver, shop_id):
     """
-    driver._baemin_api_headers 가 없으면 캡처한다.
-    중간에 fetch 실패가 잦으면 여기서 refresh 하게 호출해도 됨.
+    리뷰 페이지 진입 직후 선(先)캡처.
+    실패하면 refresh 후 1회 재시도.
     """
-    if getattr(driver, "_baemin_api_headers", None):
-        return driver._baemin_api_headers
+    hdr = capture_api_headers_from_page(driver, shop_id)
+    if hdr:
+        driver._baemin_api_headers = hdr
+        driver._baemin_api_header_captured_at = time.time()
+        return hdr
+
+    print("    [HDR] 선캡처 실패 -> refresh 후 재시도", flush=True)
+    try:
+        _clear_performance_logs(driver)
+        driver.refresh()
+        time.sleep(5)
+    except Exception:
+        pass
 
     hdr = capture_api_headers_from_page(driver, shop_id)
     driver._baemin_api_headers = hdr
@@ -355,13 +384,16 @@ def ensure_api_headers(driver, shop_id):
     return hdr
 
 
+def ensure_api_headers(driver, shop_id):
+    if getattr(driver, "_baemin_api_headers", None):
+        return driver._baemin_api_headers
+    return prime_api_headers(driver, shop_id)
+
+
 def refresh_api_headers(driver, shop_id):
-    """
-    헤더 갱신: 리뷰 페이지를 새로고침해서 self-api 호출을 다시 발생시키고 캡처
-    """
     print("    [HDR] 헤더 갱신(리뷰페이지 refresh 후 재캡처)...", flush=True)
-    _clear_performance_logs(driver)
     try:
+        _clear_performance_logs(driver)
         driver.refresh()
         time.sleep(5)
     except Exception:
@@ -404,9 +436,9 @@ def _browser_fetch(driver, url, headers):
 def fetch_reviews_api(driver, shop_id, from_date, to_date):
     """
     브라우저 fetch로 리뷰 데이터 수집.
-    - 최초에 페이지가 만든 헤더를 캡처해서 사용
+    - 페이지가 만든 동적 헤더를 캡처해서 사용
     - 실패(-1/403/...)하면 헤더 갱신 후 1회 재시도
-    - 대량 호출(initial) 대비: HEADER_REFRESH_EVERY 마다 헤더 갱신
+    - 대량(initial) 대비: HEADER_REFRESH_EVERY 마다 헤더 갱신
     """
     reviews = []
     offset = 0
@@ -426,32 +458,37 @@ def fetch_reviews_api(driver, shop_id, from_date, to_date):
         # 주기적 헤더 갱신
         if req_count > 0 and (req_count % HEADER_REFRESH_EVERY == 0):
             headers = refresh_api_headers(driver, shop_id) or headers
+            if not headers:
+                print("    [API] 헤더 갱신 실패 -> 중단", flush=True)
+                break
 
         resp = _browser_fetch(driver, url, headers)
         status = resp.get("status")
         text = resp.get("text", "")
 
-        # 실패면 헤더 갱신 후 1회 재시도
         if status != 200:
-            snippet = (text or "")[:120].replace("\n", " ")
+            snippet = (text or "")[:200].replace("\n", " ")
             print(f"    [API] 오류: status={status} body={snippet}", flush=True)
 
+            # 헤더 갱신 후 1회 재시도
             headers2 = refresh_api_headers(driver, shop_id)
-            if headers2:
-                headers = headers2
-                resp = _browser_fetch(driver, url, headers)
-                status = resp.get("status")
-                text = resp.get("text", "")
-                if status != 200:
-                    snippet2 = (text or "")[:200].replace("\n", " ")
-                    print(f"    [API] 재시도 실패: status={status} body={snippet2}", flush=True)
-                    break
-            else:
+            if not headers2:
+                print("    [API] 헤더 갱신 실패 -> 중단", flush=True)
                 break
 
-        # 여기부터는 status==200
+            headers = headers2
+            resp = _browser_fetch(driver, url, headers)
+            status = resp.get("status")
+            text = resp.get("text", "")
+
+            if status != 200:
+                snippet2 = (text or "")[:200].replace("\n", " ")
+                print(f"    [API] 재시도 실패: status={status} body={snippet2}", flush=True)
+                break
+
+        # status == 200
         try:
-            data = _safe_json_loads(text)
+            data = json.loads(text)
         except Exception as e:
             snippet = (text or "")[:200].replace("\n", " ")
             print(f"    [API] JSON 파싱 실패: {e} body={snippet}", flush=True)
@@ -477,7 +514,7 @@ def fetch_reviews_api(driver, shop_id, from_date, to_date):
 
 
 # -----------------------------
-# 데이터 처리
+# 데이터 처리/저장
 # -----------------------------
 def parse_review(review, store_name):
     images = []
@@ -658,6 +695,9 @@ def main():
                         "crawled_at": existing_data.get("generated_at"),
                     })
                 continue
+
+            # ★ 리뷰페이지 들어온 직후 선캡처(이때 못 잡으면 refresh 후 1회 재시도)
+            prime_api_headers(driver, shop_id)
 
             new_reviews = []
             for from_date, to_date in date_ranges:
