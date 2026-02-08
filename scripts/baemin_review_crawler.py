@@ -98,7 +98,6 @@ def setup_driver():
     # ★ 디버깅 채널(일부 환경에서 DevTools/포트 이슈 완화)
     options.add_argument("--remote-debugging-pipe")
 
-    # 크롬드라이버 설치/실행
     service = Service(ChromeDriverManager().install())
 
     driver = None
@@ -119,9 +118,7 @@ def setup_driver():
         if driver is None:
             raise last_err if last_err else RuntimeError("Chrome WebDriver 생성 실패")
 
-        # profile_dir을 driver에 저장해두고, quit 이후 삭제
         driver._baemin_profile_dir = profile_dir
-
         driver.set_page_load_timeout(60)
         driver.implicitly_wait(10)
 
@@ -138,7 +135,6 @@ def setup_driver():
         return driver
 
     except Exception:
-        # 드라이버 생성 자체가 실패한 경우도 폴더는 정리
         if driver is not None:
             try:
                 driver.quit()
@@ -450,7 +446,6 @@ def calculate_summary(stores):
 
 
 def main():
-    # 로그 한글 안 깨지게(가능한 경우)
     try:
         sys.stdout.reconfigure(encoding="utf-8")
         sys.stderr.reconfigure(encoding="utf-8")
@@ -549,14 +544,12 @@ def main():
                     "crawled_at": existing_data.get("generated_at")
                 })
         finally:
-            # driver 종료
             try:
                 if driver:
                     driver.quit()
             except Exception:
                 pass
 
-            # 임시 프로필 폴더 삭제
             try:
                 profile_dir = getattr(driver, "_baemin_profile_dir", None)
                 if profile_dir:
