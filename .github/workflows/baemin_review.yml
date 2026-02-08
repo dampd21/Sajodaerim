@@ -17,33 +17,35 @@ on:
 
 jobs:
   crawl:
-    runs-on: ubuntu-latest
-    
+    runs-on: [self-hosted, baemin]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
-      - name: Pull latest changes
-        run: git pull origin main --rebase || true
-      
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Install Chrome
+
+      - name: Mark workspace as safe (git)
+        shell: pwsh
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-      
+          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
+
+      - name: Pull latest changes (best-effort)
+        shell: pwsh
+        run: |
+          git pull origin main --rebase
+        continue-on-error: true
+
       - name: Install dependencies
+        shell: pwsh
         run: |
-          pip install --upgrade pip
-          pip install selenium webdriver-manager requests undetected-chromedriver
-      
+          python --version
+          python -m pip --version
+          python -m pip install --upgrade pip
+          python -m pip install selenium webdriver-manager requests
+
       - name: Run crawler
+        shell: pwsh
         env:
           CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
@@ -56,12 +58,27 @@ jobs:
           BAEMIN_PWD_DUJEONG: ${{ secrets.BAEMIN_PWD_DUJEONG }}
         run: |
           python scripts/baemin_review_crawler.py
-      
+
       - name: Commit and push
+        shell: pwsh
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
           git add docs/review_baemin_data.json
-          git diff --staged --quiet || git commit -m "Update baemin reviews - $(date +'%Y-%m-%d %H:%M')"
-          git pull origin main --rebase || true
+
+          git diff --staged --quiet
+          if ($LASTEXITCODE -ne 0) {
+            $ts = Get-Date -Format "yyyy-MM-dd HH:mm"
+            git commit -m "Update baemin reviews - $ts"
+          } else {
+            Write-Host "No changes to commit."
+          }
+
+          git pull origin main --rebase
+        continue-on-error: true
+
+      - name: Push
+        shell: pwsh
+        run: |
           git push
