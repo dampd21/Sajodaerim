@@ -62,6 +62,15 @@ jobs:
         env:
           PYTHONUTF8: "1"
           CHROME_PROFILE_BASE: "C:\\actions-runner\\_chrome_profiles"
+
+          # --- 속도 살짝 늦추기(운영 안정화용) ---
+          # 페이지네이션(50개씩) 한 번 요청하고 다음 요청까지 쉬는 시간(초)
+          API_SLEEP_SEC: "1.2"
+          # 매장 1개 끝나고 다음 매장 시작 전 쉬는 시간(초)
+          STORE_COOLDOWN_SEC: "6"
+          # (선택) 페이지당 limit (기본 50 그대로)
+          API_LIMIT: "50"
+
           CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
           BAEMIN_PWD_MAIN: ${{ secrets.BAEMIN_PWD_MAIN }}
