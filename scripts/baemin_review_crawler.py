@@ -11,8 +11,8 @@ import os
 import sys
 import json
 import time
+import uuid
 import shutil
-import tempfile
 import requests
 from datetime import datetime, timedelta
 
@@ -21,9 +21,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.common.exceptions import SessionNotCreatedException
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -63,70 +61,91 @@ LOGIN_URL = "https://biz-member.baemin.com/login?returnUrl=https%3A%2F%2Fself.ba
 OUTPUT_DIR = "docs"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
+# 크롬 프로필 저장 위치(한글/특수문자 경로 이슈 피하려고 드라이브 루트 근처로 고정)
+CHROME_PROFILE_BASE = os.environ.get("CHROME_PROFILE_BASE", r"C:\actions-runner\_chrome_profiles")
+
 
 def setup_driver():
-    """Chrome 드라이버 설정"""
+    """Chrome 드라이버 설정 (Windows self-hosted 안정화 버전)"""
     print("[SETUP] Chrome 드라이버 설정 중...", flush=True)
 
+    os.makedirs(CHROME_PROFILE_BASE, exist_ok=True)
+
+    # 매 실행마다 완전 고유한 프로필 폴더(충돌 방지)
+    profile_dir = os.path.join(CHROME_PROFILE_BASE, f"profile_{uuid.uuid4().hex}")
+    os.makedirs(profile_dir, exist_ok=True)
+
     options = Options()
+    # 안정성 옵션(일반 범위)
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=ko-KR")
-    options.add_argument("--headless=new")
-
-    # 안정화용 (일반적인 옵션)
     options.add_argument("--no-first-run")
     options.add_argument("--no-default-browser-check")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-background-networking")
 
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
-    options.add_argument(
-        "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
-    )
+    # headless on/off (기본 on)
+    headless = os.environ.get("HEADLESS", "1").strip() != "0"
+    if headless:
+        options.add_argument("--headless=new")
 
-    # ★ 매 실행마다 고유 프로필 폴더 사용 (프로필 잠김 충돌 방지)
-    profile_dir = tempfile.mkdtemp(prefix="baemin_chrome_profile_")
+    # ★ 프로필 경로를 명시(한글 경로/잠금 문제 회피)
     options.add_argument(f"--user-data-dir={profile_dir}")
 
+    # ★ 디버깅 채널(일부 환경에서 DevTools/포트 이슈 완화)
+    options.add_argument("--remote-debugging-pipe")
+
+    # 크롬드라이버 설치/실행
     service = Service(ChromeDriverManager().install())
 
+    driver = None
     try:
-        driver = webdriver.Chrome(service=service, options=options)
+        # 가끔 첫 시도가 실패할 수 있어 2~3회 재시도
+        last_err = None
+        for attempt in range(1, 4):
+            try:
+                print(f"[SETUP] 프로필 폴더: {profile_dir}", flush=True)
+                print(f"[SETUP] 드라이버 생성 시도 {attempt}/3", flush=True)
+                driver = webdriver.Chrome(service=service, options=options)
+                break
+            except SessionNotCreatedException as e:
+                last_err = e
+                print(f"[SETUP] SessionNotCreatedException (재시도): {e}", flush=True)
+                time.sleep(2)
+
+        if driver is None:
+            raise last_err if last_err else RuntimeError("Chrome WebDriver 생성 실패")
+
+        # profile_dir을 driver에 저장해두고, quit 이후 삭제
+        driver._baemin_profile_dir = profile_dir
+
+        driver.set_page_load_timeout(60)
+        driver.implicitly_wait(10)
+
+        # IP 확인(브라우저 기준)
+        try:
+            driver.get("https://api.ipify.org?format=json")
+            time.sleep(2)
+            ip_text = driver.find_element(By.TAG_NAME, "body").text
+            print(f"[SETUP] 현재 IP: {ip_text}", flush=True)
+        except Exception as e:
+            print(f"[SETUP] IP 확인 실패: {e}", flush=True)
+
+        print("[SETUP] Chrome 드라이버 설정 완료", flush=True)
+        return driver
+
     except Exception:
-        # 드라이버 생성 실패 시 임시 폴더 남지 않게 정리
+        # 드라이버 생성 자체가 실패한 경우도 폴더는 정리
+        if driver is not None:
+            try:
+                driver.quit()
+            except Exception:
+                pass
         shutil.rmtree(profile_dir, ignore_errors=True)
         raise
-
-    # profile_dir을 driver에 저장해두고, 나중에 quit 이후 삭제
-    driver._baemin_profile_dir = profile_dir
-
-    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-        "source": """
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['ko-KR', 'ko', 'en-US', 'en'] });
-            window.chrome = { runtime: {} };
-        """
-    })
-
-    driver.set_page_load_timeout(60)
-    driver.implicitly_wait(10)
-
-    # ★ IP 확인 (사무실 IP가 나오는지 확인)
-    try:
-        driver.get("https://api.ipify.org?format=json")
-        time.sleep(2)
-        ip_text = driver.find_element(By.TAG_NAME, "body").text
-        print(f"[SETUP] 현재 IP: {ip_text}", flush=True)
-    except Exception as e:
-        print(f"[SETUP] IP 확인 실패: {e}", flush=True)
-
-    print("[SETUP] Chrome 드라이버 설정 완료", flush=True)
-    return driver
 
 
 def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
@@ -134,7 +153,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
     print(f"  [LOGIN] 로그인 시도 중...", flush=True)
 
     try:
-        # 로그인 페이지 이동
         print(f"  [LOGIN] 로그인 페이지 이동", flush=True)
         driver.get(LOGIN_URL)
         time.sleep(8)
@@ -142,16 +160,13 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         current_url = driver.current_url
         print(f"  [LOGIN] 현재 URL: {current_url}", flush=True)
 
-        # 페이지 타이틀 확인
         title = driver.title
         print(f"  [LOGIN] 페이지 타이틀: {title}", flush=True)
 
-        # 입력 필드 찾기 시도
         inputs = driver.find_elements(By.TAG_NAME, "input")
         forms = driver.find_elements(By.TAG_NAME, "form")
         print(f"  [LOGIN] input: {len(inputs)}, form: {len(forms)}", flush=True)
 
-        # input이 없으면 대기
         if len(inputs) == 0:
             print(f"  [LOGIN] 입력 필드 대기 중...", flush=True)
             max_wait = 30
@@ -164,7 +179,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
                 if len(inputs) >= 2:
                     break
 
-        # 여전히 없으면 body 내용 확인
         if len(inputs) < 2:
             body = driver.find_element(By.TAG_NAME, "body")
             body_text = body.text[:500] if body.text else "(empty)"
@@ -174,14 +188,12 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             print(f"  [LOGIN] body HTML: {body_html}", flush=True)
             return None
 
-        # 입력 필드 정보 출력
         for i, inp in enumerate(inputs[:5]):
             inp_type = inp.get_attribute('type')
             inp_name = inp.get_attribute('name')
             inp_placeholder = inp.get_attribute('placeholder')
             print(f"    input[{i}]: type={inp_type}, name={inp_name}, placeholder={inp_placeholder}", flush=True)
 
-        # ID 입력 필드 찾기
         id_input = None
         for inp in inputs:
             inp_type = inp.get_attribute('type')
@@ -190,11 +202,9 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             if inp_type == 'text' or inp_name == 'id' or inp_testid == 'id':
                 id_input = inp
                 break
-
         if not id_input:
             id_input = inputs[0]
 
-        # 아이디 입력
         id_input.click()
         time.sleep(0.3)
         id_input.clear()
@@ -202,21 +212,17 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 아이디 입력 완료", flush=True)
         time.sleep(0.5)
 
-        # 비밀번호 필드 찾기
         pwd_input = None
         for inp in inputs:
             if inp.get_attribute('type') == 'password':
                 pwd_input = inp
                 break
-
         if not pwd_input and len(inputs) > 1:
             pwd_input = inputs[1]
-
         if not pwd_input:
             print(f"  [LOGIN] 비밀번호 필드를 찾을 수 없음", flush=True)
             return None
 
-        # 비밀번호 입력
         pwd_input.click()
         time.sleep(0.3)
         pwd_input.clear()
@@ -224,7 +230,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
         time.sleep(0.5)
 
-        # 로그인 버튼 찾기
         buttons = driver.find_elements(By.TAG_NAME, "button")
         print(f"  [LOGIN] button 개수: {len(buttons)}", flush=True)
 
@@ -246,11 +251,9 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
 
         time.sleep(10)
 
-        # 로그인 후 URL 확인
         current_url = driver.current_url
         print(f"  [LOGIN] 로그인 후 URL: {current_url}", flush=True)
 
-        # 로그인 성공 여부 확인
         if "login" in current_url.lower():
             errors = driver.find_elements(By.CSS_SELECTOR, ".is-danger, .error, [role='alert'], .help, p.help")
             for err in errors:
@@ -261,13 +264,11 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
 
         print(f"  [LOGIN] 로그인 성공!", flush=True)
 
-        # 리뷰 페이지 이동
         review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
         print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
         driver.get(review_url)
         time.sleep(5)
 
-        # 쿠키 추출
         cookies = driver.get_cookies()
         cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
 
@@ -555,7 +556,7 @@ def main():
             except Exception:
                 pass
 
-            # ★ 임시 프로필 폴더 삭제
+            # 임시 프로필 폴더 삭제
             try:
                 profile_dir = getattr(driver, "_baemin_profile_dir", None)
                 if profile_dir:
