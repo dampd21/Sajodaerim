@@ -1,10 +1,47 @@
 {
-  "generated_at": "2026-02-09T03:16:37.554777",
+  "generated_at": "2026-02-09T03:39:39.245544",
   "platform": "baemin",
   "crawl_mode": "daily",
-  "stores": [],
+  "stores": [
+    {
+      "store_name": "역대짬뽕 본점",
+      "shop_id": "13352293",
+      "reviews": [],
+      "review_count": 0,
+      "negative_count": 0,
+      "average_rating": 0,
+      "crawled_at": "2026-02-09T03:37:47.342819"
+    },
+    {
+      "store_name": "역대짬뽕 다산1호점",
+      "shop_id": "14232160",
+      "reviews": [],
+      "review_count": 0,
+      "negative_count": 0,
+      "average_rating": 0,
+      "crawled_at": "2026-02-09T03:38:23.307251"
+    },
+    {
+      "store_name": "역대짬뽕 송파점",
+      "shop_id": "14811818",
+      "reviews": [],
+      "review_count": 0,
+      "negative_count": 0,
+      "average_rating": 0,
+      "crawled_at": "2026-02-09T03:38:59.058335"
+    },
+    {
+      "store_name": "역대짬뽕 두정점",
+      "shop_id": "14830987",
+      "reviews": [],
+      "review_count": 0,
+      "negative_count": 0,
+      "average_rating": 0,
+      "crawled_at": "2026-02-09T03:39:34.946827"
+    }
+  ],
   "summary": {
-    "total_stores": 0,
+    "total_stores": 4,
     "total_reviews": 0,
     "total_negative": 0,
     "average_rating": 0,
