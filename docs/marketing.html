@@ -107,10 +107,28 @@
             <div class="data-table-container">
                 <div class="table-header">
                     <h3>순위 히스토리</h3>
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="timeline">타임라인</button>
-                        <button class="view-btn" data-view="card">카드뷰</button>
-                        <button class="view-btn" data-view="table">테이블뷰</button>
+                    <div class="table-header-controls">
+                        <!-- 정렬 컨트롤 -->
+                        <div class="sort-control" id="sortControl">
+                            <label>정렬</label>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="store">지점명</option>
+                                <option value="keyword">키워드</option>
+                                <option value="rank">현재 순위</option>
+                                <option value="change">순위 변동</option>
+                                <option value="best">최고 순위</option>
+                                <option value="avg">평균 순위</option>
+                            </select>
+                            <button class="sort-dir-btn" id="sortDirBtn" title="정렬 방향 전환">
+                                <span class="sort-arrow">▲</span>
+                            </button>
+                        </div>
+                        <!-- 뷰 토글 -->
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="timeline">타임라인</button>
+                            <button class="view-btn" data-view="card">카드뷰</button>
+                            <button class="view-btn" data-view="table">테이블뷰</button>
+                        </div>
                     </div>
                 </div>
                 <div id="historyTimelineView"></div>
@@ -119,14 +137,14 @@
                     <table class="data-table" id="historyTable">
                         <thead>
                             <tr>
-                                <th>날짜</th>
-                                <th>지점</th>
-                                <th>키워드</th>
-                                <th class="text-center">순위</th>
-                                <th class="text-right">블로그</th>
-                                <th class="text-right">방문자</th>
-                                <th class="text-right">저장</th>
-                                <th class="text-center">평점</th>
+                                <th class="sortable" data-sort="date">날짜</th>
+                                <th class="sortable" data-sort="store">지점</th>
+                                <th class="sortable" data-sort="keyword">키워드</th>
+                                <th class="text-center sortable" data-sort="rank">순위</th>
+                                <th class="text-right sortable" data-sort="blog">블로그</th>
+                                <th class="text-right sortable" data-sort="visitor">방문자</th>
+                                <th class="text-right sortable" data-sort="save">저장</th>
+                                <th class="text-center sortable" data-sort="score">평점</th>
                             </tr>
                         </thead>
                         <tbody id="historyTableBody"></tbody>
