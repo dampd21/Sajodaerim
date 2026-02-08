@@ -3,7 +3,8 @@
 """
 배달의민족 리뷰 크롤러
 - Selenium으로 로그인하여 세션 쿠키 획득
-- API로 리뷰 데이터 수집
+- (1) requests로 API 호출 시도
+- (2) 403/401이면 Selenium(브라우저) 내부 fetch로 API 호출 fallback
 - 지점별 계정 분리
 """
 
@@ -61,7 +62,7 @@ LOGIN_URL = "https://biz-member.baemin.com/login?returnUrl=https%3A%2F%2Fself.ba
 OUTPUT_DIR = "docs"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "review_baemin_data.json")
 
-# 크롬 프로필 저장 위치(한글/특수문자 경로 이슈 피하려고 드라이브 루트 근처로 고정)
+# 크롬 프로필 저장 위치(한글/특수문자 경로 이슈 피하려고 고정)
 CHROME_PROFILE_BASE = os.environ.get("CHROME_PROFILE_BASE", r"C:\actions-runner\_chrome_profiles")
 
 
@@ -71,12 +72,10 @@ def setup_driver():
 
     os.makedirs(CHROME_PROFILE_BASE, exist_ok=True)
 
-    # 매 실행마다 완전 고유한 프로필 폴더(충돌 방지)
     profile_dir = os.path.join(CHROME_PROFILE_BASE, f"profile_{uuid.uuid4().hex}")
     os.makedirs(profile_dir, exist_ok=True)
 
     options = Options()
-    # 안정성 옵션(일반 범위)
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
@@ -87,22 +86,17 @@ def setup_driver():
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-background-networking")
 
-    # headless on/off (기본 on)
     headless = os.environ.get("HEADLESS", "1").strip() != "0"
     if headless:
         options.add_argument("--headless=new")
 
-    # ★ 프로필 경로를 명시(한글 경로/잠금 문제 회피)
     options.add_argument(f"--user-data-dir={profile_dir}")
-
-    # ★ 디버깅 채널(일부 환경에서 DevTools/포트 이슈 완화)
     options.add_argument("--remote-debugging-pipe")
 
     service = Service(ChromeDriverManager().install())
 
     driver = None
     try:
-        # 가끔 첫 시도가 실패할 수 있어 2~3회 재시도
         last_err = None
         for attempt in range(1, 4):
             try:
@@ -122,7 +116,7 @@ def setup_driver():
         driver.set_page_load_timeout(60)
         driver.implicitly_wait(10)
 
-        # IP 확인(브라우저 기준)
+        # IP 확인
         try:
             driver.get("https://api.ipify.org?format=json")
             time.sleep(2)
@@ -179,23 +173,22 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             body = driver.find_element(By.TAG_NAME, "body")
             body_text = body.text[:500] if body.text else "(empty)"
             print(f"  [LOGIN] body text: {body_text}", flush=True)
-
             body_html = body.get_attribute("innerHTML")[:2000]
             print(f"  [LOGIN] body HTML: {body_html}", flush=True)
             return None
 
         for i, inp in enumerate(inputs[:5]):
-            inp_type = inp.get_attribute('type')
-            inp_name = inp.get_attribute('name')
-            inp_placeholder = inp.get_attribute('placeholder')
+            inp_type = inp.get_attribute("type")
+            inp_name = inp.get_attribute("name")
+            inp_placeholder = inp.get_attribute("placeholder")
             print(f"    input[{i}]: type={inp_type}, name={inp_name}, placeholder={inp_placeholder}", flush=True)
 
         id_input = None
         for inp in inputs:
-            inp_type = inp.get_attribute('type')
-            inp_name = inp.get_attribute('name')
-            inp_testid = inp.get_attribute('data-testid')
-            if inp_type == 'text' or inp_name == 'id' or inp_testid == 'id':
+            inp_type = inp.get_attribute("type")
+            inp_name = inp.get_attribute("name")
+            inp_testid = inp.get_attribute("data-testid")
+            if inp_type == "text" or inp_name == "id" or inp_testid == "id":
                 id_input = inp
                 break
         if not id_input:
@@ -205,25 +198,25 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         time.sleep(0.3)
         id_input.clear()
         id_input.send_keys(login_id)
-        print(f"  [LOGIN] 아이디 입력 완료", flush=True)
+        print("  [LOGIN] 아이디 입력 완료", flush=True)
         time.sleep(0.5)
 
         pwd_input = None
         for inp in inputs:
-            if inp.get_attribute('type') == 'password':
+            if inp.get_attribute("type") == "password":
                 pwd_input = inp
                 break
         if not pwd_input and len(inputs) > 1:
             pwd_input = inputs[1]
         if not pwd_input:
-            print(f"  [LOGIN] 비밀번호 필드를 찾을 수 없음", flush=True)
+            print("  [LOGIN] 비밀번호 필드를 찾을 수 없음", flush=True)
             return None
 
         pwd_input.click()
         time.sleep(0.3)
         pwd_input.clear()
         pwd_input.send_keys(login_pwd)
-        print(f"  [LOGIN] 비밀번호 입력 완료", flush=True)
+        print("  [LOGIN] 비밀번호 입력 완료", flush=True)
         time.sleep(0.5)
 
         buttons = driver.find_elements(By.TAG_NAME, "button")
@@ -231,19 +224,19 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
 
         login_btn = None
         for btn in buttons:
-            btn_type = btn.get_attribute('type')
+            btn_type = btn.get_attribute("type")
             btn_text = btn.text or ""
-            if btn_type == 'submit' or '로그인' in btn_text:
+            if btn_type == "submit" or "로그인" in btn_text:
                 login_btn = btn
                 print(f"  [LOGIN] 로그인 버튼 발견: type={btn_type}, text={btn_text[:20]}", flush=True)
                 break
 
         if login_btn:
             login_btn.click()
-            print(f"  [LOGIN] 로그인 버튼 클릭", flush=True)
+            print("  [LOGIN] 로그인 버튼 클릭", flush=True)
         else:
             pwd_input.send_keys(Keys.RETURN)
-            print(f"  [LOGIN] Enter 키로 로그인", flush=True)
+            print("  [LOGIN] Enter 키로 로그인", flush=True)
 
         time.sleep(10)
 
@@ -255,18 +248,19 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             for err in errors:
                 if err.text:
                     print(f"  [LOGIN] 에러: {err.text}", flush=True)
-            print(f"  [LOGIN] 로그인 실패: 여전히 로그인 페이지", flush=True)
+            print("  [LOGIN] 로그인 실패: 여전히 로그인 페이지", flush=True)
             return None
 
-        print(f"  [LOGIN] 로그인 성공!", flush=True)
+        print("  [LOGIN] 로그인 성공!", flush=True)
 
+        # 리뷰 페이지 이동(이 페이지에서 브라우저 fetch를 날릴 예정)
         review_url = f"https://self.baemin.com/shops/{shop_id}/reviews"
         print(f"  [LOGIN] 리뷰 페이지 이동: {review_url}", flush=True)
         driver.get(review_url)
         time.sleep(5)
 
         cookies = driver.get_cookies()
-        cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+        cookie_dict = {c["name"]: c["value"] for c in cookies}
 
         if cookie_dict:
             print(f"  [LOGIN] 쿠키 {len(cookie_dict)}개 획득", flush=True)
@@ -281,25 +275,34 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
         return None
 
 
-def fetch_reviews_api(cookies, shop_id, from_date, to_date):
-    """API로 리뷰 데이터 수집"""
+def _common_api_headers():
+    return {
+        "accept": "application/json, text/plain, */*",
+        "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+        "origin": "https://self.baemin.com",
+        "service-channel": "SELF_SERVICE_PC",
+        "user-agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+        ),
+    }
+
+
+def fetch_reviews_api_requests(cookies, shop_id, from_date, to_date):
+    """
+    requests로 리뷰 데이터 수집.
+    - 403/401이면 None을 리턴해서 브라우저 fetch fallback 하게 함
+    """
     reviews = []
     offset = 0
     limit = 50
 
-    headers = {
-        "accept": "application/json, text/plain, */*",
-        "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-        "origin": "https://self.baemin.com",
-        "referer": "https://self.baemin.com/",
-        "service-channel": "SELF_SERVICE_PC",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
-    }
+    headers = _common_api_headers()
 
     cookie_str = "; ".join([f"{k}={v}" for k, v in cookies.items()])
     headers["Cookie"] = cookie_str
 
-    print(f"    [API] 기간: {from_date} ~ {to_date}", flush=True)
+    print(f"    [API/requests] 기간: {from_date} ~ {to_date}", flush=True)
 
     while True:
         url = f"{API_BASE_URL}/{shop_id}/reviews?from={from_date}&to={to_date}&offset={offset}&limit={limit}"
@@ -316,20 +319,97 @@ def fetch_reviews_api(cookies, shop_id, from_date, to_date):
                     break
 
                 reviews.extend(review_list)
-                print(f"    [API] 수집: offset={offset}, 개수={len(review_list)}", flush=True)
+                print(f"    [API/requests] 수집: offset={offset}, 개수={len(review_list)}", flush=True)
 
                 if not has_next:
                     break
 
                 offset += limit
                 time.sleep(1)
-            else:
-                print(f"    [API] 오류: {response.status_code}", flush=True)
-                break
+                continue
+
+            # ★ 여기서부터 에러 처리
+            if response.status_code in (401, 403):
+                snippet = (response.text or "")[:500].replace("\n", " ")
+                print(f"    [API/requests] 차단/권한 오류: {response.status_code} body={snippet}", flush=True)
+                return None  # fallback 트리거
+
+            print(f"    [API/requests] 오류: {response.status_code} body={(response.text or '')[:200]}", flush=True)
+            break
 
         except Exception as e:
-            print(f"    [API] 요청 오류: {e}", flush=True)
+            print(f"    [API/requests] 요청 오류: {e}", flush=True)
             break
+
+    return reviews
+
+
+def _browser_fetch(driver, url, headers):
+    """
+    Selenium 브라우저 컨텍스트에서 fetch 수행 (WAF/지문 문제 회피용)
+    반환: dict(status:int, text:str)
+    """
+    script = r"""
+        const url = arguments[0];
+        const headers = arguments[1];
+        const cb = arguments[arguments.length - 1];
+
+        fetch(url, { method: "GET", credentials: "include", headers: headers })
+          .then(async (r) => {
+            const text = await r.text();
+            cb({ status: r.status, text: text });
+          })
+          .catch((e) => cb({ status: -1, text: String(e) }));
+    """
+    return driver.execute_async_script(script, url, headers)
+
+
+def fetch_reviews_api_browser(driver, shop_id, from_date, to_date):
+    """
+    브라우저 fetch로 리뷰 데이터 수집 (requests가 403일 때 fallback)
+    """
+    reviews = []
+    offset = 0
+    limit = 50
+
+    headers = _common_api_headers()
+
+    print(f"    [API/browser] 기간: {from_date} ~ {to_date}", flush=True)
+
+    while True:
+        url = f"{API_BASE_URL}/{shop_id}/reviews?from={from_date}&to={to_date}&offset={offset}&limit={limit}"
+
+        resp = _browser_fetch(driver, url, headers)
+        status = resp.get("status")
+        text = resp.get("text", "")
+
+        if status == 200:
+            try:
+                data = json.loads(text)
+            except Exception as e:
+                print(f"    [API/browser] JSON 파싱 실패: {e} text={(text or '')[:300]}", flush=True)
+                break
+
+            review_list = data.get("reviews", [])
+            has_next = data.get("next", False)
+
+            if not review_list:
+                break
+
+            reviews.extend(review_list)
+            print(f"    [API/browser] 수집: offset={offset}, 개수={len(review_list)}", flush=True)
+
+            if not has_next:
+                break
+
+            offset += limit
+            time.sleep(1)
+            continue
+
+        # 에러
+        snippet = (text or "")[:500].replace("\n", " ")
+        print(f"    [API/browser] 오류: {status} body={snippet}", flush=True)
+        break
 
     return reviews
 
@@ -341,7 +421,7 @@ def parse_review(review, store_name):
         if img.get("displayStatus") == "DISPLAY":
             images.append(img.get("imageUrl", ""))
 
-    menus = [menu.get("name", "") for menu in review.get("menus", []) if menu.get("name")]
+    menus = [m.get("name", "") for m in review.get("menus", []) if m.get("name")]
 
     created_at = review.get("createdAt", "")
     created_date = created_at[:10] if len(created_at) >= 10 else ""
@@ -369,7 +449,8 @@ def get_date_ranges(mode="daily"):
     if mode == "daily":
         target_date = today - timedelta(days=2)
         return [(target_date.strftime("%Y-%m-%d"), target_date.strftime("%Y-%m-%d"))]
-    elif mode == "initial":
+
+    if mode == "initial":
         ranges = [("2025-01-01", "2025-06-30"), ("2025-07-01", "2025-12-31")]
         if today.year >= 2026:
             start = datetime(2026, 1, 1)
@@ -378,7 +459,8 @@ def get_date_ranges(mode="daily"):
                 ranges.append((start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")))
                 start = end + timedelta(days=1)
         return ranges
-    elif mode == "current_year":
+
+    if mode == "current_year":
         year_start = datetime(today.year, 1, 1)
         ranges = []
         start = year_start
@@ -387,6 +469,7 @@ def get_date_ranges(mode="daily"):
             ranges.append((start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")))
             start = end + timedelta(days=1)
         return ranges
+
     return []
 
 
@@ -395,7 +478,7 @@ def load_existing_data():
         try:
             with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
+        except Exception:
             pass
     return {"generated_at": None, "platform": "baemin", "stores": [], "summary": {}}
 
@@ -404,11 +487,13 @@ def merge_reviews(existing_reviews, new_reviews):
     existing_ids = {r["id"] for r in existing_reviews}
     merged = existing_reviews.copy()
     new_count = 0
+
     for review in new_reviews:
         if review["id"] not in existing_ids:
             merged.append(review)
             existing_ids.add(review["id"])
             new_count += 1
+
     merged.sort(key=lambda x: x.get("created_at", ""), reverse=True)
     return merged, new_count
 
@@ -423,13 +508,16 @@ def calculate_summary(stores):
     for store in stores:
         reviews = store.get("reviews", [])
         total_reviews += len(reviews)
+
         for review in reviews:
             if review.get("is_negative"):
                 total_negative += 1
+
             rating = review.get("rating", 0)
             if rating > 0:
                 rating_sum += rating
                 rating_count += 1
+
             for menu in review.get("menus", []):
                 menu_count[menu] = menu_count.get(menu, 0) + 1
 
@@ -441,7 +529,7 @@ def calculate_summary(stores):
         "total_reviews": total_reviews,
         "total_negative": total_negative,
         "average_rating": avg_rating,
-        "popular_menus": [{"name": m[0], "count": m[1]} for m in popular_menus]
+        "popular_menus": [{"name": m[0], "count": m[1]} for m in popular_menus],
     }
 
 
@@ -477,14 +565,14 @@ def main():
         print(f"\n[{store_name}] (Shop ID: {shop_id})", flush=True)
 
         if not login_id or not login_pwd:
-            print(f"  건너뜀: 로그인 정보 없음", flush=True)
+            print("  건너뜀: 로그인 정보 없음", flush=True)
             if store_name in store_reviews:
                 all_stores.append({
                     "store_name": store_name,
                     "shop_id": shop_id,
                     "reviews": store_reviews[store_name],
                     "review_count": len(store_reviews[store_name]),
-                    "crawled_at": existing_data.get("generated_at")
+                    "crawled_at": existing_data.get("generated_at"),
                 })
             continue
 
@@ -494,22 +582,27 @@ def main():
             cookies = login_and_get_cookies(driver, login_id, login_pwd, shop_id)
 
             if not cookies:
-                print(f"  실패: 로그인 불가", flush=True)
+                print("  실패: 로그인 불가", flush=True)
                 if store_name in store_reviews:
                     all_stores.append({
                         "store_name": store_name,
                         "shop_id": shop_id,
                         "reviews": store_reviews[store_name],
                         "review_count": len(store_reviews[store_name]),
-                        "crawled_at": existing_data.get("generated_at")
+                        "crawled_at": existing_data.get("generated_at"),
                     })
                 continue
 
             new_reviews = []
             for from_date, to_date in date_ranges:
-                raw_reviews = fetch_reviews_api(cookies, shop_id, from_date, to_date)
-                for review in raw_reviews:
-                    new_reviews.append(parse_review(review, store_name))
+                raw_reviews = fetch_reviews_api_requests(cookies, shop_id, from_date, to_date)
+
+                # ★ 403/401이면 브라우저 fetch로 fallback
+                if raw_reviews is None:
+                    raw_reviews = fetch_reviews_api_browser(driver, shop_id, from_date, to_date)
+
+                for r in raw_reviews:
+                    new_reviews.append(parse_review(r, store_name))
 
             print(f"  수집 완료: {len(new_reviews)}개", flush=True)
 
@@ -530,7 +623,7 @@ def main():
                 "review_count": len(merged),
                 "negative_count": store_negative,
                 "average_rating": store_avg,
-                "crawled_at": datetime.now().isoformat()
+                "crawled_at": datetime.now().isoformat(),
             })
 
         except Exception as e:
@@ -541,7 +634,7 @@ def main():
                     "shop_id": shop_id,
                     "reviews": store_reviews[store_name],
                     "review_count": len(store_reviews[store_name]),
-                    "crawled_at": existing_data.get("generated_at")
+                    "crawled_at": existing_data.get("generated_at"),
                 })
         finally:
             try:
@@ -567,7 +660,7 @@ def main():
         "platform": "baemin",
         "crawl_mode": mode,
         "stores": all_stores,
-        "summary": summary
+        "summary": summary,
     }
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
