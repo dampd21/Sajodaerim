@@ -50,7 +50,7 @@ jobs:
         run: |
           chcp 65001>nul
           python -m pip install --upgrade pip
-          python -m pip install selenium webdriver-manager requests
+          python -m pip install selenium webdriver-manager
 
       - name: Cleanup stale chrome/chromedriver (best-effort)
         run: |
