@@ -19,7 +19,6 @@ jobs:
   crawl:
     runs-on: [self-hosted, baemin]
 
-    # 같은 러너에서 중복 실행되면 크롬 프로세스/파일 잠금이 생길 수 있어서 방지
     concurrency:
       group: baemin-review-crawler
       cancel-in-progress: true
@@ -50,15 +49,15 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install selenium webdriver-manager requests
 
-      - name: Cleanup stale chromedriver (best-effort)
+      - name: Cleanup stale chrome/chromedriver (best-effort)
         run: |
           chcp 65001>nul
-          taskkill /F /IM chromedriver.exe /T >nul 2>nul
+          taskkill /F /IM chromedriver.exe /T >nul 2>nul || echo chromedriver not running
+          taskkill /F /IM chrome.exe /T >nul 2>nul || echo chrome not running
 
       - name: Run crawler
         env:
           PYTHONUTF8: "1"
-          # 한글 경로/Temp 이슈 피하려고 프로필 베이스를 고정
           CHROME_PROFILE_BASE: "C:\\actions-runner\\_chrome_profiles"
           CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
