@@ -127,9 +127,18 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .table-header h3 { margin: 0; color: #e0e0e0; font-size: 1rem; }
+
+.table-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
 /* 뷰 토글 */
 .view-toggle {
@@ -153,6 +162,195 @@
 
 .view-btn:hover { color: #ccc; }
 .view-btn.active { background: rgba(0, 212, 255, 0.15); color: #00d4ff; }
+
+/* ============================================
+   정렬 컨트롤
+   ============================================ */
+
+.sort-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sort-control label {
+    font-size: 0.75rem;
+    color: #888;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.sort-select {
+    background: #1e2a3a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    padding: 6px 28px 6px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23888' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+
+.sort-select:focus { border-color: #00d4ff; }
+
+.sort-dir-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: #1e2a3a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    padding: 0;
+    line-height: 1;
+}
+
+.sort-dir-btn:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.sort-dir-btn .sort-arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.sort-dir-btn.desc .sort-arrow {
+    transform: rotate(180deg);
+}
+
+/* 테이블 정렬 헤더 */
+.data-table thead th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 22px;
+    transition: color 0.2s;
+}
+
+.data-table thead th.sortable:hover {
+    color: #00d4ff;
+}
+
+.data-table thead th.sortable::after {
+    content: '⇅';
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.data-table thead th.sortable.sort-asc::after {
+    content: '▲';
+    color: #00d4ff;
+}
+
+.data-table thead th.sortable.sort-desc::after {
+    content: '▼';
+    color: #00d4ff;
+}
+
+.data-table thead th.sortable.sort-asc,
+.data-table thead th.sortable.sort-desc {
+    color: #00d4ff;
+}
+
+/* ============================================
+   테이블뷰 지점별 그룹 구분
+   ============================================ */
+
+/* 지점 그룹 구분선 */
+.data-table tbody tr.store-group-first td {
+    border-top: 2px solid rgba(0, 212, 255, 0.2);
+}
+
+/* 지점별 배경색 교대 */
+.data-table tbody tr.store-group-even {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.data-table tbody tr.store-group-odd {
+    background: rgba(0, 180, 255, 0.02);
+}
+
+.data-table tbody tr.store-group-even:hover {
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.data-table tbody tr.store-group-odd:hover {
+    background: rgba(0, 212, 255, 0.06);
+}
+
+/* 지점 이름 셀 – 그룹 첫 행에서만 표시 */
+.data-table tbody td.store-name-cell {
+    font-weight: 600;
+    color: #e0e0e0;
+    position: relative;
+}
+
+.data-table tbody td.store-name-cell .store-color-bar {
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* 지점 색상 바 (최대 9개 지점) */
+.store-color-0 { background: #00d4ff; }
+.store-color-1 { background: #7b2cbf; }
+.store-color-2 { background: #4ecdc4; }
+.store-color-3 { background: #ff6b6b; }
+.store-color-4 { background: #ffe66d; }
+.store-color-5 { background: #51cf66; }
+.store-color-6 { background: #f59f00; }
+.store-color-7 { background: #e64980; }
+.store-color-8 { background: #20c997; }
+
+/* 지점 그룹 헤더 행 (선택적) */
+.data-table tbody tr.store-group-header td {
+    background: rgba(0, 212, 255, 0.06);
+    border-top: 2px solid rgba(0, 212, 255, 0.15);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+    padding: 8px 14px;
+    font-weight: 700;
+    color: #00d4ff;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+}
+
+.data-table tbody tr.store-group-header td .store-group-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.data-table tbody tr.store-group-header td .store-group-count {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #888;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
 
 /* ============================================
    타임라인 뷰 (참고 UI 적용)
@@ -995,6 +1193,10 @@
     .tl-card { width: 80px; }
     .tl-num { font-size: 1.2rem; }
     .tl-memo { flex-wrap: wrap; }
+    .table-header { flex-direction: column; align-items: flex-start; }
+    .table-header-controls { width: 100%; justify-content: space-between; }
+    .sort-control { flex: 1; }
+    .sort-select { flex: 1; min-width: 0; }
 }
 
 @media (max-width: 480px) {
@@ -1005,4 +1207,6 @@
     .tl-card { width: 72px; }
     .tl-num { font-size: 1.1rem; }
     .tl-stats { display: none; }
+    .table-header-controls { flex-direction: column; align-items: stretch; }
+    .sort-control { width: 100%; }
 }
