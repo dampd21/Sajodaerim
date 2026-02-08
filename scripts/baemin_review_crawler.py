@@ -8,10 +8,14 @@
 """
 
 import os
+import sys
 import json
 import time
+import shutil
+import tempfile
 import requests
 from datetime import datetime, timedelta
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -19,7 +23,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from webdriver_manager.chrome import ChromeDriverManager
+
 
 # 지점 정보
 STORES = [
@@ -69,13 +75,34 @@ def setup_driver():
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=ko-KR")
     options.add_argument("--headless=new")
+
+    # 안정화용 (일반적인 옵션)
+    options.add_argument("--no-first-run")
+    options.add_argument("--no-default-browser-check")
+
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36")
+    options.add_argument(
+        "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+    )
+
+    # ★ 매 실행마다 고유 프로필 폴더 사용 (프로필 잠김 충돌 방지)
+    profile_dir = tempfile.mkdtemp(prefix="baemin_chrome_profile_")
+    options.add_argument(f"--user-data-dir={profile_dir}")
 
     service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+
+    try:
+        driver = webdriver.Chrome(service=service, options=options)
+    except Exception:
+        # 드라이버 생성 실패 시 임시 폴더 남지 않게 정리
+        shutil.rmtree(profile_dir, ignore_errors=True)
+        raise
+
+    # profile_dir을 driver에 저장해두고, 나중에 quit 이후 삭제
+    driver._baemin_profile_dir = profile_dir
 
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
@@ -143,7 +170,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
             body_text = body.text[:500] if body.text else "(empty)"
             print(f"  [LOGIN] body text: {body_text}", flush=True)
 
-            # body innerHTML 일부
             body_html = body.get_attribute("innerHTML")[:2000]
             print(f"  [LOGIN] body HTML: {body_html}", flush=True)
             return None
@@ -226,7 +252,6 @@ def login_and_get_cookies(driver, login_id, login_pwd, shop_id):
 
         # 로그인 성공 여부 확인
         if "login" in current_url.lower():
-            # 에러 메시지 확인
             errors = driver.find_elements(By.CSS_SELECTOR, ".is-danger, .error, [role='alert'], .help, p.help")
             for err in errors:
                 if err.text:
@@ -424,6 +449,13 @@ def calculate_summary(stores):
 
 
 def main():
+    # 로그 한글 안 깨지게(가능한 경우)
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
     print("=" * 60, flush=True)
     print("배달의민족 리뷰 크롤러 시작", flush=True)
     print("=" * 60, flush=True)
@@ -460,9 +492,9 @@ def main():
                 })
             continue
 
-        driver = setup_driver()
-
+        driver = None
         try:
+            driver = setup_driver()
             cookies = login_and_get_cookies(driver, login_id, login_pwd, shop_id)
 
             if not cookies:
@@ -516,7 +548,20 @@ def main():
                     "crawled_at": existing_data.get("generated_at")
                 })
         finally:
-            driver.quit()
+            # driver 종료
+            try:
+                if driver:
+                    driver.quit()
+            except Exception:
+                pass
+
+            # ★ 임시 프로필 폴더 삭제
+            try:
+                profile_dir = getattr(driver, "_baemin_profile_dir", None)
+                if profile_dir:
+                    shutil.rmtree(profile_dir, ignore_errors=True)
+            except Exception:
+                pass
 
         time.sleep(2)
 
