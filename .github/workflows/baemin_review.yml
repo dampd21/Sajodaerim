@@ -14,17 +14,39 @@ on:
           - daily
           - initial
           - current_year
+      store:
+        description: '지점 선택'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - main
+          - dasan
+          - songpa
+          - dujeong
 
 permissions:
   contents: write
 
+concurrency:
+  group: baemin-review-crawler-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   crawl:
+    name: Crawl - ${{ matrix.store }}
     runs-on: [self-hosted, baemin]
 
-    concurrency:
-      group: baemin-review-crawler
-      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        store: ${{ fromJSON(
+          github.event_name == 'workflow_dispatch' && github.event.inputs.store != 'all'
+          && format('["{0}"]', github.event.inputs.store)
+          || '["main","dasan","songpa","dujeong"]'
+        ) }}
 
     defaults:
       run:
@@ -58,20 +80,19 @@ jobs:
           taskkill /F /IM chromedriver.exe /T >nul 2>nul || echo chromedriver not running
           taskkill /F /IM chrome.exe /T >nul 2>nul || echo chrome not running
 
-      - name: Run crawler
+      - name: Run crawler (per-store)
         env:
           PYTHONUTF8: "1"
           CHROME_PROFILE_BASE: "C:\\actions-runner\\_chrome_profiles"
 
-          # --- 속도 살짝 늦추기(운영 안정화용) ---
-          # 페이지네이션(50개씩) 한 번 요청하고 다음 요청까지 쉬는 시간(초)
+          # 속도(필요시 조절)
           API_SLEEP_SEC: "1.2"
-          # 매장 1개 끝나고 다음 매장 시작 전 쉬는 시간(초)
           STORE_COOLDOWN_SEC: "6"
-          # (선택) 페이지당 limit (기본 50 그대로)
           API_LIMIT: "50"
 
           CRAWL_MODE: ${{ github.event.inputs.mode || 'daily' }}
+          TARGET_STORE: ${{ matrix.store }}
+
           BAEMIN_ID_MAIN: ${{ secrets.BAEMIN_ID_MAIN }}
           BAEMIN_PWD_MAIN: ${{ secrets.BAEMIN_PWD_MAIN }}
           BAEMIN_ID_DASAN: ${{ secrets.BAEMIN_ID_DASAN }}
@@ -89,10 +110,11 @@ jobs:
           chcp 65001>nul
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
           git add docs/review_baemin_data.json
 
           for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format ""yyyy-MM-dd HH:mm"""') do set TS=%%i
-          git diff --staged --quiet || git commit -m "Update baemin reviews - %TS%"
+          git diff --staged --quiet || git commit -m "Update baemin reviews - %TS% - ${{ matrix.store }}"
 
           git pull origin main --rebase || echo pull skipped
           git push
