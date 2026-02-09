@@ -103,16 +103,21 @@ async function loadData() {
         if (r.ok) {
             marketingData = await r.json();
             if (marketingData.generated_at) {
-                document.getElementById('updateTime').textContent = 'Last update: ' + formatDateTime(new Date(marketingData.generated_at));
+                var el = document.getElementById('updateTime');
+                if (el) el.textContent = '마지막 업데이트: ' + formatDateTime(new Date(marketingData.generated_at));
             }
         }
     } catch (e) {}
+
     if (!marketingData) marketingData = { tracking_history: {}, competitor_analysis: {} };
 
     var lc = localStorage.getItem('marketing_config');
     if (lc) try { configData = JSON.parse(lc); } catch (e) { configData = null; }
     if (!configData) {
-        try { var cr = await fetch('marketing_config.json?t=' + Date.now()); if (cr.ok) configData = await cr.json(); } catch (e) {}
+        try {
+            var cr = await fetch('marketing_config.json?t=' + Date.now());
+            if (cr.ok) configData = await cr.json();
+        } catch (e) {}
     }
     if (!configData) configData = { tracking_keywords: {} };
 }
@@ -239,7 +244,10 @@ function switchView(v) {
     if (tv) tv.style.display = v === 'table' ? 'block' : 'none';
 }
 
-function closeModal() { var m = document.getElementById('detailModal'); if (m) m.classList.remove('show'); }
+function closeModal() {
+    var m = document.getElementById('detailModal');
+    if (m) m.classList.remove('show');
+}
 
 // ============================================
 // 필터
@@ -258,11 +266,13 @@ function updateKeywordFilter() {
     var ks = document.getElementById('keywordSelect');
     var sf = (document.getElementById('storeSelect') || {}).value || '';
     if (!ks || !marketingData) return;
+
     var kws = new Set();
     Object.keys(marketingData.tracking_history || {}).forEach(function(k) {
         var p = k.split('|');
         if (!sf || p[0] === sf) kws.add(p[1]);
     });
+
     ks.innerHTML = '<option value="">전체 키워드</option>';
     Array.from(kws).sort().forEach(function(k) { ks.innerHTML += '<option value="' + k + '">' + k + '</option>'; });
 }
@@ -315,13 +325,16 @@ function sortData(data, field, dir) {
 // 대시보드
 // ============================================
 
-function renderDashboard() { if (marketingData) filterAndRender(); }
+function renderDashboard() {
+    if (marketingData) filterAndRender();
+}
 
 function filterAndRender() {
     var sf = (document.getElementById('storeSelect') || {}).value || '';
     var kf = (document.getElementById('keywordSelect') || {}).value || '';
     var pd = parseInt((document.getElementById('periodSelect') || {}).value || '30');
     var fd = [];
+
     Object.entries(marketingData.tracking_history || {}).forEach(function(e) {
         var k = e[0], d = e[1], p = k.split('|');
         if (sf && p[0] !== sf) return;
@@ -345,12 +358,14 @@ function filterAndRender() {
 
 function renderSummaryCards(data) {
     document.getElementById('totalKeywords').textContent = data.length;
+
     if (!data.length) {
         document.getElementById('avgRank').textContent = '-';
         document.getElementById('rankUp').textContent = '-';
         document.getElementById('rankDown').textContent = '-';
         return;
     }
+
     var tr = 0, rc = 0, ru = 0, rd = 0;
     data.forEach(function(i) {
         var l = i.history[0], p = i.history[1];
@@ -362,6 +377,7 @@ function renderSummaryCards(data) {
             }
         }
     });
+
     document.getElementById('avgRank').textContent = rc > 0 ? (tr / rc).toFixed(1) + '위' : '-';
     document.getElementById('rankUp').textContent = ru;
     document.getElementById('rankDown').textContent = rd;
@@ -369,35 +385,63 @@ function renderSummaryCards(data) {
 
 function renderRankChart(data) {
     if (rankChart) { rankChart.destroy(); rankChart = null; }
+
     var ctx = recreateCanvas('rankChartContainer', 'rankChart');
     if (!ctx || !data.length) return;
+
     var ds = new Set();
     data.forEach(function(i) { i.history.forEach(function(h) { ds.add(h.date); }); });
+
     var dates = Array.from(ds).sort().reverse().slice(0, 30).reverse();
     var colors = ['#00d4ff', '#7b2cbf', '#4ecdc4', '#ff6b6b', '#ffe66d', '#51cf66', '#f59f00', '#e64980'];
+
     var datasets = data.slice(0, 8).map(function(i, idx) {
         return {
             label: i.store_name.replace('역대짬뽕 ', '') + ' | ' + i.keyword,
-            data: dates.map(function(d) { var f = i.history.find(function(h) { return h.date === d; }); return f && f.rank ? f.rank : null; }),
+            data: dates.map(function(d) {
+                var f = i.history.find(function(h) { return h.date === d; });
+                return f && f.rank ? f.rank : null;
+            }),
             borderColor: colors[idx % colors.length],
             backgroundColor: colors[idx % colors.length] + '20',
-            tension: 0, fill: false, spanGaps: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2
+            tension: 0,
+            fill: false,
+            spanGaps: true,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            borderWidth: 2
         };
     });
+
     rankChart = new Chart(ctx, {
         type: 'line',
-        data: { labels: dates.map(function(d) { var dt = new Date(d); return (dt.getMonth()+1) + '.' + dt.getDate(); }), datasets: datasets },
+        data: {
+            labels: dates.map(function(d) {
+                var dt = new Date(d);
+                return (dt.getMonth() + 1) + '.' + dt.getDate();
+            }),
+            datasets: datasets
+        },
         options: {
-            responsive: true, maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             plugins: {
                 legend: { position: 'top', labels: { color: '#e0e0e0', font: { size: 11 }, boxWidth: 12, padding: 12 } },
                 tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + (c.raw ? c.raw + '위' : '-'); } } },
-                zoom: { pan: { enabled: true, mode: 'x' }, zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' } }
+                zoom: {
+                    pan: { enabled: true, mode: 'x' },
+                    zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+                }
             },
             scales: {
                 x: { ticks: { color: '#888' }, grid: { display: false } },
-                y: { reverse: true, min: 1, ticks: { color: '#888', callback: function(v) { return v + '위'; } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                y: {
+                    reverse: true,
+                    min: 1,
+                    ticks: { color: '#888', callback: function(v) { return v + '위'; } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
             }
         }
     });
@@ -476,7 +520,7 @@ function renderTimelineView(data) {
             if (h.blog_reviews || h.visitor_reviews || h.save_count) {
                 statsHtml = '<div class="tl-stats">';
                 if (h.blog_reviews) statsHtml += '<span><span class="tl-lbl">블</span> ' + h.blog_reviews + '</span>';
-                if (h.visitor_reviews) statsHtml += '<span><span class="tl-lbl">방</span> ' + formatNumber(h.visitor_reviews) + '</span>';
+                if (h.visitor_reviews) statsHtml += '<span><span class="tl-lbl">방</span> ' + (formatNumber(h.visitor_reviews) || '-') + '</span>';
                 if (h.save_count) statsHtml += '<span><span class="tl-lbl">저</span> ' + h.save_count + '</span>';
                 statsHtml += '</div>';
             }
@@ -566,6 +610,7 @@ function renderHistoryCards(data) {
     var c = document.getElementById('historyCardView');
     if (!c) return;
     if (!data.length) { c.innerHTML = '<div class="no-data">추적 중인 키워드가 없습니다.</div>'; return; }
+
     c.innerHTML = data.map(function(i) {
         var l = i.history[0], p = i.history[1], ch = '';
         if (l && l.rank && p && p.rank) {
@@ -574,12 +619,34 @@ function renderHistoryCards(data) {
             else if (d < 0) ch = '<span class="rank-change down">' + d + '</span>';
             else ch = '<span class="rank-change same">-</span>';
         }
+
         var tl = i.history.slice(0, 14).map(function(h) {
             var dt = new Date(h.date);
             var wd = ['일','월','화','수','목','금','토'][dt.getDay()];
-            return '<div class="timeline-item"><div class="timeline-date">' + (dt.getMonth()+1) + '.' + String(dt.getDate()).padStart(2,'0') + ' <span class="weekday">' + wd + '</span></div><div class="timeline-rank">' + (h.rank ? h.rank + '위' : '-') + '</div><div class="timeline-stats"><span><span class="stat-label">블</span> ' + (h.blog_reviews || '-') + '</span><span><span class="stat-label">방</span> ' + (formatNumber(h.visitor_reviews) || '-') + '</span><span><span class="stat-label">저</span> ' + (h.save_count || '-') + '</span></div></div>';
+            return '<div class="timeline-item">' +
+                '<div class="timeline-date">' + (dt.getMonth() + 1) + '.' + String(dt.getDate()).padStart(2,'0') +
+                ' <span class="weekday">' + wd + '</span></div>' +
+                '<div class="timeline-rank">' + (h.rank ? h.rank + '위' : '-') + '</div>' +
+                '<div class="timeline-stats">' +
+                    '<span><span class="stat-label">블</span> ' + (h.blog_reviews || '-') + '</span>' +
+                    '<span><span class="stat-label">방</span> ' + ((formatNumber(h.visitor_reviews) || '-') ) + '</span>' +
+                    '<span><span class="stat-label">저</span> ' + (h.save_count || '-') + '</span>' +
+                '</div>' +
+            '</div>';
         }).join('');
-        return '<div class="history-card"><div class="history-card-header"><div class="history-card-store">' + i.store_name + '</div><div class="history-card-keyword">' + i.keyword + '</div></div><div class="history-card-rank"><span class="rank-number">' + (l && l.rank ? l.rank : '-') + '</span>' + ch + '<div class="rank-label">현재 순위</div></div><div class="history-timeline">' + tl + '</div></div>';
+
+        return '<div class="history-card">' +
+            '<div class="history-card-header">' +
+                '<div class="history-card-store">' + i.store_name + '</div>' +
+                '<div class="history-card-keyword">' + i.keyword + '</div>' +
+            '</div>' +
+            '<div class="history-card-rank">' +
+                '<span class="rank-number">' + (l && l.rank ? l.rank : '-') + '</span>' +
+                ch +
+                '<div class="rank-label">현재 순위</div>' +
+            '</div>' +
+            '<div class="history-timeline">' + tl + '</div>' +
+        '</div>';
     }).join('');
 }
 
@@ -596,6 +663,7 @@ function renderHistoryTable(data) {
     data.forEach(function(i) {
         var storeIdx = STORE_LIST.indexOf(i.store_name);
         if (storeIdx === -1) storeIdx = 99;
+
         i.history.slice(0, 7).forEach(function(h) {
             rows.push({
                 date: h.date,
@@ -638,6 +706,7 @@ function renderHistoryTable(data) {
         if (isNewGroup) {
             groupIdx++;
             prevStore = r.store;
+
             var colorIdx = STORE_LIST.indexOf(r.store);
             if (colorIdx === -1) colorIdx = groupIdx;
             colorIdx = colorIdx % 9;
@@ -653,8 +722,9 @@ function renderHistoryTable(data) {
 
         var groupClass = (groupIdx % 2 === 0) ? 'store-group-even' : 'store-group-odd';
         var rankDisplay = r.rank ? r.rank + '위' : '-';
+
         var rankClass = '';
-        if (r.rank && r.rank <= 10) rankClass = ' style="color:#4ecdc4;font-weight:600;"';
+        if (r.rank && r.rank <= 10) rankClass = ' style="color:#4ecdc4;font-weight:700;"';
         else if (r.rank && r.rank > 40) rankClass = ' style="color:#ff6b6b;"';
 
         html += '<tr class="' + groupClass + '">' +
@@ -796,13 +866,18 @@ async function refreshRanking() {
             else { hist.unshift(td); if (hist.length > 90) hist.length = 90; }
             ok++;
         } catch (e) { fail++; }
+
         if (i < tasks.length - 1) await delay(800);
     }
 
     progressBar.style.width = '100%';
     progressText.textContent = '완료! (성공 ' + ok + ' / 실패 ' + fail + ')';
+
     marketingData.generated_at = new Date().toISOString();
-    document.getElementById('updateTime').textContent = 'Last update: ' + formatDateTime(new Date());
+
+    var el = document.getElementById('updateTime');
+    if (el) el.textContent = '마지막 업데이트: ' + formatDateTime(new Date());
+
     filterAndRender();
 
     setTimeout(function() {
@@ -811,6 +886,7 @@ async function refreshRanking() {
         btn.classList.remove('refreshing');
         btnText.textContent = '새로고침';
     }, 2000);
+
     if (ok > 0) showToast(ok + '개 키워드 순위 업데이트 완료', 'success');
     else showToast('순위 조회 실패', 'error');
 }
@@ -847,10 +923,12 @@ async function getPlaceKeywords(placeId) {
     var proxyUrl = getProxyUrl();
     if (!proxyUrl) return [];
     var targetUrl = 'https://m.place.naver.com/restaurant/' + placeId;
+
     try {
         var response = await fetch(proxyUrl + '?url=' + encodeURIComponent(targetUrl), { method: 'GET' });
         if (!response.ok) return [];
         var html = await response.text();
+
         var match = html.match(/"keywordList"\s*:\s*(\[[^\]]*\])/);
         if (match && match[1]) {
             try {
@@ -862,7 +940,9 @@ async function getPlaceKeywords(placeId) {
             }
         }
         return [];
-    } catch (e) { return []; }
+    } catch (e) {
+        return [];
+    }
 }
 
 // ============================================
@@ -873,19 +953,27 @@ async function runCompetitorAnalysis() {
     var ki = document.getElementById('analysisKeyword');
     var keyword = ki ? ki.value.trim() : '';
     var topN = parseInt(document.getElementById('analysisTopN').value || '10');
-    if (!keyword) { showToast('검색 키워드를 입력해주세요.', 'error'); if (ki) ki.focus(); return; }
+
+    if (!keyword) {
+        showToast('검색 키워드를 입력해주세요.', 'error');
+        if (ki) ki.focus();
+        return;
+    }
 
     var btn = document.getElementById('runAnalysisBtn');
-    btn.disabled = true; btn.textContent = '분석 중...';
+    btn.disabled = true;
+    btn.textContent = '분석 중...';
     showAnalysisProgress(true, '"' + keyword + '" 검색 중...', 5);
 
     try {
         showAnalysisProgress(true, '네이버 플레이스 검색 중...', 10);
         var result = await searchNaverPlace(keyword, topN);
+
         if (!result.items || !result.items.length) {
             showToast('검색 결과가 없습니다.', 'error');
             showAnalysisProgress(false);
-            btn.disabled = false; btn.textContent = '분석 시작';
+            btn.disabled = false;
+            btn.textContent = '분석 시작';
             return;
         }
 
@@ -901,7 +989,7 @@ async function runCompetitorAnalysis() {
             var nm = item.name || '';
 
             var pct = 15 + Math.round((i / total) * 70);
-            showAnalysisProgress(true, '대표키워드 수집 (' + (i+1) + '/' + total + ') ' + nm, pct);
+            showAnalysisProgress(true, '대표키워드 수집 (' + (i + 1) + '/' + total + ') ' + nm, pct);
 
             var keywords = await getPlaceKeywords(pid);
 
@@ -911,7 +999,9 @@ async function runCompetitorAnalysis() {
             });
 
             competitors.push({
-                rank: i + 1, place_id: pid, name: nm,
+                rank: i + 1,
+                place_id: pid,
+                name: nm,
                 category: item.category || '',
                 blog_reviews: String(item.blogCafeReviewCount || 0),
                 visitor_reviews: String(item.visitorReviewCount || 0),
@@ -930,19 +1020,24 @@ async function runCompetitorAnalysis() {
         var kv = loadSavedKeywordVolumes(Object.keys(allKw));
 
         var ar = {
-            keyword: keyword, analyzed_at: new Date().toISOString(),
-            total_results: result.total, competitors: competitors,
-            keyword_volumes: kv, all_keywords: allKw
+            keyword: keyword,
+            analyzed_at: new Date().toISOString(),
+            total_results: result.total,
+            competitors: competitors,
+            keyword_volumes: kv,
+            all_keywords: allKw
         };
 
         var sk = keyword + '_' + topN;
         if (!marketingData.competitor_analysis) marketingData.competitor_analysis = {};
         marketingData.competitor_analysis[sk] = ar;
+
         try { localStorage.setItem('marketing_competitor_' + sk, JSON.stringify(ar)); } catch (e) {}
 
         showAnalysisProgress(true, '완료!', 100);
         await delay(500);
         showAnalysisProgress(false);
+
         renderAnalysisResult(ar);
         renderSavedAnalysis();
 
@@ -954,44 +1049,78 @@ async function runCompetitorAnalysis() {
         if (error.message === 'PROXY_NOT_SET') showProxySetupGuide();
         else showToast('분석 오류: ' + error.message, 'error');
     }
-    btn.disabled = false; btn.textContent = '분석 시작';
+
+    btn.disabled = false;
+    btn.textContent = '분석 시작';
 }
 
 function loadSavedKeywordVolumes(kws) {
     var v = {};
     Object.values(marketingData.competitor_analysis || {}).forEach(function(a) {
         var s = a.keyword_volumes || {};
-        Object.keys(s).forEach(function(k) { if (kws.indexOf(k) !== -1 && !v[k]) v[k] = s[k]; });
+        Object.keys(s).forEach(function(k) {
+            if (kws.indexOf(k) !== -1 && !v[k]) v[k] = s[k];
+        });
     });
     return v;
 }
 
 function showProxySetupGuide() {
-    var modal = document.getElementById('detailModal'), title = document.getElementById('modalTitle'), body = document.getElementById('modalBody');
+    var modal = document.getElementById('detailModal');
+    var title = document.getElementById('modalTitle');
+    var body = document.getElementById('modalBody');
     if (!modal || !title || !body) return;
+
     title.textContent = '프록시 설정 필요';
-    body.innerHTML = '<div style="color:#ccc;line-height:1.8;"><p>프록시 URL 설정이 필요합니다.</p><div style="margin-top:16px;"><p style="font-weight:600;color:#00d4ff;margin-bottom:8px;">프록시 URL:</p><div style="display:flex;gap:8px;"><input type="text" id="proxyUrlInput" class="form-input" placeholder="https://xxx.workers.dev" value="' + (localStorage.getItem('marketing_proxy_url') || '') + '" style="flex:1;"><button class="btn btn-primary" onclick="saveProxyUrl()">저장</button></div></div></div>';
+    body.innerHTML =
+        '<div style="color:#ccc;line-height:1.8;">' +
+            '<p>프록시 URL 설정이 필요합니다.</p>' +
+            '<div style="margin-top:16px;">' +
+                '<p style="font-weight:700;color:#00d4ff;margin-bottom:8px;">프록시 URL</p>' +
+                '<div style="display:flex;gap:8px;">' +
+                    '<input type="text" id="proxyUrlInput" class="form-input" placeholder="https://xxx.workers.dev" value="' + (localStorage.getItem('marketing_proxy_url') || '') + '" style="flex:1;">' +
+                    '<button class="btn btn-primary" onclick="saveProxyUrl()">저장</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+
     modal.classList.add('show');
 }
 
 function saveProxyUrl() {
-    var input = document.getElementById('proxyUrlInput'); if (!input) return;
+    var input = document.getElementById('proxyUrlInput');
+    if (!input) return;
+
     var url = input.value.trim();
-    if (!url || url.indexOf('http') !== 0) { showToast('올바른 URL을 입력해주세요.', 'error'); return; }
+    if (!url || url.indexOf('http') !== 0) {
+        showToast('올바른 URL을 입력해주세요.', 'error');
+        return;
+    }
     if (url.endsWith('/')) url = url.slice(0, -1);
-    localStorage.setItem('marketing_proxy_url', url); window.NAVER_PROXY_URL = url;
-    closeModal(); showToast('프록시 URL 저장 완료', 'success');
+
+    localStorage.setItem('marketing_proxy_url', url);
+    window.NAVER_PROXY_URL = url;
+
+    closeModal();
+    showToast('프록시 URL 저장 완료', 'success');
 }
 
 function showAnalysisProgress(show, text, pct) {
     var c = document.getElementById('analysisProgress');
-    if (!show) { if (c) c.remove(); return; }
+    if (!show) {
+        if (c) c.remove();
+        return;
+    }
     if (!c) {
-        c = document.createElement('div'); c.id = 'analysisProgress'; c.className = 'analysis-progress';
+        c = document.createElement('div');
+        c.id = 'analysisProgress';
+        c.className = 'analysis-progress';
         var r = document.getElementById('analysisResult');
         if (r && r.parentNode) r.parentNode.insertBefore(c, r);
     }
-    c.innerHTML = '<div class="progress-text">' + (text || '') + '</div><div class="progress-bar-container"><div class="progress-bar" style="width:' + (pct || 0) + '%"></div></div>';
+    c.innerHTML =
+        '<div class="progress-text">' + (text || '') + '</div>' +
+        '<div class="progress-bar-container"><div class="progress-bar" style="width:' + (pct || 0) + '%"></div></div>';
 }
 
 // ============================================
@@ -999,7 +1128,9 @@ function showAnalysisProgress(show, text, pct) {
 // ============================================
 
 function renderAnalysisResult(result) {
-    var c = document.getElementById('analysisResult'); if (!c) return;
+    var c = document.getElementById('analysisResult');
+    if (!c) return;
+
     c.style.display = 'block';
     document.getElementById('competitorCount').textContent = result.competitors ? result.competitors.length : 0;
 
@@ -1007,23 +1138,34 @@ function renderAnalysisResult(result) {
     if (cl && result.competitors) {
         cl.innerHTML = result.competitors.map(function(comp, idx) {
             var rc = idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : '';
-            var kb = comp.keywords && comp.keywords.length > 0
-                ? ' <span style="font-size:0.7rem;color:#7b2cbf;background:rgba(123,44,191,0.1);padding:2px 6px;border-radius:4px;">' + comp.keywords.join(', ') + '</span>' : '';
+            var kb = (comp.keywords && comp.keywords.length > 0)
+                ? ' <span style="font-size:0.78rem;color:#b794f6;background:rgba(123,44,191,0.1);padding:2px 6px;border-radius:6px;">' + comp.keywords.join(', ') + '</span>'
+                : '';
 
             return '<div class="competitor-item" data-place-id="' + comp.place_id + '">' +
                 '<div class="competitor-rank ' + rc + '">' + comp.rank + '</div>' +
-                '<div class="competitor-info"><div class="competitor-name">' + escapeHtml(comp.name) + kb + '</div><div class="competitor-category">' + escapeHtml(comp.category || '') + '</div></div>' +
-                '<div class="competitor-stats"><span>블로그 ' + formatNumber(comp.blog_reviews || 0) + '</span><span>방문자 ' + formatNumber(comp.visitor_reviews || 0) + '</span><span>저장 ' + formatNumber(comp.save_count || 0) + '</span><span>평점 ' + (comp.score || '-') + '</span></div></div>';
+                '<div class="competitor-info">' +
+                    '<div class="competitor-name">' + escapeHtml(comp.name) + kb + '</div>' +
+                    '<div class="competitor-category">' + escapeHtml(comp.category || '') + '</div>' +
+                '</div>' +
+                '<div class="competitor-stats">' +
+                    '<span>블로그 ' + (formatNumber(comp.blog_reviews || 0) || '-') + '</span>' +
+                    '<span>방문자 ' + (formatNumber(comp.visitor_reviews || 0) || '-') + '</span>' +
+                    '<span>저장 ' + (formatNumber(comp.save_count || 0) || '-') + '</span>' +
+                    '<span>평점 ' + (comp.score || '-') + '</span>' +
+                '</div>' +
+            '</div>';
         }).join('');
 
         cl.querySelectorAll('.competitor-item').forEach(function(item) {
             item.addEventListener('click', function() {
                 var pid = item.dataset.placeId;
-                var comp = result.competitors.find(function(c) { return c.place_id === pid; });
+                var comp = result.competitors.find(function(x) { return x.place_id === pid; });
                 if (comp) showCompetitorDetail(comp, result.keyword_volumes);
             });
         });
     }
+
     renderKeywordsAnalysis(result);
 }
 
@@ -1035,10 +1177,15 @@ function renderKeywordsAnalysis(result) {
     document.getElementById('totalRepKeywords').textContent = kl.length;
 
     var tv = 0, vc = 0;
-    kl.forEach(function(k) { var v = kv[k.keyword]; if (v && v.total) { tv += v.total; vc++; } });
-    document.getElementById('avgSearchVolume').textContent = vc > 0 ? formatNumber(Math.round(tv / vc)) : '-';
+    kl.forEach(function(k) {
+        var v = kv[k.keyword];
+        if (v && v.total) { tv += v.total; vc++; }
+    });
+    document.getElementById('avgSearchVolume').textContent = vc > 0 ? (formatNumber(Math.round(tv / vc)) || '-') : '-';
 
-    var tb = document.getElementById('keywordsTableBody'); if (!tb) return;
+    var tb = document.getElementById('keywordsTableBody');
+    if (!tb) return;
+
     if (!kl.length) {
         tb.innerHTML = '<tr><td colspan="4" class="text-center" style="color:#666;padding:24px;">대표 키워드를 찾지 못했습니다.</td></tr>';
         return;
@@ -1046,20 +1193,30 @@ function renderKeywordsAnalysis(result) {
 
     tb.innerHTML = kl.map(function(i) {
         var v = kv[i.keyword];
-        var cc = v && v.comp === '높음' ? 'comp-high' : v && v.comp === '중간' ? 'comp-medium' : v && v.comp === '낮음' ? 'comp-low' : '';
-        return '<tr><td>' + escapeHtml(i.keyword) + '</td><td class="text-right">' + (v && v.total ? formatNumber(v.total) : '-') + '</td><td class="text-center"><span class="comp-badge ' + cc + '">' + (v && v.comp ? v.comp : '-') + '</span></td><td class="text-right">' + i.count + '개</td></tr>';
+        var cc = (v && v.comp === '높음') ? 'comp-high' : (v && v.comp === '중간') ? 'comp-medium' : (v && v.comp === '낮음') ? 'comp-low' : '';
+        return '<tr>' +
+            '<td>' + escapeHtml(i.keyword) + '</td>' +
+            '<td class="text-right">' + (v && v.total ? (formatNumber(v.total) || '-') : '-') + '</td>' +
+            '<td class="text-center"><span class="comp-badge ' + cc + '">' + (v && v.comp ? v.comp : '-') + '</span></td>' +
+            '<td class="text-right">' + i.count + '개</td>' +
+        '</tr>';
     }).join('');
 }
 
 function showCompetitorDetail(comp, volumes) {
-    var modal = document.getElementById('detailModal'), title = document.getElementById('modalTitle'), body = document.getElementById('modalBody');
+    var modal = document.getElementById('detailModal');
+    var title = document.getElementById('modalTitle');
+    var body = document.getElementById('modalBody');
     if (!modal || !title || !body) return;
+
     title.textContent = comp.name;
 
     var kwH = (comp.keywords || []).map(function(k) {
         var v = volumes ? volumes[k] : null;
-        return '<div class="keyword-item"><span class="keyword-name">' + escapeHtml(k) + '</span>' +
-            (v ? '<span class="keyword-volume">' + formatNumber(v.total) + '</span>' : '') + '</div>';
+        return '<div class="keyword-item">' +
+            '<span class="keyword-name">' + escapeHtml(k) + '</span>' +
+            (v ? '<span class="keyword-volume">' + (formatNumber(v.total) || '-') + '</span>' : '') +
+        '</div>';
     }).join('');
 
     body.innerHTML =
@@ -1067,9 +1224,9 @@ function showCompetitorDetail(comp, volumes) {
             '<div class="detail-item"><div class="detail-label">순위</div><div class="detail-value">' + comp.rank + '위</div></div>' +
             '<div class="detail-item"><div class="detail-label">카테고리</div><div class="detail-value">' + escapeHtml(comp.category || '-') + '</div></div>' +
             '<div class="detail-item"><div class="detail-label">평점</div><div class="detail-value">' + (comp.score || '-') + '</div></div>' +
-            '<div class="detail-item"><div class="detail-label">블로그</div><div class="detail-value">' + formatNumber(comp.blog_reviews || 0) + '</div></div>' +
-            '<div class="detail-item"><div class="detail-label">방문자</div><div class="detail-value">' + formatNumber(comp.visitor_reviews || 0) + '</div></div>' +
-            '<div class="detail-item"><div class="detail-label">저장수</div><div class="detail-value">' + formatNumber(comp.save_count || 0) + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">블로그</div><div class="detail-value">' + (formatNumber(comp.blog_reviews || 0) || '-') + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">방문자</div><div class="detail-value">' + (formatNumber(comp.visitor_reviews || 0) || '-') + '</div></div>' +
+            '<div class="detail-item"><div class="detail-label">저장수</div><div class="detail-value">' + (formatNumber(comp.save_count || 0) || '-') + '</div></div>' +
         '</div>' +
         '<div class="detail-keywords-section" style="margin-top:16px;">' +
             '<h4>대표 키워드 (' + (comp.keywords ? comp.keywords.length : 0) + '개)</h4>' +
@@ -1080,8 +1237,11 @@ function showCompetitorDetail(comp, volumes) {
 }
 
 function renderSavedAnalysis() {
-    var c = document.getElementById('savedAnalysisList'); if (!c) return;
+    var c = document.getElementById('savedAnalysisList');
+    if (!c) return;
+
     var a = Object.entries(marketingData.competitor_analysis || {});
+
     for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
         if (k && k.indexOf('marketing_competitor_') === 0) {
@@ -1096,19 +1256,33 @@ function renderSavedAnalysis() {
             }
         }
     }
-    if (!a.length) { c.innerHTML = '<div class="no-data">저장된 분석 결과가 없습니다.</div>'; return; }
+
+    if (!a.length) {
+        c.innerHTML = '<div class="no-data">저장된 분석 결과가 없습니다.</div>';
+        return;
+    }
+
     a.sort(function(x, y) { return (y[1].analyzed_at || '').localeCompare(x[1].analyzed_at || ''); });
+
     c.innerHTML = a.map(function(e) {
-        var k = e[0], d = e[1];
+        var key = e[0], d = e[1];
         var dt = d.analyzed_at ? formatDateTime(new Date(d.analyzed_at)) : '-';
         var cc = d.competitors ? d.competitors.length : 0;
         var kc = d.all_keywords ? Object.keys(d.all_keywords).length : 0;
-        return '<div class="saved-item" data-key="' + k + '"><div class="saved-item-info"><div class="saved-item-keyword">' + escapeHtml(d.keyword || k) + '</div><div class="saved-item-date">' + dt + '</div></div><div class="saved-item-count">' + cc + '개 업체 / ' + kc + '개 키워드</div></div>';
+
+        return '<div class="saved-item" data-key="' + key + '">' +
+            '<div class="saved-item-info">' +
+                '<div class="saved-item-keyword">' + escapeHtml(d.keyword || key) + '</div>' +
+                '<div class="saved-item-date">' + dt + '</div>' +
+            '</div>' +
+            '<div class="saved-item-count">' + cc + '개 업체 / ' + kc + '개 키워드</div>' +
+        '</div>';
     }).join('');
+
     c.querySelectorAll('.saved-item').forEach(function(item) {
         item.addEventListener('click', function() {
-            var k = item.dataset.key;
-            var d = marketingData.competitor_analysis[k];
+            var key = item.dataset.key;
+            var d = marketingData.competitor_analysis[key];
             if (d) {
                 document.getElementById('analysisKeyword').value = d.keyword || '';
                 renderAnalysisResult(d);
@@ -1123,14 +1297,32 @@ function renderSavedAnalysis() {
 // ============================================
 
 function renderKeywordSettings() {
-    var c = document.getElementById('storeKeywordSettings'); if (!c) return;
+    var c = document.getElementById('storeKeywordSettings');
+    if (!c) return;
+
     var tk = configData ? configData.tracking_keywords || {} : {};
+
     c.innerHTML = STORE_LIST.map(function(store) {
         var kws = tk[store] || [];
         var tags = kws.map(function(k) {
-            return '<span class="keyword-tag" data-store="' + store + '" data-keyword="' + escapeHtml(k) + '">' + escapeHtml(k) + '<button class="remove-btn" title="삭제">x</button></span>';
+            return '<span class="keyword-tag" data-store="' + store + '" data-keyword="' + escapeHtml(k) + '">' +
+                escapeHtml(k) +
+                '<button class="remove-btn" title="삭제">x</button>' +
+            '</span>';
         }).join('');
-        return '<div class="store-setting-item"><div class="store-setting-header"><span class="store-setting-name">' + store + '</span><button class="add-keyword-btn" data-store="' + store + '">+ 추가</button></div><div class="keyword-tags" data-store="' + store + '">' + (tags || '<span class="no-keywords">등록된 키워드 없음</span>') + '</div><div class="keyword-input-wrapper" data-store="' + store + '" style="display:none;"><input type="text" class="keyword-input" placeholder="키워드 입력 후 Enter"><button class="btn btn-secondary confirm-add-btn">추가</button><button class="btn btn-outline cancel-add-btn">취소</button></div></div>';
+
+        return '<div class="store-setting-item">' +
+            '<div class="store-setting-header">' +
+                '<span class="store-setting-name">' + store + '</span>' +
+                '<button class="add-keyword-btn" data-store="' + store + '">+ 추가</button>' +
+            '</div>' +
+            '<div class="keyword-tags" data-store="' + store + '">' + (tags || '<span class="no-keywords">등록된 키워드 없음</span>') + '</div>' +
+            '<div class="keyword-input-wrapper" data-store="' + store + '" style="display:none;">' +
+                '<input type="text" class="keyword-input" placeholder="키워드 입력 후 Enter">' +
+                '<button class="btn btn-secondary confirm-add-btn">추가</button>' +
+                '<button class="btn btn-outline cancel-add-btn">취소</button>' +
+            '</div>' +
+        '</div>';
     }).join('');
 
     c.querySelectorAll('.add-keyword-btn').forEach(function(b) {
@@ -1139,32 +1331,44 @@ function renderKeywordSettings() {
             if (w) { w.style.display = 'flex'; w.querySelector('.keyword-input').focus(); }
         });
     });
+
     c.querySelectorAll('.cancel-add-btn').forEach(function(b) {
         b.addEventListener('click', function() {
             var w = b.closest('.keyword-input-wrapper');
             if (w) { w.style.display = 'none'; w.querySelector('.keyword-input').value = ''; }
         });
     });
+
     c.querySelectorAll('.confirm-add-btn').forEach(function(b) {
         b.addEventListener('click', function() {
             var w = b.closest('.keyword-input-wrapper');
             var s = w ? w.dataset.store : null;
             var inp = w ? w.querySelector('.keyword-input') : null;
-            if (s && inp && inp.value.trim()) { addKeywordToStore(s, inp.value.trim()); inp.value = ''; w.style.display = 'none'; }
+            if (s && inp && inp.value.trim()) {
+                addKeywordToStore(s, inp.value.trim());
+                inp.value = '';
+                w.style.display = 'none';
+            }
         });
     });
+
     c.querySelectorAll('.keyword-input').forEach(function(inp) {
         inp.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 var w = inp.closest('.keyword-input-wrapper');
                 var s = w ? w.dataset.store : null;
-                if (s && inp.value.trim()) { addKeywordToStore(s, inp.value.trim()); inp.value = ''; w.style.display = 'none'; }
+                if (s && inp.value.trim()) {
+                    addKeywordToStore(s, inp.value.trim());
+                    inp.value = '';
+                    w.style.display = 'none';
+                }
             } else if (e.key === 'Escape') {
                 var w2 = inp.closest('.keyword-input-wrapper');
                 if (w2) { w2.style.display = 'none'; inp.value = ''; }
             }
         });
     });
+
     c.querySelectorAll('.keyword-tag .remove-btn').forEach(function(b) {
         b.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -1177,6 +1381,7 @@ function renderKeywordSettings() {
 function addKeywordToStore(s, k) {
     if (!configData.tracking_keywords) configData.tracking_keywords = {};
     if (!configData.tracking_keywords[s]) configData.tracking_keywords[s] = [];
+
     if (configData.tracking_keywords[s].indexOf(k) === -1) {
         configData.tracking_keywords[s].push(k);
         saveConfigToLocalStorage();
@@ -1196,21 +1401,34 @@ function removeKeywordFromStore(s, k) {
     }
 }
 
-function saveConfigToLocalStorage() { try { localStorage.setItem('marketing_config', JSON.stringify(configData)); } catch (e) {} }
-function saveKeywordSettings() { saveConfigToLocalStorage(); showToast('키워드 설정 저장 완료', 'success'); }
+function saveConfigToLocalStorage() {
+    try { localStorage.setItem('marketing_config', JSON.stringify(configData)); } catch (e) {}
+}
+
+function saveKeywordSettings() {
+    saveConfigToLocalStorage();
+    showToast('키워드 설정 저장 완료', 'success');
+}
 
 // ============================================
 // 토스트
 // ============================================
 
 function showToast(msg, type) {
-    var ex = document.querySelector('.toast'); if (ex) ex.remove();
+    var ex = document.querySelector('.toast');
+    if (ex) ex.remove();
+
     var t = document.createElement('div');
     t.className = 'toast' + (type ? ' toast-' + type : '');
     t.textContent = msg;
     document.body.appendChild(t);
+
     requestAnimationFrame(function() { t.classList.add('show'); });
-    setTimeout(function() { t.classList.remove('show'); setTimeout(function() { t.remove(); }, 300); }, 3000);
+
+    setTimeout(function() {
+        t.classList.remove('show');
+        setTimeout(function() { t.remove(); }, 300);
+    }, 3000);
 }
 
 // ============================================
@@ -1219,13 +1437,16 @@ function showToast(msg, type) {
 
 function formatNumber(n) {
     if (n === null || n === undefined || n === '') return null;
-    var v = typeof n === 'string' ? parseInt(n.replace(/,/g, '')) : n;
+    var v = (typeof n === 'string') ? parseInt(n.replace(/,/g, '')) : n;
     if (isNaN(v)) return null;
     return new Intl.NumberFormat('ko-KR').format(v);
 }
 
 function formatDateTime(d) {
-    return d.toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleString('ko-KR', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+    });
 }
 
 function escapeHtml(t) {
@@ -1235,4 +1456,6 @@ function escapeHtml(t) {
     return d.innerHTML;
 }
 
-function delay(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+function delay(ms) {
+    return new Promise(function(r) { setTimeout(r, ms); });
+}
