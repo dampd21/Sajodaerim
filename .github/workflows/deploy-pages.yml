@@ -41,14 +41,17 @@ jobs:
           fi
 
           # AI Config 파일 생성 (API 키 주입)
+          # Direct 모드: 프론트에서 Gemini API 직접 호출 (API KEY 노출됨)
           cat > docs/ai-config.js << 'AIEOF'
           const AI_CONFIG = {
+            AI_MODE: "direct",
+            GEMINI_PROXY_URL: "",
             GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
             GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
           AIEOF
 
-          echo "AI config file created"
+          echo "AI config file created (direct mode)"
 
       - name: Generate auth-config.js
         env:
