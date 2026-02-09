@@ -39,14 +39,33 @@ jobs:
           fi
           
           # AI Config 파일 생성 (API 키 주입)
-          cat > docs/ai-config.js << 'EOF'
+          cat > docs/ai-config.js << 'AIEOF'
           const AI_CONFIG = {
             GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
             GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
-          EOF
+          AIEOF
           
           echo "AI config file created"
+      
+      - name: Generate auth-config.js
+        env:
+          DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
+        run: |
+          if [ -z "$DASHBOARD_PASSWORD" ]; then
+            echo "Warning: DASHBOARD_PASSWORD not set, auth will be skipped"
+            echo 'var AUTH_CONFIG = {};' > docs/auth-config.js
+          else
+            HASH=$(echo -n "$DASHBOARD_PASSWORD" | sha256sum | awk '{print $1}')
+            TOKEN=$(echo -n "${HASH}_session_$(date +%s)" | sha256sum | awk '{print $1}')
+            cat > docs/auth-config.js << AUTHEOF
+          var AUTH_CONFIG = {
+            password_hash: "${HASH}",
+            session_token: "${TOKEN}"
+          };
+          AUTHEOF
+            echo "auth-config.js generated with password hash"
+          fi
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
