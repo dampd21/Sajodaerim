@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROAS 분석 - 사조</title>
+    <title>ROAS 분석 - 역대짬뽕</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="roas.css">
 </head>
 <body data-ai="off">
+    <script src="auth-config.js"></script>
+    <script src="auth.js"></script>
     <div class="container">
         <nav class="main-nav">
             <a href="index.html" class="nav-link">발주 리포트</a>
@@ -17,7 +19,7 @@
             <a href="ads.html" class="nav-link">광고 관리</a>
             <a href="review.html" class="nav-link">리뷰 관리</a>
             <a href="marketing.html" class="nav-link">마케팅 관리</a>
-            <a href="roas.html" class="nav-link active">ROAS 분석</a>
+            <a href="roas.html" class="nav-link">ROAS 분석</a>
         </nav>
 
         <header class="header">
@@ -25,7 +27,6 @@
             <p class="update-time">광고 성과를 분석하고 최적화하세요</p>
         </header>
 
-        <!-- 사용 설명 (접기/펼치기) -->
         <div class="guide-section">
             <div class="guide-header" onclick="toggleGuide()">
                 <h3>광고분석 (일반+메타) 사용법</h3>
@@ -35,47 +36,31 @@
                 <p class="guide-intro">
                     네이버, 메타, 구글 등 다양한 광고 플랫폼의 성과 데이터를 업로드하여 통합 분석할 수 있습니다.
                 </p>
-
                 <div class="guide-block">
                     <h4>데이터 업로드 방법</h4>
                     <ol class="guide-steps">
-                        <li>
-                            <strong>템플릿 다운로드</strong><br>
-                            광고분석 페이지에서 통합 템플릿을 다운로드합니다.
-                        </li>
-                        <li>
-                            <strong>데이터 입력</strong><br>
-                            템플릿에 맞게 날짜, 캠페인명, 광고유형, 지출액, 노출수, 클릭수, 전환수, 매출액을 입력합니다.
-                        </li>
-                        <li>
-                            <strong>파일 업로드</strong><br>
-                            작성한 Excel/CSV 파일을 클릭하여 업로드합니다.
-                        </li>
-                        <li>
-                            <strong>분석 결과 확인</strong><br>
-                            자동으로 계산된 ROAS, CTR, CPA 등 핵심 지표와 캠페인별 성과를 확인합니다.
-                        </li>
+                        <li><strong>템플릿 다운로드</strong><br>광고분석 페이지에서 통합 템플릿을 다운로드합니다.</li>
+                        <li><strong>데이터 입력</strong><br>템플릿에 맞게 날짜, 캠페인명, 광고유형, 지출액, 노출수, 클릭수, 전환수, 매출액을 입력합니다.</li>
+                        <li><strong>파일 업로드</strong><br>작성한 Excel/CSV 파일을 클릭하여 업로드합니다.</li>
+                        <li><strong>분석 결과 확인</strong><br>자동으로 계산된 ROAS, CTR, CPA 등 핵심 지표와 캠페인별 성과를 확인합니다.</li>
                     </ol>
                 </div>
-
                 <div class="guide-block">
                     <h4>광고유형 구분</h4>
-                    <p>매출형(sales)은 ROAS 기준으로, 잠재고객(lead)은 CPL 기준으로 성과가 정렬됩니다. 각 캠페인의 목표에 맞는 광고유형을 선택하세요.</p>
+                    <p>매출형(sales)은 ROAS 기준으로, 잠재고객(lead)은 CPL 기준으로 성과가 정렬됩니다.</p>
                 </div>
-
                 <div class="guide-block">
                     <h4>주요 기능</h4>
                     <ul class="guide-features">
                         <li><strong>핵심 지표 대시보드</strong> - ROAS, CTR, CPA, CVR, 총 지출/매출을 한눈에 확인</li>
-                        <li><strong>일별 트렌드 차트</strong> - 날짜별 성과 변화를 차트로 시각화하여 추이 파악</li>
+                        <li><strong>일별 트렌드 차트</strong> - 날짜별 성과 변화를 차트로 시각화</li>
                         <li><strong>캠페인별 순위</strong> - ROAS 또는 CPL 기준으로 캠페인 성과 순위 확인</li>
-                        <li><strong>리포트 내보내기</strong> - 분석 결과를 Excel/CSV 파일로 다운로드하여 보관 또는 공유</li>
+                        <li><strong>리포트 내보내기</strong> - 분석 결과를 Excel/CSV 파일로 다운로드</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- 기간 필터 -->
         <section class="filter-section">
             <div style="width: 100%;">
                 <div class="period-filters">
@@ -95,7 +80,6 @@
             </div>
         </section>
 
-        <!-- 액션 버튼 -->
         <div class="action-bar">
             <button class="action-btn" onclick="downloadTemplate()">템플릿 다운로드</button>
             <button class="action-btn primary" onclick="document.getElementById('fileInput').click()">파일 업로드</button>
@@ -108,7 +92,6 @@
 
         <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;">
 
-        <!-- 핵심 지표 8개 -->
         <section class="summary-cards roas-summary">
             <div class="card">
                 <div class="card-label">총 비용</div>
@@ -152,7 +135,6 @@
             </div>
         </section>
 
-        <!-- 공식 설명 -->
         <div class="formula-box">
             <strong>계산 공식:</strong><br>
             ROAS = (매출 / 비용) x 100 &nbsp;|&nbsp;
@@ -161,7 +143,6 @@
             CPA = 비용 / 전환수
         </div>
 
-        <!-- 상세 메트릭 4개 -->
         <div class="metric-cards" style="margin-top: 20px;">
             <div class="metric-card blue">
                 <div class="metric-label">평균 ROAS</div>
@@ -181,7 +162,6 @@
             </div>
         </div>
 
-        <!-- 탭 -->
         <nav class="tabs" style="margin-top: 24px;">
             <button class="tab active" data-tab="overview">성과 차트</button>
             <button class="tab" data-tab="campaigns">캠페인 테이블</button>
@@ -189,7 +169,6 @@
         </nav>
 
         <main class="tab-content">
-            <!-- 탭1: 성과 차트 -->
             <section id="overview" class="tab-pane active">
                 <div class="chart-container">
                     <div class="chart-header">
@@ -199,7 +178,6 @@
                         <canvas id="trendChart"></canvas>
                     </div>
                 </div>
-
                 <div class="chart-row">
                     <div class="chart-container half">
                         <h3>매출형 캠페인 성과</h3>
@@ -213,7 +191,6 @@
                             <span style="color: #ff6b6b;">개선필요: 300% 미만</span>
                         </div>
                     </div>
-
                     <div class="chart-container half">
                         <h3>리드형 캠페인 성과</h3>
                         <div class="lead-summary">
@@ -240,7 +217,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="chart-row">
                     <div class="chart-container half">
                         <h3>캠페인별 예산 배분</h3>
@@ -255,7 +231,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="chart-container">
                     <h3>요일별 성과</h3>
                     <div class="chart-canvas-container">
@@ -264,7 +239,6 @@
                 </div>
             </section>
 
-            <!-- 탭2: 캠페인 테이블 -->
             <section id="campaigns" class="tab-pane">
                 <div class="data-table-container">
                     <h3>캠페인 성과 <span class="table-hint">(클릭하여 상세 보기)</span></h3>
@@ -288,21 +262,13 @@
                 </div>
             </section>
 
-            <!-- 탭3: TOP 분석 -->
             <section id="creatives" class="tab-pane">
                 <div class="chart-row">
                     <div class="data-table-container" style="margin-bottom: 0;">
                         <h3>ROAS TOP 10</h3>
                         <table class="data-table">
                             <thead>
-                                <tr>
-                                    <th>순위</th>
-                                    <th>캠페인명</th>
-                                    <th>유형</th>
-                                    <th>ROAS</th>
-                                    <th>매출</th>
-                                    <th>지출</th>
-                                </tr>
+                                <tr><th>순위</th><th>캠페인명</th><th>유형</th><th>ROAS</th><th>매출</th><th>지출</th></tr>
                             </thead>
                             <tbody id="roasTopTable">
                                 <tr><td colspan="6" class="no-data">데이터를 업로드하세요</td></tr>
@@ -313,14 +279,7 @@
                         <h3>전환율 TOP 10</h3>
                         <table class="data-table">
                             <thead>
-                                <tr>
-                                    <th>순위</th>
-                                    <th>캠페인명</th>
-                                    <th>유형</th>
-                                    <th>CVR</th>
-                                    <th>전환수</th>
-                                    <th>클릭수</th>
-                                </tr>
+                                <tr><th>순위</th><th>캠페인명</th><th>유형</th><th>CVR</th><th>전환수</th><th>클릭수</th></tr>
                             </thead>
                             <tbody id="cvrTopTable">
                                 <tr><td colspan="6" class="no-data">데이터를 업로드하세요</td></tr>
@@ -328,24 +287,12 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="data-table-container" style="margin-top: 20px;">
                     <h3>전체 캠페인 상세 성과</h3>
                     <div style="overflow-x: auto;">
                         <table class="data-table">
                             <thead>
-                                <tr>
-                                    <th>캠페인명</th>
-                                    <th>유형</th>
-                                    <th>ROAS</th>
-                                    <th>CVR</th>
-                                    <th>CTR</th>
-                                    <th>CPA</th>
-                                    <th>전환수</th>
-                                    <th>지출액</th>
-                                    <th>매출액</th>
-                                    <th>상태</th>
-                                </tr>
+                                <tr><th>캠페인명</th><th>유형</th><th>ROAS</th><th>CVR</th><th>CTR</th><th>CPA</th><th>전환수</th><th>지출액</th><th>매출액</th><th>상태</th></tr>
                             </thead>
                             <tbody id="allCampaignsTable">
                                 <tr><td colspan="10" class="no-data">데이터를 업로드하세요</td></tr>
@@ -357,48 +304,20 @@
         </main>
     </div>
 
-    <!-- 수동 입력 모달 -->
     <div class="modal" id="manualInputModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeManualInputModal()">&times;</span>
             <h2>일별 데이터 수동 입력</h2>
             <div class="modal-body">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">날짜 *</label>
-                        <input type="date" id="manualDate" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">캠페인명 *</label>
-                        <input type="text" id="manualCampaign" class="form-control" placeholder="예: 블프_신규" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">광고유형 *</label>
-                        <select id="manualAdType" class="form-control">
-                            <option value="sales">매출형 (구매전환)</option>
-                            <option value="lead">잠재고객 (리드수집)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">지출액 (원) *</label>
-                        <input type="number" id="manualSpend" class="form-control" placeholder="150000" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">노출수</label>
-                        <input type="number" id="manualImpressions" class="form-control" placeholder="45000">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">클릭수 *</label>
-                        <input type="number" id="manualClicks" class="form-control" placeholder="1200" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">전환수 *</label>
-                        <input type="number" id="manualConversions" class="form-control" placeholder="48" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">매출액 (원)</label>
-                        <input type="number" id="manualRevenue" class="form-control" placeholder="540000">
-                    </div>
+                    <div class="form-group"><label class="form-label">날짜 *</label><input type="date" id="manualDate" class="form-control" required></div>
+                    <div class="form-group"><label class="form-label">캠페인명 *</label><input type="text" id="manualCampaign" class="form-control" placeholder="예: 블프_신규" required></div>
+                    <div class="form-group"><label class="form-label">광고유형 *</label><select id="manualAdType" class="form-control"><option value="sales">매출형 (구매전환)</option><option value="lead">잠재고객 (리드수집)</option></select></div>
+                    <div class="form-group"><label class="form-label">지출액 (원) *</label><input type="number" id="manualSpend" class="form-control" placeholder="150000" required></div>
+                    <div class="form-group"><label class="form-label">노출수</label><input type="number" id="manualImpressions" class="form-control" placeholder="45000"></div>
+                    <div class="form-group"><label class="form-label">클릭수 *</label><input type="number" id="manualClicks" class="form-control" placeholder="1200" required></div>
+                    <div class="form-group"><label class="form-label">전환수 *</label><input type="number" id="manualConversions" class="form-control" placeholder="48" required></div>
+                    <div class="form-group"><label class="form-label">매출액 (원)</label><input type="number" id="manualRevenue" class="form-control" placeholder="540000"></div>
                 </div>
                 <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="action-btn primary" onclick="addManualData()">추가</button>
@@ -410,7 +329,6 @@
         </div>
     </div>
 
-    <!-- 캠페인 상세 모달 -->
     <div class="modal" id="campaignDetailModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeCampaignDetailModal()">&times;</span>
@@ -418,16 +336,12 @@
         </div>
     </div>
 
-    <!-- 캠페인 메모 모달 -->
     <div class="modal" id="campaignMemoModal">
         <div class="modal-content" style="max-width: 500px;">
             <span class="modal-close" onclick="closeMemoModal()">&times;</span>
             <h2 id="memoModalTitle">캠페인 메모</h2>
             <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">메모</label>
-                    <textarea id="campaignMemoText" class="form-control" rows="6" placeholder="이 캠페인에 대한 메모를 입력하세요" style="resize: vertical;"></textarea>
-                </div>
+                <div class="form-group"><label class="form-label">메모</label><textarea id="campaignMemoText" class="form-control" rows="6" placeholder="이 캠페인에 대한 메모를 입력하세요" style="resize: vertical;"></textarea></div>
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
                     <button class="action-btn primary" onclick="saveMemo()">저장</button>
                     <button class="action-btn" onclick="closeMemoModal()">취소</button>
@@ -436,18 +350,16 @@
         </div>
     </div>
 
-    <!-- 로딩 오버레이 -->
     <div id="loadingOverlay" class="loading-overlay hidden">
         <div class="loading-content">
             <div class="spinner"></div>
             <div class="loading-title" id="loadingTitle">처리 중...</div>
             <div class="loading-message" id="loadingMessage">잠시만 기다려주세요</div>
-            <div class="progress-track">
-                <div class="progress-fill" id="progressBar"></div>
-            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
         </div>
     </div>
 
+    <script src="nav.js"></script>
     <script src="roas.js"></script>
     <script src="ai-chat.js"></script>
 </body>
