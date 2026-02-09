@@ -1,10 +1,11 @@
 /* ========================================
    ROAS 분석 전용 스타일
+   - 공통 톤(style.css)과 배경/보더 투명도를 맞춤
    ======================================== */
 
 /* 사용 설명 가이드 섹션 */
 .guide-section {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     margin-bottom: 20px;
@@ -33,18 +34,16 @@
 .guide-toggle {
     color: #00d4ff;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .guide-body {
     display: none;
     padding: 0 20px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.guide-body.open {
-    display: block;
-}
+.guide-body.open { display: block; }
 
 .guide-intro {
     color: #aaa;
@@ -53,9 +52,7 @@
     margin: 16px 0;
 }
 
-.guide-block {
-    margin-bottom: 20px;
-}
+.guide-block { margin-bottom: 20px; }
 
 .guide-block h4 {
     color: #00d4ff;
@@ -76,11 +73,12 @@
     position: relative;
     padding: 12px 12px 12px 40px;
     margin-bottom: 8px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     color: #ccc;
     font-size: 0.9rem;
     line-height: 1.5;
+    border: 1px solid rgba(255,255,255,0.06);
 }
 
 .guide-steps li::before {
@@ -96,34 +94,24 @@
     align-items: center;
     justify-content: center;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff;
 }
 
-.guide-steps li strong {
-    color: #fff;
-}
+.guide-steps li strong { color: #fff; }
 
-.guide-features {
-    list-style: none;
-    padding: 0;
-}
+.guide-features { list-style: none; padding: 0; }
 
 .guide-features li {
     padding: 8px 0;
     color: #ccc;
     font-size: 0.9rem;
     line-height: 1.5;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.guide-features li:last-child {
-    border-bottom: none;
-}
-
-.guide-features li strong {
-    color: #fff;
-}
+.guide-features li:last-child { border-bottom: none; }
+.guide-features li strong { color: #fff; }
 
 .guide-block p {
     color: #aaa;
@@ -145,8 +133,8 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.3s;
+    font-weight: 600;
+    transition: all 0.2s;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -154,18 +142,14 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
-.action-btn:hover {
-    transform: translateY(-2px);
-}
+.action-btn:hover { transform: translateY(-2px); }
 
 .action-btn.primary {
     background: linear-gradient(135deg, #00d4ff, #7b2cbf);
     border-color: transparent;
 }
 
-.action-btn.primary:hover {
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
-}
+.action-btn.primary:hover { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.28); }
 
 .action-btn.success {
     background: linear-gradient(135deg, #4ecdc4, #44bd9e);
@@ -173,37 +157,29 @@
 }
 
 .action-btn.danger {
-    background: rgba(255, 107, 107, 0.2);
-    border-color: rgba(255, 107, 107, 0.5);
+    background: rgba(255, 107, 107, 0.12);
+    border-color: rgba(255, 107, 107, 0.35);
     color: #ff6b6b;
 }
 
-.action-btn.danger:hover {
-    background: rgba(255, 107, 107, 0.3);
-}
+.action-btn.danger:hover { background: rgba(255, 107, 107, 0.2); }
 
 /* 요약 카드 확장 */
-.summary-cards.roas-summary {
-    grid-template-columns: repeat(4, 1fr);
-}
+.summary-cards.roas-summary { grid-template-columns: repeat(4, 1fr); }
 
 .card.highlight-green {
-    border-color: #4ecdc4;
+    border-color: rgba(78, 205, 196, 0.45);
     background: rgba(78, 205, 196, 0.1);
 }
 
-.card.highlight-green .card-value {
-    color: #4ecdc4;
-}
+.card.highlight-green .card-value { color: #4ecdc4; }
 
 .card.highlight-blue {
-    border-color: #00d4ff;
+    border-color: rgba(0, 212, 255, 0.45);
     background: rgba(0, 212, 255, 0.1);
 }
 
-.card.highlight-blue .card-value {
-    color: #00d4ff;
-}
+.card.highlight-blue .card-value { color: #00d4ff; }
 
 /* 메트릭 카드 */
 .metric-cards {
@@ -219,12 +195,10 @@
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-left: 4px solid transparent;
-    transition: transform 0.3s;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
-.metric-card:hover {
-    transform: translateY(-3px);
-}
+.metric-card:hover { transform: translateY(-3px); }
 
 .metric-card.blue { border-left-color: #00d4ff; }
 .metric-card.green { border-left-color: #4ecdc4; }
@@ -235,11 +209,12 @@
     color: #888;
     font-size: 0.85rem;
     margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .metric-value {
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff;
     margin-bottom: 4px;
 }
@@ -248,70 +223,47 @@
 .status-badge {
     display: inline-block;
     padding: 4px 12px;
-    border-radius: 12px;
+    border-radius: 999px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 700;
 }
 
-.status-excellent {
-    background: rgba(78, 205, 196, 0.2);
-    color: #4ecdc4;
-}
-
-.status-good {
-    background: rgba(255, 230, 109, 0.2);
-    color: #ffe66d;
-}
-
-.status-poor {
-    background: rgba(255, 107, 107, 0.2);
-    color: #ff6b6b;
-}
+.status-excellent { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
+.status-good { background: rgba(255, 230, 109, 0.2); color: #ffe66d; }
+.status-poor { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
 
 /* 광고유형 태그 */
 .ad-type-tag {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 700;
 }
 
-.ad-type-tag.sales {
-    background: rgba(78, 205, 196, 0.2);
-    color: #4ecdc4;
-}
-
-.ad-type-tag.lead {
-    background: rgba(0, 212, 255, 0.2);
-    color: #00d4ff;
-}
+.ad-type-tag.sales { background: rgba(78, 205, 196, 0.2); color: #4ecdc4; }
+.ad-type-tag.lead { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
 
 /* 공식 설명 박스 */
 .formula-box {
     margin-top: 12px;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
     font-size: 0.8rem;
-    color: #888;
+    color: #aaa;
     line-height: 1.8;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.formula-box strong {
-    color: #00d4ff;
-}
+.formula-box strong { color: #00d4ff; }
 
 /* 리드형 큰 숫자 표시 */
-.lead-summary {
-    padding: 20px;
-    text-align: center;
-}
+.lead-summary { padding: 20px; text-align: center; }
 
 .lead-big-number {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 900;
     color: #00d4ff;
     margin-bottom: 8px;
 }
@@ -320,23 +272,14 @@
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-.lead-stat-item {
-    text-align: center;
-}
+.lead-stat-item { text-align: center; }
 
-.lead-stat-value {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-}
-
-.lead-stat-label {
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 4px;
-}
+.lead-stat-value { font-size: 1.5rem; font-weight: 800; color: #fff; }
+.lead-stat-label { font-size: 0.8rem; color: #888; margin-top: 4px; font-weight: 600; }
 
 /* 캠페인 행 클릭 */
 .campaign-row {
@@ -365,7 +308,8 @@
     color: #aaa;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    font-weight: 600;
 }
 
 .period-btn:hover {
@@ -392,6 +336,7 @@
 .date-input:focus {
     outline: none;
     border-color: #00d4ff;
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.18);
 }
 
 /* 모달 내부 폼 */
@@ -410,7 +355,7 @@
 .form-label {
     color: #888;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .form-control {
@@ -425,68 +370,51 @@
 .form-control:focus {
     outline: none;
     border-color: #00d4ff;
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.18);
 }
 
-.form-control option {
-    background: #1a1a2e;
-}
+.form-control option { background: #1a1a2e; }
 
-/* 현재 기간 표시 */
 .current-period-label {
     color: #888;
     font-size: 0.85rem;
     margin-top: 8px;
+    font-weight: 600;
 }
 
 /* 메모 버튼 */
 .memo-btn {
     padding: 4px 10px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.05);
     color: #aaa;
     cursor: pointer;
     font-size: 0.8rem;
     transition: all 0.2s;
+    font-weight: 700;
 }
 
-.memo-btn:hover {
-    border-color: #00d4ff;
-    color: #00d4ff;
-}
+.memo-btn:hover { border-color: #00d4ff; color: #00d4ff; }
 
 .memo-btn.has-memo {
-    background: rgba(78, 205, 196, 0.2);
-    border-color: #4ecdc4;
+    background: rgba(78, 205, 196, 0.15);
+    border-color: rgba(78, 205, 196, 0.45);
     color: #4ecdc4;
 }
 
 /* 인사이트 박스 */
 .insight-box {
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     line-height: 1.6;
     font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.insight-box.positive {
-    background: rgba(78, 205, 196, 0.1);
-    border: 1px solid rgba(78, 205, 196, 0.3);
-    color: #4ecdc4;
-}
-
-.insight-box.neutral {
-    background: rgba(255, 230, 109, 0.1);
-    border: 1px solid rgba(255, 230, 109, 0.3);
-    color: #ffe66d;
-}
-
-.insight-box.negative {
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    color: #ff6b6b;
-}
+.insight-box.positive { background: rgba(78, 205, 196, 0.1); border-color: rgba(78, 205, 196, 0.25); color: #4ecdc4; }
+.insight-box.neutral { background: rgba(255, 230, 109, 0.1); border-color: rgba(255, 230, 109, 0.25); color: #ffe66d; }
+.insight-box.negative { background: rgba(255, 107, 107, 0.1); border-color: rgba(255, 107, 107, 0.25); color: #ff6b6b; }
 
 /* 로딩 오버레이 */
 .loading-overlay {
@@ -502,9 +430,7 @@
     z-index: 9999;
 }
 
-.loading-overlay.hidden {
-    display: none;
-}
+.loading-overlay.hidden { display: none; }
 
 .loading-content {
     background: #1a1a2e;
@@ -533,20 +459,21 @@
 .loading-title {
     color: #fff;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
 }
 
 .loading-message {
     color: #888;
     font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .progress-track {
     width: 100%;
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    border-radius: 999px;
     overflow: hidden;
     margin-top: 16px;
 }
@@ -561,57 +488,25 @@
 /* ========================================
    반응형
    ======================================== */
-
 @media (max-width: 1024px) {
-    .summary-cards.roas-summary {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .metric-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .summary-cards.roas-summary { grid-template-columns: repeat(2, 1fr); }
+    .metric-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-    .summary-cards.roas-summary {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .metric-cards {
-        grid-template-columns: 1fr;
-    }
-    .action-bar {
-        flex-direction: column;
-    }
-    .action-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    .period-filters {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .period-btn {
-        text-align: center;
-    }
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-    .lead-stats {
-        flex-direction: column;
-        gap: 16px;
-    }
-    .guide-steps li {
-        padding-left: 36px;
-    }
+    .summary-cards.roas-summary { grid-template-columns: repeat(2, 1fr); }
+    .metric-cards { grid-template-columns: 1fr; }
+    .action-bar { flex-direction: column; }
+    .action-btn { width: 100%; justify-content: center; }
+    .period-filters { flex-direction: column; align-items: stretch; }
+    .period-btn { text-align: center; }
+    .form-grid { grid-template-columns: 1fr; }
+    .lead-stats { flex-direction: column; gap: 16px; }
+    .guide-steps li { padding-left: 36px; }
 }
 
 @media (max-width: 480px) {
-    .summary-cards.roas-summary {
-        grid-template-columns: 1fr;
-    }
-    .lead-big-number {
-        font-size: 2rem;
-    }
-    .metric-value {
-        font-size: 1.4rem;
-    }
+    .summary-cards.roas-summary { grid-template-columns: 1fr; }
+    .lead-big-number { font-size: 2rem; }
+    .metric-value { font-size: 1.4rem; }
 }
