@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 역대짬뽕 관리시스템</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="login-body">
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <h1 class="login-title">역대짬뽕</h1>
+                <p class="login-subtitle">프랜차이즈 관리 시스템</p>
+            </div>
+            <form id="loginForm" class="login-form" autocomplete="off">
+                <div class="login-input-group">
+                    <label for="passwordInput" class="login-label">비밀번호</label>
+                    <input
+                        type="password"
+                        id="passwordInput"
+                        class="login-input"
+                        placeholder="비밀번호를 입력하세요"
+                        autofocus
+                        required
+                    >
+                </div>
+                <div id="loginError" class="login-error" style="display:none;">
+                    비밀번호가 올바르지 않습니다.
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn">로그인</button>
+            </form>
+            <div class="login-footer">
+                <p>본사 관리자 전용 시스템입니다.</p>
+            </div>
+        </div>
+    </div>
+    <script src="auth-config.js"></script>
+    <script>
+        (function() {
+            // 이미 로그인되어 있으면 리다이렉트
+            var token = sessionStorage.getItem('auth_token');
+            if (token && typeof AUTH_CONFIG !== 'undefined' && token === AUTH_CONFIG.session_token) {
+                location.href = 'index.html';
+                return;
+            }
+
+            var form = document.getElementById('loginForm');
+            var input = document.getElementById('passwordInput');
+            var errorEl = document.getElementById('loginError');
+            var btn = document.getElementById('loginBtn');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorEl.style.display = 'none';
+                btn.disabled = true;
+                btn.textContent = '확인 중...';
+
+                var pw = input.value;
+                if (!pw) {
+                    errorEl.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = '로그인';
+                    return;
+                }
+
+                try {
+                    var hash = await sha256(pw);
+
+                    if (typeof AUTH_CONFIG === 'undefined') {
+                        errorEl.textContent = '인증 설정을 불러올 수 없습니다.';
+                        errorEl.style.display = 'block';
+                        btn.disabled = false;
+                        btn.textContent = '로그인';
+                        return;
+                    }
+
+                    if (hash === AUTH_CONFIG.password_hash) {
+                        sessionStorage.setItem('auth_token', AUTH_CONFIG.session_token);
+                        location.href = 'index.html';
+                    } else {
+                        errorEl.textContent = '비밀번호가 올바르지 않습니다.';
+                        errorEl.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                } catch (err) {
+                    errorEl.textContent = '오류가 발생했습니다.';
+                    errorEl.style.display = 'block';
+                }
+
+                btn.disabled = false;
+                btn.textContent = '로그인';
+            });
+
+            async function sha256(message) {
+                var msgBuffer = new TextEncoder().encode(message);
+                var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                var hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+            }
+        })();
+    </script>
+</body>
+</html>
