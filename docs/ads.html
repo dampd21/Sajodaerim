@@ -141,4 +141,120 @@
                             </thead>
                             <tbody id="keywordTableBody"></tbody>
                         </table>
-                
+                    </div>
+
+                    <div class="bulk-action-bar" id="bulkActionBar" style="display: none;">
+                        <span class="selected-count"><span id="selectedCount">0</span>개 선택됨</span>
+                        <div class="bulk-actions">
+                            <input type="number" id="bulkBidAmt" placeholder="일괄 입찰가" class="bulk-input">
+                            <button class="btn btn-secondary" id="bulkApplyBtn">일괄 적용</button>
+                            <button class="btn btn-outline" id="bulkIncreaseBtn">+10%</button>
+                            <button class="btn btn-outline" id="bulkDecreaseBtn">-10%</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="searchVolume" class="tab-pane">
+                    <div class="chart-container">
+                        <h3>키워드별 월간 검색량 TOP 20</h3>
+                        <div id="searchVolumeChartContainer" class="chart-canvas-container">
+                            <canvas id="searchVolumeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-row">
+                        <div class="chart-container half">
+                            <h3>PC vs 모바일 검색량</h3>
+                            <div id="deviceChartContainer" class="chart-canvas-container-small">
+                                <canvas id="deviceChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-container half">
+                            <h3>경쟁도 분포</h3>
+                            <div id="compChartContainer" class="chart-canvas-container-small">
+                                <canvas id="compChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="bidSuggestion" class="tab-pane">
+                    <div class="section-header">
+                        <h3>순위별 예상 입찰가</h3>
+                        <p class="hint">순위별 입찰가를 클릭하면 월 예상 클릭비용이 자동 계산됩니다.</p>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="data-table" id="bidSuggestionTable">
+                            <thead></thead>
+                            <tbody id="bidSuggestionTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            <section id="instagramContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">IG</div>
+                    <h2>인스타그램 광고 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="daangnContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">DN</div>
+                    <h2>당근마켓 광고 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="youtubeContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">YT</div>
+                    <h2>유튜브 광고 관리</h2>
+                    <p>준비 중입니다</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+
+            <section id="deliveryContent" class="platform-pane">
+                <div class="coming-soon-box">
+                    <div class="coming-soon-icon">DLV</div>
+                    <h2>배달 플랫폼 광고 관리</h2>
+                    <p>배달의민족 / 요기요 / 쿠팡이츠 / 땡겨요</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal" id="confirmModal">
+            <div class="modal-content modal-small">
+                <span class="modal-close">&times;</span>
+                <h2>입찰가 변경 확인</h2>
+                <div class="modal-body">
+                    <div class="confirm-list" id="confirmList"></div>
+                    <div class="confirm-warning">
+                        변경사항은 즉시 네이버 광고에 반영될 수 있습니다. (실반영 로직은 별도 구현 필요)
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-outline" id="cancelConfirmBtn">취소</button>
+                        <button class="btn btn-primary" id="applyConfirmBtn">변경 적용</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>처리 중...</p>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script src="ads.js"></script>
+    <script src="ai-chat.js"></script>
+</body>
+</html>
