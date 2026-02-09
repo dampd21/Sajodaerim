@@ -23,21 +23,23 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Prepare docs folder
         run: |
+          set -e
+
           # report_data.json 복사
           if [ -f "output/report_data.json" ]; then
             cp output/report_data.json docs/
           fi
-          
+
           # AI Config 파일 생성 (API 키 주입)
           cat > docs/ai-config.js << 'AIEOF'
           const AI_CONFIG = {
@@ -45,33 +47,60 @@ jobs:
             GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
           AIEOF
-          
+
           echo "AI config file created"
-      
+
       - name: Generate auth-config.js
         env:
           DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
         run: |
+          set -e
+
+          mkdir -p docs
+
           if [ -z "$DASHBOARD_PASSWORD" ]; then
-            echo "Warning: DASHBOARD_PASSWORD not set, auth will be skipped"
-            echo 'var AUTH_CONFIG = {};' > docs/auth-config.js
+            echo "::warning::DASHBOARD_PASSWORD not set. Auth will be disabled and login will block access until configured."
+            cat > docs/auth-config.js << 'AUTHEOF'
+          var AUTH_CONFIG = {
+            disabled: true,
+            password_hash: "",
+            session_token: "",
+            generated_at: ""
+          };
+          AUTHEOF
           else
             HASH=$(echo -n "$DASHBOARD_PASSWORD" | sha256sum | awk '{print $1}')
             TOKEN=$(echo -n "${HASH}_session_$(date +%s)" | sha256sum | awk '{print $1}')
             cat > docs/auth-config.js << AUTHEOF
           var AUTH_CONFIG = {
+            disabled: false,
             password_hash: "${HASH}",
-            session_token: "${TOKEN}"
+            session_token: "${TOKEN}",
+            generated_at: "$(date -Iseconds)"
           };
           AUTHEOF
-            echo "auth-config.js generated with password hash"
+            echo "auth-config.js generated (hash + session token)"
           fi
-      
+
+          echo "=== auth-config.js (first 200 chars) ==="
+          head -c 200 docs/auth-config.js || true
+          echo ""
+          echo "=== docs listing (auth related) ==="
+          ls -la docs | sed -n '1,200p'
+
+      - name: Verify required auth files exist
+        run: |
+          set -e
+          test -f docs/auth-config.js
+          test -f docs/auth.js
+          test -f docs/login.html
+          echo "Auth files verified."
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs'
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
