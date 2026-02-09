@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="review.css">
 </head>
 <body>
+    <script src="auth-config.js"></script>
+    <script src="auth.js"></script>
     <div class="container">
-        <!-- 네비게이션 -->
         <nav class="main-nav">
             <a href="index.html" class="nav-link">발주 리포트</a>
             <a href="sales.html" class="nav-link">매출 관리</a>
             <a href="ads.html" class="nav-link">광고 관리</a>
-            <a href="review.html" class="nav-link active">리뷰 관리</a>
+            <a href="review.html" class="nav-link">리뷰 관리</a>
             <a href="marketing.html" class="nav-link">마케팅 관리</a>
-            <a href="roas.html" class="nav-link active">ROAS 분석</a>
+            <a href="roas.html" class="nav-link">ROAS 분석</a>
         </nav>
 
         <header class="header">
@@ -24,7 +25,6 @@
             <p class="update-time" id="updateTime"></p>
         </header>
 
-        <!-- 플랫폼 선택 탭 -->
         <nav class="platform-tabs">
             <button class="platform-tab active" data-platform="naver">
                 <span class="platform-name">네이버</span>
@@ -45,7 +45,6 @@
             </button>
         </nav>
 
-        <!-- 필터 섹션 -->
         <section class="filter-section">
             <div class="filter-group">
                 <label>지점 선택</label>
@@ -77,13 +76,9 @@
             </div>
         </section>
 
-        <!-- 플랫폼별 콘텐츠 -->
         <div class="platform-content">
-            
-            <!-- 네이버 리뷰 -->
+
             <section id="naverContent" class="platform-pane active">
-                
-                <!-- 요약 카드 -->
                 <section class="summary-cards">
                     <div class="card">
                         <div class="card-label">총 리뷰</div>
@@ -107,13 +102,11 @@
                     </div>
                 </section>
 
-                <!-- 인기 태그 -->
                 <section class="tag-section">
                     <h3>인기 태그</h3>
                     <div class="tag-cloud" id="tagCloud"></div>
                 </section>
 
-                <!-- 리뷰 목록 -->
                 <section class="review-list-section">
                     <div class="section-header">
                         <h3>리뷰 목록 <span class="review-count" id="reviewCount"></span></h3>
@@ -123,10 +116,7 @@
                 </section>
             </section>
 
-            <!-- 배달의민족 리뷰 -->
             <section id="baeminContent" class="platform-pane">
-                
-                <!-- 요약 카드 -->
                 <section class="summary-cards">
                     <div class="card">
                         <div class="card-label">총 리뷰</div>
@@ -146,13 +136,11 @@
                     </div>
                 </section>
 
-                <!-- 인기 메뉴 -->
                 <section class="tag-section">
                     <h3>인기 메뉴</h3>
                     <div class="tag-cloud" id="baeminMenuCloud"></div>
                 </section>
 
-                <!-- 리뷰 목록 -->
                 <section class="review-list-section">
                     <div class="section-header">
                         <h3>리뷰 목록 <span class="review-count" id="baeminReviewCount"></span></h3>
@@ -161,10 +149,7 @@
                 </section>
             </section>
 
-            <!-- 쿠팡이츠 리뷰 -->
             <section id="coupangeatsContent" class="platform-pane">
-                
-                <!-- 요약 카드 -->
                 <section class="summary-cards">
                     <div class="card">
                         <div class="card-label">총 리뷰</div>
@@ -184,13 +169,11 @@
                     </div>
                 </section>
 
-                <!-- 인기 메뉴 -->
                 <section class="tag-section">
                     <h3>인기 메뉴</h3>
                     <div class="tag-cloud" id="coupangMenuCloud"></div>
                 </section>
 
-                <!-- 리뷰 목록 -->
                 <section class="review-list-section">
                     <div class="section-header">
                         <h3>리뷰 목록 <span class="review-count" id="coupangReviewCount"></span></h3>
@@ -199,7 +182,6 @@
                 </section>
             </section>
 
-            <!-- 미구현 플랫폼들 -->
             <section id="instagramContent" class="platform-pane">
                 <div class="coming-soon-box">
                     <div class="coming-soon-icon">Instagram</div>
@@ -219,7 +201,6 @@
             </section>
         </div>
 
-        <!-- 리뷰 상세 모달 -->
         <div class="modal" id="reviewModal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
@@ -228,6 +209,7 @@
         </div>
     </div>
 
+    <script src="nav.js"></script>
     <script src="review.js"></script>
     <script src="ai-chat.js"></script>
 </body>
