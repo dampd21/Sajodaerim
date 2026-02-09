@@ -10,15 +10,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script src="auth-config.js"></script>
+    <script src="auth.js"></script>
     <div class="container">
-        <!-- 네비게이션 -->
         <nav class="main-nav">
             <a href="index.html" class="nav-link">발주 리포트</a>
-            <a href="sales.html" class="nav-link active">매출 관리</a>
+            <a href="sales.html" class="nav-link">매출 관리</a>
             <a href="ads.html" class="nav-link">광고 관리</a>
             <a href="review.html" class="nav-link">리뷰 관리</a>
             <a href="marketing.html" class="nav-link">마케팅 관리</a>
-            <a href="roas.html" class="nav-link active">ROAS 분석</a>
+            <a href="roas.html" class="nav-link">ROAS 분석</a>
         </nav>
 
         <header class="header">
@@ -26,7 +27,6 @@
             <p class="update-time" id="updateTime"></p>
         </header>
 
-        <!-- 필터 섹션 -->
         <section class="filter-section">
             <div class="filter-group">
                 <label>지점 선택</label>
@@ -49,7 +49,6 @@
             </div>
         </section>
 
-        <!-- 요약 카드 -->
         <section class="summary-cards">
             <div class="card">
                 <div class="card-label">총 매출</div>
@@ -69,9 +68,7 @@
             </div>
         </section>
 
-        <!-- 차트 영역 -->
         <section class="chart-section">
-            <!-- 매출 현황 (구 매출 추이) -->
             <div class="chart-container">
                 <div class="chart-header">
                     <h3>매출 현황</h3>
@@ -86,14 +83,12 @@
             </div>
 
             <div class="chart-row">
-                <!-- 매출 비중 현황 (구 채널별 매출 비중) -->
                 <div class="chart-container half">
                     <h3>매출 비중 현황</h3>
                     <div id="channelChartContainer" class="chart-canvas-container">
                         <canvas id="channelChart"></canvas>
                     </div>
                 </div>
-                <!-- 지점별 매출 TOP 10 (세로 막대) -->
                 <div class="chart-container half">
                     <h3>지점별 매출 TOP 10</h3>
                     <div id="storeRankChartContainer" class="chart-canvas-container">
@@ -103,7 +98,6 @@
             </div>
         </section>
 
-        <!-- 매출 대비 발주율 섹션 -->
         <section class="chart-section">
             <div class="chart-container">
                 <div class="chart-header">
@@ -134,7 +128,6 @@
             </div>
         </section>
 
-        <!-- 지점별 매출 현황 테이블 -->
         <section class="data-table-container">
             <h3>지점별 매출 현황</h3>
             <div class="table-controls">
@@ -166,7 +159,6 @@
             </div>
         </section>
 
-        <!-- 일별 상세 모달 -->
         <div class="modal" id="dailyModal">
             <div class="modal-content modal-large">
                 <span class="modal-close">&times;</span>
@@ -192,6 +184,7 @@
         </div>
     </div>
 
+    <script src="nav.js"></script>
     <script src="sales.js"></script>
     <script src="ai-chat.js"></script>
 </body>
