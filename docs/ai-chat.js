@@ -1,8 +1,8 @@
 /**
  * AI 채팅 위젯 (공통)
  * - 보안상 권장: proxy 모드(프론트에 API KEY 없음)
- * - nav active 자동 정정 기능 포함
- * - body[data-ai="off"] 인 페이지에서는 위젯 UI는 생성하지 않음(네비 정정만 수행)
+ * - body[data-ai="off"] 인 페이지에서는 위젯 UI를 생성하지 않음
+ * - nav active 정정은 nav.js가 담당하므로 여기서는 제거
  *
  * proxy 기대 규격(권장):
  * POST { question: string, context: string, page: string }
@@ -11,22 +11,9 @@
 
 (function () {
   // ============================================
-  // 네비 active 자동 정정 (전 페이지 공통)
-  // ============================================
-  function fixNavActive() {
-    try {
-      var current = (location.pathname || "").split("/").pop() || "index.html";
-      document.querySelectorAll(".main-nav .nav-link").forEach(function (a) {
-        var href = a.getAttribute("href") || "";
-        a.classList.toggle("active", href === current);
-      });
-    } catch (e) {}
-  }
-
-  // ============================================
   // 설정
   // ============================================
-  var AI_MODE = "proxy"; // proxy | direct
+  var AI_MODE = "proxy";
   var GEMINI_PROXY_URL = "";
   var GEMINI_API_KEY = "";
   var GEMINI_API_URL = "";
@@ -88,69 +75,54 @@
   function createWidget() {
     var widget = document.createElement("div");
     widget.id = "aiChatWidget";
-    widget.innerHTML = `
-      <button id="aiChatToggle" class="ai-chat-toggle" title="AI Assistant">
-        <span class="ai-chat-icon">AI</span>
-        <span class="ai-chat-close">X</span>
-      </button>
-
-      <div id="aiChatPopup" class="ai-chat-popup">
-        <div class="ai-chat-header">
-          <div class="ai-chat-title">
-            <span>AI Assistant</span>
-          </div>
-          <div class="ai-chat-header-actions">
-            <button id="aiChatSettingsBtn" class="ai-chat-settings-btn" type="button">설정</button>
-          </div>
-          <div class="ai-chat-status" id="aiDataStatus">초기화 중...</div>
-        </div>
-
-        <div class="ai-chat-quick">
-          <button class="ai-quick-btn" data-q="이번 달 매출 요약해줘">매출 요약</button>
-          <button class="ai-quick-btn" data-q="매출 1위 지점은?">1위 지점</button>
-          <button class="ai-quick-btn" data-q="발주 현황 알려줘">발주 현황</button>
-          <button class="ai-quick-btn" data-q="홀과 배달 비율은?">홀/배달 비율</button>
-        </div>
-
-        <div class="ai-chat-messages" id="aiChatMessages">
-          <div class="ai-msg ai" id="aiWelcomeMsg">
-            안녕하세요. 데이터 분석 도우미입니다.<br>
-            매출/발주 데이터 기반으로 질문해주세요.
-          </div>
-        </div>
-
-        <div class="ai-chat-input-area">
-          <input type="text"
-                 id="aiChatInput"
-                 class="ai-chat-input"
-                 placeholder="질문을 입력하세요..."
-                 autocomplete="off">
-          <button id="aiChatSend" class="ai-chat-send" type="button" aria-label="send">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-            </svg>
-          </button>
-        </div>
-
-        <div class="ai-settings-modal" id="aiSettingsModal" aria-hidden="true">
-          <div class="ai-settings-card">
-            <div class="ai-settings-title">AI 설정</div>
-            <div class="ai-settings-desc">
-              보안상 프록시 URL을 사용하세요. (브라우저에 API 키 저장 금지)
-            </div>
-            <label class="ai-settings-label">프록시 URL</label>
-            <div class="ai-settings-row">
-              <input id="aiProxyUrlInput" class="ai-settings-input" type="text" placeholder="https://your-proxy.workers.dev">
-              <button id="aiProxySaveBtn" class="ai-settings-save" type="button">저장</button>
-            </div>
-            <div class="ai-settings-actions">
-              <button id="aiProxyCloseBtn" class="ai-settings-close" type="button">닫기</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+    widget.innerHTML = [
+      '<button id="aiChatToggle" class="ai-chat-toggle" title="AI Assistant">',
+        '<span class="ai-chat-icon">AI</span>',
+        '<span class="ai-chat-close">X</span>',
+      '</button>',
+      '<div id="aiChatPopup" class="ai-chat-popup">',
+        '<div class="ai-chat-header">',
+          '<div class="ai-chat-title"><span>AI Assistant</span></div>',
+          '<div class="ai-chat-header-actions">',
+            '<button id="aiChatSettingsBtn" class="ai-chat-settings-btn" type="button">설정</button>',
+          '</div>',
+          '<div class="ai-chat-status" id="aiDataStatus">초기화 중...</div>',
+        '</div>',
+        '<div class="ai-chat-quick">',
+          '<button class="ai-quick-btn" data-q="이번 달 매출 요약해줘">매출 요약</button>',
+          '<button class="ai-quick-btn" data-q="매출 1위 지점은?">1위 지점</button>',
+          '<button class="ai-quick-btn" data-q="발주 현황 알려줘">발주 현황</button>',
+          '<button class="ai-quick-btn" data-q="홀과 배달 비율은?">홀/배달 비율</button>',
+        '</div>',
+        '<div class="ai-chat-messages" id="aiChatMessages">',
+          '<div class="ai-msg ai" id="aiWelcomeMsg">',
+            '안녕하세요. 데이터 분석 도우미입니다.<br>매출/발주 데이터 기반으로 질문해주세요.',
+          '</div>',
+        '</div>',
+        '<div class="ai-chat-input-area">',
+          '<input type="text" id="aiChatInput" class="ai-chat-input" placeholder="질문을 입력하세요..." autocomplete="off">',
+          '<button id="aiChatSend" class="ai-chat-send" type="button" aria-label="send">',
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">',
+              '<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>',
+            '</svg>',
+          '</button>',
+        '</div>',
+        '<div class="ai-settings-modal" id="aiSettingsModal" aria-hidden="true">',
+          '<div class="ai-settings-card">',
+            '<div class="ai-settings-title">AI 설정</div>',
+            '<div class="ai-settings-desc">보안상 프록시 URL을 사용하세요. (브라우저에 API 키 저장 금지)</div>',
+            '<label class="ai-settings-label">프록시 URL</label>',
+            '<div class="ai-settings-row">',
+              '<input id="aiProxyUrlInput" class="ai-settings-input" type="text" placeholder="https://your-proxy.workers.dev">',
+              '<button id="aiProxySaveBtn" class="ai-settings-save" type="button">저장</button>',
+            '</div>',
+            '<div class="ai-settings-actions">',
+              '<button id="aiProxyCloseBtn" class="ai-settings-close" type="button">닫기</button>',
+            '</div>',
+          '</div>',
+        '</div>',
+      '</div>'
+    ].join('');
     document.body.appendChild(widget);
   }
 
@@ -159,316 +131,62 @@
   // ============================================
   function injectStyles() {
     var style = document.createElement("style");
-    style.textContent = `
-      .ai-chat-toggle {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #00d4ff, #7b2cbf);
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.35);
-        z-index: 9999;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-      }
-      .ai-chat-toggle:hover { transform: scale(1.06); }
-      .ai-chat-toggle.disabled {
-        background: #555;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
-      .ai-chat-icon, .ai-chat-close {
-        font-size: 16px;
-        transition: all 0.2s ease;
-      }
-      .ai-chat-close {
-        position: absolute;
-        opacity: 0;
-        transform: rotate(-90deg);
-      }
-      .ai-chat-toggle.open .ai-chat-icon { opacity: 0; transform: rotate(90deg); }
-      .ai-chat-toggle.open .ai-chat-close { opacity: 1; transform: rotate(0deg); }
-
-      .ai-chat-popup {
-        position: fixed;
-        bottom: 100px;
-        right: 24px;
-        width: 380px;
-        height: 520px;
-        background: #1a1a2e;
-        border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        z-index: 9998;
-        display: flex;
-        flex-direction: column;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(16px) scale(0.97);
-        transition: all 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        overflow: hidden;
-      }
-      .ai-chat-popup.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0) scale(1);
-      }
-
-      .ai-chat-header {
-        padding: 14px 16px 12px;
-        background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(123, 44, 191, 0.18));
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .ai-chat-title {
-        font-weight: 800;
-        color: #fff;
-        font-size: 1.05rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .ai-chat-header-actions {
-        margin-top: 8px;
-        display: flex;
-        justify-content: flex-end;
-      }
-      .ai-chat-settings-btn {
-        padding: 6px 10px;
-        border-radius: 8px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.18);
-        color: #ddd;
-        font-size: 0.78rem;
-        cursor: pointer;
-      }
-      .ai-chat-settings-btn:hover {
-        border-color: rgba(0,212,255,0.35);
-        color: #fff;
-      }
-
-      .ai-chat-status {
-        font-size: 0.75rem;
-        margin-top: 8px;
-        color: #4ecdc4;
-      }
-      .ai-chat-status.error { color: #ff6b6b; }
-      .ai-chat-status.warning { color: #ffe66d; }
-
-      .ai-chat-quick {
-        display: flex;
-        gap: 6px;
-        padding: 10px 12px;
-        flex-wrap: wrap;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      .ai-quick-btn {
-        padding: 6px 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        color: #aaa;
-        font-size: 0.75rem;
-        cursor: pointer;
-        transition: all 0.15s;
-        white-space: nowrap;
-      }
-      .ai-quick-btn:hover {
-        background: rgba(0, 212, 255, 0.18);
-        border-color: rgba(0, 212, 255, 0.35);
-        color: #fff;
-      }
-      .ai-quick-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-      .ai-chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 14px 14px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      .ai-msg {
-        padding: 12px 14px;
-        border-radius: 12px;
-        max-width: 88%;
-        font-size: 0.9rem;
-        line-height: 1.55;
-        word-break: break-word;
-      }
-      .ai-msg.user {
-        background: linear-gradient(135deg, #00d4ff, #7b2cbf);
-        color: #fff;
-        align-self: flex-end;
-        border-bottom-right-radius: 4px;
-      }
-      .ai-msg.ai {
-        background: rgba(255, 255, 255, 0.08);
-        color: #e0e0e0;
-        align-self: flex-start;
-        border-bottom-left-radius: 4px;
-      }
-      .ai-msg.ai strong { color: #00d4ff; }
-      .ai-msg.ai code {
-        background: rgba(0, 0, 0, 0.3);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 0.85em;
-      }
-
-      .ai-msg.loading {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .ai-loading-dots { display: flex; gap: 4px; }
-      .ai-loading-dots span {
-        width: 6px;
-        height: 6px;
-        background: #00d4ff;
-        border-radius: 50%;
-        animation: aiBounce 1.2s infinite ease-in-out both;
-      }
-      .ai-loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-      .ai-loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-      @keyframes aiBounce {
-        0%, 80%, 100% { transform: scale(0); }
-        40% { transform: scale(1); }
-      }
-
-      .ai-chat-input-area {
-        display: flex;
-        gap: 8px;
-        padding: 12px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(0, 0, 0, 0.2);
-      }
-      .ai-chat-input {
-        flex: 1;
-        padding: 12px 14px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
-        color: #fff;
-        font-size: 0.9rem;
-        outline: none;
-        transition: border-color 0.15s;
-      }
-      .ai-chat-input:focus { border-color: rgba(0, 212, 255, 0.6); }
-      .ai-chat-input::placeholder { color: #666; }
-      .ai-chat-input:disabled { opacity: 0.55; cursor: not-allowed; }
-
-      .ai-chat-send {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #00d4ff, #7b2cbf);
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        transition: transform 0.15s;
-      }
-      .ai-chat-send:hover { transform: scale(1.05); }
-      .ai-chat-send:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-      .ai-settings-modal {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.72);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-      }
-      .ai-settings-modal.open { display: flex; }
-      .ai-settings-card {
-        width: 100%;
-        background: #16213e;
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 14px;
-        padding: 16px;
-      }
-      .ai-settings-title {
-        font-weight: 800;
-        color: #fff;
-        margin-bottom: 8px;
-      }
-      .ai-settings-desc {
-        color: #aaa;
-        font-size: 0.82rem;
-        line-height: 1.5;
-        margin-bottom: 12px;
-      }
-      .ai-settings-label {
-        display: block;
-        color: #888;
-        font-size: 0.8rem;
-        margin-bottom: 6px;
-      }
-      .ai-settings-row {
-        display: flex;
-        gap: 8px;
-      }
-      .ai-settings-input {
-        flex: 1;
-        padding: 10px 12px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(255,255,255,0.06);
-        color: #fff;
-        outline: none;
-      }
-      .ai-settings-input:focus { border-color: rgba(0,212,255,0.6); }
-      .ai-settings-save {
-        padding: 10px 12px;
-        border-radius: 10px;
-        border: none;
-        background: linear-gradient(135deg, #00d4ff, #7b2cbf);
-        color: #fff;
-        font-weight: 700;
-        cursor: pointer;
-        white-space: nowrap;
-      }
-      .ai-settings-actions {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 12px;
-      }
-      .ai-settings-close {
-        padding: 8px 12px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.18);
-        color: #ddd;
-        cursor: pointer;
-      }
-
-      @media (max-width: 480px) {
-        .ai-chat-popup {
-          width: calc(100vw - 32px);
-          height: 70vh;
-          right: 16px;
-          bottom: 90px;
-        }
-        .ai-chat-toggle {
-          right: 16px;
-          bottom: 16px;
-          width: 54px;
-          height: 54px;
-        }
-      }
-    `;
+    style.textContent = [
+      '.ai-chat-toggle{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7b2cbf);border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,212,255,0.35);z-index:9999;transition:all .2s;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;letter-spacing:.02em}',
+      '.ai-chat-toggle:hover{transform:scale(1.06)}',
+      '.ai-chat-toggle.disabled{background:#555;cursor:not-allowed;box-shadow:none}',
+      '.ai-chat-icon,.ai-chat-close{font-size:16px;transition:all .2s}',
+      '.ai-chat-close{position:absolute;opacity:0;transform:rotate(-90deg)}',
+      '.ai-chat-toggle.open .ai-chat-icon{opacity:0;transform:rotate(90deg)}',
+      '.ai-chat-toggle.open .ai-chat-close{opacity:1;transform:rotate(0deg)}',
+      '.ai-chat-popup{position:fixed;bottom:100px;right:24px;width:380px;height:520px;background:#1a1a2e;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:9998;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(16px) scale(.97);transition:all .2s;border:1px solid rgba(255,255,255,.1);overflow:hidden}',
+      '.ai-chat-popup.open{opacity:1;visibility:visible;transform:translateY(0) scale(1)}',
+      '.ai-chat-header{padding:14px 16px 12px;background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(123,44,191,.18));border-bottom:1px solid rgba(255,255,255,.08)}',
+      '.ai-chat-title{font-weight:800;color:#fff;font-size:1.05rem;display:flex;align-items:center;justify-content:space-between}',
+      '.ai-chat-header-actions{margin-top:8px;display:flex;justify-content:flex-end}',
+      '.ai-chat-settings-btn{padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);color:#ddd;font-size:.78rem;cursor:pointer}',
+      '.ai-chat-settings-btn:hover{border-color:rgba(0,212,255,.35);color:#fff}',
+      '.ai-chat-status{font-size:.75rem;margin-top:8px;color:#4ecdc4}',
+      '.ai-chat-status.error{color:#ff6b6b}',
+      '.ai-chat-status.warning{color:#ffe66d}',
+      '.ai-chat-quick{display:flex;gap:6px;padding:10px 12px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.05)}',
+      '.ai-quick-btn{padding:6px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;color:#aaa;font-size:.75rem;cursor:pointer;transition:all .15s;white-space:nowrap}',
+      '.ai-quick-btn:hover{background:rgba(0,212,255,.18);border-color:rgba(0,212,255,.35);color:#fff}',
+      '.ai-quick-btn:disabled{opacity:.5;cursor:not-allowed}',
+      '.ai-chat-messages{flex:1;overflow-y:auto;padding:14px 14px 12px;display:flex;flex-direction:column;gap:12px}',
+      '.ai-msg{padding:12px 14px;border-radius:12px;max-width:88%;font-size:.9rem;line-height:1.55;word-break:break-word}',
+      '.ai-msg.user{background:linear-gradient(135deg,#00d4ff,#7b2cbf);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}',
+      '.ai-msg.ai{background:rgba(255,255,255,.08);color:#e0e0e0;align-self:flex-start;border-bottom-left-radius:4px}',
+      '.ai-msg.ai strong{color:#00d4ff}',
+      '.ai-msg.ai code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-size:.85em}',
+      '.ai-msg.loading{display:flex;align-items:center;gap:8px}',
+      '.ai-loading-dots{display:flex;gap:4px}',
+      '.ai-loading-dots span{width:6px;height:6px;background:#00d4ff;border-radius:50%;animation:aiBounce 1.2s infinite ease-in-out both}',
+      '.ai-loading-dots span:nth-child(1){animation-delay:-.32s}',
+      '.ai-loading-dots span:nth-child(2){animation-delay:-.16s}',
+      '@keyframes aiBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}',
+      '.ai-chat-input-area{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.2)}',
+      '.ai-chat-input{flex:1;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;color:#fff;font-size:.9rem;outline:none;transition:border-color .15s}',
+      '.ai-chat-input:focus{border-color:rgba(0,212,255,.6)}',
+      '.ai-chat-input::placeholder{color:#666}',
+      '.ai-chat-input:disabled{opacity:.55;cursor:not-allowed}',
+      '.ai-chat-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7b2cbf);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .15s}',
+      '.ai-chat-send:hover{transform:scale(1.05)}',
+      '.ai-chat-send:disabled{opacity:.55;cursor:not-allowed;transform:none}',
+      '.ai-settings-modal{position:absolute;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:16px}',
+      '.ai-settings-modal.open{display:flex}',
+      '.ai-settings-card{width:100%;background:#16213e;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px}',
+      '.ai-settings-title{font-weight:800;color:#fff;margin-bottom:8px}',
+      '.ai-settings-desc{color:#aaa;font-size:.82rem;line-height:1.5;margin-bottom:12px}',
+      '.ai-settings-label{display:block;color:#888;font-size:.8rem;margin-bottom:6px}',
+      '.ai-settings-row{display:flex;gap:8px}',
+      '.ai-settings-input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none}',
+      '.ai-settings-input:focus{border-color:rgba(0,212,255,.6)}',
+      '.ai-settings-save{padding:10px 12px;border-radius:10px;border:none;background:linear-gradient(135deg,#00d4ff,#7b2cbf);color:#fff;font-weight:700;cursor:pointer;white-space:nowrap}',
+      '.ai-settings-actions{display:flex;justify-content:flex-end;margin-top:12px}',
+      '.ai-settings-close{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);color:#ddd;cursor:pointer}',
+      '@media(max-width:480px){.ai-chat-popup{width:calc(100vw - 32px);height:70vh;right:16px;bottom:90px}.ai-chat-toggle{right:16px;bottom:16px;width:54px;height:54px}}'
+    ].join('\n');
     document.head.appendChild(style);
   }
 
@@ -476,11 +194,7 @@
   // 데이터 로드
   // ============================================
   function safeGetEl(id) {
-    try {
-      return document.getElementById(id);
-    } catch (e) {
-      return null;
-    }
+    try { return document.getElementById(id); } catch (e) { return null; }
   }
 
   async function loadDataFiles() {
@@ -489,18 +203,12 @@
 
     try {
       var salesResponse = await fetch("sales_data.json?t=" + Date.now());
-      if (salesResponse.ok) {
-        salesData = await salesResponse.json();
-        loaded.push("매출");
-      }
+      if (salesResponse.ok) { salesData = await salesResponse.json(); loaded.push("매출"); }
     } catch (e) {}
 
     try {
       var orderResponse = await fetch("report_data.json?t=" + Date.now());
-      if (orderResponse.ok) {
-        orderData = await orderResponse.json();
-        loaded.push("발주");
-      }
+      if (orderResponse.ok) { orderData = await orderResponse.json(); loaded.push("발주"); }
     } catch (e) {}
 
     var proxyUrl = getProxyUrl();
@@ -550,21 +258,12 @@
     var welcomeMsg = safeGetEl("aiWelcomeMsg");
     var toggleBtn = safeGetEl("aiChatToggle");
 
-    if (input) {
-      input.disabled = true;
-      input.placeholder = "AI 기능을 사용할 수 없습니다";
-    }
+    if (input) { input.disabled = true; input.placeholder = "AI 기능을 사용할 수 없습니다"; }
     if (sendBtn) sendBtn.disabled = true;
-    quickBtns.forEach(function (btn) {
-      btn.disabled = true;
-    });
-
+    quickBtns.forEach(function (btn) { btn.disabled = true; });
     if (welcomeMsg) {
-      welcomeMsg.innerHTML =
-        (message ? message : "AI 기능을 사용할 수 없습니다.") +
-        "<br><br>상단 설정에서 프록시 URL을 등록하세요.";
+      welcomeMsg.innerHTML = (message ? message : "AI 기능을 사용할 수 없습니다.") + "<br><br>상단 설정에서 프록시 URL을 등록하세요.";
     }
-
     if (toggleBtn) toggleBtn.classList.add("disabled");
   }
 
@@ -586,25 +285,9 @@
 
       if (Array.isArray(salesData.stores) && salesData.stores.length > 0) {
         context += "### 지점별 매출 TOP 5\n";
-        var top = salesData.stores
-          .slice()
-          .sort(function (a, b) {
-            return (b.total || 0) - (a.total || 0);
-          })
-          .slice(0, 5);
-
+        var top = salesData.stores.slice().sort(function (a, b) { return (b.total || 0) - (a.total || 0); }).slice(0, 5);
         top.forEach(function (store, i) {
-          context +=
-            (i + 1) +
-            ". " +
-            (store.name || "-") +
-            ": " +
-            formatNumber(store.total || 0) +
-            "원 (홀 " +
-            formatNumber(store.hall || 0) +
-            ", 배달 " +
-            formatNumber(store.delivery || 0) +
-            ")\n";
+          context += (i + 1) + ". " + (store.name || "-") + ": " + formatNumber(store.total || 0) + "원 (홀 " + formatNumber(store.hall || 0) + ", 배달 " + formatNumber(store.delivery || 0) + ")\n";
         });
         context += "\n";
       }
@@ -653,25 +336,16 @@
       var resp = await fetch(proxyUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: question,
-          context: systemPrompt,
-          page: page
-        })
+        body: JSON.stringify({ question: question, context: systemPrompt, page: page })
       });
 
       if (!resp.ok) {
         var t = "";
-        try {
-          t = await resp.text();
-        } catch (e) {}
+        try { t = await resp.text(); } catch (e) {}
         throw new Error("프록시 오류: " + resp.status + (t ? " / " + t.slice(0, 120) : ""));
       }
 
-      var json = await resp.json().catch(function () {
-        return {};
-      });
-
+      var json = await resp.json().catch(function () { return {}; });
       var text = json.text || json.answer || "";
       if (!text) throw new Error("응답을 받지 못했습니다.");
       return String(text);
@@ -682,19 +356,8 @@
     }
 
     var requestBody = {
-      contents: [
-        {
-          parts: [
-            {
-              text: systemPrompt + "\n\n사용자 질문: " + question
-            }
-          ]
-        }
-      ],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 512
-      }
+      contents: [{ parts: [{ text: systemPrompt + "\n\n사용자 질문: " + question }] }],
+      generationConfig: { temperature: 0.7, maxOutputTokens: 512 }
     };
 
     var response = await fetch(GEMINI_API_URL + "?key=" + encodeURIComponent(GEMINI_API_KEY), {
@@ -704,9 +367,7 @@
     });
 
     if (!response.ok) {
-      var errorData = await response.json().catch(function () {
-        return {};
-      });
+      var errorData = await response.json().catch(function () { return {}; });
       throw new Error((errorData.error && errorData.error.message) ? errorData.error.message : "API 오류: " + response.status);
     }
 
@@ -760,10 +421,7 @@
     var loadingDiv = document.createElement("div");
     loadingDiv.className = "ai-msg ai loading";
     loadingDiv.id = "aiLoadingMsg";
-    loadingDiv.innerHTML = `
-      <div class="ai-loading-dots"><span></span><span></span><span></span></div>
-      <span>분석 중...</span>
-    `;
+    loadingDiv.innerHTML = '<div class="ai-loading-dots"><span></span><span></span><span></span></div><span>분석 중...</span>';
     messagesDiv.appendChild(loadingDiv);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
@@ -779,7 +437,6 @@
     var input = safeGetEl("aiChatInput");
     var sendBtn = safeGetEl("aiChatSend");
     if (!input || !sendBtn) return;
-
     if (input.disabled) return;
 
     addMessage(question, true);
@@ -814,9 +471,7 @@
     input.value = getProxyUrl() || "";
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
-    setTimeout(function () {
-      input.focus();
-    }, 0);
+    setTimeout(function () { input.focus(); }, 0);
   }
 
   function closeSettings() {
@@ -837,9 +492,7 @@
     }
     if (url.endsWith("/")) url = url.slice(0, -1);
 
-    try {
-      localStorage.setItem("gemini_proxy_url", url);
-    } catch (e) {}
+    try { localStorage.setItem("gemini_proxy_url", url); } catch (e) {}
 
     closeSettings();
     loadDataFiles();
@@ -897,24 +550,17 @@
   // 유틸
   // ============================================
   function formatNumber(num) {
-    try {
-      return new Intl.NumberFormat("ko-KR").format(num || 0);
-    } catch (e) {
-      return String(num || 0);
-    }
+    try { return new Intl.NumberFormat("ko-KR").format(num || 0); }
+    catch (e) { return String(num || 0); }
   }
 
   // ============================================
   // 초기화
   // ============================================
   async function init() {
-    fixNavActive();
-
-    // roas 등에서 위젯을 숨기고 싶으면 <body data-ai="off"> 사용
+    // data-ai="off" 이면 위젯 생성하지 않음
     var aiOff = false;
-    try {
-      aiOff = (document.body && document.body.dataset && document.body.dataset.ai === "off");
-    } catch (e) {}
+    try { aiOff = (document.body && document.body.dataset && document.body.dataset.ai === "off"); } catch (e) {}
     if (aiOff) return;
 
     injectStyles();
