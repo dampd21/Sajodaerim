@@ -15,7 +15,7 @@ on:
         description: '특정 지점만 수집 (비워두면 전체)'
         required: false
         default: ''
-  
+
   schedule:
     # 매일 오전 9시 (KST) = UTC 00:00
     - cron: '0 0 * * *'
@@ -27,7 +27,7 @@ jobs:
   crawl:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -54,25 +54,25 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           ARGS=""
-          
+
           # 기본값: 2일 전까지
           if [ -n "${{ github.event.inputs.days }}" ]; then
             ARGS="$ARGS --days ${{ github.event.inputs.days }}"
           else
             ARGS="$ARGS --days 2"
           fi
-          
+
           # 기본값: 더보기 10회
           if [ -n "${{ github.event.inputs.max_clicks }}" ]; then
             ARGS="$ARGS --max-clicks ${{ github.event.inputs.max_clicks }}"
           else
             ARGS="$ARGS --max-clicks 10"
           fi
-          
+
           if [ -n "${{ github.event.inputs.store }}" ]; then
             ARGS="$ARGS --store '${{ github.event.inputs.store }}'"
           fi
-          
+
           echo "Running: python scripts/naver_review_crawler.py $ARGS"
           python scripts/naver_review_crawler.py $ARGS
 
@@ -80,6 +80,8 @@ jobs:
         run: |
           cat > docs/ai-config.js << 'EOF'
           const AI_CONFIG = {
+            AI_MODE: "direct",
+            GEMINI_PROXY_URL: "",
             GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
             GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
