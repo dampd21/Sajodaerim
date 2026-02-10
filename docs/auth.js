@@ -1,17 +1,16 @@
 /**
  * 인증 체크 (모든 페이지 상단에 포함)
- * - sessionStorage의 토큰을 auth-config.js의 session_token과 비교
+ * - sessionStorage/localStorage의 토큰을 auth-config.js의 session_token과 비교
  * - 미인증 시 login.html로 리다이렉트
  * - 로그아웃 버튼을 네비바에 추가
  *
- * v10.1 안정화:
- * - AUTH_CONFIG 누락/disabled/필드 누락을 안전하게 처리
- * - 설정 누락이면 login.html로 reason과 함께 이동(무한루프 방지)
+ * 안정화 포인트:
+ * - auth-config.js 토큰이 배포마다 바뀌면 로그인 유지가 깨지므로
+ *   deploy-pages.yml에서 session_token을 고정 토큰으로 생성하는 것을 권장
  */
 (function() {
     var currentPage = (location.pathname || '').split('/').pop() || '';
 
-    // login.html에서는 실행하지 않음
     if (currentPage === 'login.html') return;
 
     function getAuthState() {
@@ -33,16 +32,29 @@
         location.href = url;
     }
 
+    function getStoredToken() {
+        var t = sessionStorage.getItem('auth_token');
+        if (t) return t;
+        try {
+            return localStorage.getItem('auth_token') || '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function clearStoredToken() {
+        sessionStorage.removeItem('auth_token');
+        try { localStorage.removeItem('auth_token'); } catch (e) {}
+    }
+
     function checkAuth() {
         var state = getAuthState();
-
-        // 설정 누락/비활성/손상 → 로그인 페이지로 이동(보안상 open-access 방지)
         if (!state.ok) {
             redirectToLogin(state.reason);
             return;
         }
 
-        var token = sessionStorage.getItem('auth_token');
+        var token = getStoredToken();
         if (!token || token !== AUTH_CONFIG.session_token) {
             redirectToLogin('not_authenticated');
             return;
@@ -64,7 +76,7 @@
             btn.textContent = '로그아웃';
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                sessionStorage.removeItem('auth_token');
+                clearStoredToken();
                 redirectToLogin('logged_out');
             });
 
