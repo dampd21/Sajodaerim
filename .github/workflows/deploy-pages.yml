@@ -35,13 +35,10 @@ jobs:
         run: |
           set -e
 
-          # report_data.json 복사
           if [ -f "output/report_data.json" ]; then
             cp output/report_data.json docs/
           fi
 
-          # AI Config 파일 생성 (API 키 주입)
-          # Direct 모드: 프론트에서 Gemini API 직접 호출 (API KEY 노출됨)
           cat > docs/ai-config.js << 'AIEOF'
           const AI_CONFIG = {
             AI_MODE: "direct",
@@ -73,7 +70,10 @@ jobs:
           AUTHEOF
           else
             HASH=$(echo -n "$DASHBOARD_PASSWORD" | sha256sum | awk '{print $1}')
-            TOKEN=$(echo -n "${HASH}_session_$(date +%s)" | sha256sum | awk '{print $1}')
+
+            # 중요: 배포할 때마다 바뀌지 않도록 고정 토큰 생성
+            TOKEN=$(echo -n "${HASH}_session_fixed" | sha256sum | awk '{print $1}')
+
             cat > docs/auth-config.js << AUTHEOF
           var AUTH_CONFIG = {
             disabled: false,
@@ -82,7 +82,7 @@ jobs:
             generated_at: "$(date -Iseconds)"
           };
           AUTHEOF
-            echo "auth-config.js generated (hash + session token)"
+            echo "auth-config.js generated (fixed session token)"
           fi
 
           echo "=== auth-config.js (first 200 chars) ==="
