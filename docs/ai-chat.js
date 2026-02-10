@@ -1,12 +1,16 @@
 /**
  * AI 채팅 위젯 (공통)
- * - 보안상 권장: proxy 모드(프론트에 API KEY 없음)
+ * - 기본: proxy 모드(프론트에 API KEY 없음) 권장
  * - body[data-ai="off"] 인 페이지에서는 위젯 UI를 생성하지 않음
- * - nav active 정정은 nav.js가 담당하므로 여기서는 제거
  *
  * proxy 기대 규격(권장):
  * POST { question: string, context: string, page: string }
  * 응답: { text: string } 또는 { answer: string }
+ *
+ * v10.1 개선:
+ * - Direct 모드에서 Gemini 오류(401/403/429/5xx) 메시지 사용자 친화적으로 변환
+ * - Proxy 모드에서도 HTTP 오류를 친화적으로 변환
+ * - 상태 라벨에 모드/데이터 상태를 더 명확히 표시
  */
 
 (function () {
@@ -31,7 +35,7 @@
     return new Promise(function (resolve) {
       function applyConfig() {
         if (typeof AI_CONFIG !== "undefined") {
-          AI_MODE = (AI_CONFIG.AI_MODE || "proxy").toLowerCase();
+          AI_MODE = String(AI_CONFIG.AI_MODE || "proxy").toLowerCase();
           GEMINI_PROXY_URL = AI_CONFIG.GEMINI_PROXY_URL || "";
           GEMINI_API_KEY = AI_CONFIG.GEMINI_API_KEY || "";
           GEMINI_API_URL = AI_CONFIG.GEMINI_API_URL || "";
@@ -197,8 +201,14 @@
     try { return document.getElementById(id); } catch (e) { return null; }
   }
 
-  async function loadDataFiles() {
+  function setStatus(text, level) {
     var statusEl = safeGetEl("aiDataStatus");
+    if (!statusEl) return;
+    statusEl.textContent = text;
+    statusEl.className = "ai-chat-status" + (level ? (" " + level) : "");
+  }
+
+  async function loadDataFiles() {
     var loaded = [];
 
     try {
@@ -211,40 +221,32 @@
       if (orderResponse.ok) { orderData = await orderResponse.json(); loaded.push("발주"); }
     } catch (e) {}
 
-    var proxyUrl = getProxyUrl();
-    var hasProxy = !!proxyUrl;
-
-    if (!statusEl) return;
-
     if (!configLoaded) {
-      statusEl.textContent = "AI 설정을 불러올 수 없습니다.";
-      statusEl.className = "ai-chat-status error";
+      setStatus("AI 설정을 불러올 수 없습니다.", "error");
       disableChat("AI 설정을 불러올 수 없습니다.");
       return;
     }
 
     if (AI_MODE === "proxy") {
-      if (!hasProxy) {
-        statusEl.textContent = "AI 프록시 URL 설정 필요";
-        statusEl.className = "ai-chat-status warning";
+      var proxyUrl = getProxyUrl();
+      if (!proxyUrl) {
+        setStatus("AI 프록시 URL 설정 필요 (proxy 모드)", "warning");
         disableChat("AI 프록시 URL 설정이 필요합니다.");
         return;
       }
     } else {
       if (!GEMINI_API_KEY || !GEMINI_API_URL) {
-        statusEl.textContent = "AI 키 설정 필요(직접 호출 모드)";
-        statusEl.className = "ai-chat-status warning";
+        setStatus("AI 키 설정 필요 (direct 모드)", "warning");
         disableChat("AI 키 설정이 필요합니다.");
         return;
       }
     }
 
+    var modeLabel = (AI_MODE === "proxy") ? "proxy" : "direct";
     if (loaded.length > 0) {
-      statusEl.textContent = loaded.join(", ") + " 데이터 준비됨";
-      statusEl.className = "ai-chat-status";
+      setStatus(loaded.join(", ") + " 데이터 준비됨 | 모드: " + modeLabel, "");
     } else {
-      statusEl.textContent = "데이터를 불러올 수 없습니다.";
-      statusEl.className = "ai-chat-status error";
+      setStatus("데이터를 불러올 수 없습니다 | 모드: " + modeLabel, "error");
     }
   }
 
@@ -261,9 +263,11 @@
     if (input) { input.disabled = true; input.placeholder = "AI 기능을 사용할 수 없습니다"; }
     if (sendBtn) sendBtn.disabled = true;
     quickBtns.forEach(function (btn) { btn.disabled = true; });
+
     if (welcomeMsg) {
-      welcomeMsg.innerHTML = (message ? message : "AI 기능을 사용할 수 없습니다.") + "<br><br>상단 설정에서 프록시 URL을 등록하세요.";
+      welcomeMsg.innerHTML = (message ? message : "AI 기능을 사용할 수 없습니다.") + "<br><br>설정에서 모드/프록시를 확인하세요.";
     }
+
     if (toggleBtn) toggleBtn.classList.add("disabled");
   }
 
@@ -315,6 +319,49 @@
   }
 
   // ============================================
+  // 오류 메시지 변환
+  // ============================================
+  function normalizeHttpError(status, rawText, rawJson) {
+    var msg = "";
+
+    // Gemini 응답 형식: { error: { message, status, code } }
+    try {
+      if (rawJson && rawJson.error) {
+        msg = String(rawJson.error.message || rawJson.error.status || "");
+      }
+    } catch (e) {}
+
+    if (!msg && rawText) msg = String(rawText);
+
+    // 사용자 친화 메시지
+    if (status === 0 || status === -1) {
+      return "네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+    }
+
+    if (status === 401) {
+      return "AI 인증에 실패했습니다. API 키가 올바른지 확인하세요.";
+    }
+
+    if (status === 403) {
+      return "AI 접근이 거부되었습니다. API 키 권한/프로젝트 설정 또는 호출 제한을 확인하세요.";
+    }
+
+    if (status === 429) {
+      return "요청이 많아 일시적으로 제한되었습니다(429). 잠시 후 다시 시도하거나 사용량(무료 쿼터)을 확인하세요.";
+    }
+
+    if (status >= 500) {
+      return "AI 서비스 오류가 발생했습니다(" + status + "). 잠시 후 다시 시도해주세요.";
+    }
+
+    if (status >= 400) {
+      return "요청 처리 중 오류가 발생했습니다(" + status + "). " + (msg ? ("세부: " + msg) : "");
+    }
+
+    return msg || "알 수 없는 오류가 발생했습니다.";
+  }
+
+  // ============================================
   // AI 호출
   // ============================================
   async function askAI(question) {
@@ -340,15 +387,17 @@
       });
 
       if (!resp.ok) {
-        var t = "";
-        try { t = await resp.text(); } catch (e) {}
-        throw new Error("프록시 오류: " + resp.status + (t ? " / " + t.slice(0, 120) : ""));
+        var text = "";
+        var json = null;
+        try { text = await resp.text(); } catch (e) {}
+        try { json = JSON.parse(text); } catch (e2) {}
+        throw new Error(normalizeHttpError(resp.status, text, json));
       }
 
-      var json = await resp.json().catch(function () { return {}; });
-      var text = json.text || json.answer || "";
-      if (!text) throw new Error("응답을 받지 못했습니다.");
-      return String(text);
+      var outJson = await resp.json().catch(function () { return {}; });
+      var textOut = outJson.text || outJson.answer || "";
+      if (!textOut) throw new Error("AI 응답을 받지 못했습니다.");
+      return String(textOut);
     }
 
     if (!GEMINI_API_KEY || !GEMINI_API_URL) {
@@ -367,15 +416,18 @@
     });
 
     if (!response.ok) {
-      var errorData = await response.json().catch(function () { return {}; });
-      throw new Error((errorData.error && errorData.error.message) ? errorData.error.message : "API 오류: " + response.status);
+      var rawText = "";
+      var rawJson = null;
+      try { rawText = await response.text(); } catch (e3) {}
+      try { rawJson = JSON.parse(rawText); } catch (e4) {}
+      throw new Error(normalizeHttpError(response.status, rawText, rawJson));
     }
 
     var data = await response.json();
     var out = (((data || {}).candidates || [])[0] || {}).content;
     var parts = out && out.parts ? out.parts : [];
     var answer = parts[0] && parts[0].text ? parts[0].text : "";
-    if (!answer) throw new Error("응답을 받지 못했습니다.");
+    if (!answer) throw new Error("AI 응답을 받지 못했습니다.");
     return String(answer);
   }
 
@@ -441,6 +493,7 @@
 
     addMessage(question, true);
     input.value = "";
+
     isLoading = true;
     sendBtn.disabled = true;
 
@@ -558,7 +611,6 @@
   // 초기화
   // ============================================
   async function init() {
-    // data-ai="off" 이면 위젯 생성하지 않음
     var aiOff = false;
     try { aiOff = (document.body && document.body.dataset && document.body.dataset.ai === "off"); } catch (e) {}
     if (aiOff) return;
