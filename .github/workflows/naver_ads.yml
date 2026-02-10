@@ -16,7 +16,7 @@ env:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,6 +45,8 @@ jobs:
         run: |
           cat > docs/ai-config.js << 'EOF'
           const AI_CONFIG = {
+            AI_MODE: "direct",
+            GEMINI_PROXY_URL: "",
             GEMINI_API_KEY: "${{ secrets.GEMINI_API_KEY }}",
             GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
           };
