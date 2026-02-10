@@ -1,0 +1,128 @@
+/* ===========================================
+   통합 대시보드 전용 스타일
+   - 공통 컴포넌트(style.css) override 금지
+   - 전용 클래스만 추가
+   =========================================== */
+
+/* 상단 필터 섹션: 통합 페이지에서만 폭/정렬 보조 */
+.dashboard-filter .filter-group {
+    min-width: 220px;
+}
+
+.inline-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inline-input .filter-input {
+    flex: 1;
+    min-width: 140px;
+}
+
+.inline-suffix {
+    color: #888;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* 섹션 설명 */
+.section-desc {
+    margin: -6px 0 14px 0;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* 통합 페이지에서만 차트 높이 미세 조정 */
+.dashboard-chart-sm {
+    height: 240px;
+}
+
+.dashboard-chart-md {
+    height: 300px;
+}
+
+/* 변동 뱃지 */
+.delta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    color: #aaa;
+}
+
+.delta-up {
+    border-color: rgba(78, 205, 196, 0.35);
+    background: rgba(78, 205, 196, 0.12);
+    color: #4ecdc4;
+}
+
+.delta-down {
+    border-color: rgba(255, 107, 107, 0.35);
+    background: rgba(255, 107, 107, 0.12);
+    color: #ff6b6b;
+}
+
+.delta-new {
+    border-color: rgba(0, 212, 255, 0.35);
+    background: rgba(0, 212, 255, 0.12);
+    color: #00d4ff;
+}
+
+.delta-out {
+    border-color: rgba(255, 230, 109, 0.35);
+    background: rgba(255, 230, 109, 0.12);
+    color: #ffe66d;
+}
+
+/* 테이블 보조 */
+.badge-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #ddd;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+}
+
+.badge-rank.good {
+    border-color: rgba(78, 205, 196, 0.35);
+    background: rgba(78, 205, 196, 0.12);
+    color: #4ecdc4;
+}
+
+.badge-rank.warn {
+    border-color: rgba(255, 230, 109, 0.35);
+    background: rgba(255, 230, 109, 0.12);
+    color: #ffe66d;
+}
+
+.badge-rank.bad {
+    border-color: rgba(255, 107, 107, 0.35);
+    background: rgba(255, 107, 107, 0.12);
+    color: #ff6b6b;
+}
+
+.badge-rank.out {
+    border-color: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.03);
+    color: #888;
+}
+
+/* 모바일에서 필터를 더 깔끔하게 */
+@media (max-width: 768px) {
+    .dashboard-filter .filter-group {
+        min-width: 100%;
+    }
+}
