@@ -13,7 +13,7 @@
     <script src="auth.js"></script>
 
     <div class="container">
-        <nav class="main-nav">
+        <nav class="main-nav" id="mainNav">
             <a href="dashboard.html" class="nav-link">통합 대시보드</a>
             <a href="index.html" class="nav-link">발주 리포트</a>
             <a href="sales.html" class="nav-link">매출 관리</a>
@@ -25,83 +25,89 @@
 
         <header class="header">
             <h1>통합 대시보드</h1>
-            <p class="update-time" id="updateTime"></p>
+            <p class="update-time" id="updateTime">마지막 업데이트: 로딩 중...</p>
         </header>
 
-        <!-- 고객 현황 (상단) -->
-        <section class="data-table-container">
-            <h3>고객 현황</h3>
+        <!-- 고객 현황 -->
+        <section class="dashboard-customer-section">
+            <h2 class="dashboard-section-title">고객 현황</h2>
 
-            <section class="filter-section dashboard-filter">
-                <div class="filter-group">
-                    <label>지점 선택</label>
-                    <select id="storeSelect" class="filter-select">
-                        <option value="">전체 지점</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>기간</label>
-                    <select id="periodSelect" class="filter-select">
-                        <option value="7">최근 7일</option>
-                        <option value="30" selected>최근 30일</option>
-                        <option value="90">최근 90일</option>
-                        <option value="all">전체</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>객단가</label>
-                    <div class="inline-input">
-                        <input type="number" id="basePriceInput" class="filter-input" value="11000" min="1000" step="100">
-                        <span class="inline-suffix">원</span>
+            <div class="dashboard-customer-top">
+                <!-- 좌상단: 전체 고객 수 + 성별 도넛 -->
+                <div class="dashboard-customer-card dashboard-card-total">
+                    <div class="dashboard-card-header">
+                        <span class="dashboard-card-title">전체 고객 수</span>
+                    </div>
+                    <div class="dashboard-total-value" id="totalCustomers">-</div>
+                    <div class="dashboard-gender-wrap">
+                        <div class="dashboard-gender-chart-box" id="genderChartContainer">
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                        <div class="dashboard-gender-detail">
+                            <div class="dashboard-gender-row">
+                                <span class="dashboard-gender-dot male"></span>
+                                <span class="dashboard-gender-label">남성</span>
+                                <span class="dashboard-gender-value" id="maleCustomers">-</span>
+                            </div>
+                            <div class="dashboard-gender-row">
+                                <span class="dashboard-gender-dot female"></span>
+                                <span class="dashboard-gender-label">여성</span>
+                                <span class="dashboard-gender-value" id="femaleCustomers">-</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="summary-cards">
-                <div class="card">
-                    <div class="card-label">전체 고객 수(추정)</div>
-                    <div class="card-value" id="totalCustomers">-</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">남성 고객(추정)</div>
-                    <div class="card-value" id="maleCustomers">-</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">여성 고객(추정)</div>
-                    <div class="card-value" id="femaleCustomers">-</div>
-                </div>
-                <div class="card">
-                    <div class="card-label">총 매출(선택 기간)</div>
-                    <div class="card-value" id="totalSales">-</div>
-                </div>
-            </section>
-
-            <div class="chart-row">
-                <div class="chart-container half">
-                    <h3>성별 비율</h3>
-                    <div class="chart-canvas-container-small dashboard-chart-sm" id="genderChartContainer">
-                        <canvas id="genderChart"></canvas>
+                <!-- 중앙상단: 고객 유입 현황 -->
+                <div class="dashboard-customer-card dashboard-card-trend">
+                    <div class="dashboard-card-header">
+                        <span class="dashboard-card-title">고객 유입 현황</span>
                     </div>
-                </div>
-                <div class="chart-container half">
-                    <h3>일별 고객 유입(추정)</h3>
-                    <div class="chart-canvas-container dashboard-chart-md" id="dailyCustomerChartContainer">
+                    <div class="dashboard-trend-kpi">
+                        <div class="dashboard-kpi-item">
+                            <span class="dashboard-kpi-label">최근 30일 유입(추정)</span>
+                            <span class="dashboard-kpi-value" id="recentMonthCustomers">-</span>
+                        </div>
+                        <div class="dashboard-kpi-item">
+                            <span class="dashboard-kpi-label">최대 일 유입(1년)</span>
+                            <span class="dashboard-kpi-value" id="maxDayCustomers">-</span>
+                        </div>
+                        <div class="dashboard-kpi-item">
+                            <span class="dashboard-kpi-label">주요 고객 연령층</span>
+                            <span class="dashboard-kpi-value" id="topAgeGroup">-</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-trend-chart-box" id="dailyCustomerChartContainer">
                         <canvas id="dailyCustomerChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="chart-row">
-                <div class="chart-container half">
-                    <h3>연령 분포(비율 기반 추정)</h3>
-                    <div class="chart-canvas-container-small dashboard-chart-sm" id="ageChartContainer">
-                        <canvas id="ageChart"></canvas>
+            <div class="dashboard-customer-bottom">
+                <!-- 하단좌측: 성별 + 연령 도넛 -->
+                <div class="dashboard-customer-card dashboard-card-demo">
+                    <div class="dashboard-card-header">
+                        <span class="dashboard-card-title">성별 및 연령 분포</span>
+                    </div>
+                    <div class="dashboard-demo-row">
+                        <div class="dashboard-demo-chart-box" id="genderDonutContainer">
+                            <h4 class="dashboard-sub-title">성별 비율</h4>
+                            <canvas id="genderDonutChart"></canvas>
+                        </div>
+                        <div class="dashboard-demo-chart-box" id="ageDonutContainer">
+                            <h4 class="dashboard-sub-title">연령대별 비율</h4>
+                            <canvas id="ageDonutChart"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="chart-container half">
-                    <h3>방문 빈도(샘플/비율 기반)</h3>
-                    <div class="chart-canvas-container-small dashboard-chart-sm" id="visitChartContainer">
-                        <canvas id="visitChart"></canvas>
+
+                <!-- 하단우측: 연령별 남녀 가로 막대 -->
+                <div class="dashboard-customer-card dashboard-card-age-bar">
+                    <div class="dashboard-card-header">
+                        <span class="dashboard-card-title">연령별 남녀 고객 수</span>
+                    </div>
+                    <div class="dashboard-age-bar-box" id="ageBarChartContainer">
+                        <canvas id="ageBarChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -109,9 +115,8 @@
 
         <!-- 플레이스 순위 변동 -->
         <section class="data-table-container">
-            <h3>플레이스 순위 변동 (최근 기록 기준)</h3>
-            <p class="section-desc">최근 2회 기록을 비교해 순위가 변동된 지점/키워드만 표시합니다.</p>
-
+            <h3>플레이스 순위 변동 <span class="dashboard-badge-period">최근 3일</span></h3>
+            <p class="section-desc">최근 3일간 순위가 변동된 지점/키워드만 표시합니다.</p>
             <div class="table-wrapper">
                 <table class="data-table" id="rankChangeTable">
                     <thead>
@@ -132,8 +137,7 @@
         <!-- 발주 가격 변동 품목 -->
         <section class="data-table-container">
             <h3>식자재 발주 가격 변동 품목</h3>
-            <p class="section-desc">발주 데이터에서 가격 변동이 감지된 품목을 변동률 기준으로 표시합니다.</p>
-
+            <p class="section-desc">최근 발주 데이터에서 가격 상승/하락이 감지된 품목입니다. 클릭하면 상세 내역을 확인할 수 있습니다.</p>
             <div class="table-wrapper">
                 <table class="data-table" id="priceChangeTable">
                     <thead>
@@ -144,13 +148,42 @@
                             <th class="text-right">현재가</th>
                             <th class="text-right">변동액</th>
                             <th class="text-right">변동률</th>
-                            <th>기간</th>
                         </tr>
                     </thead>
                     <tbody id="priceChangeTableBody"></tbody>
                 </table>
             </div>
         </section>
+
+        <!-- 가격 변동 상세 모달 -->
+        <div class="modal" id="priceDetailModal">
+            <div class="modal-content">
+                <span class="modal-close" id="priceModalClose">&times;</span>
+                <h2 id="priceModalTitle">품목 상세</h2>
+                <div class="price-details" id="priceModalSummary"></div>
+                <div class="chart-container">
+                    <h3>가격 추이</h3>
+                    <div class="dashboard-modal-chart" id="priceHistoryChartContainer">
+                        <canvas id="priceHistoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="price-history-table" id="priceModalHistory">
+                    <h4>가격 변동 내역</h4>
+                    <table class="data-table" id="priceHistoryTable">
+                        <thead>
+                            <tr>
+                                <th>날짜</th>
+                                <th>지점</th>
+                                <th class="text-right">단가</th>
+                                <th class="text-right">수량</th>
+                                <th class="text-right">합계</th>
+                            </tr>
+                        </thead>
+                        <tbody id="priceHistoryTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="nav.js"></script>
