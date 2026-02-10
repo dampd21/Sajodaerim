@@ -77,6 +77,23 @@
                 return { ok: true, reason: '' };
             }
 
+            function getStoredToken() {
+                var t = sessionStorage.getItem('auth_token');
+                if (t) return t;
+                try {
+                    return localStorage.getItem('auth_token') || '';
+                } catch (e) {
+                    return '';
+                }
+            }
+
+            function setStoredToken(token) {
+                sessionStorage.setItem('auth_token', token);
+                try {
+                    localStorage.setItem('auth_token', token);
+                } catch (e) {}
+            }
+
             // reason 안내 메시지
             var reason = getReason();
             if (reason === 'logged_out') {
@@ -107,8 +124,8 @@
                 return;
             }
 
-            // 이미 로그인되어 있으면 리다이렉트
-            var token = sessionStorage.getItem('auth_token');
+            // 이미 로그인되어 있으면 리다이렉트 (sessionStorage + localStorage 모두 확인)
+            var token = getStoredToken();
             if (token && token === AUTH_CONFIG.session_token) {
                 location.href = 'index.html';
                 return;
@@ -133,7 +150,8 @@
                     var hash = await sha256(pw);
 
                     if (hash === AUTH_CONFIG.password_hash) {
-                        sessionStorage.setItem('auth_token', AUTH_CONFIG.session_token);
+                        // 로그인 토큰 저장: sessionStorage + localStorage
+                        setStoredToken(AUTH_CONFIG.session_token);
                         location.href = 'index.html';
                     } else {
                         errorEl.textContent = '비밀번호가 올바르지 않습니다.';
