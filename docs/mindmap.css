@@ -549,3 +549,29 @@
     font-size: 0.85rem;
   }
 }
+
+/* ============================================
+   트리맵 뷰 추가 스타일
+   ============================================ */
+.leaf rect {
+  transition: fill-opacity 0.15s;
+}
+.leaf:hover rect {
+  fill-opacity: 0.45;
+  stroke-width: 2;
+}
+.leaf:hover text {
+  fill: #fff !important;
+}
+
+.cat-group text {
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 뷰 전환 버튼 활성 상태 */
+.mindmap-action-btn.active {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.4);
+  color: #00d4ff;
+}
