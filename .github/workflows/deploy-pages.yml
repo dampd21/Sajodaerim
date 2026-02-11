@@ -59,19 +59,18 @@ jobs:
           mkdir -p docs
 
           if [ -z "$DASHBOARD_PASSWORD" ]; then
-            echo "::warning::DASHBOARD_PASSWORD not set. Auth will be disabled and login will block access until configured."
+            echo "::warning::DASHBOARD_PASSWORD not set. Creating fallback auth-config with clear message."
             cat > docs/auth-config.js << 'AUTHEOF'
           var AUTH_CONFIG = {
             disabled: true,
             password_hash: "",
             session_token: "",
-            generated_at: ""
+            generated_at: "",
+            message: "DASHBOARD_PASSWORD 시크릿이 설정되지 않았습니다."
           };
           AUTHEOF
           else
             HASH=$(echo -n "$DASHBOARD_PASSWORD" | sha256sum | awk '{print $1}')
-
-            # 중요: 배포할 때마다 바뀌지 않도록 고정 토큰 생성
             TOKEN=$(echo -n "${HASH}_session_fixed" | sha256sum | awk '{print $1}')
 
             cat > docs/auth-config.js << AUTHEOF
@@ -85,19 +84,34 @@ jobs:
             echo "auth-config.js generated (fixed session token)"
           fi
 
-          echo "=== auth-config.js (first 200 chars) ==="
-          head -c 200 docs/auth-config.js || true
-          echo ""
-          echo "=== docs listing (auth related) ==="
-          ls -la docs | sed -n '1,200p'
+          echo "=== auth-config.js validation ==="
+          if [ -f docs/auth-config.js ]; then
+            FILE_SIZE=$(wc -c < docs/auth-config.js)
+            echo "File size: ${FILE_SIZE} bytes"
+            if [ "$FILE_SIZE" -lt 10 ]; then
+              echo "::error::auth-config.js is too small, generation may have failed"
+              exit 1
+            fi
+            echo "Content preview:"
+            head -c 200 docs/auth-config.js
+            echo ""
+          else
+            echo "::error::auth-config.js was not created"
+            exit 1
+          fi
 
       - name: Verify required auth files exist
         run: |
           set -e
-          test -f docs/auth-config.js
-          test -f docs/auth.js
-          test -f docs/login.html
-          echo "Auth files verified."
+          echo "Checking required files..."
+          for f in docs/auth-config.js docs/auth.js docs/login.html; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              exit 1
+            fi
+            echo "OK: $f ($(wc -c < "$f") bytes)"
+          done
+          echo "All auth files verified."
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
