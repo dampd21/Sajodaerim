@@ -1,10 +1,10 @@
 /**
- * 키워드 마인드맵 v2
- * - Cloudflare Worker API 호출
+ * 키워드 마인드맵 v3
+ * - Cloudflare Worker API 호출 (4소스: 자동완성+블로그+본문+검색광고)
  * - D3.js Force Simulation 마인드맵
+ * - 월간검색량/경쟁도 표시
  * - localStorage 캐싱
  */
-
 (function() {
   var WORKER_URL = 'https://keywordjjbb.dampd21.workers.dev';
   var CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -21,14 +21,6 @@
     1: '#00d4ff',
     2: '#4ecdc4',
     3: '#ffe66d'
-  };
-
-  var SOURCE_COLORS = {
-    'autocomplete': '#00d4ff',
-    'blog_title': '#4ecdc4',
-    'blog_body': '#7b2cbf',
-    'mixed': '#ffe66d',
-    'fallback': '#888888'
   };
 
   // ============================================
@@ -84,6 +76,7 @@
     });
   }
 
+
   // ============================================
   // 검색 실행
   // ============================================
@@ -105,7 +98,7 @@
       return;
     }
 
-    showLoading('키워드 분석 중... (3~5초 소요)');
+    showLoading('키워드 분석 중... (3~8초 소요)');
     hideError();
 
     fetch(WORKER_URL, {
@@ -132,6 +125,7 @@
     });
   }
 
+
   // ============================================
   // 결과 렌더링
   // ============================================
@@ -139,16 +133,10 @@
   function renderResult(data) {
     currentData = data;
 
-    // 정보 바 업데이트
     updateInfoBar(data);
-
-    // 마인드맵 렌더링
     renderMindmap(data);
-
-    // 상세 테이블 렌더링
     renderDetailTable(data);
 
-    // placeholder 숨기기
     var placeholder = document.getElementById('placeholder');
     if (placeholder) placeholder.style.display = 'none';
   }
@@ -156,6 +144,7 @@
   function updateInfoBar(data) {
     var infoBar = document.getElementById('infoBar');
     var legendBar = document.getElementById('legendBar');
+
     if (infoBar) infoBar.style.display = 'flex';
     if (legendBar) legendBar.style.display = 'flex';
 
@@ -169,11 +158,14 @@
       industry.confidence > 0 ? Math.round(industry.confidence * 100) + '%' : '-');
     setText('totalKeywords', (metadata.total_keywords || 0) + '개');
     setText('genTime', (metadata.generation_time || 0).toFixed(1) + '초');
-    setText('sourceInfo',
-      '자동완성 ' + (sources.autocomplete || 0) +
-      ' / 블로그제목 ' + (sources.blog_titles || 0) +
-      ' / 블로그본문 ' + (sources.blog_bodies || 0));
+
+    var sourceText = '자동완성 ' + (sources.autocomplete || 0) +
+      ' / 블로그 ' + (sources.blog_titles || 0) +
+      ' / 본문 ' + (sources.blog_bodies || 0) +
+      ' / 검색광고 ' + (sources.naver_ads || 0);
+    setText('sourceInfo', sourceText);
   }
+
 
   // ============================================
   // D3.js 마인드맵
@@ -186,6 +178,10 @@
     // 기존 SVG 제거
     var oldSvg = container.querySelector('svg');
     if (oldSvg) oldSvg.remove();
+
+    // 툴팁 제거
+    var oldTooltip = document.getElementById('mindmapTooltip');
+    if (oldTooltip) oldTooltip.remove();
 
     // 시뮬레이션 정리
     if (simulation) {
@@ -209,6 +205,13 @@
       return Object.assign({}, l);
     });
 
+    // 툴팁 생성
+    var tooltip = document.createElement('div');
+    tooltip.id = 'mindmapTooltip';
+    tooltip.className = 'mindmap-tooltip';
+    tooltip.style.display = 'none';
+    container.appendChild(tooltip);
+
     // SVG 생성
     svg = d3.select(container)
       .append('svg')
@@ -225,7 +228,6 @@
       });
 
     svg.call(zoom);
-
     svgGroup = svg.append('g');
 
     // 링크 렌더링
@@ -262,6 +264,12 @@
             encodeURIComponent(d.id);
           window.open(url, '_blank');
         }
+      })
+      .on('mouseenter', function(event, d) {
+        showTooltip(tooltip, event, d, container);
+      })
+      .on('mouseleave', function() {
+        tooltip.style.display = 'none';
       });
 
     // 노드 원
@@ -291,6 +299,22 @@
         var label = d.id;
         if (d.level === 0) return label;
         return label.length > 10 ? label.slice(0, 10) + '..' : label;
+      })
+      .style('pointer-events', 'none');
+
+    // 검색량 있는 노드에 작은 검색량 라벨 추가
+    nodeGroups.filter(function(d) {
+      return d.level > 0 && d.monthly_search > 0;
+    }).append('text')
+      .attr('class', 'mindmap-volume-label')
+      .attr('text-anchor', 'middle')
+      .attr('dy', function(d) {
+        return (d.size / 2.5) + 26;
+      })
+      .attr('fill', '#888')
+      .attr('font-size', '8px')
+      .text(function(d) {
+        return formatVolume(d.monthly_search);
       })
       .style('pointer-events', 'none');
 
@@ -336,6 +360,63 @@
     }, 1500);
   }
 
+  // 툴팁 표시
+  function showTooltip(tooltip, event, d, container) {
+    if (d.level === 0) {
+      tooltip.style.display = 'none';
+      return;
+    }
+
+    var levelLabels = { 1: '핵심', 2: '중간', 3: '세부' };
+    var levelLabel = levelLabels[d.level] || '-';
+
+    var html = '<div class="mindmap-tooltip-title">' + escapeHtml(d.id) + '</div>';
+    html += '<div class="mindmap-tooltip-row"><span>연관도 점수</span><span>' + d.score + '</span></div>';
+    html += '<div class="mindmap-tooltip-row"><span>레벨</span><span>' + levelLabel + '</span></div>';
+
+    if (d.category && d.category !== '일반') {
+      html += '<div class="mindmap-tooltip-row"><span>분류</span><span>' + escapeHtml(d.category) + '</span></div>';
+    }
+
+    if (d.monthly_search > 0) {
+      html += '<div class="mindmap-tooltip-row mindmap-tooltip-highlight"><span>월간 검색량</span><span>' + formatNumber(d.monthly_search) + '</span></div>';
+    }
+
+    if (d.comp_idx) {
+      var compClass = '';
+      if (d.comp_idx === '높음') compClass = ' mindmap-comp-high';
+      else if (d.comp_idx === '중간') compClass = ' mindmap-comp-mid';
+      else compClass = ' mindmap-comp-low';
+      html += '<div class="mindmap-tooltip-row"><span>경쟁도</span><span class="' + compClass + '">' + escapeHtml(d.comp_idx) + '</span></div>';
+    }
+
+    if (d.source) {
+      html += '<div class="mindmap-tooltip-row mindmap-tooltip-source"><span>출처</span><span>' + escapeHtml(d.source) + '</span></div>';
+    }
+
+    html += '<div class="mindmap-tooltip-hint">클릭하면 네이버 검색</div>';
+
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    // 위치 계산
+    var rect = container.getBoundingClientRect();
+    var x = event.clientX - rect.left + 15;
+    var y = event.clientY - rect.top - 10;
+
+    // 오른쪽 넘침 방지
+    if (x + 220 > rect.width) {
+      x = event.clientX - rect.left - 230;
+    }
+    // 아래쪽 넘침 방지
+    if (y + 200 > rect.height) {
+      y = event.clientY - rect.top - 180;
+    }
+
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+
   // 드래그 핸들러
   function dragStarted(event, d) {
     if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -358,12 +439,6 @@
   function resetZoom() {
     if (!svg || !zoom) return;
 
-    var container = document.getElementById('mindmapContainer');
-    if (!container) return;
-
-    var width = container.clientWidth || 800;
-    var height = container.clientHeight || 600;
-
     svg.transition()
       .duration(500)
       .call(zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1));
@@ -374,7 +449,10 @@
     showLabels = !showLabels;
     d3.selectAll('.mindmap-label')
       .style('display', showLabels ? 'block' : 'none');
+    d3.selectAll('.mindmap-volume-label')
+      .style('display', showLabels ? 'block' : 'none');
   }
+
 
   // ============================================
   // 상세 테이블
@@ -408,6 +486,22 @@
       var searchUrl = 'https://search.naver.com/search.naver?query=' +
         encodeURIComponent(node.id);
 
+      // 월간검색량
+      var volumeText = '-';
+      if (node.monthly_search > 0) {
+        volumeText = formatNumber(node.monthly_search);
+      }
+
+      // 경쟁도
+      var compText = '-';
+      var compClass = '';
+      if (node.comp_idx) {
+        compText = node.comp_idx;
+        if (node.comp_idx === '높음') compClass = 'mindmap-comp-high';
+        else if (node.comp_idx === '중간') compClass = 'mindmap-comp-mid';
+        else compClass = 'mindmap-comp-low';
+      }
+
       return '<tr>' +
         '<td class="text-center">' + (idx + 1) + '</td>' +
         '<td>' + escapeHtml(node.id) +
@@ -417,11 +511,14 @@
         '</td>' +
         '<td class="text-center"><span class="mindmap-level-badge ' + levelClass + '">' + levelLabel + '</span></td>' +
         '<td class="text-right">' + node.score + '</td>' +
+        '<td class="text-right">' + volumeText + '</td>' +
+        '<td class="text-center"><span class="' + compClass + '">' + escapeHtml(compText) + '</span></td>' +
         '<td>' + escapeHtml(node.source || '-') + '</td>' +
         '<td class="text-center"><a href="' + searchUrl + '" target="_blank" class="mindmap-search-link">검색</a></td>' +
         '</tr>';
     }).join('');
   }
+
 
   // ============================================
   // 캐시
@@ -453,6 +550,7 @@
     } catch (e) {}
   }
 
+
   // ============================================
   // UI 헬퍼
   // ============================================
@@ -483,9 +581,7 @@
     }
   }
 
-  function hideError() {
-    // placeholder가 에러 상태면 초기화
-  }
+  function hideError() {}
 
   function setText(id, text) {
     var el = document.getElementById(id);
@@ -497,6 +593,26 @@
     var div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  function formatNumber(num) {
+    if (num >= 10000) {
+      return (num / 10000).toFixed(1) + '만';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + '천';
+    }
+    return String(num);
+  }
+
+  function formatVolume(num) {
+    if (num >= 10000) {
+      return Math.round(num / 10000) + '만';
+    }
+    if (num >= 1000) {
+      return Math.round(num / 1000) + 'k';
+    }
+    return String(num);
   }
 
 })();
