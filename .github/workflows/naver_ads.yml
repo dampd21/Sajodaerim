@@ -4,11 +4,10 @@ on:
   workflow_dispatch:
 
   schedule:
-    # 6시간마다 실행 (KST 기준: 00시, 06시, 12시, 18시)
-    - cron: '0 15 * * *'   # KST 00:00 (자정)
-    - cron: '0 21 * * *'   # KST 06:00
-    - cron: '0 3 * * *'    # KST 12:00 (정오)
-    - cron: '0 9 * * *'    # KST 18:00
+    - cron: '0 15 * * *'
+    - cron: '0 21 * * *'
+    - cron: '0 3 * * *'
+    - cron: '0 9 * * *'
 
 env:
   TZ: Asia/Seoul
@@ -33,11 +32,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: Collect Naver Ads Data
+      - name: Collect Naver Ads Data (Multi-Store)
         env:
+          # 본부 (기존)
           NAVER_AD_API_KEY: ${{ secrets.NAVER_AD_API_KEY }}
           NAVER_AD_SECRET_KEY: ${{ secrets.NAVER_AD_SECRET_KEY }}
           NAVER_AD_CUSTOMER_ID: ${{ secrets.NAVER_AD_CUSTOMER_ID }}
+          # 본점
+          NAVER_AD_API_KEY_BONJEOM: ${{ secrets.NAVER_AD_API_KEY_BONJEOM }}
+          NAVER_AD_SECRET_KEY_BONJEOM: ${{ secrets.NAVER_AD_SECRET_KEY_BONJEOM }}
+          NAVER_AD_CUSTOMER_ID_BONJEOM: ${{ secrets.NAVER_AD_CUSTOMER_ID_BONJEOM }}
+          # 다산1호점
+          NAVER_AD_API_KEY_DASAN: ${{ secrets.NAVER_AD_API_KEY_DASAN }}
+          NAVER_AD_SECRET_KEY_DASAN: ${{ secrets.NAVER_AD_SECRET_KEY_DASAN }}
+          NAVER_AD_CUSTOMER_ID_DASAN: ${{ secrets.NAVER_AD_CUSTOMER_ID_DASAN }}
+          # 송파점
+          NAVER_AD_API_KEY_SONGPA: ${{ secrets.NAVER_AD_API_KEY_SONGPA }}
+          NAVER_AD_SECRET_KEY_SONGPA: ${{ secrets.NAVER_AD_SECRET_KEY_SONGPA }}
+          NAVER_AD_CUSTOMER_ID_SONGPA: ${{ secrets.NAVER_AD_CUSTOMER_ID_SONGPA }}
+          # 두정점
+          NAVER_AD_API_KEY_DUJEONG: ${{ secrets.NAVER_AD_API_KEY_DUJEONG }}
+          NAVER_AD_SECRET_KEY_DUJEONG: ${{ secrets.NAVER_AD_SECRET_KEY_DUJEONG }}
+          NAVER_AD_CUSTOMER_ID_DUJEONG: ${{ secrets.NAVER_AD_CUSTOMER_ID_DUJEONG }}
         run: |
           python scripts/naver_ads_api.py
 
@@ -57,5 +73,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git diff --staged --quiet || git commit -m "Update Naver Ads data: $(date '+%Y-%m-%d %H:%M') KST"
+          git diff --staged --quiet || git commit -m "Update Naver Ads data (multi-store): $(date '+%Y-%m-%d %H:%M') KST"
           git push || echo "Nothing to push"
