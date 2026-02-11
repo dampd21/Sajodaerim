@@ -1,139 +1,138 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>키워드 마인드맵 - 역대짬뽕</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mindmap.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>키워드 마인드맵 - 역대짬뽕</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mindmap.css">
 </head>
 <body>
-    <div class="container">
-        <nav class="main-nav" id="mainNav">
-            <a href="dashboard.html" class="nav-link">통합 대시보드</a>
-            <a href="index.html" class="nav-link">발주 리포트</a>
-            <a href="sales.html" class="nav-link">매출 관리</a>
-            <a href="ads.html" class="nav-link">광고 관리</a>
-            <a href="review.html" class="nav-link">리뷰 관리</a>
-            <a href="marketing.html" class="nav-link">마케팅 관리</a>
-            <a href="roas.html" class="nav-link">ROAS 분석</a>
-            <a href="mindmap.html" class="nav-link">키워드 맵</a>
-        </nav>
+  <div class="container">
+    <nav class="main-nav" id="mainNav">
+      <a href="dashboard.html" class="nav-link">통합 대시보드</a>
+      <a href="index.html" class="nav-link">발주 리포트</a>
+      <a href="sales.html" class="nav-link">매출 관리</a>
+      <a href="ads.html" class="nav-link">광고 관리</a>
+      <a href="review.html" class="nav-link">리뷰 관리</a>
+      <a href="marketing.html" class="nav-link">마케팅 관리</a>
+      <a href="roas.html" class="nav-link">ROAS 분석</a>
+      <a href="mindmap.html" class="nav-link">키워드 맵</a>
+    </nav>
 
-        <div class="header">
-            <h1>키워드 마인드맵</h1>
-            <p class="update-time">키워드를 입력하면 4개 소스(자동완성 + 블로그 + 본문 + 검색광고)를 교차 분석하여 마인드맵으로 시각화합니다</p>
-        </div>
-
-        <!-- 검색 영역 -->
-        <div class="mindmap-search-section">
-            <div class="mindmap-search-bar">
-                <input type="text" id="keywordInput" class="mindmap-search-input" placeholder="분석할 키워드를 입력하세요 (예: 강남 맛집, 세무사, 네일샵)" maxlength="50">
-                <button id="searchBtn" class="mindmap-search-btn">분석</button>
-            </div>
-            <div class="mindmap-search-hints">
-                <button class="mindmap-hint-btn" data-keyword="강남 맛집">강남 맛집</button>
-                <button class="mindmap-hint-btn" data-keyword="세무사">세무사</button>
-                <button class="mindmap-hint-btn" data-keyword="네일샵">네일샵</button>
-                <button class="mindmap-hint-btn" data-keyword="짬뽕 맛집">짬뽕 맛집</button>
-                <button class="mindmap-hint-btn" data-keyword="인테리어">인테리어</button>
-                <button class="mindmap-hint-btn" data-keyword="피부과">피부과</button>
-            </div>
-        </div>
-
-        <!-- 정보 바 -->
-        <div class="mindmap-info-bar" id="infoBar" style="display:none;">
-            <div class="mindmap-info-item">
-                <span class="mindmap-info-label">업종</span>
-                <span class="mindmap-info-value" id="industryType">-</span>
-            </div>
-            <div class="mindmap-info-item">
-                <span class="mindmap-info-label">신뢰도</span>
-                <span class="mindmap-info-value" id="industryConfidence">-</span>
-            </div>
-            <div class="mindmap-info-item">
-                <span class="mindmap-info-label">키워드</span>
-                <span class="mindmap-info-value" id="totalKeywords">-</span>
-            </div>
-            <div class="mindmap-info-item">
-                <span class="mindmap-info-label">소요시간</span>
-                <span class="mindmap-info-value" id="genTime">-</span>
-            </div>
-            <div class="mindmap-info-item mindmap-info-sources">
-                <span class="mindmap-info-label">출처</span>
-                <span class="mindmap-info-value" id="sourceInfo">-</span>
-            </div>
-        </div>
-
-        <!-- 범례 + 컨트롤 -->
-        <div class="mindmap-legend" id="legendBar" style="display:none;">
-            <div class="mindmap-legend-item">
-                <span class="mindmap-legend-dot" style="background:#ff6b6b;"></span>
-                <span>중심 키워드</span>
-            </div>
-            <div class="mindmap-legend-item">
-                <span class="mindmap-legend-dot" style="background:#00d4ff;"></span>
-                <span>핵심 연관어</span>
-            </div>
-            <div class="mindmap-legend-item">
-                <span class="mindmap-legend-dot" style="background:#4ecdc4;"></span>
-                <span>중간 연관어</span>
-            </div>
-            <div class="mindmap-legend-item">
-                <span class="mindmap-legend-dot" style="background:#ffe66d;"></span>
-                <span>세부 연관어</span>
-            </div>
-            <div class="mindmap-legend-actions">
-                <button id="resetZoomBtn" class="mindmap-action-btn">줌 초기화</button>
-                <button id="toggleLabelsBtn" class="mindmap-action-btn">라벨 토글</button>
-            </div>
-        </div>
-
-        <!-- 마인드맵 캔버스 -->
-        <div class="mindmap-canvas-section">
-            <div class="mindmap-container" id="mindmapContainer">
-                <!-- Placeholder -->
-                <div class="mindmap-placeholder" id="placeholder">
-                    <div class="mindmap-placeholder-icon">?</div>
-                    <p>키워드를 입력하고 분석 버튼을 누르세요</p>
-                    <p class="mindmap-placeholder-sub">자동완성 + 블로그 + 본문 크롤링 + 검색광고 API 교차 분석</p>
-                </div>
-                <!-- 로딩 오버레이 -->
-                <div class="mindmap-loading" id="loadingOverlay" style="display:none;">
-                    <div class="mindmap-loading-spinner"></div>
-                    <p id="loadingText">키워드 분석 중...</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 상세 테이블 -->
-        <div class="mindmap-detail-section" id="detailSection" style="display:none;">
-            <h3 class="mindmap-detail-title">연관 키워드 상세 목록</h3>
-            <div class="mindmap-detail-table-wrap">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width:42px;">#</th>
-                            <th>키워드</th>
-                            <th class="text-center" style="width:70px;">레벨</th>
-                            <th class="text-right" style="width:60px;">점수</th>
-                            <th class="text-right" style="width:90px;">월간검색량</th>
-                            <th class="text-center" style="width:70px;">경쟁도</th>
-                            <th style="width:110px;">출처</th>
-                            <th class="text-center" style="width:60px;">검색</th>
-                        </tr>
-                    </thead>
-                    <tbody id="keywordDetailBody"></tbody>
-                </table>
-            </div>
-        </div>
-
+    <div class="header">
+      <h1>키워드 마인드맵</h1>
+      <p class="update-time">키워드를 입력하면 4개 소스(자동완성 + 블로그 + 본문 + 검색광고)를 교차 분석하여 마케팅 키워드를 추출합니다</p>
     </div>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="nav.js"></script>
-    <script src="auth-config.js"></script>
-    <script src="auth.js"></script>
-    <script src="mindmap.js"></script>
+    <!-- 검색 영역 -->
+    <div class="mindmap-search-section">
+      <div class="mindmap-search-bar">
+        <input type="text" id="keywordInput" class="mindmap-search-input"
+               placeholder="분석할 키워드를 입력하세요 (예: 강남 맛집, 세무사, 네일샵)" maxlength="50">
+        <button id="searchBtn" class="mindmap-search-btn">분석</button>
+      </div>
+      <div class="mindmap-search-hints">
+        <button class="mindmap-hint-btn" data-keyword="강남 맛집">강남 맛집</button>
+        <button class="mindmap-hint-btn" data-keyword="세무사">세무사</button>
+        <button class="mindmap-hint-btn" data-keyword="네일샵">네일샵</button>
+        <button class="mindmap-hint-btn" data-keyword="짬뽕 맛집">짬뽕 맛집</button>
+        <button class="mindmap-hint-btn" data-keyword="인테리어">인테리어</button>
+        <button class="mindmap-hint-btn" data-keyword="피부과">피부과</button>
+      </div>
+    </div>
+
+    <!-- 정보 바 -->
+    <div class="mindmap-info-bar" id="infoBar" style="display:none;">
+      <div class="mindmap-info-item">
+        <span class="mindmap-info-label">업종</span>
+        <span class="mindmap-info-value" id="industryType">-</span>
+      </div>
+      <div class="mindmap-info-item">
+        <span class="mindmap-info-label">신뢰도</span>
+        <span class="mindmap-info-value" id="industryConfidence">-</span>
+      </div>
+      <div class="mindmap-info-item">
+        <span class="mindmap-info-label">키워드</span>
+        <span class="mindmap-info-value" id="totalKeywords">-</span>
+      </div>
+      <div class="mindmap-info-item">
+        <span class="mindmap-info-label">소요시간</span>
+        <span class="mindmap-info-value" id="genTime">-</span>
+      </div>
+      <div class="mindmap-info-item mindmap-info-sources">
+        <span class="mindmap-info-label">출처</span>
+        <span class="mindmap-info-value" id="sourceInfo">-</span>
+      </div>
+    </div>
+
+    <!-- 범례 + 컨트롤 -->
+    <div class="mindmap-legend" id="legendBar" style="display:none;">
+      <div class="mindmap-legend-item">
+        <span class="mindmap-legend-dot" style="background:#ff6b6b;"></span>
+        <span>중심 키워드</span>
+      </div>
+      <div class="mindmap-legend-item">
+        <span class="mindmap-legend-dot" style="background:#00d4ff;"></span>
+        <span>핵심 연관어</span>
+      </div>
+      <div class="mindmap-legend-item">
+        <span class="mindmap-legend-dot" style="background:#4ecdc4;"></span>
+        <span>중간 연관어</span>
+      </div>
+      <div class="mindmap-legend-item">
+        <span class="mindmap-legend-dot" style="background:#ffe66d;"></span>
+        <span>세부 연관어</span>
+      </div>
+      <div class="mindmap-legend-actions">
+        <button id="toggleViewBtn" class="mindmap-action-btn">트리맵 뷰</button>
+        <button id="resetZoomBtn" class="mindmap-action-btn">줌 초기화</button>
+        <button id="toggleLabelsBtn" class="mindmap-action-btn">라벨 토글</button>
+      </div>
+    </div>
+
+    <!-- 마인드맵 캔버스 -->
+    <div class="mindmap-canvas-section">
+      <div class="mindmap-container" id="mindmapContainer">
+        <div class="mindmap-placeholder" id="placeholder">
+          <div class="mindmap-placeholder-icon">🔍</div>
+          <p>키워드를 입력하고 분석 버튼을 누르세요</p>
+          <p class="mindmap-placeholder-sub">자동완성 + 블로그 + 본문 크롤링 + 검색광고 API 교차 분석</p>
+        </div>
+        <div class="mindmap-loading" id="loadingOverlay" style="display:none;">
+          <div class="mindmap-loading-spinner"></div>
+          <p id="loadingText">키워드 분석 중...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상세 테이블 -->
+    <div class="mindmap-detail-section" id="detailSection" style="display:none;">
+      <h3 class="mindmap-detail-title">📊 연관 키워드 상세 목록</h3>
+      <div class="mindmap-detail-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="text-center" style="width:42px;">#</th>
+              <th>키워드</th>
+              <th class="text-center" style="width:70px;">레벨</th>
+              <th class="text-right" style="width:60px;">점수</th>
+              <th class="text-right" style="width:100px;">월간검색량</th>
+              <th class="text-center" style="width:70px;">경쟁도</th>
+              <th style="width:120px;">출처</th>
+              <th class="text-center" style="width:60px;">검색</th>
+            </tr>
+          </thead>
+          <tbody id="keywordDetailBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="nav.js"></script>
+  <script src="auth-config.js"></script>
+  <script src="auth.js"></script>
+  <script src="mindmap.js"></script>
 </body>
 </html>
