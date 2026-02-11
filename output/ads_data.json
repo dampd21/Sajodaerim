@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-11T14:34:13.012881",
+  "generated_at": "2026-02-11T19:01:00.598336",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -446,10 +446,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2167,
+      "totalChargeCost": 3146,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 99,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -467,7 +467,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 891,
+      "totalChargeCost": 1155,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 77,
@@ -565,7 +565,7 @@
       "nccCampaignId": "cmp-a001-01-000000008331945",
       "mobileChannelId": "bsn-a001-00-000000010674218",
       "pcChannelId": "bsn-a001-00-000000010674218",
-      "bidAmt": 140,
+      "bidAmt": 80,
       "name": "파워링크#다산점 플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -577,7 +577,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:53:43.000Z",
-      "editTm": "2026-02-11T03:30:03.000Z",
+      "editTm": "2026-02-11T07:30:39.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064460",
@@ -644,7 +644,7 @@
       "nccCampaignId": "cmp-a001-01-000000008331946",
       "mobileChannelId": "bsn-a001-00-000000010674225",
       "pcChannelId": "bsn-a001-00-000000010674225",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "파워링크#본점 플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -656,7 +656,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:55:02.000Z",
-      "editTm": "2026-02-10T19:38:22.000Z",
+      "editTm": "2026-02-11T07:30:39.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064482",
@@ -723,7 +723,7 @@
       "nccCampaignId": "cmp-a001-01-000000008378297",
       "mobileChannelId": "bsn-a001-00-000000010674229",
       "pcChannelId": "bsn-a001-00-000000010674229",
-      "bidAmt": 80,
+      "bidAmt": 120,
       "name": "파워링크#고덕점플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -735,7 +735,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:57:28.000Z",
-      "editTm": "2026-02-11T03:30:03.000Z",
+      "editTm": "2026-02-11T07:30:39.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064513",
@@ -2036,7 +2036,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 99,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
