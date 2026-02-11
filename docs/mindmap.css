@@ -1,0 +1,409 @@
+/* ============================================
+   키워드 마인드맵 전용 스타일
+   ============================================ */
+
+/* 검색 영역 */
+.mindmap-search-section {
+  margin-bottom: 20px;
+}
+
+.mindmap-search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mindmap-search-input {
+  flex: 1;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.mindmap-search-input:focus {
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+.mindmap-search-input::placeholder {
+  color: #666;
+}
+
+.mindmap-search-btn {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+  white-space: nowrap;
+}
+
+.mindmap-search-btn:hover {
+  transform: scale(1.03);
+}
+
+.mindmap-search-btn:active {
+  transform: scale(0.98);
+}
+
+/* 힌트 버튼 */
+.mindmap-search-hints {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mindmap-hint-btn {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: #999;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mindmap-hint-btn:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.35);
+  color: #fff;
+}
+
+/* 정보 바 */
+.mindmap-info-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.mindmap-info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mindmap-info-label {
+  color: #888;
+  font-size: 0.78rem;
+}
+
+.mindmap-info-value {
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mindmap-info-sources {
+  margin-left: auto;
+}
+
+.mindmap-info-sources .mindmap-info-value {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #999;
+}
+
+/* 범례 */
+.mindmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.mindmap-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #aaa;
+  font-size: 0.78rem;
+}
+
+.mindmap-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mindmap-legend-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.mindmap-action-btn {
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mindmap-action-btn:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.35);
+  color: #fff;
+}
+
+/* 마인드맵 캔버스 영역 */
+.mindmap-canvas-section {
+  margin-bottom: 24px;
+}
+
+.mindmap-container {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.mindmap-container svg {
+  display: block;
+}
+
+/* Placeholder */
+.mindmap-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  gap: 12px;
+}
+
+.mindmap-placeholder-icon {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #444;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mindmap-placeholder p {
+  margin: 0;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.mindmap-placeholder-sub {
+  font-size: 0.82rem !important;
+  color: #555 !important;
+}
+
+/* 로딩 */
+.mindmap-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  gap: 16px;
+  z-index: 10;
+}
+
+.mindmap-loading p {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.mindmap-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #00d4ff;
+  border-radius: 50%;
+  animation: mindmapSpin 0.8s linear infinite;
+}
+
+@keyframes mindmapSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* 노드 호버 효과 */
+.mindmap-node circle {
+  transition: fill-opacity 0.15s, stroke-width 0.15s;
+}
+
+.mindmap-node:hover circle {
+  fill-opacity: 1;
+  stroke-width: 3;
+  stroke-opacity: 0.8;
+}
+
+.mindmap-node:hover .mindmap-label {
+  fill: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* 라벨 */
+.mindmap-label {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8),
+               0 0 6px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+/* 상세 테이블 영역 */
+.mindmap-detail-section {
+  margin-top: 8px;
+}
+
+.mindmap-detail-title {
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.mindmap-detail-table-wrap {
+  overflow-x: auto;
+}
+
+/* 레벨 뱃지 */
+.mindmap-level-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mindmap-level-1 {
+  background: rgba(0, 212, 255, 0.18);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.mindmap-level-2 {
+  background: rgba(78, 205, 196, 0.18);
+  color: #4ecdc4;
+  border: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+.mindmap-level-3 {
+  background: rgba(255, 230, 109, 0.18);
+  color: #ffe66d;
+  border: 1px solid rgba(255, 230, 109, 0.3);
+}
+
+/* 카테고리 뱃지 */
+.mindmap-category-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(123, 44, 191, 0.15);
+  border: 1px solid rgba(123, 44, 191, 0.3);
+  border-radius: 8px;
+  color: #b388ff;
+  font-size: 0.72rem;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* 검색 링크 */
+.mindmap-search-link {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 8px;
+  color: #00d4ff;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.mindmap-search-link:hover {
+  background: rgba(0, 212, 255, 0.25);
+  color: #fff;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .mindmap-search-bar {
+    flex-direction: column;
+  }
+
+  .mindmap-search-btn {
+    width: 100%;
+  }
+
+  .mindmap-container {
+    height: 400px;
+  }
+
+  .mindmap-info-bar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mindmap-info-sources {
+    margin-left: 0;
+  }
+
+  .mindmap-legend {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .mindmap-legend-actions {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .mindmap-legend-actions .mindmap-action-btn {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .mindmap-container {
+    height: 350px;
+  }
+
+  .mindmap-search-hints {
+    gap: 6px;
+  }
+
+  .mindmap-hint-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+}
