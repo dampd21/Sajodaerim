@@ -1,5 +1,6 @@
 /* ============================================
-   키워드 마인드맵 전용 스타일
+   키워드 마인드맵 전용 스타일 v3
+   - 툴팁, 검색량 라벨, 경쟁도 스타일 포함
    ============================================ */
 
 /* 검색 영역 */
@@ -279,7 +280,114 @@
   user-select: none;
 }
 
-/* 상세 테이블 영역 */
+/* 검색량 미니 라벨 (노드 아래) */
+.mindmap-volume-label {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  user-select: none;
+}
+
+
+/* ============================================
+   툴팁
+   ============================================ */
+
+.mindmap-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: rgba(20, 20, 40, 0.95);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  padding: 14px 16px;
+  min-width: 200px;
+  max-width: 280px;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mindmap-tooltip-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mindmap-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+.mindmap-tooltip-row span:first-child {
+  color: #888;
+}
+
+.mindmap-tooltip-row span:last-child {
+  font-weight: 600;
+}
+
+.mindmap-tooltip-highlight {
+  background: rgba(0, 212, 255, 0.08);
+  margin: 2px -8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.mindmap-tooltip-highlight span:last-child {
+  color: #00d4ff;
+}
+
+.mindmap-tooltip-source {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mindmap-tooltip-source span:last-child {
+  font-size: 0.72rem;
+  color: #999;
+  font-weight: 400;
+}
+
+.mindmap-tooltip-hint {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.7rem;
+  color: #666;
+  text-align: center;
+}
+
+
+/* ============================================
+   경쟁도 색상
+   ============================================ */
+
+.mindmap-comp-high {
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.mindmap-comp-mid {
+  color: #ffe66d;
+  font-weight: 600;
+}
+
+.mindmap-comp-low {
+  color: #4ecdc4;
+  font-weight: 600;
+}
+
+
+/* ============================================
+   상세 테이블 영역
+   ============================================ */
+
 .mindmap-detail-section {
   margin-top: 8px;
 }
@@ -353,7 +461,11 @@
   color: #fff;
 }
 
-/* 반응형 */
+
+/* ============================================
+   반응형
+   ============================================ */
+
 @media (max-width: 768px) {
   .mindmap-search-bar {
     flex-direction: column;
@@ -391,6 +503,18 @@
     flex: 1;
     text-align: center;
   }
+
+  /* 테이블 컬럼 숨김: 출처 */
+  .mindmap-detail-table-wrap .data-table th:nth-child(7),
+  .mindmap-detail-table-wrap .data-table td:nth-child(7) {
+    display: none;
+  }
+
+  .mindmap-tooltip {
+    min-width: 170px;
+    max-width: 230px;
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -405,5 +529,23 @@
   .mindmap-hint-btn {
     padding: 5px 10px;
     font-size: 0.75rem;
+  }
+
+  /* 테이블 컬럼 추가 숨김: 경쟁도, 출처 */
+  .mindmap-detail-table-wrap .data-table th:nth-child(6),
+  .mindmap-detail-table-wrap .data-table td:nth-child(6),
+  .mindmap-detail-table-wrap .data-table th:nth-child(7),
+  .mindmap-detail-table-wrap .data-table td:nth-child(7) {
+    display: none;
+  }
+
+  .mindmap-tooltip {
+    min-width: 150px;
+    max-width: 200px;
+    font-size: 0.75rem;
+  }
+
+  .mindmap-tooltip-title {
+    font-size: 0.85rem;
   }
 }
