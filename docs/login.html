@@ -29,6 +29,7 @@
                         required
                     >
                 </div>
+
                 <div id="loginError" class="login-error" style="display:none;">
                     비밀번호가 올바르지 않습니다.
                 </div>
@@ -41,138 +42,200 @@
         </div>
     </div>
 
-    <script src="auth-config.js"></script>
     <script>
+        /**
+         * auth-config.js 동적 로딩 방식
+         * - 배포 타이밍 이슈로 auth-config.js가 아직 반영되지 않았을 수 있음
+         * - 최대 3회 재시도 후 실패 시 안내 메시지 표시
+         */
         (function() {
-            var form = document.getElementById('loginForm');
-            var input = document.getElementById('passwordInput');
-            var errorEl = document.getElementById('loginError');
-            var noticeEl = document.getElementById('loginNotice');
-            var btn = document.getElementById('loginBtn');
+            var MAX_RETRY = 3;
+            var RETRY_DELAY = 2000;
+            var retryCount = 0;
 
-            function getReason() {
-                try {
-                    var params = new URLSearchParams(location.search || '');
-                    return params.get('reason') || '';
-                } catch (e) {
-                    return '';
-                }
-            }
-
-            function showNotice(msg) {
-                if (!noticeEl) return;
-                noticeEl.textContent = msg;
-                noticeEl.style.display = 'block';
-            }
-
-            function disableForm() {
-                if (input) input.disabled = true;
-                if (btn) btn.disabled = true;
-            }
-
-            function isAuthUsable() {
-                if (typeof AUTH_CONFIG === 'undefined') return { ok: false, reason: 'config_missing' };
-                if (AUTH_CONFIG && AUTH_CONFIG.disabled === true) return { ok: false, reason: 'auth_disabled' };
-                if (!AUTH_CONFIG.password_hash || !AUTH_CONFIG.session_token) return { ok: false, reason: 'config_invalid' };
-                return { ok: true, reason: '' };
-            }
-
-            function getStoredToken() {
-                var t = sessionStorage.getItem('auth_token');
-                if (t) return t;
-                try {
-                    return localStorage.getItem('auth_token') || '';
-                } catch (e) {
-                    return '';
-                }
-            }
-
-            function setStoredToken(token) {
-                sessionStorage.setItem('auth_token', token);
-                try {
-                    localStorage.setItem('auth_token', token);
-                } catch (e) {}
-            }
-
-            // reason 안내 메시지
-            var reason = getReason();
-            if (reason === 'logged_out') {
-                showNotice('로그아웃 되었습니다.');
-            } else if (reason === 'not_authenticated') {
-                showNotice('로그인이 필요합니다.');
-            } else if (reason === 'config_missing') {
-                showNotice('인증 설정 파일을 불러올 수 없습니다. 배포 상태를 확인하세요.');
-            } else if (reason === 'auth_disabled') {
-                showNotice('비밀번호 인증이 설정되지 않았습니다. 관리자에게 DASHBOARD_PASSWORD 설정 및 재배포를 요청하세요.');
-            } else if (reason === 'config_invalid') {
-                showNotice('인증 설정이 올바르지 않습니다. 관리자에게 재배포를 요청하세요.');
-            }
-
-            // 인증 설정 자체 점검 (설정이 없으면 로그인 시도 자체를 막음)
-            var authState = isAuthUsable();
-            if (!authState.ok) {
-                disableForm();
-                if (!reason) {
-                    if (authState.reason === 'config_missing') {
-                        showNotice('인증 설정 파일을 불러올 수 없습니다. 배포 상태를 확인하세요.');
-                    } else if (authState.reason === 'auth_disabled') {
-                        showNotice('비밀번호 인증이 설정되지 않았습니다. 관리자에게 DASHBOARD_PASSWORD 설정 및 재배포를 요청하세요.');
+            function loadAuthConfig(callback) {
+                var script = document.createElement('script');
+                script.src = 'auth-config.js?t=' + Date.now();
+                script.onload = function() {
+                    if (typeof AUTH_CONFIG !== 'undefined') {
+                        callback(true);
                     } else {
-                        showNotice('인증 설정이 올바르지 않습니다. 관리자에게 재배포를 요청하세요.');
+                        callback(false);
+                    }
+                };
+                script.onerror = function() {
+                    callback(false);
+                };
+                document.head.appendChild(script);
+            }
+
+            function tryLoad() {
+                loadAuthConfig(function(success) {
+                    if (success) {
+                        initLogin();
+                    } else {
+                        retryCount++;
+                        if (retryCount < MAX_RETRY) {
+                            setTimeout(tryLoad, RETRY_DELAY);
+                        } else {
+                            initLogin();
+                        }
+                    }
+                });
+            }
+
+            tryLoad();
+
+            function initLogin() {
+                var form = document.getElementById('loginForm');
+                var input = document.getElementById('passwordInput');
+                var errorEl = document.getElementById('loginError');
+                var noticeEl = document.getElementById('loginNotice');
+                var btn = document.getElementById('loginBtn');
+
+                function getReason() {
+                    try {
+                        var params = new URLSearchParams(location.search || '');
+                        return params.get('reason') || '';
+                    } catch (e) {
+                        return '';
                     }
                 }
-                return;
-            }
 
-            // 이미 로그인되어 있으면 리다이렉트 (sessionStorage + localStorage 모두 확인)
-            var token = getStoredToken();
-            if (token && token === AUTH_CONFIG.session_token) {
-                location.href = 'index.html';
-                return;
-            }
+                function showNotice(msg) {
+                    if (!noticeEl) return;
+                    noticeEl.textContent = msg;
+                    noticeEl.style.display = 'block';
+                }
 
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                errorEl.style.display = 'none';
-                btn.disabled = true;
-                btn.textContent = '확인 중...';
+                function disableForm(msg) {
+                    if (input) input.disabled = true;
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.textContent = msg || '사용 불가';
+                    }
+                }
 
-                var pw = input.value;
-                if (!pw) {
-                    errorEl.textContent = '비밀번호를 입력하세요.';
-                    errorEl.style.display = 'block';
-                    btn.disabled = false;
-                    btn.textContent = '로그인';
+                function enableForm() {
+                    if (input) input.disabled = false;
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = '로그인';
+                    }
+                }
+
+                function isAuthUsable() {
+                    if (typeof AUTH_CONFIG === 'undefined') return { ok: false, reason: 'config_missing' };
+                    if (AUTH_CONFIG && AUTH_CONFIG.disabled === true) return { ok: false, reason: 'auth_disabled' };
+                    if (!AUTH_CONFIG.password_hash || !AUTH_CONFIG.session_token) return { ok: false, reason: 'config_invalid' };
+                    return { ok: true, reason: '' };
+                }
+
+                function getStoredToken() {
+                    var t = sessionStorage.getItem('auth_token');
+                    if (t) return t;
+                    try {
+                        return localStorage.getItem('auth_token') || '';
+                    } catch (e) {
+                        return '';
+                    }
+                }
+
+                function setStoredToken(token) {
+                    sessionStorage.setItem('auth_token', token);
+                    try {
+                        localStorage.setItem('auth_token', token);
+                    } catch (e) {}
+                }
+
+                // reason 안내 메시지
+                var reason = getReason();
+                if (reason === 'logged_out') {
+                    showNotice('로그아웃 되었습니다.');
+                } else if (reason === 'not_authenticated') {
+                    showNotice('로그인이 필요합니다.');
+                } else if (reason === 'config_missing') {
+                    showNotice('인증 설정을 불러오는 중입니다. 잠시 후 새로고침 해주세요.');
+                } else if (reason === 'auth_disabled') {
+                    showNotice('비밀번호가 아직 설정되지 않았습니다. 관리자에게 문의하세요.');
+                } else if (reason === 'config_invalid') {
+                    showNotice('인증 설정에 문제가 있습니다. 관리자에게 문의하세요.');
+                }
+
+                // 인증 설정 점검
+                var authState = isAuthUsable();
+                if (!authState.ok) {
+                    if (authState.reason === 'config_missing') {
+                        disableForm('배포 대기 중');
+                        if (!reason) {
+                            showNotice('배포가 진행 중입니다. 1~2분 후 새로고침(F5) 해주세요.');
+                        }
+                    } else if (authState.reason === 'auth_disabled') {
+                        disableForm('설정 필요');
+                        if (!reason) {
+                            showNotice('비밀번호가 아직 설정되지 않았습니다. 관리자에게 DASHBOARD_PASSWORD 설정을 요청하세요.');
+                        }
+                    } else {
+                        disableForm('설정 오류');
+                        if (!reason) {
+                            showNotice('인증 설정에 문제가 있습니다. 관리자에게 재배포를 요청하세요.');
+                        }
+                    }
                     return;
                 }
 
-                try {
-                    var hash = await sha256(pw);
+                // 폼 활성화 보장
+                enableForm();
 
-                    if (hash === AUTH_CONFIG.password_hash) {
-                        // 로그인 토큰 저장: sessionStorage + localStorage
-                        setStoredToken(AUTH_CONFIG.session_token);
-                        location.href = 'index.html';
-                    } else {
-                        errorEl.textContent = '비밀번호가 올바르지 않습니다.';
-                        errorEl.style.display = 'block';
-                        input.value = '';
-                        input.focus();
-                    }
-                } catch (err) {
-                    errorEl.textContent = '오류가 발생했습니다.';
-                    errorEl.style.display = 'block';
+                // 이미 로그인되어 있으면 리다이렉트
+                var token = getStoredToken();
+                if (token && token === AUTH_CONFIG.session_token) {
+                    location.href = 'dashboard.html';
+                    return;
                 }
 
-                btn.disabled = false;
-                btn.textContent = '로그인';
-            });
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    errorEl.style.display = 'none';
+                    btn.disabled = true;
+                    btn.textContent = '확인 중...';
 
-            async function sha256(message) {
-                var msgBuffer = new TextEncoder().encode(message);
-                var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                var hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+                    var pw = input.value;
+                    if (!pw) {
+                        errorEl.textContent = '비밀번호를 입력하세요.';
+                        errorEl.style.display = 'block';
+                        btn.disabled = false;
+                        btn.textContent = '로그인';
+                        return;
+                    }
+
+                    try {
+                        var hash = await sha256(pw);
+
+                        if (hash === AUTH_CONFIG.password_hash) {
+                            setStoredToken(AUTH_CONFIG.session_token);
+                            location.href = 'dashboard.html';
+                        } else {
+                            errorEl.textContent = '비밀번호가 올바르지 않습니다.';
+                            errorEl.style.display = 'block';
+                            input.value = '';
+                            input.focus();
+                        }
+                    } catch (err) {
+                        errorEl.textContent = '오류가 발생했습니다. 잠시 후 다시 시도하세요.';
+                        errorEl.style.display = 'block';
+                    }
+
+                    btn.disabled = false;
+                    btn.textContent = '로그인';
+                });
+
+                async function sha256(message) {
+                    var msgBuffer = new TextEncoder().encode(message);
+                    var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                    var hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+                }
             }
         })();
     </script>
