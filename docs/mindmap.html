@@ -22,7 +22,7 @@
 
         <div class="header">
             <h1>키워드 마인드맵</h1>
-            <p class="update-time">키워드를 입력하면 연관 키워드를 자동 분석하여 마인드맵으로 시각화합니다</p>
+            <p class="update-time">키워드를 입력하면 4개 소스(자동완성 + 블로그 + 본문 + 검색광고)를 교차 분석하여 마인드맵으로 시각화합니다</p>
         </div>
 
         <!-- 검색 영역 -->
@@ -92,11 +92,11 @@
         <!-- 마인드맵 캔버스 -->
         <div class="mindmap-canvas-section">
             <div class="mindmap-container" id="mindmapContainer">
-                <!-- Placeholder (검색 전) -->
+                <!-- Placeholder -->
                 <div class="mindmap-placeholder" id="placeholder">
                     <div class="mindmap-placeholder-icon">?</div>
                     <p>키워드를 입력하고 분석 버튼을 누르세요</p>
-                    <p class="mindmap-placeholder-sub">네이버 자동완성 + 블로그 분석 + AI 업종 감지</p>
+                    <p class="mindmap-placeholder-sub">자동완성 + 블로그 + 본문 크롤링 + 검색광고 API 교차 분석</p>
                 </div>
                 <!-- 로딩 오버레이 -->
                 <div class="mindmap-loading" id="loadingOverlay" style="display:none;">
@@ -113,12 +113,14 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width:50px;">#</th>
+                            <th class="text-center" style="width:42px;">#</th>
                             <th>키워드</th>
-                            <th class="text-center" style="width:80px;">레벨</th>
-                            <th class="text-right" style="width:70px;">점수</th>
-                            <th style="width:100px;">출처</th>
-                            <th class="text-center" style="width:70px;">검색</th>
+                            <th class="text-center" style="width:70px;">레벨</th>
+                            <th class="text-right" style="width:60px;">점수</th>
+                            <th class="text-right" style="width:90px;">월간검색량</th>
+                            <th class="text-center" style="width:70px;">경쟁도</th>
+                            <th style="width:110px;">출처</th>
+                            <th class="text-center" style="width:60px;">검색</th>
                         </tr>
                     </thead>
                     <tbody id="keywordDetailBody"></tbody>
