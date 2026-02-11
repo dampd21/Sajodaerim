@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-11T23:40:17.022886",
+  "generated_at": "2026-02-11T23:41:26.248514",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -137626,6 +137626,55 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026020902280961",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "정직",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-09T18:10:58.506198",
+          "created_date": "2026-02-09",
+          "is_negative": false
+        },
+        {
+          "id": "2026020901432133",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "쿵쾅찐",
+          "rating": 5.0,
+          "content": "항상맛나게먹습니다",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/9/01kh03nvzn1gymtjdmxwpfx8qc.jpg"
+          ],
+          "created_at": "2026-02-09T11:28:50.384414",
+          "created_date": "2026-02-09",
+          "is_negative": false
+        },
+        {
+          "id": "2026020900495665",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "발로차차차",
+          "rating": 1.0,
+          "content": "해물상한냄새 너무많이나서 배민측에 전달했는데  동시간대 5개를 같이 했는데 문제가 없었다 하시네요? 다버립니다 횟집 실장입니다 따로 문제제기 하겠습니다",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/9/01kgzjekpgt34xvm7cbcdt0khe.jpg"
+          ],
+          "created_at": "2026-02-09T06:27:46.734641",
+          "created_date": "2026-02-09",
+          "is_negative": true
+        },
+        {
           "id": "2026020802800851",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -139927,10 +139976,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 139,
-      "negative_count": 18,
-      "average_rating": 4.53,
-      "crawled_at": "2026-02-10T23:45:34.177863"
+      "review_count": 142,
+      "negative_count": 19,
+      "average_rating": 4.51,
+      "crawled_at": "2026-02-11T23:41:17.808151"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -156906,17 +156955,17 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9577,
-    "total_negative": 302,
+    "total_reviews": 9580,
+    "total_negative": 303,
     "average_rating": 4.87,
     "popular_menus": [
       {
         "name": "역대짬뽕",
-        "count": 2383
+        "count": 2384
       },
       {
         "name": "역대 초당순두부짬뽕",
-        "count": 2104
+        "count": 2106
       },
       {
         "name": "역대짜장밥",
@@ -156951,6 +157000,6 @@
         "count": 363
       }
     ],
-    "new_reviews": 7
+    "new_reviews": 3
   }
 }
