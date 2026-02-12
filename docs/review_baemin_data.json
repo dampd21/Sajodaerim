@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-12T23:34:38.751157",
+  "generated_at": "2026-02-12T23:35:46.742596",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -137742,6 +137742,53 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026021002952915",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "kjjj1144",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "굴짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T22:47:39.428536",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021002886499",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "위풍당당",
+          "rating": 1.0,
+          "content": "호평 평내 금곡 다산 여러 중식을 먹어봤지만 역대급으로 맛없음 지나가다 손님없는건 알았는데 그 이유를 이제야 알게됨 탕수육 등심도 아닌거 같고 고기 실화인가고기 10%반죽90% 진짜 역대급이네요 글 지우지 마시고 보고 반성하고 개선하세요",
+          "menus": [
+            "SET 1. 찹쌀탕수육+짜장2"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/10/01kh3tnfbbd3yqsyhenwzsx0jy.jpg"
+          ],
+          "created_at": "2026-02-10T22:04:23.774207",
+          "created_date": "2026-02-10",
+          "is_negative": true
+        },
+        {
+          "id": "2026021002403005",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "행복소",
+          "rating": 5.0,
+          "content": "맛있게 잘 먹었습니다!!",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T18:33:41.226778",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
           "id": "2026020902280961",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -140092,10 +140139,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 142,
-      "negative_count": 19,
-      "average_rating": 4.51,
-      "crawled_at": "2026-02-11T23:41:17.808151"
+      "review_count": 145,
+      "negative_count": 20,
+      "average_rating": 4.49,
+      "crawled_at": "2026-02-12T23:35:38.280568"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -157184,8 +157231,8 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9594,
-    "total_negative": 303,
+    "total_reviews": 9597,
+    "total_negative": 304,
     "average_rating": 4.87,
     "popular_menus": [
       {
@@ -157194,7 +157241,7 @@
       },
       {
         "name": "역대 초당순두부짬뽕",
-        "count": 2109
+        "count": 2110
       },
       {
         "name": "역대짜장밥",
@@ -157229,6 +157276,6 @@
         "count": 363
       }
     ],
-    "new_reviews": 7
+    "new_reviews": 3
   }
 }
