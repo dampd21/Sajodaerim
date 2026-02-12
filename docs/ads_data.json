@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-12T06:34:43.287491",
+  "generated_at": "2026-02-12T14:01:25.546825",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -446,10 +446,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 407,
+      "totalChargeCost": 1628,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -467,7 +467,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 253,
+      "totalChargeCost": 1518,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 77,
@@ -565,7 +565,7 @@
       "nccCampaignId": "cmp-a001-01-000000008331945",
       "mobileChannelId": "bsn-a001-00-000000010674218",
       "pcChannelId": "bsn-a001-00-000000010674218",
-      "bidAmt": 140,
+      "bidAmt": 70,
       "name": "파워링크#다산점 플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -577,7 +577,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:53:43.000Z",
-      "editTm": "2026-02-11T19:30:28.000Z",
+      "editTm": "2026-02-11T23:31:00.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064460",
@@ -656,7 +656,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:55:02.000Z",
-      "editTm": "2026-02-11T11:30:59.000Z",
+      "editTm": "2026-02-12T03:30:50.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064482",
@@ -2036,7 +2036,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
