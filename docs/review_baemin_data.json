@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-12T23:35:46.742596",
+  "generated_at": "2026-02-12T23:36:58.782258",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -140149,6 +140149,113 @@
       "shop_id": "14811818",
       "reviews": [
         {
+          "id": "2026021003100442",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "kk99",
+          "rating": 3.0,
+          "content": "탕수육에서 뭔가 양고기같은 맛이났어요 고기 간인지튀김옷인지 향신료 같은맛이 나서 개인적으로 아는 탕수육맛이 아니여서 아쉬웠어요",
+          "menus": [
+            "역대짜장면",
+            "미니탕수육"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T23:45:43.941158",
+          "created_date": "2026-02-10",
+          "is_negative": true
+        },
+        {
+          "id": "2026021002436306",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "방구석안성재",
+          "rating": 5.0,
+          "content": "생존입니다",
+          "menus": [
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T18:55:29.359912",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021002181888",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "pjam",
+          "rating": 5.0,
+          "content": "맛있습니다~",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/10/01kh3aryc3ewwhy890vrywj7wt.jpg"
+          ],
+          "created_at": "2026-02-10T17:30:34.482071",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021002088339",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "배달안먹어",
+          "rating": 5.0,
+          "content": "",
+          "menus": [],
+          "images": [],
+          "created_at": "2026-02-10T16:29:34.478406",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021001752477",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "아미",
+          "rating": 5.0,
+          "content": "와 개맛있어요",
+          "menus": [
+            "역대짜장면",
+            "마라만두"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T13:57:19.584797",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021001677084",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "zmzmzm",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "나홀로 짬뽕세트"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T13:11:32.214836",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
+          "id": "2026021001610794",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "oh득춘",
+          "rating": 5.0,
+          "content": "양도많고 진짜맛잇어요!!",
+          "menus": [
+            "나홀로 짜장세트"
+          ],
+          "images": [],
+          "created_at": "2026-02-10T13:03:40.326896",
+          "created_date": "2026-02-10",
+          "is_negative": false
+        },
+        {
           "id": "2026020902856030",
           "store_name": "역대짬뽕 송파점",
           "platform": "baemin",
@@ -150760,10 +150867,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 645,
-      "negative_count": 23,
+      "review_count": 652,
+      "negative_count": 24,
       "average_rating": 4.83,
-      "crawled_at": "2026-02-11T23:42:27.669618"
+      "crawled_at": "2026-02-12T23:36:50.330964"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -157231,13 +157338,13 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9597,
-    "total_negative": 304,
+    "total_reviews": 9604,
+    "total_negative": 305,
     "average_rating": 4.87,
     "popular_menus": [
       {
         "name": "역대짬뽕",
-        "count": 2386
+        "count": 2387
       },
       {
         "name": "역대 초당순두부짬뽕",
@@ -157249,11 +157356,11 @@
       },
       {
         "name": "역대짜장면",
-        "count": 791
+        "count": 793
       },
       {
         "name": "삼선간짜장",
-        "count": 730
+        "count": 731
       },
       {
         "name": "마파두부덮밥",
@@ -157265,7 +157372,7 @@
       },
       {
         "name": "나홀로 짬뽕세트",
-        "count": 397
+        "count": 398
       },
       {
         "name": "찹쌀탕수육",
@@ -157273,9 +157380,9 @@
       },
       {
         "name": "미니탕수육",
-        "count": 363
+        "count": 364
       }
     ],
-    "new_reviews": 3
+    "new_reviews": 7
   }
 }
