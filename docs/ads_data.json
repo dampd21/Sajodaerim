@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-13T13:56:55.241166",
+  "generated_at": "2026-02-13T18:56:33.203932",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -446,10 +446,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 1452,
+      "totalChargeCost": 2347,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 2,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -467,10 +467,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 605,
+      "totalChargeCost": 1016,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 143,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -723,7 +723,7 @@
       "nccCampaignId": "cmp-a001-01-000000008378297",
       "mobileChannelId": "bsn-a001-00-000000010674229",
       "pcChannelId": "bsn-a001-00-000000010674229",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "파워링크#고덕점플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -735,7 +735,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:57:28.000Z",
-      "editTm": "2026-02-12T19:29:42.000Z",
+      "editTm": "2026-02-13T07:30:31.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064513",
@@ -2036,7 +2036,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 99,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2077,7 +2077,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 0,
+      "expectCost": 2,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
@@ -2122,7 +2122,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 143,
+      "expectCost": 88,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2163,7 +2163,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 0,
+      "expectCost": 1,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
