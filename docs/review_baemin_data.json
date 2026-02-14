@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-14T13:46:22.967820",
+  "generated_at": "2026-02-14T13:47:29.434367",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -137936,6 +137936,23 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026021202108653",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "나롱",
+          "rating": 5.0,
+          "content": "찹샬탕슉 맛나용",
+          "menus": [
+            "나홀로 초당순두부짬뽕세트"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/12/01kh8dr8sjae1jz766g6nsbatn.jpg"
+          ],
+          "created_at": "2026-02-12T16:58:50.240965",
+          "created_date": "2026-02-12",
+          "is_negative": false
+        },
+        {
           "id": "2026021002952915",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -140333,10 +140350,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 145,
+      "review_count": 146,
       "negative_count": 20,
       "average_rating": 4.49,
-      "crawled_at": "2026-02-12T23:35:38.280568"
+      "crawled_at": "2026-02-14T13:47:20.976725"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -157532,7 +157549,7 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9616,
+    "total_reviews": 9617,
     "total_negative": 305,
     "average_rating": 4.87,
     "popular_menus": [
@@ -157577,6 +157594,6 @@
         "count": 367
       }
     ],
-    "new_reviews": 12
+    "new_reviews": 1
   }
 }
