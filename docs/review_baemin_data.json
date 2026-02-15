@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-16T06:06:44.189692",
+  "generated_at": "2026-02-16T06:07:53.164746",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -138233,6 +138233,72 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026021401670434",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "졍이",
+          "rating": 3.0,
+          "content": "배달이빨라용~ 별5개 주려고했는데ㅜㅜ 탕수육은 바삭하지않고요...짜장면도.....",
+          "menus": [
+            "미니탕수육",
+            "역대짜장면"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/14/01khd648b8wp2yfq8r4vft667q.jpg"
+          ],
+          "created_at": "2026-02-14T13:21:46.584713",
+          "created_date": "2026-02-14",
+          "is_negative": true
+        },
+        {
+          "id": "2026021401349053",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "종현",
+          "rating": 5.0,
+          "content": "맛있게 잘먹었습니당!",
+          "menus": [
+            "역대짬뽕",
+            "새우볶음밥"
+          ],
+          "images": [],
+          "created_at": "2026-02-14T10:47:55.269559",
+          "created_date": "2026-02-14",
+          "is_negative": false
+        },
+        {
+          "id": "2026021400962546",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "김주남김주남",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "짬뽕 나홀로 세트"
+          ],
+          "images": [],
+          "created_at": "2026-02-14T08:54:58.031515",
+          "created_date": "2026-02-14",
+          "is_negative": false
+        },
+        {
+          "id": "2026021400115979",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "Zet",
+          "rating": 5.0,
+          "content": "맛있게 잘먹었습니다",
+          "menus": [
+            "짜장 나홀로 세트"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/14/01khbz8w09ccb40kxefed2aqx8.jpg"
+          ],
+          "created_at": "2026-02-14T02:02:43.321746",
+          "created_date": "2026-02-14",
+          "is_negative": false
+        },
+        {
           "id": "2026021302852319",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -140698,10 +140764,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 149,
-      "negative_count": 20,
+      "review_count": 153,
+      "negative_count": 21,
       "average_rating": 4.5,
-      "crawled_at": "2026-02-15T13:11:31.088323"
+      "crawled_at": "2026-02-16T06:07:44.729753"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -158104,13 +158170,13 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9650,
-    "total_negative": 306,
+    "total_reviews": 9654,
+    "total_negative": 307,
     "average_rating": 4.87,
     "popular_menus": [
       {
         "name": "역대짬뽕",
-        "count": 2396
+        "count": 2397
       },
       {
         "name": "역대 초당순두부짬뽕",
@@ -158122,7 +158188,7 @@
       },
       {
         "name": "역대짜장면",
-        "count": 799
+        "count": 800
       },
       {
         "name": "삼선간짜장",
@@ -158146,9 +158212,9 @@
       },
       {
         "name": "미니탕수육",
-        "count": 370
+        "count": 371
       }
     ],
-    "new_reviews": 10
+    "new_reviews": 4
   }
 }
