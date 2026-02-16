@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-16T14:03:03.292302",
+  "generated_at": "2026-02-16T19:03:05.607231",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -446,10 +446,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2813,
+      "totalChargeCost": 5867,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 110,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -467,10 +467,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2715,
+      "totalChargeCost": 3614,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -565,7 +565,7 @@
       "nccCampaignId": "cmp-a001-01-000000008331945",
       "mobileChannelId": "bsn-a001-00-000000010674218",
       "pcChannelId": "bsn-a001-00-000000010674218",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "파워링크#다산점 플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -577,7 +577,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:53:43.000Z",
-      "editTm": "2026-02-15T15:56:19.000Z",
+      "editTm": "2026-02-16T07:31:06.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064460",
@@ -644,7 +644,7 @@
       "nccCampaignId": "cmp-a001-01-000000008331946",
       "mobileChannelId": "bsn-a001-00-000000010674225",
       "pcChannelId": "bsn-a001-00-000000010674225",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "파워링크#본점 플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -656,7 +656,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:55:02.000Z",
-      "editTm": "2026-02-15T07:29:18.000Z",
+      "editTm": "2026-02-16T07:31:06.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064482",
@@ -2036,7 +2036,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 110,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2122,7 +2122,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
