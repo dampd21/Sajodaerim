@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-16T06:25:47.522306",
+  "generated_at": "2026-02-16T14:03:03.292302",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -446,10 +446,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 388,
+      "totalChargeCost": 2813,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -467,7 +467,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 517,
+      "totalChargeCost": 2715,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 66,
@@ -723,7 +723,7 @@
       "nccCampaignId": "cmp-a001-01-000000008378297",
       "mobileChannelId": "bsn-a001-00-000000010674229",
       "pcChannelId": "bsn-a001-00-000000010674229",
-      "bidAmt": 130,
+      "bidAmt": 70,
       "name": "파워링크#고덕점플레이스유입#1",
       "userLock": false,
       "useDailyBudget": true,
@@ -735,7 +735,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-28T02:57:28.000Z",
-      "editTm": "2026-02-15T19:30:00.000Z",
+      "editTm": "2026-02-15T23:30:54.000Z",
       "targets": [
         {
           "nccTargetId": "tgt-a001-01-000000502064513",
@@ -2036,7 +2036,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
