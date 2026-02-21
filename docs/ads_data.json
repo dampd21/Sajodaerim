@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-21T18:38:48.930055",
+  "generated_at": "2026-02-22T00:19:31.378501",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -19,8 +19,8 @@
       "summary": {
         "total_campaigns": 9,
         "total_adgroups": 17,
-        "total_keywords": 662,
-        "active_keywords": 593
+        "total_keywords": 695,
+        "active_keywords": 626
       }
     },
     {
@@ -66,7 +66,7 @@
       "deliveryMethod": "ACCELERATED",
       "trackingMode": "AUTO_TRACKING_MODE",
       "usePeriod": false,
-      "dailyBudget": 50000,
+      "dailyBudget": 20000,
       "useDailyBudget": true,
       "totalChargeCost": 0,
       "status": "ELIGIBLE",
@@ -75,7 +75,7 @@
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-12-10T00:02:13.000Z",
-      "editTm": "2026-02-20T16:56:43.000Z",
+      "editTm": "2026-02-21T15:16:06.000Z",
       "sharedBudgetLock": false
     },
     {
@@ -87,16 +87,16 @@
       "deliveryMethod": "ACCELERATED",
       "trackingMode": "AUTO_TRACKING_MODE",
       "usePeriod": false,
-      "dailyBudget": 60000,
+      "dailyBudget": 20000,
       "useDailyBudget": true,
-      "totalChargeCost": 1023,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1023,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-12-10T00:02:41.000Z",
-      "editTm": "2026-02-20T16:56:43.000Z",
+      "editTm": "2026-02-21T15:16:10.000Z",
       "sharedBudgetLock": false
     },
     {
@@ -108,16 +108,16 @@
       "deliveryMethod": "ACCELERATED",
       "trackingMode": "AUTO_TRACKING_MODE",
       "usePeriod": false,
-      "dailyBudget": 0,
-      "useDailyBudget": false,
-      "totalChargeCost": 583,
+      "dailyBudget": 20000,
+      "useDailyBudget": true,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 583,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-12-10T00:12:51.000Z",
-      "editTm": "2026-02-20T16:44:48.000Z",
+      "editTm": "2026-02-21T15:15:56.000Z",
       "sharedBudgetLock": false
     },
     {
@@ -173,10 +173,10 @@
       "usePeriod": false,
       "dailyBudget": 20000,
       "useDailyBudget": true,
-      "totalChargeCost": 2024,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2023-01-30T04:43:18.000Z",
@@ -194,10 +194,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2937,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 143,
+      "expectCost": 55,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-07-13T04:08:56.000Z",
@@ -213,16 +213,16 @@
       "deliveryMethod": "ACCELERATED",
       "trackingMode": "TRACKING_DISABLED",
       "usePeriod": false,
-      "dailyBudget": 3000,
+      "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 8,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-09-04T14:00:42.000Z",
-      "editTm": "2024-09-04T14:00:42.000Z",
+      "editTm": "2026-02-21T15:16:22.000Z",
       "sharedBudgetLock": false
     },
     {
@@ -234,16 +234,16 @@
       "deliveryMethod": "STANDARD",
       "trackingMode": "TRACKING_DISABLED",
       "usePeriod": false,
-      "dailyBudget": 3000,
+      "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 169,
+      "totalChargeCost": 1,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-09-04T14:02:51.000Z",
-      "editTm": "2024-09-04T14:02:51.000Z",
+      "editTm": "2026-02-21T15:16:18.000Z",
       "sharedBudgetLock": false
     },
     {
@@ -299,10 +299,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 5267,
+      "totalChargeCost": 181,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 110,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -320,7 +320,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 3751,
+      "totalChargeCost": 6,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -814,7 +814,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 110,
+      "bidAmt": 230,
       "name": "BPS_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -826,7 +826,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-02-21T03:31:31.000Z",
+      "editTm": "2026-02-21T11:24:58.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -1082,7 +1082,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1113,8 +1113,8 @@
       "useCntsNetworkBidAmt": false,
       "mobileNetworkBidWeight": 100,
       "pcNetworkBidWeight": 100,
-      "dailyBudget": 3000,
-      "budgetLock": true,
+      "dailyBudget": 10000,
+      "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-13T04:10:09.000Z",
       "editTm": "2026-02-20T16:07:52.000Z",
@@ -1159,9 +1159,9 @@
       },
       "pcChannelKey": "1455516190",
       "mobileChannelKey": "1455516190",
-      "status": "PAUSED",
-      "statusReason": "GROUP_LIMITED_BY_BUDGET",
-      "expectCost": 143,
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "expectCost": 55,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1451,7 +1451,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 110,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1623,7 +1623,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -20625,6 +20625,765 @@
       "editTm": "2026-02-20T16:55:46.000Z",
       "status": "PAUSED",
       "statusReason": "KEYWORD_PAUSED",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485897",
+      "keyword": "역대짬뽕송파점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485898",
+      "keyword": "역대짬뽕송파",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485899",
+      "keyword": "역대짬뽕오산",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485900",
+      "keyword": "역대짬뽕오산점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485901",
+      "keyword": "역대짬뽕오산시청",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485902",
+      "keyword": "역대짬뽕오산시청점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485903",
+      "keyword": "역대짬뽕송탄",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485904",
+      "keyword": "역대짬뽕송탄점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485905",
+      "keyword": "역대짬뽕평택",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485906",
+      "keyword": "역대짬뽕반월",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485907",
+      "keyword": "역대짬뽕반월점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485908",
+      "keyword": "역대짬뽕수원",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485909",
+      "keyword": "역대짬뽕영통",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485910",
+      "keyword": "역대짬뽕병점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485911",
+      "keyword": "역대짬뽕병점점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485912",
+      "keyword": "역대짬뽕화성",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485913",
+      "keyword": "역대짬뽕천안",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485914",
+      "keyword": "역대짬뽕천안두정",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485915",
+      "keyword": "역대짬뽕두정",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485916",
+      "keyword": "역대짬뽕본점",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485917",
+      "keyword": "역대짬뽕장한평",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485918",
+      "keyword": "역대짬뽕군자",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485919",
+      "keyword": "역대짬뽕답십리",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485920",
+      "keyword": "역대짬뽕남양주",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485921",
+      "keyword": "남양주역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485922",
+      "keyword": "다산역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485923",
+      "keyword": "역대짬뽕다산",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485924",
+      "keyword": "반월역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485925",
+      "keyword": "송파역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485926",
+      "keyword": "석촌역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485927",
+      "keyword": "장안동역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485928",
+      "keyword": "평택역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "nccQi": {
+        "qiGrade": 4
+      },
+      "attr": {},
+      "campaignName": "BPS_파워링크_자사명",
+      "adgroupName": "BPS_파워링크_자사명(수정)",
+      "storeName": "역대짬뽕 본점"
+    },
+    {
+      "nccKeywordId": "nkw-a001-01-000007923485929",
+      "keyword": "화성역대짬뽕",
+      "customerId": 2783467,
+      "nccAdgroupId": "grp-a001-01-000000047004380",
+      "nccCampaignId": "cmp-a001-01-000000008846189",
+      "userLock": false,
+      "inspectStatus": "APPROVED",
+      "bidAmt": 70,
+      "useGroupBidAmt": true,
+      "delFlag": false,
+      "regTm": "2026-02-21T15:12:58.000Z",
+      "editTm": "2026-02-21T15:13:03.000Z",
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
       "nccQi": {
         "qiGrade": 4
       },
@@ -48177,19 +48936,19 @@
       "monthlyMobileQcCnt": 20,
       "compIdx": "중간"
     },
-    "역대짬뽕가맹": {
-      "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 5,
+    "역대짬뽕송파": {
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 300,
       "compIdx": "낮음"
     },
-    "역대짬뽕금액": {
-      "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 5,
+    "역대짬뽕송파점": {
+      "monthlyPcQcCnt": 10,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "낮음"
     },
-    "역대짬뽕지점": {
+    "역대짬뽕오산": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 5,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "낮음"
     },
     "모로미쿠시": {
@@ -48467,7 +49226,167 @@
       "monthlyMobileQcCnt": 370,
       "compIdx": "낮음"
     },
-    "역대짬뽕매출": {
+    "역대짬뽕송탄": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 20,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕송탄점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕오산시청": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕오산시청점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕오산점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕반월": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕반월점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 20,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕수원": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕영통": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕평택": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕병점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 40,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕병점점": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕천안": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 60,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕천안두정": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕화성": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕군자": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕답십리": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕두정": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "중간"
+    },
+    "역대짬뽕본점": {
+      "monthlyPcQcCnt": 20,
+      "monthlyMobileQcCnt": 270,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕장한평": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 20,
+      "compIdx": "낮음"
+    },
+    "남양주역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "다산역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 70,
+      "compIdx": "낮음"
+    },
+    "반월역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕남양주": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕다산": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 140,
+      "compIdx": "낮음"
+    },
+    "석촌역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "중간"
+    },
+    "송파역대짬뽕": {
+      "monthlyPcQcCnt": 10,
+      "monthlyMobileQcCnt": 30,
+      "compIdx": "중간"
+    },
+    "장안동역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 60,
+      "compIdx": "낮음"
+    },
+    "평택역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 20,
+      "compIdx": "낮음"
+    },
+    "화성역대짬뽕": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕가맹": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕금액": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕지점": {
       "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 5,
       "compIdx": "낮음"
@@ -48478,6 +49397,11 @@
       "compIdx": "낮음"
     },
     "역대짬뽕프랜차이즈": {
+      "monthlyPcQcCnt": 5,
+      "monthlyMobileQcCnt": 5,
+      "compIdx": "낮음"
+    },
+    "역대짬뽕매출": {
       "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 5,
       "compIdx": "낮음"
@@ -108110,6 +109034,897 @@
         "pcBid": 70
       }
     ],
+    "역대짬뽕송파점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕송파": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕오산": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕오산점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕오산시청": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕오산시청점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕송탄": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕송탄점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕평택": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕반월": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕반월점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕수원": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕영통": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕병점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕병점점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕화성": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕천안": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕천안두정": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕두정": [
+      {
+        "rank": 1,
+        "mobileBid": 380,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕본점": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕장한평": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕군자": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕답십리": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕남양주": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "남양주역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "다산역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "역대짬뽕다산": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "반월역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "송파역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "석촌역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "장안동역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "평택역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
+    "화성역대짬뽕": [
+      {
+        "rank": 1,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 2,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 3,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 4,
+        "mobileBid": 70,
+        "pcBid": 70
+      },
+      {
+        "rank": 5,
+        "mobileBid": 70,
+        "pcBid": 70
+      }
+    ],
     "역대짬뽕금액": [
       {
         "rank": 1,
@@ -110167,7 +111982,7 @@
     "total_stores": 3,
     "total_campaigns": 14,
     "total_adgroups": 25,
-    "total_keywords": 745,
-    "active_keywords": 676
+    "total_keywords": 778,
+    "active_keywords": 709
   }
 }
