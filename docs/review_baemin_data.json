@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-22T11:40:20.758496",
+  "generated_at": "2026-02-22T11:41:31.478934",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -139038,6 +139038,22 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026022002936808",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "바다맘",
+          "rating": 4.0,
+          "content": "짜장과 만두는 맛있었으나 탕수육은 너무 눅눅하고 질겼습니다",
+          "menus": [
+            "역대짜장면",
+            "미니탕수육"
+          ],
+          "images": [],
+          "created_at": "2026-02-20T22:42:54.591298",
+          "created_date": "2026-02-20",
+          "is_negative": false
+        },
+        {
           "id": "2026021803034550",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -141787,10 +141803,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 166,
+      "review_count": 167,
       "negative_count": 23,
       "average_rating": 4.5,
-      "crawled_at": "2026-02-20T23:13:57.774054"
+      "crawled_at": "2026-02-22T11:41:23.008040"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -159887,7 +159903,7 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9756,
+    "total_reviews": 9757,
     "total_negative": 315,
     "average_rating": 4.87,
     "popular_menus": [
@@ -159905,7 +159921,7 @@
       },
       {
         "name": "역대짜장면",
-        "count": 818
+        "count": 819
       },
       {
         "name": "삼선간짜장",
@@ -159929,9 +159945,9 @@
       },
       {
         "name": "미니탕수육",
-        "count": 374
+        "count": 375
       }
     ],
-    "new_reviews": 9
+    "new_reviews": 1
   }
 }
