@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-22T11:41:31.478934",
+  "generated_at": "2026-02-22T11:42:44.517604",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -141813,6 +141813,74 @@
       "shop_id": "14811818",
       "reviews": [
         {
+          "id": "2026022002877232",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "용선",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕",
+            "새우볶음밥"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/20/01khxjaye3vdg37vwtbmzcjk9t.jpg"
+          ],
+          "created_at": "2026-02-20T22:02:59.674046",
+          "created_date": "2026-02-20",
+          "is_negative": false
+        },
+        {
+          "id": "2026022002721741",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "굥지",
+          "rating": 5.0,
+          "content": "짬뽕국물 죽여줘요",
+          "menus": [
+            "맵탱이 고추짬뽕",
+            "새우볶음밥"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/20/01khxf6ke374vqgypbfjrkzj1y.jpg"
+          ],
+          "created_at": "2026-02-20T21:08:11.542166",
+          "created_date": "2026-02-20",
+          "is_negative": false
+        },
+        {
+          "id": "2026022002646831",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "달곰84",
+          "rating": 3.0,
+          "content": "탕수육 반죽이 약간 덜 익은것인지 원래 그런것인지 모르겠지만 속안에 크림 처럼 미끌미끌거리는 식감이 절반 정도 있었어요.",
+          "menus": [],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/20/01khxdd9sc7jr89qta6nnraz6k.jpg"
+          ],
+          "created_at": "2026-02-20T20:36:53.873884",
+          "created_date": "2026-02-20",
+          "is_negative": true
+        },
+        {
+          "id": "2026022002573572",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "h90",
+          "rating": 5.0,
+          "content": "불맛나고 맛있어용!",
+          "menus": [
+            "삼선간짜장"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/20/01khxbed4j0br5r95btkfyx1zc.jpg"
+          ],
+          "created_at": "2026-02-20T20:02:32.9605",
+          "created_date": "2026-02-20",
+          "is_negative": false
+        },
+        {
           "id": "2026021802353763",
           "store_name": "역대짬뽕 송파점",
           "platform": "baemin",
@@ -153278,10 +153346,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 696,
-      "negative_count": 25,
+      "review_count": 700,
+      "negative_count": 26,
       "average_rating": 4.83,
-      "crawled_at": "2026-02-20T23:15:03.839446"
+      "crawled_at": "2026-02-22T11:42:35.865888"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -159903,13 +159971,13 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9757,
-    "total_negative": 315,
+    "total_reviews": 9761,
+    "total_negative": 316,
     "average_rating": 4.87,
     "popular_menus": [
       {
         "name": "역대짬뽕",
-        "count": 2428
+        "count": 2429
       },
       {
         "name": "역대 초당순두부짬뽕",
@@ -159925,7 +159993,7 @@
       },
       {
         "name": "삼선간짜장",
-        "count": 751
+        "count": 752
       },
       {
         "name": "마파두부덮밥",
@@ -159933,7 +160001,7 @@
       },
       {
         "name": "맵탱이 고추짬뽕",
-        "count": 640
+        "count": 641
       },
       {
         "name": "나홀로 짬뽕세트",
@@ -159948,6 +160016,6 @@
         "count": 375
       }
     ],
-    "new_reviews": 1
+    "new_reviews": 4
   }
 }
