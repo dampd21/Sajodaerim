@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-22T11:44:20.721188",
+  "generated_at": "2026-02-27T16:34:46.881907",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -139038,6 +139038,21 @@
       "shop_id": "14232160",
       "reviews": [
         {
+          "id": "2026022500005909",
+          "store_name": "역대짬뽕 다산1호점",
+          "platform": "baemin",
+          "nickname": "바l달의민족vip",
+          "rating": 5.0,
+          "content": "잘먹었습니다",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-25T00:58:02.170474",
+          "created_date": "2026-02-25",
+          "is_negative": false
+        },
+        {
           "id": "2026022002936808",
           "store_name": "역대짬뽕 다산1호점",
           "platform": "baemin",
@@ -141803,10 +141818,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 167,
+      "review_count": 168,
       "negative_count": 23,
       "average_rating": 4.5,
-      "crawled_at": "2026-02-22T11:41:23.008040"
+      "crawled_at": "2026-02-27T16:34:38.413515"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -159971,7 +159986,7 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9761,
+    "total_reviews": 9762,
     "total_negative": 316,
     "average_rating": 4.87,
     "popular_menus": [
@@ -159981,7 +159996,7 @@
       },
       {
         "name": "역대 초당순두부짬뽕",
-        "count": 2144
+        "count": 2145
       },
       {
         "name": "역대짜장밥",
@@ -160016,6 +160031,6 @@
         "count": 375
       }
     ],
-    "new_reviews": 0
+    "new_reviews": 1
   }
 }
