@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-27T16:34:46.881907",
+  "generated_at": "2026-02-27T16:35:54.791368",
   "platform": "baemin",
   "crawl_mode": "daily",
   "stores": [
@@ -141828,6 +141828,83 @@
       "shop_id": "14811818",
       "reviews": [
         {
+          "id": "2026022502747491",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "akzkwm",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "SET 2. 찹쌀탕수육+짜장+짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-25T21:14:32.788292",
+          "created_date": "2026-02-25",
+          "is_negative": false
+        },
+        {
+          "id": "2026022501714654",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "짱가",
+          "rating": 5.0,
+          "content": "",
+          "menus": [
+            "백짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-25T13:51:48.077453",
+          "created_date": "2026-02-25",
+          "is_negative": false
+        },
+        {
+          "id": "2026022501676597",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "ㅇ이건희ㅇ",
+          "rating": 5.0,
+          "content": "국물 너무 칼칼하고 면발 쫄깃해서 맛있네요\n잘먹었습니다",
+          "menus": [
+            "역대 초당순두부짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-25T13:32:48.948284",
+          "created_date": "2026-02-25",
+          "is_negative": false
+        },
+        {
+          "id": "2026022501442882",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "우정수호",
+          "rating": 5.0,
+          "content": "맛있어요!!진짜 오랜만에 한 그릇 다 먹었어요ㅎㅎ면이 얇은 편이라 더 좋고 불향도 나고 해물도 많이 들었어요 혼자 먹기엔 양이 너무 많아서 튀김은 다 못먹었지만 튀김도 괜찮습니다",
+          "menus": [
+            "나홀로 삼선간짜장세트"
+          ],
+          "images": [
+            "https://bmreview.cdn.baemin.com/bmreview-qh2e/i/2026/2/25/01kj9c6s3vabbca3s9k633v4nb.jpg"
+          ],
+          "created_at": "2026-02-25T12:06:44.851523",
+          "created_date": "2026-02-25",
+          "is_negative": false
+        },
+        {
+          "id": "2026022500341868",
+          "store_name": "역대짬뽕 송파점",
+          "platform": "baemin",
+          "nickname": "초심",
+          "rating": 3.0,
+          "content": "",
+          "menus": [
+            "역대짬뽕"
+          ],
+          "images": [],
+          "created_at": "2026-02-25T05:25:33.431402",
+          "created_date": "2026-02-25",
+          "is_negative": true
+        },
+        {
           "id": "2026022002877232",
           "store_name": "역대짬뽕 송파점",
           "platform": "baemin",
@@ -153361,10 +153438,10 @@
           "is_negative": false
         }
       ],
-      "review_count": 700,
-      "negative_count": 26,
+      "review_count": 705,
+      "negative_count": 27,
       "average_rating": 4.83,
-      "crawled_at": "2026-02-22T11:42:35.865888"
+      "crawled_at": "2026-02-27T16:35:46.316348"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -159986,17 +160063,17 @@
   ],
   "summary": {
     "total_stores": 4,
-    "total_reviews": 9762,
-    "total_negative": 316,
+    "total_reviews": 9767,
+    "total_negative": 317,
     "average_rating": 4.87,
     "popular_menus": [
       {
         "name": "역대짬뽕",
-        "count": 2429
+        "count": 2430
       },
       {
         "name": "역대 초당순두부짬뽕",
-        "count": 2145
+        "count": 2146
       },
       {
         "name": "역대짜장밥",
@@ -160031,6 +160108,6 @@
         "count": 375
       }
     ],
-    "new_reviews": 1
+    "new_reviews": 5
   }
 }
