@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-01T13:57:30.267913",
+  "generated_at": "2026-03-01T18:38:29.845479",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -89,10 +89,10 @@
       "usePeriod": false,
       "dailyBudget": 20000,
       "useDailyBudget": true,
-      "totalChargeCost": 0,
+      "totalChargeCost": 1782,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 825,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-12-10T00:02:41.000Z",
@@ -110,7 +110,7 @@
       "usePeriod": false,
       "dailyBudget": 20000,
       "useDailyBudget": true,
-      "totalChargeCost": 154,
+      "totalChargeCost": 308,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 77,
@@ -131,10 +131,10 @@
       "usePeriod": false,
       "dailyBudget": 20000,
       "useDailyBudget": true,
-      "totalChargeCost": 2090,
+      "totalChargeCost": 2805,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 110,
       "migType": 0,
       "delFlag": false,
       "regTm": "2023-01-30T04:43:18.000Z",
@@ -152,10 +152,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 4554,
+      "totalChargeCost": 6501,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 154,
+      "expectCost": 66,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-07-13T04:08:56.000Z",
@@ -173,7 +173,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 105,
+      "totalChargeCost": 142,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -194,10 +194,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 121,
+      "totalChargeCost": 167,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 2,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-09-04T14:02:51.000Z",
@@ -573,7 +573,7 @@
       "mobileChannelKey": "https://역대짬뽕.com",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1419,
+      "expectCost": 957,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 1
@@ -661,7 +661,7 @@
       "mobileChannelKey": "https://역대짬뽕.com",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 9834,
+      "expectCost": 825,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 1
@@ -772,7 +772,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -784,7 +784,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-03-01T03:30:37.000Z",
+      "editTm": "2026-03-01T07:32:26.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -872,7 +872,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 110,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -951,7 +951,7 @@
       "mobileChannelKey": "1455516190",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 154,
+      "expectCost": 66,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1036,7 +1036,7 @@
       "mobileChannelKey": "1455516190",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 2,
+      "expectCost": 1,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
