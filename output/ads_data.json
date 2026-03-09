@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-09T19:01:45.919666",
+  "generated_at": "2026-03-10T00:53:17.834431",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -257,10 +257,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 4085,
+      "totalChargeCost": 10,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -278,10 +278,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 6571,
+      "totalChargeCost": 105,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 253,
+      "expectCost": 99,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -1327,7 +1327,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 110,
+      "expectCost": 99,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1368,7 +1368,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 2,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
@@ -1413,7 +1413,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 253,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
