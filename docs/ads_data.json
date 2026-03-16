@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-16T06:28:10.059170",
+  "generated_at": "2026-03-16T14:20:42.715315",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -257,10 +257,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 378,
+      "totalChargeCost": 1113,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -278,7 +278,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2118,
+      "totalChargeCost": 3622,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -772,7 +772,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 70,
+      "bidAmt": 120,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -784,7 +784,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-03-15T07:31:23.000Z",
+      "editTm": "2026-03-16T03:29:28.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -1241,7 +1241,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 66,
+      "expectCost": 99,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1327,7 +1327,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 55,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1413,7 +1413,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 275,
+      "expectCost": 253,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
