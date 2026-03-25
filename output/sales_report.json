@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-03-24T15:00:57.476404",
+  "generated_at": "2026-03-25T15:02:16.570396",
   "summary": {
-    "total_records": 6720,
+    "total_records": 6735,
     "total_stores": 15,
-    "total_days": 448,
+    "total_days": 449,
     "date_range": {
       "start": "2025-01-01",
-      "end": "2026-03-24"
+      "end": "2026-03-25"
     },
-    "total_sales": 9091556419,
-    "total_hall": 6041744475,
-    "total_delivery": 3047297944,
+    "total_sales": 9105789519,
+    "total_hall": 6050935675,
+    "total_delivery": 3052339844,
     "total_packaging": 2514000,
-    "total_count": 321881,
-    "total_customers": 214095
+    "total_count": 322431,
+    "total_customers": 214481
   },
   "stores": [
     {
@@ -25,7 +25,7 @@
       "total": 0,
       "count": 0,
       "customers": 0,
-      "days": 448
+      "days": 449
     },
     {
       "code": "B86144",
@@ -36,18 +36,18 @@
       "total": 474468000,
       "count": 16202,
       "customers": 16293,
-      "days": 448
+      "days": 449
     },
     {
       "code": "B90117",
       "name": "역대짬뽕 본점",
-      "hall": 1219023440,
-      "delivery": 1952687824,
+      "hall": 1221133640,
+      "delivery": 1954763024,
       "packaging": 116500,
-      "total": 3171827764,
-      "count": 128831,
-      "customers": 41360,
-      "days": 448
+      "total": 3176013164,
+      "count": 129006,
+      "customers": 41433,
+      "days": 449
     },
     {
       "code": "B91513",
@@ -58,29 +58,29 @@
       "total": 0,
       "count": 0,
       "customers": 0,
-      "days": 448
+      "days": 449
     },
     {
       "code": "K10717",
       "name": "역대짬뽕 오산시청점",
-      "hall": 570521100,
+      "hall": 571508600,
       "delivery": 0,
       "packaging": 458500,
-      "total": 570979600,
-      "count": 15086,
-      "customers": 26356,
-      "days": 448
+      "total": 571967100,
+      "count": 15114,
+      "customers": 26415,
+      "days": 449
     },
     {
       "code": "K12021",
       "name": "역대짬뽕 병점점",
-      "hall": 1174532500,
+      "hall": 1176231000,
       "delivery": 0,
       "packaging": 0,
-      "total": 1174532500,
-      "count": 21935,
-      "customers": 37509,
-      "days": 448
+      "total": 1176231000,
+      "count": 21973,
+      "customers": 37572,
+      "days": 449
     },
     {
       "code": "K14172",
@@ -91,18 +91,18 @@
       "total": 0,
       "count": 0,
       "customers": 0,
-      "days": 448
+      "days": 449
     },
     {
       "code": "K42183",
       "name": "역대짬뽕 송탄점",
-      "hall": 614236000,
+      "hall": 615332500,
       "delivery": 0,
       "packaging": 1299500,
-      "total": 615535500,
-      "count": 15853,
-      "customers": 23648,
-      "days": 448
+      "total": 616632000,
+      "count": 15887,
+      "customers": 23697,
+      "days": 449
     },
     {
       "code": "K48668",
@@ -113,18 +113,18 @@
       "total": 0,
       "count": 0,
       "customers": 0,
-      "days": 448
+      "days": 449
     },
     {
       "code": "K49757",
       "name": "역대짬뽕 화성반월점",
-      "hall": 1034769500,
+      "hall": 1035880500,
       "delivery": 0,
       "packaging": 22000,
-      "total": 1034791500,
-      "count": 38803,
-      "customers": 38858,
-      "days": 448
+      "total": 1035902500,
+      "count": 38847,
+      "customers": 38902,
+      "days": 449
     },
     {
       "code": "K63270",
@@ -135,18 +135,18 @@
       "total": 251283100,
       "count": 10489,
       "customers": 3600,
-      "days": 448
+      "days": 449
     },
     {
       "code": "K95825",
       "name": "역대짬뽕 다산1호점",
-      "hall": 351384960,
-      "delivery": 726983100,
+      "hall": 351688960,
+      "delivery": 727382300,
       "packaging": 30500,
-      "total": 1078398560,
-      "count": 46022,
-      "customers": 13885,
-      "days": 448
+      "total": 1079101760,
+      "count": 46057,
+      "customers": 13901,
+      "days": 449
     },
     {
       "code": "N15875",
@@ -157,29 +157,29 @@
       "total": 0,
       "count": 0,
       "customers": 0,
-      "days": 448
+      "days": 449
     },
     {
       "code": "N34702",
       "name": "역대짬뽕 송파점",
-      "hall": 233262375,
-      "delivery": 229710520,
+      "hall": 234464375,
+      "delivery": 231641420,
       "packaging": 11000,
-      "total": 462983895,
-      "count": 17901,
-      "customers": 8221,
-      "days": 448
+      "total": 466116795,
+      "count": 18025,
+      "customers": 8268,
+      "days": 449
     },
     {
       "code": "N37528",
       "name": "역대짬뽕 두정점",
-      "hall": 118764500,
-      "delivery": 137916500,
+      "hall": 119446000,
+      "delivery": 138553100,
       "packaging": 75000,
-      "total": 256756000,
-      "count": 10759,
-      "customers": 4365,
-      "days": 448
+      "total": 258074100,
+      "count": 10831,
+      "customers": 4400,
+      "days": 449
     }
   ],
   "daily": [
@@ -5109,6 +5109,17 @@
       "total": 13685100,
       "count": 530,
       "customers": 424,
+      "stores": 15
+    },
+    {
+      "date": "2026-03-25",
+      "date_raw": "20260325",
+      "hall": 9191200,
+      "delivery": 5041900,
+      "packaging": 0,
+      "total": 14233100,
+      "count": 550,
+      "customers": 386,
       "stores": 15
     }
   ],
@@ -73208,6 +73219,158 @@
         "count": 99,
         "customers": 55
       }
+    ],
+    "2026-03-25": [
+      {
+        "code": "B85707",
+        "name": "역대짬뽕 수유점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "B86144",
+        "name": "역대짬뽕 세종점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "B90117",
+        "name": "역대짬뽕 본점",
+        "hall": 2110200,
+        "delivery": 2075200,
+        "packaging": 0,
+        "total": 4185400,
+        "count": 175,
+        "customers": 73
+      },
+      {
+        "code": "B91513",
+        "name": "역대짬뽕 영통점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "K10717",
+        "name": "역대짬뽕 오산시청점",
+        "hall": 987500,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 987500,
+        "count": 28,
+        "customers": 59
+      },
+      {
+        "code": "K12021",
+        "name": "역대짬뽕 병점점",
+        "hall": 1698500,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 1698500,
+        "count": 38,
+        "customers": 63
+      },
+      {
+        "code": "K14172",
+        "name": "역대반점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "K42183",
+        "name": "역대짬뽕 송탄점",
+        "hall": 1096500,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 1096500,
+        "count": 34,
+        "customers": 49
+      },
+      {
+        "code": "K48668",
+        "name": "역대짬뽕(송탄점)KIOSK",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "K49757",
+        "name": "역대짬뽕 화성반월점",
+        "hall": 1111000,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 1111000,
+        "count": 44,
+        "customers": 44
+      },
+      {
+        "code": "K63270",
+        "name": "역대짬뽕 천안SDI점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "K95825",
+        "name": "역대짬뽕 다산1호점",
+        "hall": 304000,
+        "delivery": 399200,
+        "packaging": 0,
+        "total": 703200,
+        "count": 35,
+        "customers": 16
+      },
+      {
+        "code": "N15875",
+        "name": "역대짬뽕 봉담점",
+        "hall": 0,
+        "delivery": 0,
+        "packaging": 0,
+        "total": 0,
+        "count": 0,
+        "customers": 0
+      },
+      {
+        "code": "N34702",
+        "name": "역대짬뽕 송파점",
+        "hall": 1202000,
+        "delivery": 1930900,
+        "packaging": 0,
+        "total": 3132900,
+        "count": 124,
+        "customers": 47
+      },
+      {
+        "code": "N37528",
+        "name": "역대짬뽕 두정점",
+        "hall": 681500,
+        "delivery": 636600,
+        "packaging": 0,
+        "total": 1318100,
+        "count": 72,
+        "customers": 35
+      }
     ]
   },
   "weekly": [
@@ -73853,13 +74016,13 @@
     },
     {
       "week": "2026-W13",
-      "hall": 18688100,
-      "delivery": 8464600,
+      "hall": 27879300,
+      "delivery": 13506500,
       "packaging": 0,
-      "total": 27152700,
-      "count": 1066,
-      "customers": 777,
-      "days": 2
+      "total": 41385800,
+      "count": 1616,
+      "customers": 1163,
+      "days": 3
     }
   ],
   "monthly": [
@@ -74005,13 +74168,13 @@
     },
     {
       "month": "2026-03",
-      "hall": 285356800,
-      "delivery": 173694925,
+      "hall": 294548000,
+      "delivery": 178736825,
       "packaging": 36000,
-      "total": 459087725,
-      "count": 16297,
-      "customers": 10751,
-      "days": 24
+      "total": 473320825,
+      "count": 16847,
+      "customers": 11137,
+      "days": 25
     }
   ],
   "month_list": [
