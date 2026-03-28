@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-28T18:48:32.187098",
+  "generated_at": "2026-03-29T00:25:49.555339",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -257,10 +257,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 4713,
+      "totalChargeCost": 125,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 66,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -278,10 +278,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 3362,
+      "totalChargeCost": 9,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 3,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -772,7 +772,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 70,
+      "bidAmt": 100,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -784,7 +784,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-03-27T23:29:12.000Z",
+      "editTm": "2026-03-28T11:26:51.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -1241,7 +1241,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 66,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1327,7 +1327,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 231,
+      "expectCost": 55,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1368,7 +1368,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 3,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
@@ -1413,7 +1413,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 242,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
