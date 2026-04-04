@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-04T13:54:03.673900",
+  "generated_at": "2026-04-04T18:49:49.809341",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -257,10 +257,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 5238,
+      "totalChargeCost": 7890,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 110,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -278,10 +278,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2475,
+      "totalChargeCost": 3819,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -772,7 +772,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 80,
+      "bidAmt": 70,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -784,7 +784,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-04-04T03:31:15.000Z",
+      "editTm": "2026-04-04T07:31:50.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -1241,7 +1241,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 110,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
