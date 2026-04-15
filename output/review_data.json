@@ -1,11 +1,86 @@
 {
-  "generated_at": "2026-04-14T11:05:58.666013",
+  "generated_at": "2026-04-15T11:03:13.549264",
   "platform": "naver",
   "stores": [
     {
       "store_name": "역대짬뽕 본점",
       "place_id": "1542530224",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "신영창",
+          "content": "정말 짬뽕이 얼큰하니 맛있어요",
+          "keywords": [
+            "바로 입장",
+            "예약 없이 이용",
+            "아침에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.15.수",
+          "visit_date": "2026-04-15",
+          "visit_info": [
+            "방문일\n4.15.수\n2026년 4월 15일 수요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "0cb36e05e98fab72"
+        },
+        {
+          "type": "visitor",
+          "author": "원츄1188",
+          "content": "마파밥도 자극적이지 않고 건더기 푸짐해서 맛있었어요",
+          "keywords": [
+            "점심에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -8,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "8dcd4df619253882"
+        },
+        {
+          "type": "visitor",
+          "author": "M0OZ",
+          "content": "맛난 한끼였습니다!!",
+          "keywords": [
+            "바로 입장",
+            "예약 없이 이용",
+            "친구",
+            "점심에 방문",
+            "친목"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -4,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "c75cc24f7c9e1a15"
+        },
         {
           "type": "visitor",
           "author": "rla****",
@@ -14071,13 +14146,13 @@
           "id": "8a99313d7dbe253f"
         }
       ],
-      "visitor_count": 500,
+      "visitor_count": 503,
       "blog_count": 21,
-      "meta_visitor_count": 3190,
+      "meta_visitor_count": 3193,
       "meta_blog_count": 418,
       "negative_count": 14,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:06:08.734406"
+      "crawled_at": "2026-04-15T11:03:26.718285"
     },
     {
       "store_name": "역대짬뽕 병점점",
@@ -14688,12 +14763,66 @@
       "meta_blog_count": 105,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:07:31.902309"
+      "crawled_at": "2026-04-15T11:05:17.603467"
     },
     {
       "store_name": "역대짬뽕 송파점",
       "place_id": "2066998075",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "sora han",
+          "content": "짜장면이랑 군만두 맛잇어요\n서비스 멘보샤도 맛있어요 꼭 드세요",
+          "keywords": [
+            "바로 입장",
+            "연인・배우자",
+            "예약 없이 이용",
+            "데이트",
+            "점심에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "2번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "30be113cbf24d386"
+        },
+        {
+          "type": "visitor",
+          "author": "sar****",
+          "content": "가게가 넓고 쾌적하고 음식도 맛있어요!",
+          "keywords": [
+            "바로 입장",
+            "연인・배우자",
+            "예약 없이 이용",
+            "데이트",
+            "점심에 방문"
+          ],
+          "tags": [
+            "인테리어가 멋져요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -2,
+          "sentiment_method": "keyword_threshold",
+          "id": "74cd55ec38c8996a"
+        },
         {
           "type": "visitor",
           "author": "화장품쟁이0",
@@ -41187,18 +41316,45 @@
           "id": "3dff1edf0efdac6f"
         }
       ],
-      "visitor_count": 793,
+      "visitor_count": 795,
       "blog_count": 106,
-      "meta_visitor_count": 800,
+      "meta_visitor_count": 802,
       "meta_blog_count": 355,
       "negative_count": 57,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:09:59.311061"
+      "crawled_at": "2026-04-15T11:07:47.765206"
     },
     {
       "store_name": "역대짬뽕 다산1호점",
       "place_id": "1455516190",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "god****",
+          "content": "역대짬뽕 역대급입니다. 양도 생각한거보다 많았고, 얼큰하고 맛있네요 너무 좋습니다 다음번에도 오려고 합니다\n\n강추드립니다!!",
+          "keywords": [
+            "바로 입장",
+            "혼자",
+            "예약 없이 이용",
+            "일상",
+            "점심에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "2번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -9,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "4e37406a43e5f891"
+        },
         {
           "type": "visitor",
           "author": "후니68",
@@ -48521,18 +48677,72 @@
           "id": "f0360790a03531b3"
         }
       ],
-      "visitor_count": 265,
+      "visitor_count": 266,
       "blog_count": 11,
-      "meta_visitor_count": 1321,
+      "meta_visitor_count": 1323,
       "meta_blog_count": 860,
       "negative_count": 11,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:11:56.979782"
+      "crawled_at": "2026-04-15T11:09:44.889764"
     },
     {
       "store_name": "역대짬뽕 화성반월점",
       "place_id": "1474983307",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "이민규46",
+          "content": "맛있게 먹었어요두번째 방문이에요",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "예약 없이 이용",
+            "친구",
+            "친목"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "2번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "3ca9647fb4598f2f"
+        },
+        {
+          "type": "visitor",
+          "author": "bright7",
+          "content": "처음왔는데 맛있어요 다음에 또올게요",
+          "keywords": [
+            "바로 입장",
+            "예약 없이 이용",
+            "친구",
+            "점심에 방문",
+            "친목"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "f2207d525e50779c"
+        },
         {
           "type": "visitor",
           "author": "kle****",
@@ -51197,18 +51407,45 @@
           "id": "651df5d4b5737dff"
         }
       ],
-      "visitor_count": 89,
+      "visitor_count": 91,
       "blog_count": 13,
-      "meta_visitor_count": 982,
+      "meta_visitor_count": 984,
       "meta_blog_count": 456,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:13:48.285862"
+      "crawled_at": "2026-04-15T11:11:35.820473"
     },
     {
       "store_name": "역대짬뽕 오산시청점",
       "place_id": "1160136895",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "abe****",
+          "content": "맛있어용!",
+          "keywords": [
+            "바로 입장",
+            "예약 없이 이용",
+            "지인・동료",
+            "점심에 방문",
+            "친목"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "ccfb53066e0c50d9"
+        },
         {
           "type": "visitor",
           "author": "qkr****",
@@ -53565,18 +53802,289 @@
           "id": "ff7ad4bad10f9e90"
         }
       ],
-      "visitor_count": 80,
+      "visitor_count": 81,
       "blog_count": 11,
-      "meta_visitor_count": 953,
+      "meta_visitor_count": 954,
       "meta_blog_count": 265,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:15:40.516413"
+      "crawled_at": "2026-04-15T11:13:26.925495"
     },
     {
       "store_name": "역대짬뽕 두정점",
       "place_id": "1726445983",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "95****",
+          "content": "맛있게 잘먹었습니다 다음에 또올게여",
+          "keywords": [
+            "바로 입장",
+            "혼자",
+            "예약 없이 이용",
+            "일상",
+            "밤에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.15.수",
+          "visit_date": "2026-04-15",
+          "visit_info": [
+            "방문일\n4.15.수\n2026년 4월 15일 수요일",
+            "2번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "0cc66086014a1e31"
+        },
+        {
+          "type": "visitor",
+          "author": "kil****",
+          "content": "저번에 오고 맛이있어용!! 짬뽕지존보다 더 맛있는거 같아요,,!!!♡♡♡",
+          "keywords": [
+            "저녁에 방문",
+            "10분 이내",
+            "예약 후 이용",
+            "친구",
+            "친목"
+          ],
+          "tags": [
+            "재료가 신선해요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -2,
+          "sentiment_method": "keyword_threshold",
+          "id": "272bfb196b81768d"
+        },
+        {
+          "type": "visitor",
+          "author": "호빵궁댕이",
+          "content": "집 근처에 새로 오픈했기에 한번 방문 했습니다.\n너무 시끄럽지 않은 분위기에,\n혼자서도 부담없이 먹고 가기 괜찮네요.\n맛도 나쁘지 않습니다.\n짬뽕 생각 날때 한번 들려도 좋을듯,\n( 근데 요즘 짬뽕값 너무 올랐어요 ㅠㅠ )\n더보기",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "혼자",
+            "예약 없이 이용",
+            "일상"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "2번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -4,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "7b26d06fde291f40"
+        },
+        {
+          "type": "visitor",
+          "author": "명코63",
+          "content": "완전 맛있어용.",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "연인・배우자",
+            "예약 없이 이용",
+            "데이트"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "f52f19486df12e69"
+        },
+        {
+          "type": "visitor",
+          "author": "조경빈25",
+          "content": "양 많고 매콤해요!",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "일상",
+            "예약 없이 이용"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -4,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "b8b85a8d99e50991"
+        },
+        {
+          "type": "visitor",
+          "author": "김노영15",
+          "content": "맛있게 잘먹었어요 ㅎ",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "혼자",
+            "예약 없이 이용"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -6,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "e194fbae315d574c"
+        },
+        {
+          "type": "visitor",
+          "author": "으농쿠쨩",
+          "content": "한번 먹어보고 싶어서 방문했아요!!\n기본 짬뽕 2단계 햇는데 신라면보다 매워요!!\n주의하세영ㅎㅎㅎ\n그래도 면이 쫄깃하고 맛나요!!\n더보기",
+          "keywords": [
+            "바로 입장",
+            "저녁에 방문",
+            "혼자",
+            "예약 없이 이용",
+            "일상"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -4,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "8c9ffa43aa266f60"
+        },
+        {
+          "type": "visitor",
+          "author": "hyperplus",
+          "content": "쟁반 짜장이 맛있어요! 애인이랑 같이 왔는데 서로 맛있다며 칭찬하면서 쉬지 않고 먹었습니다. 카페 같은 분위기~ 추천합니다~",
+          "keywords": [
+            "바로 입장",
+            "연인・배우자",
+            "일상, 데이트",
+            "예약 없이 이용",
+            "점심에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA0MTRfOTIg/MDAxNzc2MTU0MDgwMTMy.FYZz3FFfVIVmN96tI3MJvJOt-CBEpRtDD53kzNy5qN0g.8zsQxQCu94cZzsWkyQRXhdyRVZJU7d6UTCRYrfR-gA4g.JPEG/image.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": -8,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "ff4dc22e60b6f6de"
+        },
+        {
+          "type": "visitor",
+          "author": "aeo2040",
+          "content": "음식.분위기 좋아요\n혼자 와서 먹어도 괜찮아요",
+          "keywords": [
+            "바로 입장",
+            "일상",
+            "점심에 방문",
+            "지인・동료"
+          ],
+          "tags": [
+            "매장이 넓어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -1,
+          "sentiment_method": "keyword_threshold",
+          "id": "f5c274e9fc02657e"
+        },
+        {
+          "type": "visitor",
+          "author": "띠보미",
+          "content": "너무 맛잇어요!! 자주 올게요",
+          "keywords": [
+            "바로 입장",
+            "예약 없이 이용",
+            "친구",
+            "점심에 방문",
+            "친목"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA0MTRfNjIg/MDAxNzc2MTM2NDU2Mzgx.Iuz0SoGzrA226bHkMSisn1MqdvvYngfyqNSgZRABSdcg.ebIngXJFYToEqnDt5Qtzd3U2Odwe0W1g_pIEdULMFSgg.JPEG/351226B9-589F-440A-A732-76E3E0C6BB90.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": -4,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "58e826da8b7a32ba"
+        },
         {
           "type": "visitor",
           "author": "mkf****",
@@ -70457,18 +70965,45 @@
           "id": "a9dbaeab6dc1b3ae"
         }
       ],
-      "visitor_count": 598,
+      "visitor_count": 608,
       "blog_count": 21,
-      "meta_visitor_count": 843,
+      "meta_visitor_count": 852,
       "meta_blog_count": 50,
       "negative_count": 1,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:16:57.913107"
+      "crawled_at": "2026-04-15T11:14:44.885435"
     },
     {
       "store_name": "역대짬뽕 송탄점",
       "place_id": "1147851109",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "greenhouse45",
+          "content": "음식이 맛있어요.\n늘 친절하셔서 기분 좋게 먹고 갑니다 ~^^",
+          "keywords": [
+            "바로 입장",
+            "연인・배우자",
+            "예약 없이 이용",
+            "일상",
+            "점심에 방문"
+          ],
+          "tags": [
+            "음식이 맛있어요"
+          ],
+          "visit_date_raw": "4.14.화",
+          "visit_date": "2026-04-14",
+          "visit_info": [
+            "방문일\n4.14.화\n2026년 4월 14일 화요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": -7,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "7d9d27895762de72"
+        },
         {
           "type": "visitor",
           "author": "dbt****",
@@ -72662,13 +73197,13 @@
           "id": "88bed84fa1c96495"
         }
       ],
-      "visitor_count": 75,
+      "visitor_count": 76,
       "blog_count": 11,
-      "meta_visitor_count": 860,
+      "meta_visitor_count": 862,
       "meta_blog_count": 45,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:18:37.269488"
+      "crawled_at": "2026-04-15T11:16:23.050212"
     },
     {
       "store_name": "역대짬뽕 여수국동점",
@@ -73109,32 +73644,32 @@
       "meta_blog_count": 0,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-04-14T11:20:11.895798"
+      "crawled_at": "2026-04-15T11:17:59.758923"
     }
   ],
   "summary": {
     "total_stores": 9,
-    "total_visitor_reviews": 2420,
+    "total_visitor_reviews": 2440,
     "total_blog_reviews": 218,
-    "total_reviews": 2638,
+    "total_reviews": 2658,
     "total_negative": 83,
     "total_ai_analyzed": 0,
-    "new_visitor_reviews": 8,
+    "new_visitor_reviews": 20,
     "new_blog_reviews": 0,
-    "meta_total_visitor": 9659,
+    "meta_total_visitor": 9680,
     "meta_total_blog": 2554
   },
   "stats": {
-    "today": 0,
-    "yesterday": 11,
-    "this_week": 128,
-    "last_week": 164,
-    "this_month": 644,
-    "last_month": 588,
+    "today": 2,
+    "yesterday": 18,
+    "this_week": 132,
+    "last_week": 159,
+    "this_month": 636,
+    "last_month": 601,
     "total_negative": 83,
     "total_ai_analyzed": 0,
-    "daily_change": -100.0,
-    "weekly_change": -22.0,
-    "monthly_change": 9.5
+    "daily_change": -88.9,
+    "weekly_change": -17.0,
+    "monthly_change": 5.8
   }
 }
