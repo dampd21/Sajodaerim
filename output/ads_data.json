@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-20T07:16:43.087081",
+  "generated_at": "2026-05-20T15:51:17.394963",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -152,10 +152,10 @@
       "usePeriod": false,
       "dailyBudget": 30000,
       "useDailyBudget": true,
-      "totalChargeCost": 3324,
+      "totalChargeCost": 15961,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 395,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2023-01-30T04:43:18.000Z",
@@ -173,10 +173,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 873,
+      "totalChargeCost": 7163,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 231,
+      "expectCost": 295,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-07-13T04:08:56.000Z",
@@ -194,10 +194,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 33,
+      "totalChargeCost": 123,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 2,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-09-04T14:00:42.000Z",
@@ -215,7 +215,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 29,
+      "totalChargeCost": 106,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -278,10 +278,10 @@
       "usePeriod": false,
       "dailyBudget": 5000,
       "useDailyBudget": true,
-      "totalChargeCost": 69,
+      "totalChargeCost": 445,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 68,
+      "expectCost": 80,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-05-12T07:24:54.000Z",
@@ -341,10 +341,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 2022,
+      "totalChargeCost": 7670,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 84,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -362,10 +362,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 14590,
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 1541,
+      "totalChargeCost": 40187,
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
+      "expectCost": 528,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -856,7 +856,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 70,
+      "bidAmt": 120,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -868,7 +868,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-05-19T15:58:56.000Z",
+      "editTm": "2026-05-20T03:31:54.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -920,7 +920,7 @@
       "pcChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "PAUSED",
-      "statusReason": "BUSINESS_CHANNEL_DISAPPROVED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -964,7 +964,7 @@
       "pcChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "PAUSED",
-      "statusReason": "BUSINESS_CHANNEL_DISAPPROVED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -1008,7 +1008,7 @@
       "pcChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "PAUSED",
-      "statusReason": "BUSINESS_CHANNEL_DISAPPROVED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -1052,7 +1052,7 @@
       "pcChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "PAUSED",
-      "statusReason": "BUSINESS_CHANNEL_DISAPPROVED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -1096,7 +1096,7 @@
       "pcChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "PAUSED",
-      "statusReason": "BUSINESS_CHANNEL_DISAPPROVED",
+      "statusReason": "BUSINESS_CHANNEL_UNDER_REVIEW",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -1120,7 +1120,7 @@
       "nccCampaignId": "cmp-a001-06-000000006284418",
       "mobileChannelId": "bsn-a001-00-000000008049291",
       "pcChannelId": "bsn-a001-00-000000008049291",
-      "bidAmt": 100,
+      "bidAmt": 80,
       "name": "본점_광고그룹#가족,모임,회식_2",
       "userLock": false,
       "useDailyBudget": true,
@@ -1132,7 +1132,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2023-01-30T04:45:52.000Z",
-      "editTm": "2026-05-09T07:28:02.000Z",
+      "editTm": "2026-05-20T06:25:54.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "all"
@@ -1164,7 +1164,7 @@
       "nccCampaignId": "cmp-a001-06-000000006284418",
       "mobileChannelId": "bsn-a001-00-000000008049291",
       "pcChannelId": "bsn-a001-00-000000008049291",
-      "bidAmt": 100,
+      "bidAmt": 90,
       "name": "본점_광고그룹#가족,모임,회식",
       "userLock": false,
       "useDailyBudget": true,
@@ -1176,7 +1176,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2026-05-08T10:00:53.000Z",
-      "editTm": "2026-05-09T07:13:54.000Z",
+      "editTm": "2026-05-20T02:01:06.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "all"
@@ -1428,7 +1428,7 @@
       "nccCampaignId": "cmp-a001-06-000000006284418",
       "mobileChannelId": "bsn-a001-00-000000008049291",
       "pcChannelId": "bsn-a001-00-000000008049291",
-      "bidAmt": 300,
+      "bidAmt": 270,
       "name": "본점_광고그룹#갈만한곳,가볼만한곳,술집,핫플_2",
       "userLock": false,
       "useDailyBudget": true,
@@ -1440,7 +1440,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2026-05-09T07:28:15.000Z",
-      "editTm": "2026-05-11T02:56:47.000Z",
+      "editTm": "2026-05-20T02:01:06.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "all"
@@ -1472,7 +1472,7 @@
       "nccCampaignId": "cmp-a001-06-000000006284418",
       "mobileChannelId": "bsn-a001-00-000000008049291",
       "pcChannelId": "bsn-a001-00-000000008049291",
-      "bidAmt": 300,
+      "bidAmt": 270,
       "name": "본점_광고그룹#24시,식당,술집",
       "userLock": false,
       "useDailyBudget": true,
@@ -1484,7 +1484,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2026-05-09T07:30:36.000Z",
-      "editTm": "2026-05-09T07:31:03.000Z",
+      "editTm": "2026-05-20T02:01:07.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "all"
@@ -1537,7 +1537,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 612,
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1581,7 +1581,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 395,
+      "expectCost": 589,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1836,7 +1836,7 @@
       "mobileChannelKey": "1455516190",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 231,
+      "expectCost": 295,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1878,7 +1878,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 2,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
@@ -2168,7 +2168,7 @@
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 68,
+      "expectCost": 80,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 1
@@ -2416,7 +2416,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 84,
+      "expectCost": 318,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2500,9 +2500,9 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
+      "expectCost": 87,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2541,8 +2541,8 @@
       "targetSummary": {},
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 1,
       "migType": 0,
       "adgroupAttrJson": {
@@ -2586,9 +2586,9 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 87,
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
+      "expectCost": 315,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2620,7 +2620,7 @@
       "mobileNetworkBidWeight": 100,
       "pcNetworkBidWeight": 100,
       "dailyBudget": 30000,
-      "budgetLock": false,
+      "budgetLock": true,
       "delFlag": false,
       "regTm": "2026-05-01T09:35:32.000Z",
       "editTm": "2026-05-01T09:40:12.000Z",
@@ -2630,9 +2630,9 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 1541,
+      "status": "PAUSED",
+      "statusReason": "GROUP_LIMITED_BY_BUDGET",
+      "expectCost": 1396,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2674,9 +2674,9 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 112,
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
+      "expectCost": 118,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2718,8 +2718,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -2762,8 +2762,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -2806,8 +2806,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 55,
       "migType": 0,
       "adgroupAttrJson": {
@@ -2850,9 +2850,9 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
-      "expectCost": 469,
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
+      "expectCost": 480,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2938,8 +2938,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -2982,8 +2982,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
@@ -3026,8 +3026,8 @@
       },
       "pcChannelKey": "1726445983",
       "mobileChannelKey": "1726445983",
-      "status": "ELIGIBLE",
-      "statusReason": "ELIGIBLE",
+      "status": "PAUSED",
+      "statusReason": "CAMPAIGN_LIMITED_BY_BUDGET",
       "expectCost": 0,
       "migType": 0,
       "adgroupAttrJson": {
