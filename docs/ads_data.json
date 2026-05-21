@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T02:27:39.633358",
+  "generated_at": "2026-05-22T07:19:25.137000",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -152,10 +152,10 @@
       "usePeriod": false,
       "dailyBudget": 30000,
       "useDailyBudget": true,
-      "totalChargeCost": 1576,
+      "totalChargeCost": 3367,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 309,
+      "expectCost": 469,
       "migType": 0,
       "delFlag": false,
       "regTm": "2023-01-30T04:43:18.000Z",
@@ -173,10 +173,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 440,
+      "totalChargeCost": 969,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 363,
+      "expectCost": 227,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-07-13T04:08:56.000Z",
@@ -194,10 +194,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 16,
+      "totalChargeCost": 35,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 2,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-09-04T14:00:42.000Z",
@@ -341,7 +341,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 846,
+      "totalChargeCost": 1528,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -362,10 +362,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 11225,
+      "totalChargeCost": 13623,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 835,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -856,7 +856,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 120,
+      "bidAmt": 140,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -868,7 +868,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-05-21T15:59:00.000Z",
+      "editTm": "2026-05-21T19:30:29.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -1537,7 +1537,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 309,
+      "expectCost": 469,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1836,7 +1836,7 @@
       "mobileChannelKey": "1455516190",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 363,
+      "expectCost": 227,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1878,7 +1878,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1,
+      "expectCost": 2,
       "migType": 0,
       "adgroupAttrJson": {
         "biddingModel": "CPM",
@@ -2256,7 +2256,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 260,
+      "expectCost": 267,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2342,7 +2342,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 55,
+      "expectCost": 104,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2472,7 +2472,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 835,
+      "expectCost": 843,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2516,7 +2516,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 104,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -22770,6 +22770,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 5,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -22800,6 +22802,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 10,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -22830,6 +22834,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 7,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -22860,6 +22866,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 3,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -22890,6 +22898,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23190,6 +23200,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 3,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23250,6 +23262,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 7,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23310,6 +23324,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 8,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23400,6 +23416,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 8,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23430,6 +23448,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 6,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23640,6 +23660,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 9,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -23820,6 +23842,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -25740,6 +25764,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 6,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -28950,6 +28976,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -28980,6 +29008,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 7,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -29040,6 +29070,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 4,
+      "expectedClickScore": 8,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -29160,6 +29192,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 8,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -29370,6 +29404,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -29700,6 +29736,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 7,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -29820,6 +29858,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 8,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30120,6 +30160,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 7,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30210,6 +30252,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 5,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30480,6 +30524,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 3,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30540,6 +30586,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 5,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30600,6 +30648,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -30930,6 +30980,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -35040,6 +35092,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -35820,6 +35874,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -37380,6 +37436,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 3,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -37440,6 +37498,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 9,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -42720,6 +42780,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 1,
+      "expectedClickScore": 8,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -42840,6 +42902,8 @@
       "nccQi": {
         "qiGrade": 4
       },
+      "adRelevanceScore": 2,
+      "expectedClickScore": 10,
       "links": {
         "pc": {
           "final": "https://map.naver.com/p/entry/place/1542530224"
@@ -55969,8 +56033,8 @@
       "nccQi": {
         "qiGrade": 4
       },
-      "adRelevanceScore": 9,
-      "expectedClickScore": 7,
+      "adRelevanceScore": 8,
+      "expectedClickScore": 8,
       "attr": {},
       "campaignName": "두정점파워링크#1",
       "adgroupName": "두정점파워링크#1_광고그룹#1",
@@ -57467,7 +57531,7 @@
         "qiGrade": 4
       },
       "adRelevanceScore": 9,
-      "expectedClickScore": 9,
+      "expectedClickScore": 8,
       "attr": {},
       "campaignName": "두정점파워링크#1",
       "adgroupName": "두정점파워링크#1_광고그룹#1",
@@ -92162,8 +92226,8 @@
       "compIdx": "높음"
     },
     "프랜차이즈": {
-      "monthlyPcQcCnt": 4460,
-      "monthlyMobileQcCnt": 7760,
+      "monthlyPcQcCnt": 4360,
+      "monthlyMobileQcCnt": 7750,
       "compIdx": "높음"
     },
     "프렌차이즈창업": {
@@ -92192,8 +92256,8 @@
       "compIdx": "높음"
     },
     "프랜차이즈창업": {
-      "monthlyPcQcCnt": 1840,
-      "monthlyMobileQcCnt": 1230,
+      "monthlyPcQcCnt": 1880,
+      "monthlyMobileQcCnt": 1250,
       "compIdx": "높음"
     },
     "짬뽕창업": {
@@ -92267,7 +92331,7 @@
       "compIdx": "높음"
     },
     "외식프랜차이즈": {
-      "monthlyPcQcCnt": 180,
+      "monthlyPcQcCnt": 160,
       "monthlyMobileQcCnt": 140,
       "compIdx": "높음"
     },
@@ -92347,8 +92411,8 @@
       "compIdx": "높음"
     },
     "소자본창업": {
-      "monthlyPcQcCnt": 1500,
-      "monthlyMobileQcCnt": 3430,
+      "monthlyPcQcCnt": 1480,
+      "monthlyMobileQcCnt": 3370,
       "compIdx": "높음"
     },
     "창업설명회": {
@@ -92683,7 +92747,7 @@
     },
     "프랜차이즈사업": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 180,
+      "monthlyMobileQcCnt": 170,
       "compIdx": "높음"
     },
     "탕수육프랜차이즈": {
@@ -92718,7 +92782,7 @@
     },
     "창업컨설턴트": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 80,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "높음"
     },
     "창업종류": {
@@ -92733,12 +92797,12 @@
     },
     "창업대출": {
       "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 3290,
+      "monthlyMobileQcCnt": 3270,
       "compIdx": "높음"
     },
     "돈버는방법": {
-      "monthlyPcQcCnt": 930,
-      "monthlyMobileQcCnt": 4340,
+      "monthlyPcQcCnt": 920,
+      "monthlyMobileQcCnt": 4330,
       "compIdx": "높음"
     },
     "외식창업교육": {
@@ -92753,7 +92817,7 @@
     },
     "돈버는법": {
       "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 1330,
+      "monthlyMobileQcCnt": 1320,
       "compIdx": "높음"
     },
     "프렌차이즈창업비용": {
@@ -92852,7 +92916,7 @@
       "compIdx": "높음"
     },
     "소액투자": {
-      "monthlyPcQcCnt": 100,
+      "monthlyPcQcCnt": 90,
       "monthlyMobileQcCnt": 310,
       "compIdx": "높음"
     },
@@ -92868,7 +92932,7 @@
     },
     "여자창업": {
       "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 1700,
+      "monthlyMobileQcCnt": 1680,
       "compIdx": "높음"
     },
     "전수창업": {
@@ -92973,7 +93037,7 @@
     },
     "순두부창업": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "음식브랜드": {
@@ -92993,7 +93057,7 @@
     },
     "카레체인점": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 310,
+      "monthlyMobileQcCnt": 300,
       "compIdx": "높음"
     },
     "한국창업": {
@@ -93047,8 +93111,8 @@
       "compIdx": "높음"
     },
     "순두부찌개": {
-      "monthlyPcQcCnt": 5640,
-      "monthlyMobileQcCnt": 83100,
+      "monthlyPcQcCnt": 5610,
+      "monthlyMobileQcCnt": 82700,
       "compIdx": "높음"
     },
     "프랜차이즈회사": {
@@ -93062,8 +93126,8 @@
       "compIdx": "높음"
     },
     "소자본1인창업": {
-      "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 400,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 370,
       "compIdx": "높음"
     },
     "무인사업": {
@@ -93092,8 +93156,8 @@
       "compIdx": "높음"
     },
     "무인카페창업비용": {
-      "monthlyPcQcCnt": 510,
-      "monthlyMobileQcCnt": 2170,
+      "monthlyPcQcCnt": 500,
+      "monthlyMobileQcCnt": 2150,
       "compIdx": "높음"
     },
     "1인식당": {
@@ -93202,8 +93266,8 @@
       "compIdx": "높음"
     },
     "샤브올데이": {
-      "monthlyPcQcCnt": 43700,
-      "monthlyMobileQcCnt": 688300,
+      "monthlyPcQcCnt": 42600,
+      "monthlyMobileQcCnt": 684300,
       "compIdx": "중간"
     },
     "프랜차이즈컨설팅": {
@@ -93217,7 +93281,7 @@
       "compIdx": "높음"
     },
     "무인카페창업": {
-      "monthlyPcQcCnt": 350,
+      "monthlyPcQcCnt": 340,
       "monthlyMobileQcCnt": 590,
       "compIdx": "높음"
     },
@@ -93387,8 +93451,8 @@
       "compIdx": "높음"
     },
     "특수상권창업": {
-      "monthlyPcQcCnt": 370,
-      "monthlyMobileQcCnt": 470,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 480,
       "compIdx": "높음"
     },
     "올리브영창업": {
@@ -93397,7 +93461,7 @@
       "compIdx": "높음"
     },
     "샤브샤브무한리필": {
-      "monthlyPcQcCnt": 1580,
+      "monthlyPcQcCnt": 1550,
       "monthlyMobileQcCnt": 31200,
       "compIdx": "높음"
     },
@@ -93417,8 +93481,8 @@
       "compIdx": "높음"
     },
     "1인샤브샤브": {
-      "monthlyPcQcCnt": 570,
-      "monthlyMobileQcCnt": 7100,
+      "monthlyPcQcCnt": 560,
+      "monthlyMobileQcCnt": 7110,
       "compIdx": "높음"
     },
     "소고기체인점": {
@@ -93437,8 +93501,8 @@
       "compIdx": "높음"
     },
     "돼지고기김치찌개": {
-      "monthlyPcQcCnt": 2540,
-      "monthlyMobileQcCnt": 64800,
+      "monthlyPcQcCnt": 2490,
+      "monthlyMobileQcCnt": 64500,
       "compIdx": "높음"
     },
     "외식경영컨설팅": {
@@ -93637,7 +93701,7 @@
       "compIdx": "높음"
     },
     "라멘창업": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 120,
       "compIdx": "높음"
     },
@@ -93737,8 +93801,8 @@
       "compIdx": "높음"
     },
     "라멘맛집": {
-      "monthlyPcQcCnt": 880,
-      "monthlyMobileQcCnt": 13900,
+      "monthlyPcQcCnt": 890,
+      "monthlyMobileQcCnt": 14000,
       "compIdx": "높음"
     },
     "BAPULIX": {
@@ -93958,7 +94022,7 @@
     },
     "식당주방인테리어": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 210,
+      "monthlyMobileQcCnt": 200,
       "compIdx": "높음"
     },
     "사업추천": {
@@ -94023,7 +94087,7 @@
     },
     "프랜차이즈가맹점": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 100,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "뜨는프렌차이즈": {
@@ -94257,7 +94321,7 @@
       "compIdx": "중간"
     },
     "중년창업": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
@@ -94352,7 +94416,7 @@
       "compIdx": "높음"
     },
     "예비창업자": {
-      "monthlyPcQcCnt": 80,
+      "monthlyPcQcCnt": 90,
       "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
@@ -94367,7 +94431,7 @@
       "compIdx": "높음"
     },
     "낙지체인점": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
@@ -94383,7 +94447,7 @@
     },
     "만두체인점": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 100,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "베이글창업": {
@@ -94418,7 +94482,7 @@
     },
     "외식산업": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 90,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
     "음식컨설팅": {
@@ -94433,7 +94497,7 @@
     },
     "한식뷔페창업": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "텐동프랜차이즈": {
@@ -94463,12 +94527,12 @@
     },
     "사진관창업": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 130,
+      "monthlyMobileQcCnt": 140,
       "compIdx": "높음"
     },
     "1인사업": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 190,
+      "monthlyMobileQcCnt": 180,
       "compIdx": "높음"
     },
     "창업방법": {
@@ -94508,7 +94572,7 @@
     },
     "꽈배기창업": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 220,
+      "monthlyMobileQcCnt": 240,
       "compIdx": "높음"
     },
     "타코비창업": {
@@ -94623,7 +94687,7 @@
     },
     "투잡창업": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 70,
+      "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
     "의류창업": {
@@ -94632,8 +94696,8 @@
       "compIdx": "높음"
     },
     "창업교육": {
-      "monthlyPcQcCnt": 260,
-      "monthlyMobileQcCnt": 260,
+      "monthlyPcQcCnt": 250,
+      "monthlyMobileQcCnt": 250,
       "compIdx": "높음"
     },
     "떡카페창업": {
@@ -94788,7 +94852,7 @@
     },
     "스끼야끼": {
       "monthlyPcQcCnt": 930,
-      "monthlyMobileQcCnt": 8320,
+      "monthlyMobileQcCnt": 8290,
       "compIdx": "높음"
     },
     "음식점창업비용": {
@@ -94842,8 +94906,8 @@
       "compIdx": "높음"
     },
     "프랜차이즈창업박람회": {
-      "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 550,
+      "monthlyPcQcCnt": 410,
+      "monthlyMobileQcCnt": 540,
       "compIdx": "높음"
     },
     "정육식당창업": {
@@ -95087,8 +95151,8 @@
       "compIdx": "높음"
     },
     "카레전문점": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 520,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 500,
       "compIdx": "높음"
     },
     "타코창업": {
@@ -95538,7 +95602,7 @@
     },
     "수익성": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 150,
       "compIdx": "중간"
     },
     "가든식당매매": {
@@ -95663,7 +95727,7 @@
     },
     "푸드트럭비용": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 520,
+      "monthlyMobileQcCnt": 530,
       "compIdx": "높음"
     },
     "해산물창업": {
@@ -95792,8 +95856,8 @@
       "compIdx": "높음"
     },
     "샤브샤브창업": {
-      "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 100,
+      "monthlyPcQcCnt": 120,
+      "monthlyMobileQcCnt": 90,
       "compIdx": "높음"
     },
     "프랜차이즈리스트": {
@@ -95842,8 +95906,8 @@
       "compIdx": "높음"
     },
     "체인": {
-      "monthlyPcQcCnt": 1660,
-      "monthlyMobileQcCnt": 3810,
+      "monthlyPcQcCnt": 1680,
+      "monthlyMobileQcCnt": 3780,
       "compIdx": "중간"
     },
     "해장국집창업": {
@@ -95852,7 +95916,7 @@
       "compIdx": "낮음"
     },
     "프랜차이즈창업비용": {
-      "monthlyPcQcCnt": 80,
+      "monthlyPcQcCnt": 90,
       "monthlyMobileQcCnt": 190,
       "compIdx": "높음"
     },
@@ -95962,8 +96026,8 @@
       "compIdx": "높음"
     },
     "청년사업": {
-      "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 470,
+      "monthlyPcQcCnt": 260,
+      "monthlyMobileQcCnt": 450,
       "compIdx": "높음"
     },
     "분식프랜차이즈": {
@@ -96308,7 +96372,7 @@
     },
     "애견사업": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 70,
+      "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
     "애견샵창업": {
@@ -97153,7 +97217,7 @@
     },
     "여성창업대출": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 780,
+      "monthlyMobileQcCnt": 800,
       "compIdx": "높음"
     },
     "아라치": {
@@ -97308,7 +97372,7 @@
     },
     "1억재테크": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 80,
+      "monthlyMobileQcCnt": 90,
       "compIdx": "높음"
     },
     "돈되는부업": {
@@ -97472,7 +97536,7 @@
       "compIdx": "높음"
     },
     "닭칼국수": {
-      "monthlyPcQcCnt": 2100,
+      "monthlyPcQcCnt": 2110,
       "monthlyMobileQcCnt": 23200,
       "compIdx": "높음"
     },
@@ -97928,12 +97992,12 @@
     },
     "아구찜창업": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "높음"
     },
     "아이엠웹": {
       "monthlyPcQcCnt": 410,
-      "monthlyMobileQcCnt": 160,
+      "monthlyMobileQcCnt": 150,
       "compIdx": "높음"
     },
     "만두프랜차이즈": {
@@ -97947,8 +98011,8 @@
       "compIdx": "높음"
     },
     "무료홈페이지": {
-      "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 630,
+      "monthlyPcQcCnt": 860,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "무료홈페이지제작": {
@@ -97968,7 +98032,7 @@
     },
     "피자샵인샵": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "햄버거샵인샵": {
@@ -97992,8 +98056,8 @@
       "compIdx": "높음"
     },
     "홈페이지": {
-      "monthlyPcQcCnt": 4500,
-      "monthlyMobileQcCnt": 4360,
+      "monthlyPcQcCnt": 4490,
+      "monthlyMobileQcCnt": 4340,
       "compIdx": "높음"
     },
     "샌드위치전문점": {
@@ -98057,7 +98121,7 @@
       "compIdx": "높음"
     },
     "블로그꾸미기": {
-      "monthlyPcQcCnt": 2340,
+      "monthlyPcQcCnt": 2320,
       "monthlyMobileQcCnt": 1530,
       "compIdx": "높음"
     },
@@ -98072,8 +98136,8 @@
       "compIdx": "높음"
     },
     "블로그": {
-      "monthlyPcQcCnt": 32100,
-      "monthlyMobileQcCnt": 164100,
+      "monthlyPcQcCnt": 32000,
+      "monthlyMobileQcCnt": 163600,
       "compIdx": "높음"
     },
     "쇼핑몰": {
@@ -98097,7 +98161,7 @@
       "compIdx": "높음"
     },
     "커피창업": {
-      "monthlyPcQcCnt": 210,
+      "monthlyPcQcCnt": 200,
       "monthlyMobileQcCnt": 340,
       "compIdx": "높음"
     },
@@ -98112,7 +98176,7 @@
       "compIdx": "높음"
     },
     "치킨창업": {
-      "monthlyPcQcCnt": 1250,
+      "monthlyPcQcCnt": 1240,
       "monthlyMobileQcCnt": 440,
       "compIdx": "높음"
     },
@@ -98138,7 +98202,7 @@
     },
     "무료홈페이지사이트": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "편의점매매": {
@@ -98298,7 +98362,7 @@
     },
     "프랜차이즈매출순위": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "카페가맹점": {
@@ -98317,8 +98381,8 @@
       "compIdx": "높음"
     },
     "무자본창업": {
-      "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 670,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 650,
       "compIdx": "높음"
     },
     "서울창업박람회": {
@@ -98407,8 +98471,8 @@
       "compIdx": "높음"
     },
     "프랜차이즈카페창업": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 560,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 580,
       "compIdx": "높음"
     },
     "카페프랜차이즈": {
@@ -98423,7 +98487,7 @@
     },
     "시니어창업": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 410,
+      "monthlyMobileQcCnt": 420,
       "compIdx": "높음"
     },
     "수원창업박람회": {
@@ -98463,7 +98527,7 @@
     },
     "2030청년창업": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "창업컨설팅비용": {
@@ -98512,7 +98576,7 @@
       "compIdx": "중간"
     },
     "창업컨설팅업체": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
@@ -98582,8 +98646,8 @@
       "compIdx": "높음"
     },
     "카페창업비용": {
-      "monthlyPcQcCnt": 550,
-      "monthlyMobileQcCnt": 2060,
+      "monthlyPcQcCnt": 540,
+      "monthlyMobileQcCnt": 2030,
       "compIdx": "높음"
     },
     "프랜차이즈창업박람회SETEC": {
@@ -98613,7 +98677,7 @@
     },
     "창업모집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "커피체인점": {
@@ -98692,7 +98756,7 @@
       "compIdx": "높음"
     },
     "프랜차이즈인테리어": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 80,
       "monthlyMobileQcCnt": 40,
       "compIdx": "높음"
     },
@@ -98752,8 +98816,8 @@
       "compIdx": "높음"
     },
     "1인기업": {
-      "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 270,
+      "monthlyPcQcCnt": 200,
+      "monthlyMobileQcCnt": 260,
       "compIdx": "높음"
     },
     "커피프렌차이즈창업": {
@@ -98973,7 +99037,7 @@
     },
     "무인매장창업": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 320,
+      "monthlyMobileQcCnt": 310,
       "compIdx": "높음"
     },
     "햄버거창업": {
@@ -98988,7 +99052,7 @@
     },
     "베이커리카페창업": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 110,
+      "monthlyMobileQcCnt": 120,
       "compIdx": "높음"
     },
     "코인세탁창업": {
@@ -99052,8 +99116,8 @@
       "compIdx": "높음"
     },
     "빨래": {
-      "monthlyPcQcCnt": 1800,
-      "monthlyMobileQcCnt": 10800,
+      "monthlyPcQcCnt": 1830,
+      "monthlyMobileQcCnt": 10900,
       "compIdx": "높음"
     },
     "빨래방가격": {
@@ -99288,11 +99352,11 @@
     },
     "코인노래방인테리어": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 70,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
     "코인노래연습장": {
-      "monthlyPcQcCnt": 40,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 900,
       "compIdx": "높음"
     },
@@ -99367,8 +99431,8 @@
       "compIdx": "높음"
     },
     "코인노래방": {
-      "monthlyPcQcCnt": 3660,
-      "monthlyMobileQcCnt": 156700,
+      "monthlyPcQcCnt": 3650,
+      "monthlyMobileQcCnt": 156900,
       "compIdx": "높음"
     },
     "개인커피숍창업비용": {
@@ -99547,8 +99611,8 @@
       "compIdx": "높음"
     },
     "온라인사업": {
-      "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 340,
+      "monthlyPcQcCnt": 110,
+      "monthlyMobileQcCnt": 330,
       "compIdx": "높음"
     },
     "카페테이크아웃": {
@@ -99762,7 +99826,7 @@
       "compIdx": "높음"
     },
     "서울창업지원센터": {
-      "monthlyPcQcCnt": 70,
+      "monthlyPcQcCnt": 80,
       "monthlyMobileQcCnt": 120,
       "compIdx": "높음"
     },
@@ -99847,7 +99911,7 @@
       "compIdx": "높음"
     },
     "경기창업": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 10,
       "compIdx": "중간"
     },
@@ -99912,7 +99976,7 @@
       "compIdx": "높음"
     },
     "은퇴후창업": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
@@ -99967,8 +100031,8 @@
       "compIdx": "높음"
     },
     "런드리": {
-      "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 1480,
+      "monthlyPcQcCnt": 320,
+      "monthlyMobileQcCnt": 1490,
       "compIdx": "중간"
     },
     "무인가게창업": {
@@ -100008,12 +100072,12 @@
     },
     "빨래방카페": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "세탁방": {
       "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 6050,
+      "monthlyMobileQcCnt": 6090,
       "compIdx": "높음"
     },
     "세탁방건조기": {
@@ -100028,12 +100092,12 @@
     },
     "셀프세탁": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 620,
+      "monthlyMobileQcCnt": 630,
       "compIdx": "높음"
     },
     "셀프세탁방": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 2260,
+      "monthlyMobileQcCnt": 2300,
       "compIdx": "높음"
     },
     "셀프세탁방창업": {
@@ -100048,12 +100112,12 @@
     },
     "신발빨래": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 1520,
+      "monthlyMobileQcCnt": 1570,
       "compIdx": "높음"
     },
     "이불세탁기": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 270,
+      "monthlyMobileQcCnt": 260,
       "compIdx": "중간"
     },
     "코인세탁기가격": {
@@ -100212,12 +100276,12 @@
       "compIdx": "높음"
     },
     "CAFE": {
-      "monthlyPcQcCnt": 1190,
-      "monthlyMobileQcCnt": 3920,
+      "monthlyPcQcCnt": 1170,
+      "monthlyMobileQcCnt": 3890,
       "compIdx": "높음"
     },
     "까페": {
-      "monthlyPcQcCnt": 990,
+      "monthlyPcQcCnt": 980,
       "monthlyMobileQcCnt": 34800,
       "compIdx": "높음"
     },
@@ -100308,7 +100372,7 @@
     },
     "필라테스프랜차이즈": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "개인카페매매": {
@@ -100377,7 +100441,7 @@
       "compIdx": "높음"
     },
     "위탁운영": {
-      "monthlyPcQcCnt": 160,
+      "monthlyPcQcCnt": 150,
       "monthlyMobileQcCnt": 170,
       "compIdx": "높음"
     },
@@ -100503,7 +100567,7 @@
     },
     "기술창업": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 160,
+      "monthlyMobileQcCnt": 150,
       "compIdx": "높음"
     },
     "피시방프랜차이즈": {
@@ -100517,7 +100581,7 @@
       "compIdx": "높음"
     },
     "프랜차이즈PC방": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
@@ -100547,8 +100611,8 @@
       "compIdx": "높음"
     },
     "상가임대": {
-      "monthlyPcQcCnt": 1930,
-      "monthlyMobileQcCnt": 8900,
+      "monthlyPcQcCnt": 1910,
+      "monthlyMobileQcCnt": 8820,
       "compIdx": "높음"
     },
     "업소용건조기": {
@@ -100558,12 +100622,12 @@
     },
     "편의점창업비용": {
       "monthlyPcQcCnt": 700,
-      "monthlyMobileQcCnt": 3660,
+      "monthlyMobileQcCnt": 3610,
       "compIdx": "높음"
     },
     "상가매매": {
-      "monthlyPcQcCnt": 1140,
-      "monthlyMobileQcCnt": 5360,
+      "monthlyPcQcCnt": 1130,
+      "monthlyMobileQcCnt": 5340,
       "compIdx": "높음"
     },
     "업소용세탁기": {
@@ -100602,8 +100666,8 @@
       "compIdx": "높음"
     },
     "세탁기": {
-      "monthlyPcQcCnt": 20900,
-      "monthlyMobileQcCnt": 64700,
+      "monthlyPcQcCnt": 20700,
+      "monthlyMobileQcCnt": 64400,
       "compIdx": "높음"
     },
     "싱크대수리": {
@@ -100612,8 +100676,8 @@
       "compIdx": "높음"
     },
     "상가임대사이트": {
-      "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 350,
+      "monthlyPcQcCnt": 270,
+      "monthlyMobileQcCnt": 340,
       "compIdx": "높음"
     },
     "이색창업": {
@@ -100657,7 +100721,7 @@
       "compIdx": "높음"
     },
     "부동산상가": {
-      "monthlyPcQcCnt": 350,
+      "monthlyPcQcCnt": 340,
       "monthlyMobileQcCnt": 1500,
       "compIdx": "높음"
     },
@@ -100682,7 +100746,7 @@
       "compIdx": "높음"
     },
     "메가커피창업": {
-      "monthlyPcQcCnt": 980,
+      "monthlyPcQcCnt": 970,
       "monthlyMobileQcCnt": 2060,
       "compIdx": "높음"
     },
@@ -100737,8 +100801,8 @@
       "compIdx": "높음"
     },
     "부산맛집추천": {
-      "monthlyPcQcCnt": 1030,
-      "monthlyMobileQcCnt": 8340,
+      "monthlyPcQcCnt": 1040,
+      "monthlyMobileQcCnt": 8330,
       "compIdx": "높음"
     },
     "소자본창업추천": {
@@ -100818,7 +100882,7 @@
     },
     "2천만원투자": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "높음"
     },
     "3천만원투자": {
@@ -101057,8 +101121,8 @@
       "compIdx": "높음"
     },
     "공간대여": {
-      "monthlyPcQcCnt": 2230,
-      "monthlyMobileQcCnt": 6600,
+      "monthlyPcQcCnt": 2200,
+      "monthlyMobileQcCnt": 6610,
       "compIdx": "높음"
     },
     "본우리반상": {
@@ -101073,7 +101137,7 @@
     },
     "사업아이디어": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "공유창고창업": {
@@ -101397,7 +101461,7 @@
       "compIdx": "높음"
     },
     "학교매점": {
-      "monthlyPcQcCnt": 80,
+      "monthlyPcQcCnt": 90,
       "monthlyMobileQcCnt": 270,
       "compIdx": "중간"
     },
@@ -101512,8 +101576,8 @@
       "compIdx": "높음"
     },
     "솥밥": {
-      "monthlyPcQcCnt": 4200,
-      "monthlyMobileQcCnt": 40100,
+      "monthlyPcQcCnt": 4170,
+      "monthlyMobileQcCnt": 40000,
       "compIdx": "높음"
     },
     "권리금없는상가": {
@@ -101533,7 +101597,7 @@
     },
     "옷가게창업": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 340,
+      "monthlyMobileQcCnt": 330,
       "compIdx": "높음"
     },
     "뜨는장사": {
@@ -101702,7 +101766,7 @@
       "compIdx": "높음"
     },
     "에스테틱창업": {
-      "monthlyPcQcCnt": 50,
+      "monthlyPcQcCnt": 60,
       "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
@@ -101717,7 +101781,7 @@
       "compIdx": "높음"
     },
     "강남역상가임대": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
@@ -101742,8 +101806,8 @@
       "compIdx": "높음"
     },
     "마포구상가": {
-      "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 60,
+      "monthlyPcQcCnt": 30,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "중간"
     },
     "상가건물임대": {
@@ -101773,7 +101837,7 @@
     },
     "신천역상가": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyMobileQcCnt": 5,
       "compIdx": "높음"
     },
     "신축상가": {
@@ -101787,12 +101851,12 @@
       "compIdx": "낮음"
     },
     "압구정상가": {
-      "monthlyPcQcCnt": 50,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
     "역삼동상가": {
-      "monthlyPcQcCnt": 40,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
@@ -101803,7 +101867,7 @@
     },
     "잠실주공5단지상가": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
     "청담동상가": {
@@ -101828,7 +101892,7 @@
     },
     "2층상가": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
     "점포중개": {
@@ -102047,13 +102111,13 @@
       "compIdx": "높음"
     },
     "백화점입점": {
-      "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 70,
+      "monthlyPcQcCnt": 40,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
     "멀티방": {
       "monthlyPcQcCnt": 540,
-      "monthlyMobileQcCnt": 5250,
+      "monthlyMobileQcCnt": 5280,
       "compIdx": "중간"
     },
     "베이비카페창업": {
@@ -102078,7 +102142,7 @@
     },
     "네일샵임대": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
     "특수상권매매": {
@@ -102183,7 +102247,7 @@
     },
     "푸드트럭매매": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 110,
+      "monthlyMobileQcCnt": 120,
       "compIdx": "중간"
     },
     "상가점포": {
@@ -102233,11 +102297,11 @@
     },
     "수수료매장": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
     "의류브랜드창업": {
-      "monthlyPcQcCnt": 50,
+      "monthlyPcQcCnt": 60,
       "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
@@ -102767,7 +102831,7 @@
       "compIdx": "낮음"
     },
     "국대찜닭": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 320,
       "compIdx": "중간"
     },
@@ -102948,7 +103012,7 @@
     },
     "푸드코트": {
       "monthlyPcQcCnt": 480,
-      "monthlyMobileQcCnt": 2090,
+      "monthlyMobileQcCnt": 2070,
       "compIdx": "높음"
     },
     "얼짱몸짱": {
@@ -103288,7 +103352,7 @@
     },
     "피부샵": {
       "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 3080,
+      "monthlyMobileQcCnt": 3070,
       "compIdx": "높음"
     },
     "피부샵매매": {
@@ -103923,7 +103987,7 @@
     },
     "프랜차이즈술집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 190,
+      "monthlyMobileQcCnt": 200,
       "compIdx": "높음"
     },
     "바베큐치킨": {
@@ -104287,7 +104351,7 @@
       "compIdx": "중간"
     },
     "치킨메뉴": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 70,
       "monthlyMobileQcCnt": 300,
       "compIdx": "높음"
     },
@@ -104322,8 +104386,8 @@
       "compIdx": "높음"
     },
     "초밥맛집": {
-      "monthlyPcQcCnt": 1280,
-      "monthlyMobileQcCnt": 28400,
+      "monthlyPcQcCnt": 1290,
+      "monthlyMobileQcCnt": 28200,
       "compIdx": "높음"
     },
     "굽네치킨창업비용": {
@@ -104493,7 +104557,7 @@
     },
     "소상공인창업지원금": {
       "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 820,
+      "monthlyMobileQcCnt": 810,
       "compIdx": "높음"
     },
     "쇼핑몰홈페이지제작": {
@@ -104503,11 +104567,11 @@
     },
     "에어컨청소학원": {
       "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 790,
+      "monthlyMobileQcCnt": 800,
       "compIdx": "높음"
     },
     "중식학원": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 80,
       "compIdx": "높음"
     },
@@ -104572,7 +104636,7 @@
       "compIdx": "중간"
     },
     "굽네치킨창업": {
-      "monthlyPcQcCnt": 40,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
@@ -104813,7 +104877,7 @@
     },
     "온라인쇼핑몰창업": {
       "monthlyPcQcCnt": 370,
-      "monthlyMobileQcCnt": 840,
+      "monthlyMobileQcCnt": 820,
       "compIdx": "높음"
     },
     "초밥24": {
@@ -105007,7 +105071,7 @@
       "compIdx": "높음"
     },
     "묵은지김치찌개": {
-      "monthlyPcQcCnt": 150,
+      "monthlyPcQcCnt": 160,
       "monthlyMobileQcCnt": 2150,
       "compIdx": "높음"
     },
@@ -105107,7 +105171,7 @@
       "compIdx": "중간"
     },
     "찌개": {
-      "monthlyPcQcCnt": 2280,
+      "monthlyPcQcCnt": 2250,
       "monthlyMobileQcCnt": 12600,
       "compIdx": "중간"
     },
@@ -105172,8 +105236,8 @@
       "compIdx": "높음"
     },
     "한식": {
-      "monthlyPcQcCnt": 3810,
-      "monthlyMobileQcCnt": 40800,
+      "monthlyPcQcCnt": 3760,
+      "monthlyMobileQcCnt": 40600,
       "compIdx": "중간"
     },
     "회체인점": {
@@ -105332,7 +105396,7 @@
       "compIdx": "높음"
     },
     "횟집인테리어": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
@@ -105423,7 +105487,7 @@
     },
     "육개장맛집": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 2860,
+      "monthlyMobileQcCnt": 2970,
       "compIdx": "높음"
     },
     "맛집마케팅": {
@@ -105442,8 +105506,8 @@
       "compIdx": "높음"
     },
     "횟집": {
-      "monthlyPcQcCnt": 5010,
-      "monthlyMobileQcCnt": 113300,
+      "monthlyPcQcCnt": 4970,
+      "monthlyMobileQcCnt": 113200,
       "compIdx": "중간"
     },
     "회집": {
@@ -105513,7 +105577,7 @@
     },
     "애니골맛집": {
       "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 7850,
+      "monthlyMobileQcCnt": 7820,
       "compIdx": "중간"
     },
     "야당초밥집": {
@@ -105533,7 +105597,7 @@
     },
     "일산풍동맛집": {
       "monthlyPcQcCnt": 200,
-      "monthlyMobileQcCnt": 2180,
+      "monthlyMobileQcCnt": 2220,
       "compIdx": "중간"
     },
     "파주오야스미": {
@@ -105637,8 +105701,8 @@
       "compIdx": "중간"
     },
     "60대취업": {
-      "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 210,
+      "monthlyPcQcCnt": 80,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "높음"
     },
     "오코노미야끼": {
@@ -105778,7 +105842,7 @@
     },
     "숯불구이": {
       "monthlyPcQcCnt": 320,
-      "monthlyMobileQcCnt": 2740,
+      "monthlyMobileQcCnt": 2750,
       "compIdx": "높음"
     },
     "참치전문점": {
@@ -105792,8 +105856,8 @@
       "compIdx": "높음"
     },
     "콩나물국밥": {
-      "monthlyPcQcCnt": 4230,
-      "monthlyMobileQcCnt": 96000,
+      "monthlyPcQcCnt": 4250,
+      "monthlyMobileQcCnt": 96100,
       "compIdx": "중간"
     },
     "육초참치": {
@@ -106118,12 +106182,12 @@
     },
     "곰탕맛집": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 2220,
+      "monthlyMobileQcCnt": 2230,
       "compIdx": "높음"
     },
     "소상공인창업지원": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "입점문의": {
@@ -106212,8 +106276,8 @@
       "compIdx": "높음"
     },
     "연어초밥": {
-      "monthlyPcQcCnt": 790,
-      "monthlyMobileQcCnt": 6980,
+      "monthlyPcQcCnt": 810,
+      "monthlyMobileQcCnt": 7000,
       "compIdx": "중간"
     },
     "포장배달전문점": {
@@ -106222,7 +106286,7 @@
       "compIdx": "중간"
     },
     "육회배달": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 200,
       "compIdx": "중간"
     },
@@ -106328,7 +106392,7 @@
     },
     "실내포차인테리어": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "해산물프랜차이즈": {
@@ -106507,12 +106571,12 @@
       "compIdx": "높음"
     },
     "이자카야프렌차이즈": {
-      "monthlyPcQcCnt": 5,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "돈까스샵인샵": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
@@ -106543,7 +106607,7 @@
     },
     "중장년일자리": {
       "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 610,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "소자본소규모창업": {
@@ -106678,7 +106742,7 @@
     },
     "투다리창업비용": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 420,
+      "monthlyMobileQcCnt": 410,
       "compIdx": "높음"
     },
     "소자본술집": {
@@ -106763,7 +106827,7 @@
     },
     "민생시장": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 80,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "낮음"
     },
     "양식프랜차이즈": {
@@ -106783,7 +106847,7 @@
     },
     "덮밥집": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 2210,
+      "monthlyMobileQcCnt": 2200,
       "compIdx": "높음"
     },
     "생맥주1900": {
@@ -106813,7 +106877,7 @@
     },
     "구매대행창업": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "생맥주1900원": {
@@ -106823,7 +106887,7 @@
     },
     "호떡창업": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "삼계탕체인점": {
@@ -106838,7 +106902,7 @@
     },
     "포장마차체인점": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyMobileQcCnt": 5,
       "compIdx": "낮음"
     },
     "포차체인": {
@@ -106987,12 +107051,12 @@
       "compIdx": "높음"
     },
     "스테이크맛집": {
-      "monthlyPcQcCnt": 1050,
-      "monthlyMobileQcCnt": 15500,
+      "monthlyPcQcCnt": 1040,
+      "monthlyMobileQcCnt": 15400,
       "compIdx": "높음"
     },
     "파스타맛집": {
-      "monthlyPcQcCnt": 1170,
+      "monthlyPcQcCnt": 1190,
       "monthlyMobileQcCnt": 32300,
       "compIdx": "높음"
     },
@@ -107037,8 +107101,8 @@
       "compIdx": "낮음"
     },
     "파스타를부탁해": {
-      "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 90,
+      "monthlyPcQcCnt": 10,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "낮음"
     },
     "프랜차이즈파스타": {
@@ -107252,7 +107316,7 @@
       "compIdx": "중간"
     },
     "파스타도식사다": {
-      "monthlyPcQcCnt": 70,
+      "monthlyPcQcCnt": 60,
       "monthlyMobileQcCnt": 710,
       "compIdx": "낮음"
     },
@@ -107297,7 +107361,7 @@
       "compIdx": "높음"
     },
     "레스토랑": {
-      "monthlyPcQcCnt": 1650,
+      "monthlyPcQcCnt": 1640,
       "monthlyMobileQcCnt": 13000,
       "compIdx": "중간"
     },
@@ -107578,7 +107642,7 @@
     },
     "쿠키브랜드": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "화덕피자전문점": {
@@ -107628,7 +107692,7 @@
     },
     "떡만두국": {
       "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 3380,
+      "monthlyMobileQcCnt": 3390,
       "compIdx": "높음"
     },
     "막국수가격": {
@@ -107642,23 +107706,23 @@
       "compIdx": "높음"
     },
     "만두국": {
-      "monthlyPcQcCnt": 1090,
-      "monthlyMobileQcCnt": 8610,
+      "monthlyPcQcCnt": 1080,
+      "monthlyMobileQcCnt": 8630,
       "compIdx": "높음"
     },
     "멸치국수맛집": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 370,
       "compIdx": "높음"
     },
     "비빔국수레시피": {
       "monthlyPcQcCnt": 1900,
-      "monthlyMobileQcCnt": 35800,
+      "monthlyMobileQcCnt": 35700,
       "compIdx": "높음"
     },
     "소바맛집": {
-      "monthlyPcQcCnt": 200,
-      "monthlyMobileQcCnt": 3620,
+      "monthlyPcQcCnt": 190,
+      "monthlyMobileQcCnt": 3600,
       "compIdx": "높음"
     },
     "수제비": {
@@ -107667,13 +107731,13 @@
       "compIdx": "중간"
     },
     "제육볶음레시피": {
-      "monthlyPcQcCnt": 6140,
-      "monthlyMobileQcCnt": 135800,
+      "monthlyPcQcCnt": 6120,
+      "monthlyMobileQcCnt": 135200,
       "compIdx": "높음"
     },
     "제육볶음맛집": {
       "monthlyPcQcCnt": 260,
-      "monthlyMobileQcCnt": 4640,
+      "monthlyMobileQcCnt": 4630,
       "compIdx": "높음"
     },
     "콩국수": {
@@ -107687,13 +107751,13 @@
       "compIdx": "중간"
     },
     "강남역술집": {
-      "monthlyPcQcCnt": 1730,
-      "monthlyMobileQcCnt": 12400,
+      "monthlyPcQcCnt": 1750,
+      "monthlyMobileQcCnt": 12600,
       "compIdx": "높음"
     },
     "공덕술집": {
       "monthlyPcQcCnt": 290,
-      "monthlyMobileQcCnt": 1400,
+      "monthlyMobileQcCnt": 1410,
       "compIdx": "중간"
     },
     "답십리술집": {
@@ -107788,12 +107852,12 @@
     },
     "제육덮밥": {
       "monthlyPcQcCnt": 620,
-      "monthlyMobileQcCnt": 4030,
+      "monthlyMobileQcCnt": 3990,
       "compIdx": "중간"
     },
     "문래동술집": {
       "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1330,
+      "monthlyMobileQcCnt": 1340,
       "compIdx": "높음"
     },
     "EDIYA": {
@@ -107812,8 +107876,8 @@
       "compIdx": "높음"
     },
     "이태원술집": {
-      "monthlyPcQcCnt": 1280,
-      "monthlyMobileQcCnt": 14600,
+      "monthlyPcQcCnt": 1270,
+      "monthlyMobileQcCnt": 14700,
       "compIdx": "중간"
     },
     "쪽갈비창업": {
@@ -107893,7 +107957,7 @@
     },
     "아랑경양회관": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 160,
+      "monthlyMobileQcCnt": 170,
       "compIdx": "낮음"
     },
     "부평술집": {
@@ -107933,12 +107997,12 @@
     },
     "제육정식": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 330,
+      "monthlyMobileQcCnt": 320,
       "compIdx": "높음"
     },
     "성수술집": {
-      "monthlyPcQcCnt": 1290,
-      "monthlyMobileQcCnt": 7060,
+      "monthlyPcQcCnt": 1260,
+      "monthlyMobileQcCnt": 7030,
       "compIdx": "높음"
     },
     "쪽갈비체인점": {
@@ -108032,8 +108096,8 @@
       "compIdx": "높음"
     },
     "들깨칼국수": {
-      "monthlyPcQcCnt": 690,
-      "monthlyMobileQcCnt": 9040,
+      "monthlyPcQcCnt": 700,
+      "monthlyMobileQcCnt": 9070,
       "compIdx": "높음"
     },
     "돈까스가맹점": {
@@ -108058,7 +108122,7 @@
     },
     "치즈돈까스": {
       "monthlyPcQcCnt": 490,
-      "monthlyMobileQcCnt": 3780,
+      "monthlyMobileQcCnt": 3750,
       "compIdx": "중간"
     },
     "피자프랜차이즈순위": {
@@ -108098,7 +108162,7 @@
     },
     "성수동술집": {
       "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1090,
+      "monthlyMobileQcCnt": 1120,
       "compIdx": "높음"
     },
     "신사역술집": {
@@ -108148,7 +108212,7 @@
     },
     "구운동맛집": {
       "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 2270,
+      "monthlyMobileQcCnt": 2280,
       "compIdx": "중간"
     },
     "면부심": {
@@ -108262,8 +108326,8 @@
       "compIdx": "높음"
     },
     "상가부동산": {
-      "monthlyPcQcCnt": 360,
-      "monthlyMobileQcCnt": 550,
+      "monthlyPcQcCnt": 340,
+      "monthlyMobileQcCnt": 560,
       "compIdx": "높음"
     },
     "안전한투자": {
@@ -108348,7 +108412,7 @@
     },
     "메뉴개발": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 270,
+      "monthlyMobileQcCnt": 260,
       "compIdx": "높음"
     },
     "프랜차이즈경영": {
@@ -108417,7 +108481,7 @@
       "compIdx": "낮음"
     },
     "냉모밀": {
-      "monthlyPcQcCnt": 2150,
+      "monthlyPcQcCnt": 2140,
       "monthlyMobileQcCnt": 17300,
       "compIdx": "중간"
     },
@@ -108473,7 +108537,7 @@
     },
     "창업플랫폼": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 130,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "3평창업": {
@@ -108602,8 +108666,8 @@
       "compIdx": "높음"
     },
     "햄버거브랜드": {
-      "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 1260,
+      "monthlyPcQcCnt": 320,
+      "monthlyMobileQcCnt": 1290,
       "compIdx": "높음"
     },
     "피자": {
@@ -108612,7 +108676,7 @@
       "compIdx": "높음"
     },
     "햄버거": {
-      "monthlyPcQcCnt": 11200,
+      "monthlyPcQcCnt": 11400,
       "monthlyMobileQcCnt": 91400,
       "compIdx": "중간"
     },
@@ -108622,7 +108686,7 @@
       "compIdx": "중간"
     },
     "버거": {
-      "monthlyPcQcCnt": 1060,
+      "monthlyPcQcCnt": 1040,
       "monthlyMobileQcCnt": 10500,
       "compIdx": "높음"
     },
@@ -108712,7 +108776,7 @@
       "compIdx": "높음"
     },
     "패스트푸드": {
-      "monthlyPcQcCnt": 1000,
+      "monthlyPcQcCnt": 970,
       "monthlyMobileQcCnt": 3630,
       "compIdx": "높음"
     },
@@ -108732,7 +108796,7 @@
       "compIdx": "높음"
     },
     "수제버거브랜드": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
@@ -108778,7 +108842,7 @@
     },
     "가맹거래사": {
       "monthlyPcQcCnt": 1240,
-      "monthlyMobileQcCnt": 2160,
+      "monthlyMobileQcCnt": 2140,
       "compIdx": "높음"
     },
     "프랜차이즈가맹거래사": {
@@ -108853,7 +108917,7 @@
     },
     "프랜차이즈전문변호사": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
     "냉동피자추천": {
@@ -108862,8 +108926,8 @@
       "compIdx": "중간"
     },
     "공정거래조정원": {
-      "monthlyPcQcCnt": 1100,
-      "monthlyMobileQcCnt": 350,
+      "monthlyPcQcCnt": 1120,
+      "monthlyMobileQcCnt": 360,
       "compIdx": "높음"
     },
     "국밥샵인샵": {
@@ -108898,7 +108962,7 @@
     },
     "샐러드프랜차이즈": {
       "monthlyPcQcCnt": 140,
-      "monthlyMobileQcCnt": 170,
+      "monthlyMobileQcCnt": 160,
       "compIdx": "높음"
     },
     "프랜차이즈가맹계약서": {
@@ -108907,7 +108971,7 @@
       "compIdx": "높음"
     },
     "프랜차이즈분쟁": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
@@ -109157,7 +109221,7 @@
       "compIdx": "높음"
     },
     "간편식품": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
@@ -109213,12 +109277,12 @@
     },
     "햄버거창업비용": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "야식추천": {
-      "monthlyPcQcCnt": 1230,
-      "monthlyMobileQcCnt": 4090,
+      "monthlyPcQcCnt": 1260,
+      "monthlyMobileQcCnt": 4100,
       "compIdx": "높음"
     },
     "점심추천": {
@@ -109298,12 +109362,12 @@
     },
     "이삭토스트창업비용": {
       "monthlyPcQcCnt": 220,
-      "monthlyMobileQcCnt": 1310,
+      "monthlyMobileQcCnt": 1320,
       "compIdx": "높음"
     },
     "브런치까페": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 1180,
+      "monthlyMobileQcCnt": 1170,
       "compIdx": "높음"
     },
     "모둠국밥": {
@@ -109378,7 +109442,7 @@
     },
     "디저트카페프랜차이즈": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
     "맘스터치양도양수": {
@@ -109437,8 +109501,8 @@
       "compIdx": "높음"
     },
     "순대국맛집": {
-      "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 9430,
+      "monthlyPcQcCnt": 410,
+      "monthlyMobileQcCnt": 9450,
       "compIdx": "높음"
     },
     "밀면체인점": {
@@ -109468,7 +109532,7 @@
     },
     "소고기육전": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 1050,
+      "monthlyMobileQcCnt": 1040,
       "compIdx": "높음"
     },
     "햄버거가맹점": {
@@ -109537,8 +109601,8 @@
       "compIdx": "높음"
     },
     "순대국": {
-      "monthlyPcQcCnt": 6630,
-      "monthlyMobileQcCnt": 88700,
+      "monthlyPcQcCnt": 6660,
+      "monthlyMobileQcCnt": 88900,
       "compIdx": "중간"
     },
     "담소소사골순대": {
@@ -109578,7 +109642,7 @@
     },
     "내장탕맛집": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 810,
+      "monthlyMobileQcCnt": 830,
       "compIdx": "높음"
     },
     "뼈해장국체인점": {
@@ -109632,8 +109696,8 @@
       "compIdx": "높음"
     },
     "곰국": {
-      "monthlyPcQcCnt": 290,
-      "monthlyMobileQcCnt": 2320,
+      "monthlyPcQcCnt": 280,
+      "monthlyMobileQcCnt": 2300,
       "compIdx": "높음"
     },
     "담소사골순대": {
@@ -109693,7 +109757,7 @@
     },
     "설렁탕맛집": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 6500,
+      "monthlyMobileQcCnt": 6510,
       "compIdx": "높음"
     },
     "소고기국밥": {
@@ -109757,8 +109821,8 @@
       "compIdx": "중간"
     },
     "부산돼지국밥맛집": {
-      "monthlyPcQcCnt": 670,
-      "monthlyMobileQcCnt": 6630,
+      "monthlyPcQcCnt": 680,
+      "monthlyMobileQcCnt": 6680,
       "compIdx": "높음"
     },
     "멕시코음식": {
@@ -109807,8 +109871,8 @@
       "compIdx": "높음"
     },
     "타코맛집": {
-      "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 8860,
+      "monthlyPcQcCnt": 730,
+      "monthlyMobileQcCnt": 8890,
       "compIdx": "높음"
     },
     "감자탕체인": {
@@ -109973,7 +110037,7 @@
     },
     "또띠아요리": {
       "monthlyPcQcCnt": 830,
-      "monthlyMobileQcCnt": 8080,
+      "monthlyMobileQcCnt": 8050,
       "compIdx": "높음"
     },
     "반올림피자창업": {
@@ -110063,7 +110127,7 @@
     },
     "토스트가맹점": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "타코체인점": {
@@ -110132,8 +110196,8 @@
       "compIdx": "낮음"
     },
     "돼지부속": {
-      "monthlyPcQcCnt": 380,
-      "monthlyMobileQcCnt": 3060,
+      "monthlyPcQcCnt": 370,
+      "monthlyMobileQcCnt": 3070,
       "compIdx": "중간"
     },
     "돼지부속물": {
@@ -110212,8 +110276,8 @@
       "compIdx": "중간"
     },
     "돈많이버는법": {
-      "monthlyPcQcCnt": 200,
-      "monthlyMobileQcCnt": 700,
+      "monthlyPcQcCnt": 210,
+      "monthlyMobileQcCnt": 690,
       "compIdx": "높음"
     },
     "의정부피자": {
@@ -110338,7 +110402,7 @@
     },
     "돈벌기": {
       "monthlyPcQcCnt": 140,
-      "monthlyMobileQcCnt": 620,
+      "monthlyMobileQcCnt": 610,
       "compIdx": "높음"
     },
     "배달국밥창업": {
@@ -110577,8 +110641,8 @@
       "compIdx": "중간"
     },
     "꽃피는화덕피자": {
-      "monthlyPcQcCnt": 1150,
-      "monthlyMobileQcCnt": 16000,
+      "monthlyPcQcCnt": 1120,
+      "monthlyMobileQcCnt": 15900,
       "compIdx": "중간"
     },
     "내포스파게티": {
@@ -110727,12 +110791,12 @@
       "compIdx": "중간"
     },
     "에그2000": {
-      "monthlyPcQcCnt": 410,
-      "monthlyMobileQcCnt": 2030,
+      "monthlyPcQcCnt": 400,
+      "monthlyMobileQcCnt": 2020,
       "compIdx": "낮음"
     },
     "프렌치토스트": {
-      "monthlyPcQcCnt": 2220,
+      "monthlyPcQcCnt": 2200,
       "monthlyMobileQcCnt": 34400,
       "compIdx": "중간"
     },
@@ -110772,7 +110836,7 @@
       "compIdx": "중간"
     },
     "핫한카페": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 130,
       "compIdx": "중간"
     },
@@ -110783,7 +110847,7 @@
     },
     "샌드위치브랜드": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 880,
+      "monthlyMobileQcCnt": 870,
       "compIdx": "높음"
     },
     "수원피자": {
@@ -110793,7 +110857,7 @@
     },
     "토스트장사": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "제빵프랜차이즈": {
@@ -110893,7 +110957,7 @@
     },
     "염소탕프랜차이즈": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyMobileQcCnt": 5,
       "compIdx": "중간"
     },
     "보리밥창업": {
@@ -110903,7 +110967,7 @@
     },
     "업소용소세지": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 180,
+      "monthlyMobileQcCnt": 170,
       "compIdx": "중간"
     },
     "핫도그장사": {
@@ -110912,13 +110976,13 @@
       "compIdx": "중간"
     },
     "핫도그푸드트럭": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "베이커리프랜차이즈": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "토스트가게창업": {
@@ -110942,8 +111006,8 @@
       "compIdx": "높음"
     },
     "야식": {
-      "monthlyPcQcCnt": 1140,
-      "monthlyMobileQcCnt": 8760,
+      "monthlyPcQcCnt": 1150,
+      "monthlyMobileQcCnt": 8750,
       "compIdx": "중간"
     },
     "빵프랜차이즈": {
@@ -111118,12 +111182,12 @@
     },
     "샵엔샵": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 350,
+      "monthlyMobileQcCnt": 340,
       "compIdx": "높음"
     },
     "계란샌드위치": {
-      "monthlyPcQcCnt": 480,
-      "monthlyMobileQcCnt": 5430,
+      "monthlyPcQcCnt": 490,
+      "monthlyMobileQcCnt": 5420,
       "compIdx": "높음"
     },
     "간식체인점": {
@@ -111303,7 +111367,7 @@
     },
     "빵배달": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 280,
+      "monthlyMobileQcCnt": 270,
       "compIdx": "중간"
     },
     "베이커리창업비용": {
@@ -111318,7 +111382,7 @@
     },
     "샌드위치창업비용": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "샌드위치카페창업": {
@@ -111338,12 +111402,12 @@
     },
     "빵업체": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "이삭토스트가맹": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 220,
+      "monthlyMobileQcCnt": 230,
       "compIdx": "높음"
     },
     "삼계탕프랜차이즈": {
@@ -111498,7 +111562,7 @@
     },
     "샌드위치업체": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "방가네소고기국밥수육": {
@@ -111588,7 +111652,7 @@
     },
     "떡볶이기계": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "샵인샵브랜드": {
@@ -111618,7 +111682,7 @@
     },
     "포케집창업": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "낮음"
     },
     "타코야끼장사": {
@@ -111697,37 +111761,37 @@
       "compIdx": "높음"
     },
     "천안피자": {
-      "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 1030,
+      "monthlyPcQcCnt": 140,
+      "monthlyMobileQcCnt": 1040,
       "compIdx": "높음"
     },
     "떡볶이맛집": {
-      "monthlyPcQcCnt": 610,
-      "monthlyMobileQcCnt": 9770,
+      "monthlyPcQcCnt": 620,
+      "monthlyMobileQcCnt": 9810,
       "compIdx": "높음"
     },
     "천안맛집": {
       "monthlyPcQcCnt": 10100,
-      "monthlyMobileQcCnt": 81500,
+      "monthlyMobileQcCnt": 81600,
       "compIdx": "높음"
     },
     "흑염소분양": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 480,
+      "monthlyMobileQcCnt": 470,
       "compIdx": "높음"
     },
     "흑염소수육": {
-      "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 1460,
+      "monthlyPcQcCnt": 160,
+      "monthlyMobileQcCnt": 1440,
       "compIdx": "중간"
     },
     "흑염소식당": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 1550,
+      "monthlyMobileQcCnt": 1530,
       "compIdx": "높음"
     },
     "흑염소요리": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 240,
       "compIdx": "높음"
     },
@@ -111763,7 +111827,7 @@
     },
     "염소탕맛집": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 5090,
+      "monthlyMobileQcCnt": 5100,
       "compIdx": "높음"
     },
     "샐러드카페창업": {
@@ -111813,7 +111877,7 @@
     },
     "염소한마리가격": {
       "monthlyPcQcCnt": 290,
-      "monthlyMobileQcCnt": 5180,
+      "monthlyMobileQcCnt": 5120,
       "compIdx": "높음"
     },
     "업소용떡볶이소스": {
@@ -111898,7 +111962,7 @@
     },
     "휴게소음식": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 760,
+      "monthlyMobileQcCnt": 770,
       "compIdx": "중간"
     },
     "휴게소체인점": {
@@ -111912,8 +111976,8 @@
       "compIdx": "중간"
     },
     "냉면": {
-      "monthlyPcQcCnt": 12100,
-      "monthlyMobileQcCnt": 155600,
+      "monthlyPcQcCnt": 12000,
+      "monthlyMobileQcCnt": 155300,
       "compIdx": "중간"
     },
     "일월찬해장국": {
@@ -111922,7 +111986,7 @@
       "compIdx": "낮음"
     },
     "베이커리브랜드": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
@@ -111963,7 +112027,7 @@
     },
     "샐러드브랜드": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 150,
+      "monthlyMobileQcCnt": 140,
       "compIdx": "높음"
     },
     "배달브랜드": {
@@ -112047,8 +112111,8 @@
       "compIdx": "높음"
     },
     "맛집추천": {
-      "monthlyPcQcCnt": 1060,
-      "monthlyMobileQcCnt": 5640,
+      "monthlyPcQcCnt": 1130,
+      "monthlyMobileQcCnt": 5590,
       "compIdx": "높음"
     },
     "동네맛집뼈구이집": {
@@ -112092,8 +112156,8 @@
       "compIdx": "높음"
     },
     "샌드위치맛집": {
-      "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 9210,
+      "monthlyPcQcCnt": 860,
+      "monthlyMobileQcCnt": 9220,
       "compIdx": "높음"
     },
     "타코야끼배달": {
@@ -112118,7 +112182,7 @@
     },
     "호프집안주": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 230,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "높음"
     },
     "베이커리컨설팅": {
@@ -112268,7 +112332,7 @@
     },
     "해운대맛집": {
       "monthlyPcQcCnt": 11900,
-      "monthlyMobileQcCnt": 102700,
+      "monthlyMobileQcCnt": 103100,
       "compIdx": "높음"
     },
     "상봉맛집": {
@@ -112282,8 +112346,8 @@
       "compIdx": "높음"
     },
     "성수동핫플": {
-      "monthlyPcQcCnt": 1840,
-      "monthlyMobileQcCnt": 14500,
+      "monthlyPcQcCnt": 1860,
+      "monthlyMobileQcCnt": 14600,
       "compIdx": "높음"
     },
     "수성구맛집": {
@@ -112292,8 +112356,8 @@
       "compIdx": "높음"
     },
     "건대맛집": {
-      "monthlyPcQcCnt": 6840,
-      "monthlyMobileQcCnt": 48400,
+      "monthlyPcQcCnt": 6870,
+      "monthlyMobileQcCnt": 48500,
       "compIdx": "높음"
     },
     "성수동맛집": {
@@ -112552,8 +112616,8 @@
       "compIdx": "높음"
     },
     "식당인테리어": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 560,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 550,
       "compIdx": "높음"
     },
     "인테리어공사업체": {
@@ -112567,7 +112631,7 @@
       "compIdx": "높음"
     },
     "카페인테리어업체": {
-      "monthlyPcQcCnt": 40,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
@@ -112587,7 +112651,7 @@
       "compIdx": "높음"
     },
     "갈비맛집": {
-      "monthlyPcQcCnt": 430,
+      "monthlyPcQcCnt": 440,
       "monthlyMobileQcCnt": 10900,
       "compIdx": "높음"
     },
@@ -113343,7 +113407,7 @@
     },
     "GS편의점창업": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 170,
+      "monthlyMobileQcCnt": 160,
       "compIdx": "높음"
     },
     "공차가맹점": {
@@ -113562,8 +113626,8 @@
       "compIdx": "높음"
     },
     "곱창전골맛집": {
-      "monthlyPcQcCnt": 220,
-      "monthlyMobileQcCnt": 4010,
+      "monthlyPcQcCnt": 230,
+      "monthlyMobileQcCnt": 4050,
       "compIdx": "높음"
     },
     "대창전골": {
@@ -113628,17 +113692,17 @@
     },
     "미사": {
       "monthlyPcQcCnt": 1740,
-      "monthlyMobileQcCnt": 8500,
+      "monthlyMobileQcCnt": 8430,
       "compIdx": "높음"
     },
     "서울한정식맛집": {
-      "monthlyPcQcCnt": 880,
-      "monthlyMobileQcCnt": 7150,
+      "monthlyPcQcCnt": 870,
+      "monthlyMobileQcCnt": 6940,
       "compIdx": "높음"
     },
     "철원가볼만한곳": {
       "monthlyPcQcCnt": 2860,
-      "monthlyMobileQcCnt": 28200,
+      "monthlyMobileQcCnt": 28300,
       "compIdx": "높음"
     },
     "하남미사참치": {
@@ -113668,7 +113732,7 @@
     },
     "꺼꾸잽이초장집": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 990,
+      "monthlyMobileQcCnt": 970,
       "compIdx": "낮음"
     },
     "코다리프랜차이즈": {
@@ -114077,8 +114141,8 @@
       "compIdx": "높음"
     },
     "닭발양념": {
-      "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 5030,
+      "monthlyPcQcCnt": 180,
+      "monthlyMobileQcCnt": 5010,
       "compIdx": "높음"
     },
     "배달떡볶이": {
@@ -114097,8 +114161,8 @@
       "compIdx": "높음"
     },
     "푸드트럭중고": {
-      "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 470,
+      "monthlyPcQcCnt": 100,
+      "monthlyMobileQcCnt": 480,
       "compIdx": "높음"
     },
     "족발": {
@@ -114502,8 +114566,8 @@
       "compIdx": "높음"
     },
     "투자": {
-      "monthlyPcQcCnt": 1540,
-      "monthlyMobileQcCnt": 4140,
+      "monthlyPcQcCnt": 1530,
+      "monthlyMobileQcCnt": 4170,
       "compIdx": "높음"
     },
     "작은카페창업": {
@@ -115183,7 +115247,7 @@
     },
     "안주도매": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "연말모임장소": {
@@ -115313,7 +115377,7 @@
     },
     "업소용닭꼬치": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 460,
+      "monthlyMobileQcCnt": 450,
       "compIdx": "높음"
     },
     "보쌈브랜드": {
@@ -115427,8 +115491,8 @@
       "compIdx": "높음"
     },
     "포차메뉴": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 460,
+      "monthlyPcQcCnt": 50,
+      "monthlyMobileQcCnt": 470,
       "compIdx": "높음"
     },
     "김치찌개샵인샵": {
@@ -115818,7 +115882,7 @@
     },
     "부산용호동맛집": {
       "monthlyPcQcCnt": 450,
-      "monthlyMobileQcCnt": 4700,
+      "monthlyMobileQcCnt": 4690,
       "compIdx": "중간"
     },
     "불난반점": {
@@ -115842,12 +115906,12 @@
       "compIdx": "높음"
     },
     "갈비탕": {
-      "monthlyPcQcCnt": 6560,
+      "monthlyPcQcCnt": 6510,
       "monthlyMobileQcCnt": 73700,
       "compIdx": "중간"
     },
     "도가니탕": {
-      "monthlyPcQcCnt": 2340,
+      "monthlyPcQcCnt": 2330,
       "monthlyMobileQcCnt": 19200,
       "compIdx": "중간"
     },
@@ -115913,12 +115977,12 @@
     },
     "엠파나다": {
       "monthlyPcQcCnt": 140,
-      "monthlyMobileQcCnt": 810,
+      "monthlyMobileQcCnt": 800,
       "compIdx": "중간"
     },
     "타말": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 90,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "낮음"
     },
     "CU편의점창업비용": {
@@ -115937,7 +116001,7 @@
       "compIdx": "중간"
     },
     "밀키트배달": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 120,
       "compIdx": "높음"
     },
@@ -115977,8 +116041,8 @@
       "compIdx": "낮음"
     },
     "와규": {
-      "monthlyPcQcCnt": 1620,
-      "monthlyMobileQcCnt": 10600,
+      "monthlyPcQcCnt": 1630,
+      "monthlyMobileQcCnt": 10700,
       "compIdx": "높음"
     },
     "야끼니꾸": {
@@ -116002,8 +116066,8 @@
       "compIdx": "높음"
     },
     "우설": {
-      "monthlyPcQcCnt": 1820,
-      "monthlyMobileQcCnt": 11100,
+      "monthlyPcQcCnt": 1830,
+      "monthlyMobileQcCnt": 11000,
       "compIdx": "중간"
     },
     "단체회식": {
@@ -116012,13 +116076,13 @@
       "compIdx": "높음"
     },
     "모츠나베": {
-      "monthlyPcQcCnt": 2010,
+      "monthlyPcQcCnt": 2020,
       "monthlyMobileQcCnt": 11500,
       "compIdx": "높음"
     },
     "야키니쿠": {
       "monthlyPcQcCnt": 2430,
-      "monthlyMobileQcCnt": 16200,
+      "monthlyMobileQcCnt": 16100,
       "compIdx": "높음"
     },
     "특양": {
@@ -116033,12 +116097,12 @@
     },
     "닭목살": {
       "monthlyPcQcCnt": 1300,
-      "monthlyMobileQcCnt": 7060,
+      "monthlyMobileQcCnt": 7090,
       "compIdx": "중간"
     },
     "소고기구이": {
-      "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 2970,
+      "monthlyPcQcCnt": 310,
+      "monthlyMobileQcCnt": 2990,
       "compIdx": "중간"
     },
     "회식메뉴추천": {
@@ -116047,8 +116111,8 @@
       "compIdx": "높음"
     },
     "소고기맛집": {
-      "monthlyPcQcCnt": 1270,
-      "monthlyMobileQcCnt": 26300,
+      "monthlyPcQcCnt": 1290,
+      "monthlyMobileQcCnt": 26400,
       "compIdx": "높음"
     },
     "회식장소": {
@@ -116062,33 +116126,33 @@
       "compIdx": "중간"
     },
     "꽃갈비살": {
-      "monthlyPcQcCnt": 510,
+      "monthlyPcQcCnt": 500,
       "monthlyMobileQcCnt": 3190,
       "compIdx": "중간"
     },
     "늑간살": {
-      "monthlyPcQcCnt": 540,
-      "monthlyMobileQcCnt": 3310,
+      "monthlyPcQcCnt": 520,
+      "monthlyMobileQcCnt": 3330,
       "compIdx": "중간"
     },
     "안창살": {
-      "monthlyPcQcCnt": 1480,
+      "monthlyPcQcCnt": 1470,
       "monthlyMobileQcCnt": 10300,
       "compIdx": "중간"
     },
     "치마살": {
       "monthlyPcQcCnt": 760,
-      "monthlyMobileQcCnt": 5480,
+      "monthlyMobileQcCnt": 5510,
       "compIdx": "높음"
     },
     "소고기": {
-      "monthlyPcQcCnt": 7830,
-      "monthlyMobileQcCnt": 66700,
+      "monthlyPcQcCnt": 7750,
+      "monthlyMobileQcCnt": 66800,
       "compIdx": "중간"
     },
     "저녁메뉴추천": {
       "monthlyPcQcCnt": 17900,
-      "monthlyMobileQcCnt": 90100,
+      "monthlyMobileQcCnt": 89800,
       "compIdx": "높음"
     },
     "울트라아멘": {
@@ -116107,8 +116171,8 @@
       "compIdx": "높음"
     },
     "편육": {
-      "monthlyPcQcCnt": 2110,
-      "monthlyMobileQcCnt": 11700,
+      "monthlyPcQcCnt": 2090,
+      "monthlyMobileQcCnt": 11800,
       "compIdx": "중간"
     },
     "초계국수": {
@@ -116118,7 +116182,7 @@
     },
     "우설맛집": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 1230,
+      "monthlyMobileQcCnt": 1190,
       "compIdx": "중간"
     },
     "연어육회": {
@@ -116147,8 +116211,8 @@
       "compIdx": "높음"
     },
     "50대재취업": {
-      "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 380,
+      "monthlyPcQcCnt": 180,
+      "monthlyMobileQcCnt": 390,
       "compIdx": "높음"
     },
     "50대주부일자리": {
@@ -116197,13 +116261,13 @@
       "compIdx": "높음"
     },
     "5천만원투자": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 70,
       "monthlyMobileQcCnt": 140,
       "compIdx": "높음"
     },
     "50대여성일자리": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 290,
+      "monthlyMobileQcCnt": 280,
       "compIdx": "높음"
     },
     "유명갈비집": {
@@ -116263,7 +116327,7 @@
     },
     "안양맛집": {
       "monthlyPcQcCnt": 4090,
-      "monthlyMobileQcCnt": 27800,
+      "monthlyMobileQcCnt": 27700,
       "compIdx": "높음"
     },
     "인덕원맛집": {
@@ -116327,43 +116391,43 @@
       "compIdx": "높음"
     },
     "계산동맛집": {
-      "monthlyPcQcCnt": 1150,
-      "monthlyMobileQcCnt": 9500,
+      "monthlyPcQcCnt": 1160,
+      "monthlyMobileQcCnt": 9480,
       "compIdx": "높음"
     },
     "계산역맛집": {
-      "monthlyPcQcCnt": 550,
-      "monthlyMobileQcCnt": 4060,
+      "monthlyPcQcCnt": 560,
+      "monthlyMobileQcCnt": 4080,
       "compIdx": "중간"
     },
     "부천상동맛집": {
       "monthlyPcQcCnt": 1160,
-      "monthlyMobileQcCnt": 8900,
+      "monthlyMobileQcCnt": 8910,
       "compIdx": "높음"
     },
     "부천시청맛집": {
-      "monthlyPcQcCnt": 1370,
-      "monthlyMobileQcCnt": 7720,
+      "monthlyPcQcCnt": 1390,
+      "monthlyMobileQcCnt": 7750,
       "compIdx": "높음"
     },
     "부평구청맛집": {
       "monthlyPcQcCnt": 1180,
-      "monthlyMobileQcCnt": 7350,
+      "monthlyMobileQcCnt": 7300,
       "compIdx": "높음"
     },
     "시청역맛집": {
-      "monthlyPcQcCnt": 3330,
+      "monthlyPcQcCnt": 3260,
       "monthlyMobileQcCnt": 12900,
       "compIdx": "높음"
     },
     "신월동맛집": {
-      "monthlyPcQcCnt": 470,
-      "monthlyMobileQcCnt": 3490,
+      "monthlyPcQcCnt": 460,
+      "monthlyMobileQcCnt": 3450,
       "compIdx": "중간"
     },
     "화곡역맛집": {
-      "monthlyPcQcCnt": 1560,
-      "monthlyMobileQcCnt": 10400,
+      "monthlyPcQcCnt": 1580,
+      "monthlyMobileQcCnt": 10500,
       "compIdx": "높음"
     },
     "소바": {
@@ -116403,22 +116467,22 @@
     },
     "호주산와규": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 800,
+      "monthlyMobileQcCnt": 790,
       "compIdx": "중간"
     },
     "왕십리맛집": {
-      "monthlyPcQcCnt": 5200,
-      "monthlyMobileQcCnt": 27900,
+      "monthlyPcQcCnt": 5180,
+      "monthlyMobileQcCnt": 28100,
       "compIdx": "높음"
     },
     "왕십리술집": {
-      "monthlyPcQcCnt": 580,
-      "monthlyMobileQcCnt": 3590,
+      "monthlyPcQcCnt": 590,
+      "monthlyMobileQcCnt": 3630,
       "compIdx": "중간"
     },
     "한양대맛집": {
-      "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 4510,
+      "monthlyPcQcCnt": 770,
+      "monthlyMobileQcCnt": 4500,
       "compIdx": "중간"
     },
     "베트남쌀국수프랜차이즈": {
@@ -116588,7 +116652,7 @@
     },
     "태국식자재": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "1980밀면회관": {
@@ -116643,7 +116707,7 @@
     },
     "중국식품마트": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 500,
+      "monthlyMobileQcCnt": 490,
       "compIdx": "중간"
     },
     "케이터링창업": {
@@ -116907,7 +116971,7 @@
       "compIdx": "중간"
     },
     "막국수맛집": {
-      "monthlyPcQcCnt": 610,
+      "monthlyPcQcCnt": 600,
       "monthlyMobileQcCnt": 17600,
       "compIdx": "높음"
     },
@@ -116952,7 +117016,7 @@
       "compIdx": "중간"
     },
     "메밀": {
-      "monthlyPcQcCnt": 1420,
+      "monthlyPcQcCnt": 1410,
       "monthlyMobileQcCnt": 11600,
       "compIdx": "중간"
     },
@@ -117003,7 +117067,7 @@
     },
     "도시락집": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 690,
+      "monthlyMobileQcCnt": 700,
       "compIdx": "중간"
     },
     "코다리냉면": {
@@ -117057,8 +117121,8 @@
       "compIdx": "높음"
     },
     "주변맛집": {
-      "monthlyPcQcCnt": 7930,
-      "monthlyMobileQcCnt": 285300,
+      "monthlyPcQcCnt": 7920,
+      "monthlyMobileQcCnt": 285100,
       "compIdx": "높음"
     },
     "진해맛집": {
@@ -117228,7 +117292,7 @@
     },
     "짬뽕분말": {
       "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 2670,
+      "monthlyMobileQcCnt": 2820,
       "compIdx": "중간"
     },
     "짜장": {
@@ -117253,7 +117317,7 @@
     },
     "짬뽕가루": {
       "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 1390,
+      "monthlyMobileQcCnt": 1400,
       "compIdx": "중간"
     },
     "짬뽕스프": {
@@ -117403,7 +117467,7 @@
     },
     "삼산회관": {
       "monthlyPcQcCnt": 1120,
-      "monthlyMobileQcCnt": 8660,
+      "monthlyMobileQcCnt": 8620,
       "compIdx": "낮음"
     },
     "미몽창업": {
@@ -117737,8 +117801,8 @@
       "compIdx": "중간"
     },
     "코스맥스화장품": {
-      "monthlyPcQcCnt": 510,
-      "monthlyMobileQcCnt": 2460,
+      "monthlyPcQcCnt": 500,
+      "monthlyMobileQcCnt": 2470,
       "compIdx": "중간"
     },
     "포시즌마트": {
@@ -119072,7 +119136,7 @@
       "compIdx": "높음"
     },
     "평택맛집": {
-      "monthlyPcQcCnt": 7290,
+      "monthlyPcQcCnt": 7250,
       "monthlyMobileQcCnt": 61900,
       "compIdx": "높음"
     },
@@ -119087,8 +119151,8 @@
       "compIdx": "중간"
     },
     "쭈꾸미": {
-      "monthlyPcQcCnt": 11200,
-      "monthlyMobileQcCnt": 106500,
+      "monthlyPcQcCnt": 10800,
+      "monthlyMobileQcCnt": 104500,
       "compIdx": "중간"
     },
     "쭈꾸미맛집": {
@@ -119097,8 +119161,8 @@
       "compIdx": "높음"
     },
     "군자역맛집": {
-      "monthlyPcQcCnt": 3450,
-      "monthlyMobileQcCnt": 16100,
+      "monthlyPcQcCnt": 3440,
+      "monthlyMobileQcCnt": 16200,
       "compIdx": "높음"
     },
     "하남쭈꾸미": {
@@ -119127,7 +119191,7 @@
       "compIdx": "높음"
     },
     "창동맛집": {
-      "monthlyPcQcCnt": 1480,
+      "monthlyPcQcCnt": 1460,
       "monthlyMobileQcCnt": 12000,
       "compIdx": "높음"
     },
@@ -119158,7 +119222,7 @@
     },
     "나성동맛집": {
       "monthlyPcQcCnt": 2200,
-      "monthlyMobileQcCnt": 13500,
+      "monthlyMobileQcCnt": 13600,
       "compIdx": "높음"
     },
     "쭈꾸미밀키트": {
@@ -119187,8 +119251,8 @@
       "compIdx": "높음"
     },
     "청주맛집": {
-      "monthlyPcQcCnt": 11900,
-      "monthlyMobileQcCnt": 91400,
+      "monthlyPcQcCnt": 12000,
+      "monthlyMobileQcCnt": 91500,
       "compIdx": "높음"
     },
     "장안동고기집": {
@@ -119262,8 +119326,8 @@
       "compIdx": "높음"
     },
     "세종시가볼만한곳": {
-      "monthlyPcQcCnt": 1200,
-      "monthlyMobileQcCnt": 9980,
+      "monthlyPcQcCnt": 1190,
+      "monthlyMobileQcCnt": 10000,
       "compIdx": "높음"
     },
     "경동시장맛집": {
@@ -119322,8 +119386,8 @@
       "compIdx": "중간"
     },
     "홍게제철": {
-      "monthlyPcQcCnt": 1270,
-      "monthlyMobileQcCnt": 12700,
+      "monthlyPcQcCnt": 1260,
+      "monthlyMobileQcCnt": 12600,
       "compIdx": "높음"
     },
     "홍게": {
@@ -119388,7 +119452,7 @@
     },
     "건대술집": {
       "monthlyPcQcCnt": 1360,
-      "monthlyMobileQcCnt": 19500,
+      "monthlyMobileQcCnt": 19700,
       "compIdx": "높음"
     },
     "군자고기": {
@@ -119512,8 +119576,8 @@
       "compIdx": "중간"
     },
     "중곡동맛집": {
-      "monthlyPcQcCnt": 570,
-      "monthlyMobileQcCnt": 4940,
+      "monthlyPcQcCnt": 580,
+      "monthlyMobileQcCnt": 4900,
       "compIdx": "높음"
     },
     "청량리모임": {
@@ -119567,18 +119631,18 @@
       "compIdx": "높음"
     },
     "군자맛집": {
-      "monthlyPcQcCnt": 3940,
-      "monthlyMobileQcCnt": 20300,
+      "monthlyPcQcCnt": 3930,
+      "monthlyMobileQcCnt": 20500,
       "compIdx": "높음"
     },
     "아차산": {
-      "monthlyPcQcCnt": 6340,
-      "monthlyMobileQcCnt": 29600,
+      "monthlyPcQcCnt": 6240,
+      "monthlyMobileQcCnt": 29200,
       "compIdx": "중간"
     },
     "아차산맛집": {
-      "monthlyPcQcCnt": 1370,
-      "monthlyMobileQcCnt": 9790,
+      "monthlyPcQcCnt": 1360,
+      "monthlyMobileQcCnt": 9750,
       "compIdx": "중간"
     },
     "덕소역맛집": {
@@ -119592,8 +119656,8 @@
       "compIdx": "높음"
     },
     "아차산역맛집": {
-      "monthlyPcQcCnt": 1000,
-      "monthlyMobileQcCnt": 7050,
+      "monthlyPcQcCnt": 990,
+      "monthlyMobileQcCnt": 7040,
       "compIdx": "중간"
     },
     "동묘역맛집": {
@@ -119687,8 +119751,8 @@
       "compIdx": "높음"
     },
     "광진구맛집": {
-      "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 5310,
+      "monthlyPcQcCnt": 770,
+      "monthlyMobileQcCnt": 5220,
       "compIdx": "높음"
     },
     "사가정맛집": {
@@ -119733,7 +119797,7 @@
     },
     "구의동맛집": {
       "monthlyPcQcCnt": 730,
-      "monthlyMobileQcCnt": 4100,
+      "monthlyMobileQcCnt": 4130,
       "compIdx": "높음"
     },
     "망우동맛집": {
@@ -119872,7 +119936,7 @@
       "compIdx": "중간"
     },
     "복지리": {
-      "monthlyPcQcCnt": 1010,
+      "monthlyPcQcCnt": 1000,
       "monthlyMobileQcCnt": 5330,
       "compIdx": "중간"
     },
@@ -119902,7 +119966,7 @@
       "compIdx": "높음"
     },
     "세종가볼만한곳": {
-      "monthlyPcQcCnt": 2710,
+      "monthlyPcQcCnt": 2700,
       "monthlyMobileQcCnt": 29600,
       "compIdx": "높음"
     },
@@ -119918,7 +119982,7 @@
     },
     "복어맛집": {
       "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 6510,
+      "monthlyMobileQcCnt": 6490,
       "compIdx": "높음"
     },
     "구의역맛집": {
@@ -119928,7 +119992,7 @@
     },
     "강구맛집": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 1510,
+      "monthlyMobileQcCnt": 1520,
       "compIdx": "중간"
     },
     "약수동맛집": {
@@ -119938,7 +120002,7 @@
     },
     "광장동맛집": {
       "monthlyPcQcCnt": 410,
-      "monthlyMobileQcCnt": 3220,
+      "monthlyMobileQcCnt": 3230,
       "compIdx": "높음"
     },
     "봉화산역우대갈비": {
@@ -119947,8 +120011,8 @@
       "compIdx": "중간"
     },
     "중랑구장미축제": {
-      "monthlyPcQcCnt": 4110,
-      "monthlyMobileQcCnt": 25800,
+      "monthlyPcQcCnt": 4250,
+      "monthlyMobileQcCnt": 26600,
       "compIdx": "중간"
     },
     "중랑구청맛집": {
@@ -120097,8 +120161,8 @@
       "compIdx": "높음"
     },
     "강변역맛집": {
-      "monthlyPcQcCnt": 710,
-      "monthlyMobileQcCnt": 5560,
+      "monthlyPcQcCnt": 720,
+      "monthlyMobileQcCnt": 5550,
       "compIdx": "중간"
     },
     "서울장어맛집": {
@@ -120177,8 +120241,8 @@
       "compIdx": "높음"
     },
     "행당동맛집": {
-      "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1150,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 1160,
       "compIdx": "중간"
     },
     "한판등심": {
@@ -120268,7 +120332,7 @@
     },
     "자양동맛집": {
       "monthlyPcQcCnt": 670,
-      "monthlyMobileQcCnt": 4900,
+      "monthlyMobileQcCnt": 4840,
       "compIdx": "높음"
     },
     "마곡이자카야": {
@@ -120388,7 +120452,7 @@
     },
     "하남시맛집": {
       "monthlyPcQcCnt": 430,
-      "monthlyMobileQcCnt": 2870,
+      "monthlyMobileQcCnt": 2800,
       "compIdx": "높음"
     },
     "보리굴비선물": {
@@ -120443,7 +120507,7 @@
     },
     "서강대맛집": {
       "monthlyPcQcCnt": 340,
-      "monthlyMobileQcCnt": 1560,
+      "monthlyMobileQcCnt": 1550,
       "compIdx": "중간"
     },
     "구미공단맛집": {
@@ -120582,8 +120646,8 @@
       "compIdx": "높음"
     },
     "배곧맛집": {
-      "monthlyPcQcCnt": 3810,
-      "monthlyMobileQcCnt": 28400,
+      "monthlyPcQcCnt": 3820,
+      "monthlyMobileQcCnt": 28500,
       "compIdx": "높음"
     },
     "장안동회식장소": {
@@ -120607,8 +120671,8 @@
       "compIdx": "중간"
     },
     "퇴촌맛집": {
-      "monthlyPcQcCnt": 800,
-      "monthlyMobileQcCnt": 8680,
+      "monthlyPcQcCnt": 810,
+      "monthlyMobileQcCnt": 8720,
       "compIdx": "중간"
     },
     "시흥맛집": {
@@ -120633,12 +120697,12 @@
     },
     "북한강맛집": {
       "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 6530,
+      "monthlyMobileQcCnt": 6510,
       "compIdx": "높음"
     },
     "서울숲맛집": {
-      "monthlyPcQcCnt": 5160,
-      "monthlyMobileQcCnt": 41300,
+      "monthlyPcQcCnt": 5140,
+      "monthlyMobileQcCnt": 41400,
       "compIdx": "높음"
     },
     "문정동맛집": {
@@ -120683,7 +120747,7 @@
     },
     "경기광주맛집": {
       "monthlyPcQcCnt": 2920,
-      "monthlyMobileQcCnt": 22300,
+      "monthlyMobileQcCnt": 22200,
       "compIdx": "높음"
     },
     "건대공연": {
@@ -120802,7 +120866,7 @@
       "compIdx": "높음"
     },
     "뚝섬맛집": {
-      "monthlyPcQcCnt": 1330,
+      "monthlyPcQcCnt": 1340,
       "monthlyMobileQcCnt": 8970,
       "compIdx": "높음"
     },
@@ -121087,8 +121151,8 @@
       "compIdx": "높음"
     },
     "오늘저녁메뉴추천": {
-      "monthlyPcQcCnt": 3560,
-      "monthlyMobileQcCnt": 15300,
+      "monthlyPcQcCnt": 3540,
+      "monthlyMobileQcCnt": 15200,
       "compIdx": "높음"
     },
     "내주변맛집": {
@@ -121213,7 +121277,7 @@
     },
     "유성맛집": {
       "monthlyPcQcCnt": 1100,
-      "monthlyMobileQcCnt": 8300,
+      "monthlyMobileQcCnt": 8210,
       "compIdx": "높음"
     },
     "전민동맛집": {
@@ -121243,7 +121307,7 @@
     },
     "도담동맛집": {
       "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 5700,
+      "monthlyMobileQcCnt": 5570,
       "compIdx": "높음"
     },
     "새롬동맛집": {
@@ -121252,8 +121316,8 @@
       "compIdx": "중간"
     },
     "어진동맛집": {
-      "monthlyPcQcCnt": 620,
-      "monthlyMobileQcCnt": 2790,
+      "monthlyPcQcCnt": 600,
+      "monthlyMobileQcCnt": 2770,
       "compIdx": "높음"
     },
     "유성구맛집": {
@@ -121262,8 +121326,8 @@
       "compIdx": "높음"
     },
     "송촌동맛집": {
-      "monthlyPcQcCnt": 790,
-      "monthlyMobileQcCnt": 6280,
+      "monthlyPcQcCnt": 780,
+      "monthlyMobileQcCnt": 6270,
       "compIdx": "중간"
     },
     "중랑구모임": {
@@ -121352,8 +121416,8 @@
       "compIdx": "높음"
     },
     "종로가볼만한곳": {
-      "monthlyPcQcCnt": 1060,
-      "monthlyMobileQcCnt": 8780,
+      "monthlyPcQcCnt": 1080,
+      "monthlyMobileQcCnt": 8810,
       "compIdx": "높음"
     },
     "미아사거리장어": {
@@ -121447,13 +121511,13 @@
       "compIdx": "높음"
     },
     "을지로점심": {
-      "monthlyPcQcCnt": 490,
+      "monthlyPcQcCnt": 480,
       "monthlyMobileQcCnt": 820,
       "compIdx": "높음"
     },
     "충정로맛집": {
-      "monthlyPcQcCnt": 1090,
-      "monthlyMobileQcCnt": 3360,
+      "monthlyPcQcCnt": 1070,
+      "monthlyMobileQcCnt": 3380,
       "compIdx": "중간"
     },
     "청주홈파티": {
@@ -121462,7 +121526,7 @@
       "compIdx": "높음"
     },
     "대학로놀거리": {
-      "monthlyPcQcCnt": 670,
+      "monthlyPcQcCnt": 660,
       "monthlyMobileQcCnt": 5630,
       "compIdx": "높음"
     },
@@ -121732,8 +121796,8 @@
       "compIdx": "높음"
     },
     "건대역맛집": {
-      "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 2510,
+      "monthlyPcQcCnt": 300,
+      "monthlyMobileQcCnt": 2500,
       "compIdx": "높음"
     },
     "성내동맛집": {
@@ -121773,7 +121837,7 @@
     },
     "화양동맛집": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 710,
+      "monthlyMobileQcCnt": 720,
       "compIdx": "높음"
     },
     "하남한우": {
@@ -121822,8 +121886,8 @@
       "compIdx": "높음"
     },
     "퇴촌토마토": {
-      "monthlyPcQcCnt": 690,
-      "monthlyMobileQcCnt": 3850,
+      "monthlyPcQcCnt": 700,
+      "monthlyMobileQcCnt": 3930,
       "compIdx": "중간"
     },
     "선릉역점심식사": {
@@ -121963,7 +122027,7 @@
     },
     "양수리맛집": {
       "monthlyPcQcCnt": 530,
-      "monthlyMobileQcCnt": 6870,
+      "monthlyMobileQcCnt": 6860,
       "compIdx": "높음"
     },
     "가평베고니아새정원맛집": {
@@ -122038,7 +122102,7 @@
     },
     "수원금곡동맛집": {
       "monthlyPcQcCnt": 400,
-      "monthlyMobileQcCnt": 3310,
+      "monthlyMobileQcCnt": 3320,
       "compIdx": "높음"
     },
     "남양주애견동반식당": {
@@ -122047,8 +122111,8 @@
       "compIdx": "높음"
     },
     "덕소맛집": {
-      "monthlyPcQcCnt": 940,
-      "monthlyMobileQcCnt": 9120,
+      "monthlyPcQcCnt": 930,
+      "monthlyMobileQcCnt": 9100,
       "compIdx": "중간"
     },
     "구리역맛집": {
@@ -122062,8 +122126,8 @@
       "compIdx": "높음"
     },
     "율동공원맛집": {
-      "monthlyPcQcCnt": 1070,
-      "monthlyMobileQcCnt": 12900,
+      "monthlyPcQcCnt": 1050,
+      "monthlyMobileQcCnt": 12800,
       "compIdx": "중간"
     },
     "성수동": {
@@ -122088,7 +122152,7 @@
     },
     "만성찬팅": {
       "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 620,
+      "monthlyMobileQcCnt": 610,
       "compIdx": "낮음"
     },
     "서울장어무한리필": {
@@ -122098,7 +122162,7 @@
     },
     "오산횟집": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 1870,
+      "monthlyMobileQcCnt": 1860,
       "compIdx": "낮음"
     },
     "일도씨닭갈비": {
@@ -122148,7 +122212,7 @@
     },
     "미사역맛집": {
       "monthlyPcQcCnt": 1780,
-      "monthlyMobileQcCnt": 10800,
+      "monthlyMobileQcCnt": 10700,
       "compIdx": "높음"
     },
     "남양주맛집추천": {
@@ -122277,8 +122341,8 @@
       "compIdx": "높음"
     },
     "뚝섬역맛집": {
-      "monthlyPcQcCnt": 2130,
-      "monthlyMobileQcCnt": 8470,
+      "monthlyPcQcCnt": 2120,
+      "monthlyMobileQcCnt": 8480,
       "compIdx": "높음"
     },
     "이태원맛집": {
@@ -122348,7 +122412,7 @@
     },
     "건대입구역맛집": {
       "monthlyPcQcCnt": 1030,
-      "monthlyMobileQcCnt": 6190,
+      "monthlyMobileQcCnt": 6030,
       "compIdx": "높음"
     },
     "다산신도시맛집": {
@@ -122548,7 +122612,7 @@
     },
     "경기도가평맛집": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 480,
+      "monthlyMobileQcCnt": 490,
       "compIdx": "높음"
     },
     "미사맛집": {
@@ -122588,7 +122652,7 @@
     },
     "성수맛집": {
       "monthlyPcQcCnt": 14700,
-      "monthlyMobileQcCnt": 116500,
+      "monthlyMobileQcCnt": 116600,
       "compIdx": "높음"
     },
     "미사경정공원맛집": {
@@ -122632,7 +122696,7 @@
       "compIdx": "높음"
     },
     "잠실역맛집": {
-      "monthlyPcQcCnt": 3360,
+      "monthlyPcQcCnt": 3320,
       "monthlyMobileQcCnt": 20600,
       "compIdx": "높음"
     },
@@ -122747,7 +122811,7 @@
       "compIdx": "중간"
     },
     "성수회식": {
-      "monthlyPcQcCnt": 220,
+      "monthlyPcQcCnt": 210,
       "monthlyMobileQcCnt": 250,
       "compIdx": "높음"
     },
@@ -122962,8 +123026,8 @@
       "compIdx": "높음"
     },
     "성수역맛집": {
-      "monthlyPcQcCnt": 3170,
-      "monthlyMobileQcCnt": 24300,
+      "monthlyPcQcCnt": 3190,
+      "monthlyMobileQcCnt": 24400,
       "compIdx": "높음"
     },
     "강동구회식장소": {
@@ -123253,7 +123317,7 @@
     },
     "성북구맛집": {
       "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 4960,
+      "monthlyMobileQcCnt": 4950,
       "compIdx": "높음"
     },
     "서울송파구맛집": {
@@ -123508,7 +123572,7 @@
     },
     "한림광릉CC맛집": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 990,
+      "monthlyMobileQcCnt": 980,
       "compIdx": "중간"
     },
     "서울근교드라이브코스": {
@@ -124472,7 +124536,7 @@
       "compIdx": "낮음"
     },
     "노량진맛집": {
-      "monthlyPcQcCnt": 2990,
+      "monthlyPcQcCnt": 3010,
       "monthlyMobileQcCnt": 16100,
       "compIdx": "높음"
     },
@@ -124517,7 +124581,7 @@
       "compIdx": "중간"
     },
     "잠실놀거리": {
-      "monthlyPcQcCnt": 2290,
+      "monthlyPcQcCnt": 2280,
       "monthlyMobileQcCnt": 18200,
       "compIdx": "높음"
     },
@@ -124527,8 +124591,8 @@
       "compIdx": "높음"
     },
     "오리구이": {
-      "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 5360,
+      "monthlyPcQcCnt": 410,
+      "monthlyMobileQcCnt": 5350,
       "compIdx": "중간"
     },
     "오리로스": {
@@ -124637,8 +124701,8 @@
       "compIdx": "중간"
     },
     "포천갈비": {
-      "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 4050,
+      "monthlyPcQcCnt": 320,
+      "monthlyMobileQcCnt": 4010,
       "compIdx": "높음"
     },
     "군자역데이트": {
@@ -125272,8 +125336,8 @@
       "compIdx": "높음"
     },
     "개금맛집": {
-      "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 7310,
+      "monthlyPcQcCnt": 840,
+      "monthlyMobileQcCnt": 7290,
       "compIdx": "중간"
     },
     "짜장면맛집": {
@@ -125297,7 +125361,7 @@
       "compIdx": "중간"
     },
     "팔보채": {
-      "monthlyPcQcCnt": 4170,
+      "monthlyPcQcCnt": 4180,
       "monthlyMobileQcCnt": 40400,
       "compIdx": "높음"
     },
@@ -125363,7 +125427,7 @@
     },
     "저녁식사": {
       "monthlyPcQcCnt": 520,
-      "monthlyMobileQcCnt": 2150,
+      "monthlyMobileQcCnt": 2140,
       "compIdx": "중간"
     },
     "점심맛집": {
@@ -125413,7 +125477,7 @@
     },
     "이수맛집": {
       "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 5020,
+      "monthlyMobileQcCnt": 5000,
       "compIdx": "높음"
     },
     "사당역중국집": {
@@ -125487,8 +125551,8 @@
       "compIdx": "중간"
     },
     "오향장육": {
-      "monthlyPcQcCnt": 1650,
-      "monthlyMobileQcCnt": 10400,
+      "monthlyPcQcCnt": 1620,
+      "monthlyMobileQcCnt": 10300,
       "compIdx": "중간"
     },
     "샥스핀": {
@@ -125502,8 +125566,8 @@
       "compIdx": "중간"
     },
     "마린시티맛집": {
-      "monthlyPcQcCnt": 880,
-      "monthlyMobileQcCnt": 7440,
+      "monthlyPcQcCnt": 850,
+      "monthlyMobileQcCnt": 7420,
       "compIdx": "중간"
     },
     "군산맛집": {
@@ -125528,7 +125592,7 @@
     },
     "부산코스요리": {
       "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 1860,
+      "monthlyMobileQcCnt": 1850,
       "compIdx": "높음"
     },
     "해운대구남로맛집": {
@@ -125553,7 +125617,7 @@
     },
     "해운대술집": {
       "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 7190,
+      "monthlyMobileQcCnt": 7240,
       "compIdx": "높음"
     },
     "해운대접대": {
@@ -125567,8 +125631,8 @@
       "compIdx": "높음"
     },
     "서울데이트": {
-      "monthlyPcQcCnt": 4390,
-      "monthlyMobileQcCnt": 16400,
+      "monthlyPcQcCnt": 4430,
+      "monthlyMobileQcCnt": 16500,
       "compIdx": "높음"
     },
     "성남중화요리": {
@@ -125662,18 +125726,18 @@
       "compIdx": "높음"
     },
     "서울시청맛집": {
-      "monthlyPcQcCnt": 1330,
-      "monthlyMobileQcCnt": 6890,
+      "monthlyPcQcCnt": 1310,
+      "monthlyMobileQcCnt": 6860,
       "compIdx": "높음"
     },
     "경기도안산맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 920,
+      "monthlyMobileQcCnt": 910,
       "compIdx": "높음"
     },
     "부산해운대맛집": {
-      "monthlyPcQcCnt": 3380,
-      "monthlyMobileQcCnt": 20300,
+      "monthlyPcQcCnt": 3370,
+      "monthlyMobileQcCnt": 20200,
       "compIdx": "높음"
     },
     "상계역맛집": {
@@ -125717,8 +125781,8 @@
       "compIdx": "중간"
     },
     "아산가볼만한곳": {
-      "monthlyPcQcCnt": 3580,
-      "monthlyMobileQcCnt": 43500,
+      "monthlyPcQcCnt": 3560,
+      "monthlyMobileQcCnt": 43300,
       "compIdx": "높음"
     },
     "아산스파비스맛집": {
@@ -125753,7 +125817,7 @@
     },
     "천안점심맛집": {
       "monthlyPcQcCnt": 490,
-      "monthlyMobileQcCnt": 2920,
+      "monthlyMobileQcCnt": 2910,
       "compIdx": "높음"
     },
     "천안코스요리": {
@@ -125777,7 +125841,7 @@
       "compIdx": "중간"
     },
     "안산맛집": {
-      "monthlyPcQcCnt": 6220,
+      "monthlyPcQcCnt": 6200,
       "monthlyMobileQcCnt": 44900,
       "compIdx": "높음"
     },
@@ -125867,7 +125931,7 @@
       "compIdx": "중간"
     },
     "김포가볼만한곳": {
-      "monthlyPcQcCnt": 2290,
+      "monthlyPcQcCnt": 2280,
       "monthlyMobileQcCnt": 26300,
       "compIdx": "높음"
     },
@@ -126027,8 +126091,8 @@
       "compIdx": "높음"
     },
     "동파육": {
-      "monthlyPcQcCnt": 2500,
-      "monthlyMobileQcCnt": 16000,
+      "monthlyPcQcCnt": 2530,
+      "monthlyMobileQcCnt": 16100,
       "compIdx": "높음"
     },
     "천안맛집추천": {
@@ -126078,7 +126142,7 @@
     },
     "가족식사": {
       "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1770,
+      "monthlyMobileQcCnt": 1760,
       "compIdx": "중간"
     },
     "갤러리아포레": {
@@ -126147,7 +126211,7 @@
       "compIdx": "높음"
     },
     "서울가족식사": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 80,
       "monthlyMobileQcCnt": 360,
       "compIdx": "높음"
     },
@@ -126353,7 +126417,7 @@
     },
     "성수룸식당": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 240,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "중간"
     },
     "상견례": {
@@ -126418,7 +126482,7 @@
     },
     "가족모임식당": {
       "monthlyPcQcCnt": 320,
-      "monthlyMobileQcCnt": 3540,
+      "monthlyMobileQcCnt": 3500,
       "compIdx": "높음"
     },
     "상견례장소추천": {
@@ -126452,13 +126516,13 @@
       "compIdx": "높음"
     },
     "칠순식당": {
-      "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 590,
+      "monthlyPcQcCnt": 120,
+      "monthlyMobileQcCnt": 580,
       "compIdx": "높음"
     },
     "서울룸식당": {
-      "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 1080,
+      "monthlyPcQcCnt": 230,
+      "monthlyMobileQcCnt": 1070,
       "compIdx": "높음"
     },
     "강남상견례장소": {
@@ -126488,7 +126552,7 @@
     },
     "서울갈만한곳": {
       "monthlyPcQcCnt": 1510,
-      "monthlyMobileQcCnt": 8910,
+      "monthlyMobileQcCnt": 8950,
       "compIdx": "높음"
     },
     "양고기스테이크": {
@@ -126662,7 +126726,7 @@
       "compIdx": "중간"
     },
     "팔순잔치": {
-      "monthlyPcQcCnt": 830,
+      "monthlyPcQcCnt": 820,
       "monthlyMobileQcCnt": 4290,
       "compIdx": "높음"
     },
@@ -126862,8 +126926,8 @@
       "compIdx": "낮음"
     },
     "합정맛집": {
-      "monthlyPcQcCnt": 7300,
-      "monthlyMobileQcCnt": 37200,
+      "monthlyPcQcCnt": 7260,
+      "monthlyMobileQcCnt": 37300,
       "compIdx": "높음"
     },
     "합정역맛집": {
