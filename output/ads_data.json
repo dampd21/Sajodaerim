@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-24T19:46:40.578014",
+  "generated_at": "2026-05-25T00:57:24.145419",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -131,10 +131,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 77,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 73,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-05-12T10:06:47.000Z",
@@ -152,10 +152,10 @@
       "usePeriod": false,
       "dailyBudget": 30000,
       "useDailyBudget": true,
-      "totalChargeCost": 21372,
+      "totalChargeCost": 2506,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 619,
       "migType": 0,
       "delFlag": false,
       "regTm": "2023-01-30T04:43:18.000Z",
@@ -173,10 +173,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 11811,
+      "totalChargeCost": 77,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 285,
+      "expectCost": 77,
       "migType": 0,
       "delFlag": false,
       "regTm": "2024-07-13T04:08:56.000Z",
@@ -194,7 +194,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 123,
+      "totalChargeCost": 4,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -215,7 +215,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 124,
+      "totalChargeCost": 5,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -341,7 +341,7 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 834,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -362,7 +362,7 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 4961,
+      "totalChargeCost": 0,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
       "expectCost": 1,
@@ -856,7 +856,7 @@
       "nccCampaignId": "cmp-a001-01-000000008846189",
       "mobileChannelId": "bsn-a001-00-000000011287018",
       "pcChannelId": "bsn-a001-00-000000011287018",
-      "bidAmt": 70,
+      "bidAmt": 90,
       "name": "창업광고_파워링크_자사명(수정)",
       "userLock": false,
       "useDailyBudget": true,
@@ -868,7 +868,7 @@
       "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-12-26T04:11:49.000Z",
-      "editTm": "2026-05-23T23:32:08.000Z",
+      "editTm": "2026-05-24T11:30:38.000Z",
       "targetSummary": {
         "pcMobile": "all",
         "media": "partially"
@@ -921,7 +921,7 @@
       "mobileChannelKey": "https://map.naver.com/p/entry/place/1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 77,
+      "expectCost": 73,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 1
@@ -1537,7 +1537,7 @@
       "mobileChannelKey": "1542530224",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 1047,
+      "expectCost": 619,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -1789,7 +1789,7 @@
       "mobileNetworkBidWeight": 100,
       "pcNetworkBidWeight": 100,
       "dailyBudget": 11000,
-      "budgetLock": true,
+      "budgetLock": false,
       "delFlag": false,
       "regTm": "2024-07-13T04:10:09.000Z",
       "editTm": "2026-05-19T05:08:13.000Z",
@@ -1834,9 +1834,9 @@
       },
       "pcChannelKey": "1455516190",
       "mobileChannelKey": "1455516190",
-      "status": "PAUSED",
-      "statusReason": "GROUP_LIMITED_BY_BUDGET",
-      "expectCost": 520,
+      "status": "ELIGIBLE",
+      "statusReason": "ELIGIBLE",
+      "expectCost": 77,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -132929,369 +132929,369 @@
     "중식창업": [
       {
         "rank": 1,
-        "mobileBid": 18030,
-        "pcBid": 19540
+        "mobileBid": 19800,
+        "pcBid": 21450
       },
       {
         "rank": 2,
-        "mobileBid": 16730,
-        "pcBid": 18740
+        "mobileBid": 18360,
+        "pcBid": 20580
       },
       {
         "rank": 3,
-        "mobileBid": 11820,
-        "pcBid": 12080
+        "mobileBid": 12980,
+        "pcBid": 13260
       },
       {
         "rank": 4,
-        "mobileBid": 8680,
-        "pcBid": 10280
+        "mobileBid": 9530,
+        "pcBid": 11280
       },
       {
         "rank": 5,
-        "mobileBid": 7610,
-        "pcBid": 6970
+        "mobileBid": 8360,
+        "pcBid": 7650
       }
     ],
     "중국집창업": [
       {
         "rank": 1,
-        "mobileBid": 19930,
-        "pcBid": 20730
+        "mobileBid": 21880,
+        "pcBid": 22760
       },
       {
         "rank": 2,
-        "mobileBid": 19660,
-        "pcBid": 20220
+        "mobileBid": 21580,
+        "pcBid": 22200
       },
       {
         "rank": 3,
-        "mobileBid": 10140,
-        "pcBid": 11680
+        "mobileBid": 11130,
+        "pcBid": 12820
       },
       {
         "rank": 4,
-        "mobileBid": 9870,
-        "pcBid": 9170
+        "mobileBid": 10830,
+        "pcBid": 10060
       },
       {
         "rank": 5,
-        "mobileBid": 7890,
-        "pcBid": 8790
+        "mobileBid": 8660,
+        "pcBid": 9650
       }
     ],
     "창업추천": [
       {
         "rank": 1,
-        "mobileBid": 21620,
-        "pcBid": 21560
+        "mobileBid": 23730,
+        "pcBid": 23670
       },
       {
         "rank": 2,
-        "mobileBid": 20500,
-        "pcBid": 20750
+        "mobileBid": 22500,
+        "pcBid": 22780
       },
       {
         "rank": 3,
-        "mobileBid": 20160,
-        "pcBid": 19260
+        "mobileBid": 22130,
+        "pcBid": 21150
       },
       {
         "rank": 4,
-        "mobileBid": 19100,
-        "pcBid": 18870
+        "mobileBid": 20970,
+        "pcBid": 20710
       },
       {
         "rank": 5,
-        "mobileBid": 18680,
-        "pcBid": 18860
+        "mobileBid": 20510,
+        "pcBid": 20710
       }
     ],
     "식당창업": [
       {
         "rank": 1,
-        "mobileBid": 34090,
-        "pcBid": 27870
+        "mobileBid": 37430,
+        "pcBid": 30600
       },
       {
         "rank": 2,
-        "mobileBid": 31880,
-        "pcBid": 27000
+        "mobileBid": 35000,
+        "pcBid": 29650
       },
       {
         "rank": 3,
-        "mobileBid": 30490,
-        "pcBid": 26450
+        "mobileBid": 33480,
+        "pcBid": 29040
       },
       {
         "rank": 4,
-        "mobileBid": 28910,
-        "pcBid": 26310
+        "mobileBid": 31740,
+        "pcBid": 28880
       },
       {
         "rank": 5,
-        "mobileBid": 26980,
-        "pcBid": 25660
+        "mobileBid": 29620,
+        "pcBid": 28170
       }
     ],
     "중국집프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 17600,
-        "pcBid": 16440
+        "mobileBid": 19330,
+        "pcBid": 18040
       },
       {
         "rank": 2,
-        "mobileBid": 12670,
-        "pcBid": 13680
+        "mobileBid": 13910,
+        "pcBid": 15020
       },
       {
         "rank": 3,
-        "mobileBid": 9280,
-        "pcBid": 7260
+        "mobileBid": 10180,
+        "pcBid": 7970
       },
       {
         "rank": 4,
-        "mobileBid": 7740,
-        "pcBid": 5250
+        "mobileBid": 8500,
+        "pcBid": 5760
       },
       {
         "rank": 5,
-        "mobileBid": 6150,
-        "pcBid": 4300
+        "mobileBid": 6750,
+        "pcBid": 4720
       }
     ],
     "창업": [
       {
         "rank": 1,
-        "mobileBid": 34400,
-        "pcBid": 39330
+        "mobileBid": 37770,
+        "pcBid": 43180
       },
       {
         "rank": 2,
-        "mobileBid": 29000,
-        "pcBid": 33860
+        "mobileBid": 31840,
+        "pcBid": 37170
       },
       {
         "rank": 3,
-        "mobileBid": 25670,
-        "pcBid": 29360
+        "mobileBid": 28180,
+        "pcBid": 32230
       },
       {
         "rank": 4,
-        "mobileBid": 24070,
-        "pcBid": 27000
+        "mobileBid": 26430,
+        "pcBid": 29640
       },
       {
         "rank": 5,
-        "mobileBid": 22890,
-        "pcBid": 25140
+        "mobileBid": 25130,
+        "pcBid": 27600
       }
     ],
     "중식당창업": [
       {
         "rank": 1,
-        "mobileBid": 19770,
-        "pcBid": 19420
+        "mobileBid": 21710,
+        "pcBid": 21320
       },
       {
         "rank": 2,
-        "mobileBid": 14320,
-        "pcBid": 17000
+        "mobileBid": 15730,
+        "pcBid": 18670
       },
       {
         "rank": 3,
-        "mobileBid": 6830,
-        "pcBid": 10140
+        "mobileBid": 7500,
+        "pcBid": 11130
       },
       {
         "rank": 4,
-        "mobileBid": 4590,
-        "pcBid": 4800
+        "mobileBid": 5040,
+        "pcBid": 5270
       },
       {
         "rank": 5,
-        "mobileBid": 4220,
-        "pcBid": 2730
+        "mobileBid": 4630,
+        "pcBid": 2990
       }
     ],
     "짬뽕창업": [
       {
         "rank": 1,
-        "mobileBid": 16520,
-        "pcBid": 20080
+        "mobileBid": 18130,
+        "pcBid": 22040
       },
       {
         "rank": 2,
-        "mobileBid": 16270,
-        "pcBid": 18090
+        "mobileBid": 17860,
+        "pcBid": 19860
       },
       {
         "rank": 3,
-        "mobileBid": 11740,
-        "pcBid": 14320
+        "mobileBid": 12890,
+        "pcBid": 15720
       },
       {
         "rank": 4,
-        "mobileBid": 8040,
-        "pcBid": 9820
+        "mobileBid": 8830,
+        "pcBid": 10780
       },
       {
         "rank": 5,
-        "mobileBid": 6900,
-        "pcBid": 8100
+        "mobileBid": 7580,
+        "pcBid": 8900
       }
     ],
     "요식업": [
       {
         "rank": 1,
-        "mobileBid": 9650,
-        "pcBid": 14560
+        "mobileBid": 10600,
+        "pcBid": 15990
       },
       {
         "rank": 2,
-        "mobileBid": 8290,
-        "pcBid": 9850
+        "mobileBid": 9100,
+        "pcBid": 10810
       },
       {
         "rank": 3,
-        "mobileBid": 7330,
-        "pcBid": 8910
+        "mobileBid": 8050,
+        "pcBid": 9790
       },
       {
         "rank": 4,
-        "mobileBid": 6430,
-        "pcBid": 8170
+        "mobileBid": 7060,
+        "pcBid": 8970
       },
       {
         "rank": 5,
-        "mobileBid": 5710,
-        "pcBid": 7330
+        "mobileBid": 6270,
+        "pcBid": 8040
       }
     ],
     "중식프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 17310,
-        "pcBid": 18330
+        "mobileBid": 19010,
+        "pcBid": 20130
       },
       {
         "rank": 2,
-        "mobileBid": 13840,
-        "pcBid": 13130
+        "mobileBid": 15200,
+        "pcBid": 14410
       },
       {
         "rank": 3,
-        "mobileBid": 9750,
-        "pcBid": 8490
+        "mobileBid": 10700,
+        "pcBid": 9320
       },
       {
         "rank": 4,
-        "mobileBid": 7630,
-        "pcBid": 7260
+        "mobileBid": 8380,
+        "pcBid": 7970
       },
       {
         "rank": 5,
-        "mobileBid": 7060,
-        "pcBid": 6490
+        "mobileBid": 7750,
+        "pcBid": 7130
       }
     ],
     "짬뽕프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 15500,
-        "pcBid": 7990
+        "mobileBid": 17020,
+        "pcBid": 8770
       },
       {
         "rank": 2,
-        "mobileBid": 4970,
-        "pcBid": 5440
+        "mobileBid": 5450,
+        "pcBid": 5970
       },
       {
         "rank": 3,
-        "mobileBid": 4160,
-        "pcBid": 3930
+        "mobileBid": 4560,
+        "pcBid": 4310
       },
       {
         "rank": 4,
-        "mobileBid": 3700,
-        "pcBid": 2930
+        "mobileBid": 4060,
+        "pcBid": 3220
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 2440
+        "pcBid": 2680
       }
     ],
     "창업아이템": [
       {
         "rank": 1,
-        "mobileBid": 21570,
-        "pcBid": 19290
+        "mobileBid": 23680,
+        "pcBid": 21180
       },
       {
         "rank": 2,
-        "mobileBid": 18200,
-        "pcBid": 17480
+        "mobileBid": 19980,
+        "pcBid": 19190
       },
       {
         "rank": 3,
-        "mobileBid": 16290,
-        "pcBid": 16240
+        "mobileBid": 17880,
+        "pcBid": 17830
       },
       {
         "rank": 4,
-        "mobileBid": 15040,
-        "pcBid": 15740
+        "mobileBid": 16520,
+        "pcBid": 17290
       },
       {
         "rank": 5,
-        "mobileBid": 14250,
-        "pcBid": 15030
+        "mobileBid": 15640,
+        "pcBid": 16500
       }
     ],
     "프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 30380,
-        "pcBid": 30630
+        "mobileBid": 33350,
+        "pcBid": 33630
       },
       {
         "rank": 2,
-        "mobileBid": 25020,
-        "pcBid": 28370
+        "mobileBid": 27470,
+        "pcBid": 31150
       },
       {
         "rank": 3,
-        "mobileBid": 22340,
-        "pcBid": 25170
+        "mobileBid": 24520,
+        "pcBid": 27640
       },
       {
         "rank": 4,
-        "mobileBid": 20790,
-        "pcBid": 23040
+        "mobileBid": 22830,
+        "pcBid": 25290
       },
       {
         "rank": 5,
-        "mobileBid": 19480,
-        "pcBid": 21330
+        "mobileBid": 21390,
+        "pcBid": 23420
       }
     ],
     "보배반점창업": [
       {
         "rank": 1,
-        "mobileBid": 3060,
-        "pcBid": 1600
+        "mobileBid": 3360,
+        "pcBid": 1750
       },
       {
         "rank": 2,
-        "mobileBid": 1640,
-        "pcBid": 1060
+        "mobileBid": 1800,
+        "pcBid": 1160
       },
       {
         "rank": 3,
         "mobileBid": 820,
-        "pcBid": 1030
+        "pcBid": 1140
       },
       {
         "rank": 4,
@@ -133307,12 +133307,12 @@
     "보배반점창업비용": [
       {
         "rank": 1,
-        "mobileBid": 2990,
-        "pcBid": 1080
+        "mobileBid": 3290,
+        "pcBid": 1180
       },
       {
         "rank": 2,
-        "mobileBid": 1270,
+        "mobileBid": 1400,
         "pcBid": 850
       },
       {
@@ -133685,13 +133685,13 @@
     "짬뽕지존창업": [
       {
         "rank": 1,
-        "mobileBid": 1690,
-        "pcBid": 1440
+        "mobileBid": 1850,
+        "pcBid": 1580
       },
       {
         "rank": 2,
         "mobileBid": 310,
-        "pcBid": 1070
+        "pcBid": 1170
       },
       {
         "rank": 3,
@@ -133847,8 +133847,8 @@
     "무궁화반점창업": [
       {
         "rank": 1,
-        "mobileBid": 4010,
-        "pcBid": 4010
+        "mobileBid": 4410,
+        "pcBid": 4410
       },
       {
         "rank": 2,
@@ -134171,22 +134171,22 @@
     "홍콩반점창업": [
       {
         "rank": 1,
-        "mobileBid": 3560,
-        "pcBid": 7600
+        "mobileBid": 3910,
+        "pcBid": 8350
       },
       {
         "rank": 2,
-        "mobileBid": 2340,
-        "pcBid": 2640
+        "mobileBid": 2560,
+        "pcBid": 2890
       },
       {
         "rank": 3,
-        "mobileBid": 2280,
+        "mobileBid": 2500,
         "pcBid": 480
       },
       {
         "rank": 4,
-        "mobileBid": 1220,
+        "mobileBid": 1330,
         "pcBid": 80
       },
       {
@@ -134198,28 +134198,28 @@
     "홍콩반점창업비용": [
       {
         "rank": 1,
-        "mobileBid": 3630,
-        "pcBid": 7160
+        "mobileBid": 3980,
+        "pcBid": 7860
       },
       {
         "rank": 2,
-        "mobileBid": 2790,
-        "pcBid": 4470
+        "mobileBid": 3060,
+        "pcBid": 4910
       },
       {
         "rank": 3,
-        "mobileBid": 1860,
-        "pcBid": 4420
+        "mobileBid": 2040,
+        "pcBid": 4850
       },
       {
         "rank": 4,
-        "mobileBid": 1840,
-        "pcBid": 4110
+        "mobileBid": 2020,
+        "pcBid": 4520
       },
       {
         "rank": 5,
-        "mobileBid": 1610,
-        "pcBid": 3530
+        "mobileBid": 1770,
+        "pcBid": 3870
       }
     ],
     "홍콩반점창업문의": [
@@ -134495,44 +134495,44 @@
     "용용선생창업": [
       {
         "rank": 1,
-        "mobileBid": 3250,
-        "pcBid": 6160
+        "mobileBid": 3570,
+        "pcBid": 6760
       },
       {
         "rank": 2,
-        "mobileBid": 2090,
-        "pcBid": 4430
+        "mobileBid": 2300,
+        "pcBid": 4860
       },
       {
         "rank": 3,
-        "mobileBid": 1720,
-        "pcBid": 3680
+        "mobileBid": 1890,
+        "pcBid": 4040
       },
       {
         "rank": 4,
-        "mobileBid": 1650,
-        "pcBid": 2490
+        "mobileBid": 1810,
+        "pcBid": 2740
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1590
+        "pcBid": 1750
       }
     ],
     "용용선생창업비용": [
       {
         "rank": 1,
-        "mobileBid": 4610,
-        "pcBid": 1760
+        "mobileBid": 5060,
+        "pcBid": 1930
       },
       {
         "rank": 2,
-        "mobileBid": 3690,
+        "mobileBid": 4060,
         "pcBid": 350
       },
       {
         "rank": 3,
-        "mobileBid": 2020,
+        "mobileBid": 2220,
         "pcBid": 90
       },
       {
@@ -134820,7 +134820,7 @@
       {
         "rank": 1,
         "mobileBid": 910,
-        "pcBid": 2050
+        "pcBid": 2260
       },
       {
         "rank": 2,
@@ -134982,17 +134982,17 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 2950
+        "pcBid": 3240
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 2750
+        "pcBid": 3010
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 1550
+        "pcBid": 1700
       },
       {
         "rank": 4,
@@ -135305,94 +135305,94 @@
     "치킨프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 26020,
-        "pcBid": 29280
+        "mobileBid": 28560,
+        "pcBid": 32140
       },
       {
         "rank": 2,
-        "mobileBid": 25860,
-        "pcBid": 25610
+        "mobileBid": 28390,
+        "pcBid": 28120
       },
       {
         "rank": 3,
-        "mobileBid": 24600,
-        "pcBid": 24180
+        "mobileBid": 27000,
+        "pcBid": 26550
       },
       {
         "rank": 4,
-        "mobileBid": 22790,
-        "pcBid": 23280
+        "mobileBid": 25020,
+        "pcBid": 25560
       },
       {
         "rank": 5,
-        "mobileBid": 20840,
-        "pcBid": 22070
+        "mobileBid": 22880,
+        "pcBid": 24230
       }
     ],
     "치킨전문점": [
       {
         "rank": 1,
-        "mobileBid": 5130,
-        "pcBid": 7080
+        "mobileBid": 5630,
+        "pcBid": 7770
       },
       {
         "rank": 2,
-        "mobileBid": 4890,
-        "pcBid": 5160
+        "mobileBid": 5370,
+        "pcBid": 5660
       },
       {
         "rank": 3,
-        "mobileBid": 4510,
-        "pcBid": 4810
+        "mobileBid": 4950,
+        "pcBid": 5280
       },
       {
         "rank": 4,
-        "mobileBid": 4050,
-        "pcBid": 4570
+        "mobileBid": 4450,
+        "pcBid": 5020
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 4240
+        "pcBid": 4660
       }
     ],
     "일식프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 11150,
-        "pcBid": 12960
+        "mobileBid": 12240,
+        "pcBid": 14230
       },
       {
         "rank": 2,
-        "mobileBid": 10950,
-        "pcBid": 12920
+        "mobileBid": 12020,
+        "pcBid": 14180
       },
       {
         "rank": 3,
-        "mobileBid": 10680,
-        "pcBid": 12590
+        "mobileBid": 11720,
+        "pcBid": 13830
       },
       {
         "rank": 4,
-        "mobileBid": 10000,
-        "pcBid": 10600
+        "mobileBid": 10980,
+        "pcBid": 11630
       },
       {
         "rank": 5,
-        "mobileBid": 9210,
-        "pcBid": 10330
+        "mobileBid": 10110,
+        "pcBid": 11340
       }
     ],
     "일식전문점": [
       {
         "rank": 1,
-        "mobileBid": 1590,
-        "pcBid": 2050
+        "mobileBid": 1740,
+        "pcBid": 2260
       },
       {
         "rank": 2,
-        "mobileBid": 1060,
-        "pcBid": 1020
+        "mobileBid": 1170,
+        "pcBid": 1120
       },
       {
         "rank": 3,
@@ -135413,88 +135413,88 @@
     "한식프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 23870,
-        "pcBid": 16250
+        "mobileBid": 26200,
+        "pcBid": 17840
       },
       {
         "rank": 2,
-        "mobileBid": 17890,
-        "pcBid": 14690
+        "mobileBid": 19640,
+        "pcBid": 16130
       },
       {
         "rank": 3,
-        "mobileBid": 16930,
-        "pcBid": 14300
+        "mobileBid": 18590,
+        "pcBid": 15700
       },
       {
         "rank": 4,
-        "mobileBid": 14720,
-        "pcBid": 14040
+        "mobileBid": 16160,
+        "pcBid": 15420
       },
       {
         "rank": 5,
-        "mobileBid": 14350,
-        "pcBid": 14030
+        "mobileBid": 15760,
+        "pcBid": 15400
       }
     ],
     "한식전문점": [
       {
         "rank": 1,
-        "mobileBid": 6400,
-        "pcBid": 6900
+        "mobileBid": 7030,
+        "pcBid": 7580
       },
       {
         "rank": 2,
-        "mobileBid": 5330,
-        "pcBid": 5750
+        "mobileBid": 5850,
+        "pcBid": 6310
       },
       {
         "rank": 3,
-        "mobileBid": 3000,
-        "pcBid": 4650
+        "mobileBid": 3290,
+        "pcBid": 5100
       },
       {
         "rank": 4,
-        "mobileBid": 2530,
-        "pcBid": 3190
+        "mobileBid": 2780,
+        "pcBid": 3500
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 2420
+        "pcBid": 2650
       }
     ],
     "양식프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 6140,
-        "pcBid": 6070
+        "mobileBid": 6740,
+        "pcBid": 6670
       },
       {
         "rank": 2,
-        "mobileBid": 5910,
-        "pcBid": 6050
+        "mobileBid": 6490,
+        "pcBid": 6640
       },
       {
         "rank": 3,
-        "mobileBid": 5680,
-        "pcBid": 4610
+        "mobileBid": 6240,
+        "pcBid": 5060
       },
       {
         "rank": 4,
-        "mobileBid": 4810,
-        "pcBid": 4010
+        "mobileBid": 5290,
+        "pcBid": 4410
       },
       {
         "rank": 5,
-        "mobileBid": 4550,
-        "pcBid": 3530
+        "mobileBid": 5000,
+        "pcBid": 3870
       }
     ],
     "양식전문점": [
       {
         "rank": 1,
-        "mobileBid": 1200,
+        "mobileBid": 1320,
         "pcBid": 70
       },
       {
@@ -135521,157 +135521,157 @@
     "파스타프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 5590,
-        "pcBid": 5510
+        "mobileBid": 6140,
+        "pcBid": 6050
       },
       {
         "rank": 2,
-        "mobileBid": 5250,
-        "pcBid": 5400
+        "mobileBid": 5760,
+        "pcBid": 5930
       },
       {
         "rank": 3,
-        "mobileBid": 5040,
-        "pcBid": 5030
+        "mobileBid": 5530,
+        "pcBid": 5520
       },
       {
         "rank": 4,
-        "mobileBid": 4680,
-        "pcBid": 4510
+        "mobileBid": 5130,
+        "pcBid": 4950
       },
       {
         "rank": 5,
-        "mobileBid": 4340,
-        "pcBid": 4190
+        "mobileBid": 4760,
+        "pcBid": 4600
       }
     ],
     "파스타전문점": [
       {
         "rank": 1,
-        "mobileBid": 3420,
-        "pcBid": 2800
+        "mobileBid": 3750,
+        "pcBid": 3070
       },
       {
         "rank": 2,
-        "mobileBid": 3000,
-        "pcBid": 2160
+        "mobileBid": 3290,
+        "pcBid": 2370
       },
       {
         "rank": 3,
-        "mobileBid": 2750,
-        "pcBid": 1900
+        "mobileBid": 3020,
+        "pcBid": 2080
       },
       {
         "rank": 4,
-        "mobileBid": 2290,
-        "pcBid": 1760
+        "mobileBid": 2520,
+        "pcBid": 1940
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1620
+        "pcBid": 1780
       }
     ],
     "피자프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 10200,
-        "pcBid": 7810
+        "mobileBid": 11200,
+        "pcBid": 8580
       },
       {
         "rank": 2,
-        "mobileBid": 8100,
-        "pcBid": 7340
+        "mobileBid": 8890,
+        "pcBid": 8060
       },
       {
         "rank": 3,
-        "mobileBid": 7580,
-        "pcBid": 6580
+        "mobileBid": 8330,
+        "pcBid": 7220
       },
       {
         "rank": 4,
-        "mobileBid": 7280,
-        "pcBid": 6060
+        "mobileBid": 8000,
+        "pcBid": 6650
       },
       {
         "rank": 5,
-        "mobileBid": 6610,
-        "pcBid": 5410
+        "mobileBid": 7250,
+        "pcBid": 5940
       }
     ],
     "피자전문점": [
       {
         "rank": 1,
-        "mobileBid": 6420,
-        "pcBid": 4650
+        "mobileBid": 7040,
+        "pcBid": 5100
       },
       {
         "rank": 2,
-        "mobileBid": 4660,
-        "pcBid": 4120
+        "mobileBid": 5120,
+        "pcBid": 4530
       },
       {
         "rank": 3,
-        "mobileBid": 3520,
-        "pcBid": 2920
+        "mobileBid": 3860,
+        "pcBid": 3210
       },
       {
         "rank": 4,
-        "mobileBid": 2370,
-        "pcBid": 2210
+        "mobileBid": 2610,
+        "pcBid": 2430
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1950
+        "pcBid": 2140
       }
     ],
     "햄버거프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 42590,
-        "pcBid": 72860
+        "mobileBid": 46760,
+        "pcBid": 79990
       },
       {
         "rank": 2,
-        "mobileBid": 20250,
-        "pcBid": 45170
+        "mobileBid": 22230,
+        "pcBid": 49590
       },
       {
         "rank": 3,
-        "mobileBid": 16200,
-        "pcBid": 19440
+        "mobileBid": 17790,
+        "pcBid": 21340
       },
       {
         "rank": 4,
-        "mobileBid": 13350,
-        "pcBid": 10550
+        "mobileBid": 14660,
+        "pcBid": 11580
       },
       {
         "rank": 5,
-        "mobileBid": 11460,
-        "pcBid": 8260
+        "mobileBid": 12580,
+        "pcBid": 9070
       }
     ],
     "햄버거전문점": [
       {
         "rank": 1,
-        "mobileBid": 5480,
+        "mobileBid": 6010,
         "pcBid": 70
       },
       {
         "rank": 2,
-        "mobileBid": 2070,
+        "mobileBid": 2280,
         "pcBid": 70
       },
       {
         "rank": 3,
-        "mobileBid": 1790,
+        "mobileBid": 1960,
         "pcBid": 70
       },
       {
         "rank": 4,
-        "mobileBid": 1580,
+        "mobileBid": 1740,
         "pcBid": 70
       },
       {
@@ -135683,104 +135683,104 @@
     "국밥프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 82130,
-        "pcBid": 89510
+        "mobileBid": 90170,
+        "pcBid": 98270
       },
       {
         "rank": 2,
-        "mobileBid": 52120,
-        "pcBid": 35820
+        "mobileBid": 57220,
+        "pcBid": 39320
       },
       {
         "rank": 3,
-        "mobileBid": 24600,
-        "pcBid": 23110
+        "mobileBid": 27010,
+        "pcBid": 25370
       },
       {
         "rank": 4,
-        "mobileBid": 20540,
-        "pcBid": 22440
+        "mobileBid": 22550,
+        "pcBid": 24640
       },
       {
         "rank": 5,
-        "mobileBid": 16200,
-        "pcBid": 19730
+        "mobileBid": 17780,
+        "pcBid": 21660
       }
     ],
     "국밥전문점": [
       {
         "rank": 1,
-        "mobileBid": 8370,
-        "pcBid": 10930
+        "mobileBid": 9190,
+        "pcBid": 12000
       },
       {
         "rank": 2,
-        "mobileBid": 5380,
-        "pcBid": 8320
+        "mobileBid": 5910,
+        "pcBid": 9140
       },
       {
         "rank": 3,
-        "mobileBid": 4590,
-        "pcBid": 6230
+        "mobileBid": 5040,
+        "pcBid": 6840
       },
       {
         "rank": 4,
-        "mobileBid": 4370,
-        "pcBid": 5660
+        "mobileBid": 4790,
+        "pcBid": 6210
       },
       {
         "rank": 5,
-        "mobileBid": 3660,
-        "pcBid": 4450
+        "mobileBid": 4020,
+        "pcBid": 4890
       }
     ],
     "초밥프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 15330,
-        "pcBid": 15710
+        "mobileBid": 16840,
+        "pcBid": 17250
       },
       {
         "rank": 2,
-        "mobileBid": 11140,
-        "pcBid": 9020
+        "mobileBid": 12230,
+        "pcBid": 9900
       },
       {
         "rank": 3,
-        "mobileBid": 10010,
-        "pcBid": 5810
+        "mobileBid": 10990,
+        "pcBid": 6370
       },
       {
         "rank": 4,
-        "mobileBid": 7200,
-        "pcBid": 4350
+        "mobileBid": 7900,
+        "pcBid": 4770
       },
       {
         "rank": 5,
-        "mobileBid": 4890,
-        "pcBid": 3330
+        "mobileBid": 5370,
+        "pcBid": 3660
       }
     ],
     "초밥전문점": [
       {
         "rank": 1,
-        "mobileBid": 3900,
-        "pcBid": 4130
+        "mobileBid": 4280,
+        "pcBid": 4540
       },
       {
         "rank": 2,
-        "mobileBid": 3240,
-        "pcBid": 3790
+        "mobileBid": 3560,
+        "pcBid": 4160
       },
       {
         "rank": 3,
-        "mobileBid": 2120,
-        "pcBid": 2410
+        "mobileBid": 2330,
+        "pcBid": 2650
       },
       {
         "rank": 4,
-        "mobileBid": 1240,
-        "pcBid": 1590
+        "mobileBid": 1360,
+        "pcBid": 1750
       },
       {
         "rank": 5,
@@ -135791,190 +135791,190 @@
     "고기프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 30910,
-        "pcBid": 33610
+        "mobileBid": 33940,
+        "pcBid": 36900
       },
       {
         "rank": 2,
-        "mobileBid": 26400,
-        "pcBid": 28680
+        "mobileBid": 28980,
+        "pcBid": 31480
       },
       {
         "rank": 3,
-        "mobileBid": 24370,
-        "pcBid": 28220
+        "mobileBid": 26760,
+        "pcBid": 30980
       },
       {
         "rank": 4,
-        "mobileBid": 22510,
-        "pcBid": 25730
+        "mobileBid": 24710,
+        "pcBid": 28250
       },
       {
         "rank": 5,
-        "mobileBid": 20760,
-        "pcBid": 21120
+        "mobileBid": 22790,
+        "pcBid": 23190
       }
     ],
     "고기전문점": [
       {
         "rank": 1,
-        "mobileBid": 6990,
-        "pcBid": 7360
+        "mobileBid": 7680,
+        "pcBid": 8090
       },
       {
         "rank": 2,
-        "mobileBid": 6690,
-        "pcBid": 7030
+        "mobileBid": 7350,
+        "pcBid": 7710
       },
       {
         "rank": 3,
-        "mobileBid": 6440,
-        "pcBid": 5440
+        "mobileBid": 7070,
+        "pcBid": 5970
       },
       {
         "rank": 4,
-        "mobileBid": 5910,
-        "pcBid": 3520
+        "mobileBid": 6480,
+        "pcBid": 3860
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3350
+        "pcBid": 3670
       }
     ],
     "삼겹살프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 32480,
-        "pcBid": 29800
+        "mobileBid": 35650,
+        "pcBid": 32720
       },
       {
         "rank": 2,
-        "mobileBid": 27610,
-        "pcBid": 27350
+        "mobileBid": 30310,
+        "pcBid": 30030
       },
       {
         "rank": 3,
-        "mobileBid": 22380,
-        "pcBid": 27170
+        "mobileBid": 24570,
+        "pcBid": 29830
       },
       {
         "rank": 4,
-        "mobileBid": 19130,
-        "pcBid": 20440
+        "mobileBid": 21000,
+        "pcBid": 22440
       },
       {
         "rank": 5,
-        "mobileBid": 15820,
-        "pcBid": 15690
+        "mobileBid": 17370,
+        "pcBid": 17230
       }
     ],
     "삼겹살전문점": [
       {
         "rank": 1,
-        "mobileBid": 17920,
-        "pcBid": 19580
+        "mobileBid": 19680,
+        "pcBid": 21500
       },
       {
         "rank": 2,
-        "mobileBid": 11000,
-        "pcBid": 8290
+        "mobileBid": 12080,
+        "pcBid": 9100
       },
       {
         "rank": 3,
-        "mobileBid": 8160,
-        "pcBid": 7680
+        "mobileBid": 8960,
+        "pcBid": 8430
       },
       {
         "rank": 4,
-        "mobileBid": 7040,
-        "pcBid": 6790
+        "mobileBid": 7720,
+        "pcBid": 7460
       },
       {
         "rank": 5,
-        "mobileBid": 6620,
-        "pcBid": 6480
+        "mobileBid": 7260,
+        "pcBid": 7120
       }
     ],
     "돼지고기프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 11250,
-        "pcBid": 15450
+        "mobileBid": 12360,
+        "pcBid": 16960
       },
       {
         "rank": 2,
-        "mobileBid": 11190,
-        "pcBid": 11160
+        "mobileBid": 12290,
+        "pcBid": 12260
       },
       {
         "rank": 3,
-        "mobileBid": 10270,
-        "pcBid": 11160
+        "mobileBid": 11280,
+        "pcBid": 12250
       },
       {
         "rank": 4,
-        "mobileBid": 9470,
-        "pcBid": 10690
+        "mobileBid": 10400,
+        "pcBid": 11730
       },
       {
         "rank": 5,
-        "mobileBid": 8960,
-        "pcBid": 8900
+        "mobileBid": 9840,
+        "pcBid": 9770
       }
     ],
     "돼지고기전문점": [
       {
         "rank": 1,
-        "mobileBid": 9590,
-        "pcBid": 6100
+        "mobileBid": 10530,
+        "pcBid": 6700
       },
       {
         "rank": 2,
-        "mobileBid": 9300,
-        "pcBid": 3940
+        "mobileBid": 10210,
+        "pcBid": 4320
       },
       {
         "rank": 3,
-        "mobileBid": 7780,
-        "pcBid": 3540
+        "mobileBid": 8540,
+        "pcBid": 3890
       },
       {
         "rank": 4,
-        "mobileBid": 5860,
-        "pcBid": 3010
+        "mobileBid": 6430,
+        "pcBid": 3300
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 2050
+        "pcBid": 2260
       }
     ],
     "요식업프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 36060,
-        "pcBid": 36400
+        "mobileBid": 39580,
+        "pcBid": 39970
       },
       {
         "rank": 2,
-        "mobileBid": 28240,
-        "pcBid": 29750
+        "mobileBid": 31000,
+        "pcBid": 32660
       },
       {
         "rank": 3,
-        "mobileBid": 20030,
-        "pcBid": 24300
+        "mobileBid": 21990,
+        "pcBid": 26680
       },
       {
         "rank": 4,
-        "mobileBid": 19310,
-        "pcBid": 20550
+        "mobileBid": 21200,
+        "pcBid": 22560
       },
       {
         "rank": 5,
-        "mobileBid": 18050,
-        "pcBid": 18230
+        "mobileBid": 19820,
+        "pcBid": 20010
       }
     ],
     "요식업전문점": [
@@ -136007,28 +136007,28 @@
     "배달전문프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 12800,
-        "pcBid": 13510
+        "mobileBid": 14050,
+        "pcBid": 14830
       },
       {
         "rank": 2,
-        "mobileBid": 12780,
-        "pcBid": 12530
+        "mobileBid": 14030,
+        "pcBid": 13750
       },
       {
         "rank": 3,
-        "mobileBid": 11680,
-        "pcBid": 11580
+        "mobileBid": 12820,
+        "pcBid": 12720
       },
       {
         "rank": 4,
-        "mobileBid": 11610,
-        "pcBid": 10650
+        "mobileBid": 12740,
+        "pcBid": 11690
       },
       {
         "rank": 5,
-        "mobileBid": 11560,
-        "pcBid": 9630
+        "mobileBid": 12690,
+        "pcBid": 10580
       }
     ],
     "배달전문전문점": [
@@ -136061,109 +136061,109 @@
     "배달프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 16400,
-        "pcBid": 16760
+        "mobileBid": 18010,
+        "pcBid": 18400
       },
       {
         "rank": 2,
-        "mobileBid": 15350,
-        "pcBid": 16220
+        "mobileBid": 16850,
+        "pcBid": 17800
       },
       {
         "rank": 3,
-        "mobileBid": 13890,
-        "pcBid": 14670
+        "mobileBid": 15250,
+        "pcBid": 16100
       },
       {
         "rank": 4,
-        "mobileBid": 12120,
-        "pcBid": 13020
+        "mobileBid": 13310,
+        "pcBid": 14290
       },
       {
         "rank": 5,
-        "mobileBid": 11630,
-        "pcBid": 12320
+        "mobileBid": 12770,
+        "pcBid": 13530
       }
     ],
     "배달전문점": [
       {
         "rank": 1,
-        "mobileBid": 13260,
-        "pcBid": 15420
+        "mobileBid": 14560,
+        "pcBid": 16930
       },
       {
         "rank": 2,
-        "mobileBid": 9720,
-        "pcBid": 14200
+        "mobileBid": 10680,
+        "pcBid": 15590
       },
       {
         "rank": 3,
-        "mobileBid": 8850,
-        "pcBid": 12250
+        "mobileBid": 9720,
+        "pcBid": 13450
       },
       {
         "rank": 4,
-        "mobileBid": 7490,
-        "pcBid": 11070
+        "mobileBid": 8220,
+        "pcBid": 12160
       },
       {
         "rank": 5,
-        "mobileBid": 6710,
-        "pcBid": 9000
+        "mobileBid": 7360,
+        "pcBid": 9880
       }
     ],
     "치킨프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 21920,
-        "pcBid": 22110
+        "mobileBid": 24060,
+        "pcBid": 24280
       },
       {
         "rank": 2,
-        "mobileBid": 21700,
-        "pcBid": 21110
+        "mobileBid": 23820,
+        "pcBid": 23180
       },
       {
         "rank": 3,
-        "mobileBid": 21560,
-        "pcBid": 20690
+        "mobileBid": 23670,
+        "pcBid": 22720
       },
       {
         "rank": 4,
-        "mobileBid": 19840,
-        "pcBid": 19780
+        "mobileBid": 21780,
+        "pcBid": 21710
       },
       {
         "rank": 5,
-        "mobileBid": 16980,
-        "pcBid": 19740
+        "mobileBid": 18640,
+        "pcBid": 21670
       }
     ],
     "치킨프랜차이즈창업비용": [
       {
         "rank": 1,
-        "mobileBid": 12130,
-        "pcBid": 10020
+        "mobileBid": 13320,
+        "pcBid": 11000
       },
       {
         "rank": 2,
-        "mobileBid": 7100,
-        "pcBid": 9680
+        "mobileBid": 7800,
+        "pcBid": 10630
       },
       {
         "rank": 3,
-        "mobileBid": 6130,
-        "pcBid": 6940
+        "mobileBid": 6720,
+        "pcBid": 7620
       },
       {
         "rank": 4,
-        "mobileBid": 5430,
-        "pcBid": 6750
+        "mobileBid": 5960,
+        "pcBid": 7410
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 6240
+        "pcBid": 6850
       }
     ],
     "치킨프랜차이즈창업문의": [
@@ -136197,27 +136197,27 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 12430
+        "pcBid": 13650
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 9620
+        "pcBid": 10560
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 9020
+        "pcBid": 9900
       },
       {
         "rank": 4,
         "mobileBid": 70,
-        "pcBid": 8000
+        "pcBid": 8780
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 4470
+        "pcBid": 4910
       }
     ],
     "치킨전문점창업비용": [
@@ -136278,27 +136278,27 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 5530
+        "pcBid": 6080
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 5370
+        "pcBid": 5890
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 1680
+        "pcBid": 1840
       },
       {
         "rank": 4,
         "mobileBid": 70,
-        "pcBid": 1520
+        "pcBid": 1670
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1290
+        "pcBid": 1410
       }
     ],
     "일식프랜차이즈창업비용": [
@@ -136439,28 +136439,28 @@
     "한식프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 23160,
-        "pcBid": 19800
+        "mobileBid": 25430,
+        "pcBid": 21740
       },
       {
         "rank": 2,
-        "mobileBid": 21750,
-        "pcBid": 13850
+        "mobileBid": 23880,
+        "pcBid": 15210
       },
       {
         "rank": 3,
-        "mobileBid": 17170,
-        "pcBid": 13620
+        "mobileBid": 18850,
+        "pcBid": 14950
       },
       {
         "rank": 4,
-        "mobileBid": 15600,
-        "pcBid": 13060
+        "mobileBid": 17120,
+        "pcBid": 14340
       },
       {
         "rank": 5,
-        "mobileBid": 14400,
-        "pcBid": 12550
+        "mobileBid": 15810,
+        "pcBid": 13780
       }
     ],
     "한식프랜차이즈창업비용": [
@@ -136602,7 +136602,7 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 1120
+        "pcBid": 1230
       },
       {
         "rank": 2,
@@ -136763,7 +136763,7 @@
     "파스타프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 1430,
+        "mobileBid": 1570,
         "pcBid": 70
       },
       {
@@ -136925,28 +136925,28 @@
     "피자프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 9050,
-        "pcBid": 8680
+        "mobileBid": 9940,
+        "pcBid": 9530
       },
       {
         "rank": 2,
-        "mobileBid": 5650,
-        "pcBid": 7210
+        "mobileBid": 6210,
+        "pcBid": 7910
       },
       {
         "rank": 3,
-        "mobileBid": 4320,
-        "pcBid": 6330
+        "mobileBid": 4740,
+        "pcBid": 6950
       },
       {
         "rank": 4,
-        "mobileBid": 4150,
-        "pcBid": 5380
+        "mobileBid": 4560,
+        "pcBid": 5910
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 4330
+        "pcBid": 4750
       }
     ],
     "피자프랜차이즈창업비용": [
@@ -137087,28 +137087,28 @@
     "햄버거프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 7660,
-        "pcBid": 2680
+        "mobileBid": 8410,
+        "pcBid": 2940
       },
       {
         "rank": 2,
-        "mobileBid": 2870,
-        "pcBid": 2240
+        "mobileBid": 3150,
+        "pcBid": 2460
       },
       {
         "rank": 3,
-        "mobileBid": 2680,
-        "pcBid": 2090
+        "mobileBid": 2940,
+        "pcBid": 2300
       },
       {
         "rank": 4,
-        "mobileBid": 2040,
-        "pcBid": 2040
+        "mobileBid": 2240,
+        "pcBid": 2240
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1650
+        "pcBid": 1810
       }
     ],
     "햄버거프랜차이즈창업비용": [
@@ -137249,28 +137249,28 @@
     "국밥프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 10940,
-        "pcBid": 22460
+        "mobileBid": 12010,
+        "pcBid": 24660
       },
       {
         "rank": 2,
-        "mobileBid": 7590,
-        "pcBid": 13800
+        "mobileBid": 8330,
+        "pcBid": 15150
       },
       {
         "rank": 3,
-        "mobileBid": 4920,
-        "pcBid": 12620
+        "mobileBid": 5400,
+        "pcBid": 13850
       },
       {
         "rank": 4,
-        "mobileBid": 4640,
-        "pcBid": 5910
+        "mobileBid": 5090,
+        "pcBid": 6490
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 4920
+        "pcBid": 5400
       }
     ],
     "국밥프랜차이즈창업비용": [
@@ -137412,22 +137412,22 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 5370
+        "pcBid": 5890
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 3580
+        "pcBid": 3930
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 1330
+        "pcBid": 1460
       },
       {
         "rank": 4,
         "mobileBid": 70,
-        "pcBid": 1170
+        "pcBid": 1280
       },
       {
         "rank": 5,
@@ -137573,28 +137573,28 @@
     "고기프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 14040,
-        "pcBid": 17100
+        "mobileBid": 15420,
+        "pcBid": 18780
       },
       {
         "rank": 2,
-        "mobileBid": 13210,
-        "pcBid": 12940
+        "mobileBid": 14500,
+        "pcBid": 14210
       },
       {
         "rank": 3,
-        "mobileBid": 11350,
-        "pcBid": 12750
+        "mobileBid": 12460,
+        "pcBid": 13990
       },
       {
         "rank": 4,
-        "mobileBid": 11320,
-        "pcBid": 12530
+        "mobileBid": 12430,
+        "pcBid": 13750
       },
       {
         "rank": 5,
-        "mobileBid": 10490,
-        "pcBid": 11780
+        "mobileBid": 11510,
+        "pcBid": 12930
       }
     ],
     "고기프랜차이즈창업비용": [
@@ -137735,22 +137735,22 @@
     "삼겹살프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 11330,
+        "mobileBid": 12440,
         "pcBid": 70
       },
       {
         "rank": 2,
-        "mobileBid": 11190,
+        "mobileBid": 12290,
         "pcBid": 70
       },
       {
         "rank": 3,
-        "mobileBid": 3570,
+        "mobileBid": 3910,
         "pcBid": 70
       },
       {
         "rank": 4,
-        "mobileBid": 2320,
+        "mobileBid": 2550,
         "pcBid": 70
       },
       {
@@ -138060,17 +138060,17 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 12750
+        "pcBid": 13990
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 4470
+        "pcBid": 4910
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 3840
+        "pcBid": 4220
       },
       {
         "rank": 4,
@@ -138221,7 +138221,7 @@
     "배달전문프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 4790,
+        "mobileBid": 5260,
         "pcBid": 70
       },
       {
@@ -138383,28 +138383,28 @@
     "배달프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 6980,
-        "pcBid": 8830
+        "mobileBid": 7660,
+        "pcBid": 9690
       },
       {
         "rank": 2,
-        "mobileBid": 6660,
-        "pcBid": 7990
+        "mobileBid": 7310,
+        "pcBid": 8770
       },
       {
         "rank": 3,
-        "mobileBid": 6610,
-        "pcBid": 7210
+        "mobileBid": 7260,
+        "pcBid": 7910
       },
       {
         "rank": 4,
-        "mobileBid": 6290,
-        "pcBid": 6820
+        "mobileBid": 6910,
+        "pcBid": 7490
       },
       {
         "rank": 5,
-        "mobileBid": 5240,
-        "pcBid": 5170
+        "mobileBid": 5750,
+        "pcBid": 5670
       }
     ],
     "배달프랜차이즈창업비용": [
@@ -138464,55 +138464,55 @@
     "배달전문점창업": [
       {
         "rank": 1,
-        "mobileBid": 11040,
-        "pcBid": 13080
+        "mobileBid": 12120,
+        "pcBid": 14360
       },
       {
         "rank": 2,
-        "mobileBid": 11030,
-        "pcBid": 12330
+        "mobileBid": 12110,
+        "pcBid": 13530
       },
       {
         "rank": 3,
-        "mobileBid": 10960,
-        "pcBid": 12050
+        "mobileBid": 12030,
+        "pcBid": 13230
       },
       {
         "rank": 4,
-        "mobileBid": 10880,
-        "pcBid": 11970
+        "mobileBid": 11940,
+        "pcBid": 13140
       },
       {
         "rank": 5,
-        "mobileBid": 10530,
-        "pcBid": 11910
+        "mobileBid": 11560,
+        "pcBid": 13080
       }
     ],
     "배달전문점창업비용": [
       {
         "rank": 1,
-        "mobileBid": 10110,
-        "pcBid": 10270
+        "mobileBid": 11100,
+        "pcBid": 11270
       },
       {
         "rank": 2,
-        "mobileBid": 7980,
-        "pcBid": 8590
+        "mobileBid": 8760,
+        "pcBid": 9430
       },
       {
         "rank": 3,
-        "mobileBid": 5520,
-        "pcBid": 5170
+        "mobileBid": 6060,
+        "pcBid": 5670
       },
       {
         "rank": 4,
-        "mobileBid": 4900,
-        "pcBid": 4610
+        "mobileBid": 5380,
+        "pcBid": 5060
       },
       {
         "rank": 5,
-        "mobileBid": 4770,
-        "pcBid": 4340
+        "mobileBid": 5240,
+        "pcBid": 4760
       }
     ],
     "배달전문점창업문의": [
@@ -138545,28 +138545,28 @@
     "중국집창업비용": [
       {
         "rank": 1,
-        "mobileBid": 4810,
-        "pcBid": 4930
+        "mobileBid": 5290,
+        "pcBid": 5410
       },
       {
         "rank": 2,
-        "mobileBid": 4560,
-        "pcBid": 4210
+        "mobileBid": 5010,
+        "pcBid": 4620
       },
       {
         "rank": 3,
-        "mobileBid": 4380,
-        "pcBid": 4090
+        "mobileBid": 4810,
+        "pcBid": 4500
       },
       {
         "rank": 4,
-        "mobileBid": 3980,
-        "pcBid": 3780
+        "mobileBid": 4360,
+        "pcBid": 4150
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3280
+        "pcBid": 3600
       }
     ],
     "중국집창업문의": [
@@ -138599,28 +138599,28 @@
     "중식집창업": [
       {
         "rank": 1,
-        "mobileBid": 3460,
-        "pcBid": 3100
+        "mobileBid": 3790,
+        "pcBid": 3400
       },
       {
         "rank": 2,
-        "mobileBid": 3220,
-        "pcBid": 2420
+        "mobileBid": 3540,
+        "pcBid": 2660
       },
       {
         "rank": 3,
-        "mobileBid": 2610,
-        "pcBid": 2050
+        "mobileBid": 2870,
+        "pcBid": 2260
       },
       {
         "rank": 4,
-        "mobileBid": 1990,
-        "pcBid": 1760
+        "mobileBid": 2190,
+        "pcBid": 1930
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1590
+        "pcBid": 1740
       }
     ],
     "중식집창업비용": [
@@ -138708,12 +138708,12 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 4480
+        "pcBid": 4920
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 1280
+        "pcBid": 1400
       },
       {
         "rank": 3,
@@ -138734,28 +138734,28 @@
     "짬뽕집창업": [
       {
         "rank": 1,
-        "mobileBid": 17900,
-        "pcBid": 7750
+        "mobileBid": 19650,
+        "pcBid": 8510
       },
       {
         "rank": 2,
-        "mobileBid": 2170,
-        "pcBid": 6480
+        "mobileBid": 2390,
+        "pcBid": 7110
       },
       {
         "rank": 3,
-        "mobileBid": 1700,
-        "pcBid": 5430
+        "mobileBid": 1860,
+        "pcBid": 5960
       },
       {
         "rank": 4,
-        "mobileBid": 1610,
-        "pcBid": 3040
+        "mobileBid": 1760,
+        "pcBid": 3340
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 2820
+        "pcBid": 3100
       }
     ],
     "짬뽕집창업비용": [
@@ -138815,28 +138815,28 @@
     "중화요리창업": [
       {
         "rank": 1,
-        "mobileBid": 17100,
-        "pcBid": 4550
+        "mobileBid": 18780,
+        "pcBid": 5000
       },
       {
         "rank": 2,
-        "mobileBid": 4970,
-        "pcBid": 4470
+        "mobileBid": 5460,
+        "pcBid": 4910
       },
       {
         "rank": 3,
-        "mobileBid": 4940,
-        "pcBid": 4380
+        "mobileBid": 5420,
+        "pcBid": 4810
       },
       {
         "rank": 4,
-        "mobileBid": 4460,
-        "pcBid": 4270
+        "mobileBid": 4900,
+        "pcBid": 4690
       },
       {
         "rank": 5,
-        "mobileBid": 4300,
-        "pcBid": 3550
+        "mobileBid": 4720,
+        "pcBid": 3890
       }
     ],
     "중화요리창업비용": [
@@ -138977,28 +138977,28 @@
     "짜장면창업": [
       {
         "rank": 1,
-        "mobileBid": 5020,
-        "pcBid": 7130
+        "mobileBid": 5510,
+        "pcBid": 7820
       },
       {
         "rank": 2,
-        "mobileBid": 4270,
-        "pcBid": 4440
+        "mobileBid": 4690,
+        "pcBid": 4880
       },
       {
         "rank": 3,
-        "mobileBid": 3920,
-        "pcBid": 4200
+        "mobileBid": 4310,
+        "pcBid": 4610
       },
       {
         "rank": 4,
-        "mobileBid": 3640,
-        "pcBid": 3130
+        "mobileBid": 3990,
+        "pcBid": 3430
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3100
+        "pcBid": 3400
       }
     ],
     "짜장면창업비용": [
@@ -139058,28 +139058,28 @@
     "중식창업비용": [
       {
         "rank": 1,
-        "mobileBid": 4920,
-        "pcBid": 7160
+        "mobileBid": 5400,
+        "pcBid": 7860
       },
       {
         "rank": 2,
-        "mobileBid": 4710,
-        "pcBid": 5370
+        "mobileBid": 5170,
+        "pcBid": 5890
       },
       {
         "rank": 3,
-        "mobileBid": 3580,
-        "pcBid": 4470
+        "mobileBid": 3930,
+        "pcBid": 4910
       },
       {
         "rank": 4,
-        "mobileBid": 2060,
-        "pcBid": 3060
+        "mobileBid": 2270,
+        "pcBid": 3360
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3060
+        "pcBid": 3360
       }
     ],
     "중식창업문의": [
@@ -139112,12 +139112,12 @@
     "배달중식창업": [
       {
         "rank": 1,
-        "mobileBid": 3580,
+        "mobileBid": 3930,
         "pcBid": 70
       },
       {
         "rank": 2,
-        "mobileBid": 1080,
+        "mobileBid": 1190,
         "pcBid": 70
       },
       {
@@ -139436,12 +139436,12 @@
     "짬뽕전문점창업": [
       {
         "rank": 1,
-        "mobileBid": 3100,
+        "mobileBid": 3400,
         "pcBid": 70
       },
       {
         "rank": 2,
-        "mobileBid": 1160,
+        "mobileBid": 1270,
         "pcBid": 70
       },
       {
@@ -139598,28 +139598,28 @@
     "중식프랜차이즈창업": [
       {
         "rank": 1,
-        "mobileBid": 5070,
-        "pcBid": 13580
+        "mobileBid": 5560,
+        "pcBid": 14910
       },
       {
         "rank": 2,
-        "mobileBid": 3150,
-        "pcBid": 5980
+        "mobileBid": 3460,
+        "pcBid": 6570
       },
       {
         "rank": 3,
-        "mobileBid": 2950,
-        "pcBid": 4380
+        "mobileBid": 3240,
+        "pcBid": 4810
       },
       {
         "rank": 4,
-        "mobileBid": 2630,
-        "pcBid": 3900
+        "mobileBid": 2890,
+        "pcBid": 4280
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3430
+        "pcBid": 3770
       }
     ],
     "중식프랜차이즈창업비용": [
@@ -139760,55 +139760,55 @@
     "마라탕창업": [
       {
         "rank": 1,
-        "mobileBid": 16640,
-        "pcBid": 17740
+        "mobileBid": 18270,
+        "pcBid": 19470
       },
       {
         "rank": 2,
-        "mobileBid": 15800,
-        "pcBid": 15130
+        "mobileBid": 17350,
+        "pcBid": 16610
       },
       {
         "rank": 3,
-        "mobileBid": 15400,
-        "pcBid": 14890
+        "mobileBid": 16900,
+        "pcBid": 16340
       },
       {
         "rank": 4,
-        "mobileBid": 15020,
-        "pcBid": 14130
+        "mobileBid": 16490,
+        "pcBid": 15510
       },
       {
         "rank": 5,
-        "mobileBid": 14320,
-        "pcBid": 13090
+        "mobileBid": 15720,
+        "pcBid": 14370
       }
     ],
     "마라탕창업비용": [
       {
         "rank": 1,
-        "mobileBid": 7790,
-        "pcBid": 7640
+        "mobileBid": 8560,
+        "pcBid": 8390
       },
       {
         "rank": 2,
-        "mobileBid": 7660,
-        "pcBid": 7240
+        "mobileBid": 8410,
+        "pcBid": 7950
       },
       {
         "rank": 3,
-        "mobileBid": 6820,
-        "pcBid": 6880
+        "mobileBid": 7480,
+        "pcBid": 7560
       },
       {
         "rank": 4,
-        "mobileBid": 6420,
-        "pcBid": 5980
+        "mobileBid": 7050,
+        "pcBid": 6560
       },
       {
         "rank": 5,
-        "mobileBid": 6120,
-        "pcBid": 4460
+        "mobileBid": 6710,
+        "pcBid": 4890
       }
     ],
     "마라탕창업문의": [
@@ -139841,55 +139841,55 @@
     "라멘창업": [
       {
         "rank": 1,
-        "mobileBid": 9920,
-        "pcBid": 9730
+        "mobileBid": 10900,
+        "pcBid": 10690
       },
       {
         "rank": 2,
-        "mobileBid": 9370,
-        "pcBid": 8930
+        "mobileBid": 10280,
+        "pcBid": 9800
       },
       {
         "rank": 3,
-        "mobileBid": 7990,
-        "pcBid": 7730
+        "mobileBid": 8780,
+        "pcBid": 8480
       },
       {
         "rank": 4,
-        "mobileBid": 7510,
-        "pcBid": 7280
+        "mobileBid": 8250,
+        "pcBid": 7990
       },
       {
         "rank": 5,
-        "mobileBid": 6570,
-        "pcBid": 6430
+        "mobileBid": 7220,
+        "pcBid": 7060
       }
     ],
     "라멘창업비용": [
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 3380
+        "pcBid": 3710
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 3310
+        "pcBid": 3630
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 2540
+        "pcBid": 2790
       },
       {
         "rank": 4,
         "mobileBid": 70,
-        "pcBid": 1610
+        "pcBid": 1760
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1570
+        "pcBid": 1720
       }
     ],
     "라멘창업문의": [
@@ -139923,12 +139923,12 @@
       {
         "rank": 1,
         "mobileBid": 190,
-        "pcBid": 5340
+        "pcBid": 5860
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 2790
+        "pcBid": 3060
       },
       {
         "rank": 3,
@@ -140084,55 +140084,55 @@
     "쌀국수창업": [
       {
         "rank": 1,
-        "mobileBid": 8410,
-        "pcBid": 9840
+        "mobileBid": 9230,
+        "pcBid": 10800
       },
       {
         "rank": 2,
-        "mobileBid": 8370,
-        "pcBid": 9260
+        "mobileBid": 9190,
+        "pcBid": 10160
       },
       {
         "rank": 3,
-        "mobileBid": 8190,
-        "pcBid": 8590
+        "mobileBid": 9000,
+        "pcBid": 9430
       },
       {
         "rank": 4,
-        "mobileBid": 7880,
-        "pcBid": 8590
+        "mobileBid": 8650,
+        "pcBid": 9430
       },
       {
         "rank": 5,
-        "mobileBid": 7760,
-        "pcBid": 8580
+        "mobileBid": 8530,
+        "pcBid": 9420
       }
     ],
     "쌀국수창업비용": [
       {
         "rank": 1,
-        "mobileBid": 4920,
-        "pcBid": 5810
+        "mobileBid": 5400,
+        "pcBid": 6380
       },
       {
         "rank": 2,
-        "mobileBid": 4590,
-        "pcBid": 4370
+        "mobileBid": 5040,
+        "pcBid": 4800
       },
       {
         "rank": 3,
-        "mobileBid": 4550,
-        "pcBid": 4370
+        "mobileBid": 4990,
+        "pcBid": 4800
       },
       {
         "rank": 4,
-        "mobileBid": 3660,
-        "pcBid": 3250
+        "mobileBid": 4020,
+        "pcBid": 3570
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 3130
+        "pcBid": 3430
       }
     ],
     "쌀국수창업문의": [
@@ -140246,62 +140246,62 @@
     "칼국수창업": [
       {
         "rank": 1,
-        "mobileBid": 9180,
-        "pcBid": 10500
+        "mobileBid": 10080,
+        "pcBid": 11520
       },
       {
         "rank": 2,
-        "mobileBid": 9000,
-        "pcBid": 8630
+        "mobileBid": 9890,
+        "pcBid": 9480
       },
       {
         "rank": 3,
-        "mobileBid": 8960,
-        "pcBid": 7630
+        "mobileBid": 9840,
+        "pcBid": 8370
       },
       {
         "rank": 4,
-        "mobileBid": 8530,
-        "pcBid": 7420
+        "mobileBid": 9370,
+        "pcBid": 8140
       },
       {
         "rank": 5,
-        "mobileBid": 8250,
-        "pcBid": 7280
+        "mobileBid": 9060,
+        "pcBid": 7990
       }
     ],
     "칼국수창업비용": [
       {
         "rank": 1,
-        "mobileBid": 8810,
-        "pcBid": 7080
+        "mobileBid": 9670,
+        "pcBid": 7770
       },
       {
         "rank": 2,
-        "mobileBid": 7560,
-        "pcBid": 5530
+        "mobileBid": 8300,
+        "pcBid": 6080
       },
       {
         "rank": 3,
-        "mobileBid": 6050,
-        "pcBid": 5400
+        "mobileBid": 6640,
+        "pcBid": 5920
       },
       {
         "rank": 4,
-        "mobileBid": 6010,
-        "pcBid": 5310
+        "mobileBid": 6600,
+        "pcBid": 5830
       },
       {
         "rank": 5,
-        "mobileBid": 4950,
-        "pcBid": 4840
+        "mobileBid": 5430,
+        "pcBid": 5310
       }
     ],
     "칼국수창업문의": [
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 2680
+        "pcBid": 2940
       },
       {
         "rank": 2,
@@ -140409,17 +140409,17 @@
       {
         "rank": 1,
         "mobileBid": 1030,
-        "pcBid": 3200
+        "pcBid": 3510
       },
       {
         "rank": 2,
         "mobileBid": 480,
-        "pcBid": 2380
+        "pcBid": 2620
       },
       {
         "rank": 3,
         "mobileBid": 180,
-        "pcBid": 1040
+        "pcBid": 1140
       },
       {
         "rank": 4,
@@ -140570,55 +140570,55 @@
     "해장국창업": [
       {
         "rank": 1,
-        "mobileBid": 87120,
-        "pcBid": 89510
+        "mobileBid": 95640,
+        "pcBid": 98270
       },
       {
         "rank": 2,
-        "mobileBid": 70370,
-        "pcBid": 72800
+        "mobileBid": 77260,
+        "pcBid": 79920
       },
       {
         "rank": 3,
-        "mobileBid": 46390,
-        "pcBid": 30630
+        "mobileBid": 50930,
+        "pcBid": 33630
       },
       {
         "rank": 4,
-        "mobileBid": 28480,
-        "pcBid": 24490
+        "mobileBid": 31270,
+        "pcBid": 26890
       },
       {
         "rank": 5,
-        "mobileBid": 22800,
-        "pcBid": 22150
+        "mobileBid": 25030,
+        "pcBid": 24310
       }
     ],
     "해장국창업비용": [
       {
         "rank": 1,
-        "mobileBid": 20670,
-        "pcBid": 89510
+        "mobileBid": 22700,
+        "pcBid": 98270
       },
       {
         "rank": 2,
-        "mobileBid": 10010,
-        "pcBid": 16200
+        "mobileBid": 10990,
+        "pcBid": 17780
       },
       {
         "rank": 3,
-        "mobileBid": 7490,
-        "pcBid": 9920
+        "mobileBid": 8220,
+        "pcBid": 10890
       },
       {
         "rank": 4,
-        "mobileBid": 6630,
-        "pcBid": 5730
+        "mobileBid": 7280,
+        "pcBid": 6290
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 5640
+        "pcBid": 6190
       }
     ],
     "해장국창업문의": [
@@ -140652,27 +140652,27 @@
       {
         "rank": 1,
         "mobileBid": 70,
-        "pcBid": 5010
+        "pcBid": 5500
       },
       {
         "rank": 2,
         "mobileBid": 70,
-        "pcBid": 3480
+        "pcBid": 3820
       },
       {
         "rank": 3,
         "mobileBid": 70,
-        "pcBid": 2120
+        "pcBid": 2330
       },
       {
         "rank": 4,
         "mobileBid": 70,
-        "pcBid": 1220
+        "pcBid": 1340
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1050
+        "pcBid": 1150
       }
     ],
     "해장국프랜차이즈창업비용": [
@@ -140813,185 +140813,185 @@
     "중국집체인점": [
       {
         "rank": 1,
-        "mobileBid": 17160,
-        "pcBid": 7580
+        "mobileBid": 18840,
+        "pcBid": 8330
       },
       {
         "rank": 2,
-        "mobileBid": 5430,
-        "pcBid": 6330
+        "mobileBid": 5970,
+        "pcBid": 6950
       },
       {
         "rank": 3,
-        "mobileBid": 4040,
-        "pcBid": 4330
+        "mobileBid": 4430,
+        "pcBid": 4750
       },
       {
         "rank": 4,
-        "mobileBid": 2950,
-        "pcBid": 3100
+        "mobileBid": 3240,
+        "pcBid": 3400
       },
       {
         "rank": 5,
-        "mobileBid": 1620,
-        "pcBid": 2040
+        "mobileBid": 1780,
+        "pcBid": 2240
       }
     ],
     "짬뽕체인점": [
       {
         "rank": 1,
-        "mobileBid": 16980,
-        "pcBid": 6730
+        "mobileBid": 18650,
+        "pcBid": 7390
       },
       {
         "rank": 2,
-        "mobileBid": 3980,
-        "pcBid": 4340
+        "mobileBid": 4370,
+        "pcBid": 4760
       },
       {
         "rank": 3,
-        "mobileBid": 2450,
-        "pcBid": 2100
+        "mobileBid": 2700,
+        "pcBid": 2300
       },
       {
         "rank": 4,
-        "mobileBid": 1750,
-        "pcBid": 1540
+        "mobileBid": 1920,
+        "pcBid": 1690
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1360
+        "pcBid": 1500
       }
     ],
     "중식프렌차이즈": [
       {
         "rank": 1,
-        "mobileBid": 7160,
-        "pcBid": 6170
+        "mobileBid": 7860,
+        "pcBid": 6770
       },
       {
         "rank": 2,
-        "mobileBid": 6050,
-        "pcBid": 4470
+        "mobileBid": 6640,
+        "pcBid": 4910
       },
       {
         "rank": 3,
-        "mobileBid": 4470,
-        "pcBid": 3840
+        "mobileBid": 4910,
+        "pcBid": 4220
       },
       {
         "rank": 4,
-        "mobileBid": 4270,
-        "pcBid": 2610
+        "mobileBid": 4690,
+        "pcBid": 2870
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1790
+        "pcBid": 1960
       }
     ],
     "중식당프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 18030,
-        "pcBid": 14530
+        "mobileBid": 19790,
+        "pcBid": 15950
       },
       {
         "rank": 2,
-        "mobileBid": 12330,
-        "pcBid": 9750
+        "mobileBid": 13540,
+        "pcBid": 10700
       },
       {
         "rank": 3,
-        "mobileBid": 5570,
-        "pcBid": 5620
+        "mobileBid": 6120,
+        "pcBid": 6170
       },
       {
         "rank": 4,
-        "mobileBid": 3490,
-        "pcBid": 5300
+        "mobileBid": 3830,
+        "pcBid": 5820
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 4250
+        "pcBid": 4670
       }
     ],
     "중식체인점": [
       {
         "rank": 1,
-        "mobileBid": 5960,
-        "pcBid": 5430
+        "mobileBid": 6550,
+        "pcBid": 5960
       },
       {
         "rank": 2,
-        "mobileBid": 5660,
-        "pcBid": 5100
+        "mobileBid": 6220,
+        "pcBid": 5600
       },
       {
         "rank": 3,
-        "mobileBid": 5320,
-        "pcBid": 4600
+        "mobileBid": 5840,
+        "pcBid": 5050
       },
       {
         "rank": 4,
-        "mobileBid": 4110,
-        "pcBid": 3860
+        "mobileBid": 4510,
+        "pcBid": 4240
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 2660
+        "pcBid": 2920
       }
     ],
     "탕수육창업": [
       {
         "rank": 1,
-        "mobileBid": 17900,
-        "pcBid": 4580
+        "mobileBid": 19650,
+        "pcBid": 5020
       },
       {
         "rank": 2,
-        "mobileBid": 5640,
-        "pcBid": 4080
+        "mobileBid": 6190,
+        "pcBid": 4480
       },
       {
         "rank": 3,
-        "mobileBid": 4830,
-        "pcBid": 3670
+        "mobileBid": 5310,
+        "pcBid": 4030
       },
       {
         "rank": 4,
-        "mobileBid": 2150,
-        "pcBid": 2070
+        "mobileBid": 2360,
+        "pcBid": 2270
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1730
+        "pcBid": 1890
       }
     ],
     "짬뽕프렌차이즈": [
       {
         "rank": 1,
-        "mobileBid": 11320,
-        "pcBid": 17900
+        "mobileBid": 12430,
+        "pcBid": 19650
       },
       {
         "rank": 2,
-        "mobileBid": 2570,
-        "pcBid": 4470
+        "mobileBid": 2820,
+        "pcBid": 4910
       },
       {
         "rank": 3,
-        "mobileBid": 1300,
-        "pcBid": 1790
+        "mobileBid": 1430,
+        "pcBid": 1960
       },
       {
         "rank": 4,
-        "mobileBid": 1040,
-        "pcBid": 1520
+        "mobileBid": 1140,
+        "pcBid": 1670
       },
       {
         "rank": 5,
@@ -141002,23 +141002,23 @@
     "프랜차이즈중국집": [
       {
         "rank": 1,
-        "mobileBid": 3190,
-        "pcBid": 2070
+        "mobileBid": 3500,
+        "pcBid": 2270
       },
       {
         "rank": 2,
-        "mobileBid": 1520,
-        "pcBid": 2070
+        "mobileBid": 1670,
+        "pcBid": 2270
       },
       {
         "rank": 3,
-        "mobileBid": 1430,
-        "pcBid": 1200
+        "mobileBid": 1570,
+        "pcBid": 1320
       },
       {
         "rank": 4,
-        "mobileBid": 1110,
-        "pcBid": 1020
+        "mobileBid": 1210,
+        "pcBid": 1130
       },
       {
         "rank": 5,
@@ -141029,17 +141029,17 @@
     "중식브랜드": [
       {
         "rank": 1,
-        "mobileBid": 2320,
-        "pcBid": 2710
+        "mobileBid": 2540,
+        "pcBid": 2980
       },
       {
         "rank": 2,
-        "mobileBid": 1580,
-        "pcBid": 1480
+        "mobileBid": 1740,
+        "pcBid": 1620
       },
       {
         "rank": 3,
-        "mobileBid": 1050,
+        "mobileBid": 1160,
         "pcBid": 1060
       },
       {
@@ -141056,7 +141056,7 @@
     "짬뽕브랜드": [
       {
         "rank": 1,
-        "mobileBid": 1360,
+        "mobileBid": 1500,
         "pcBid": 190
       },
       {
@@ -141083,50 +141083,50 @@
     "짜장면프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 4130,
-        "pcBid": 8130
+        "mobileBid": 4530,
+        "pcBid": 8930
       },
       {
         "rank": 2,
-        "mobileBid": 4060,
-        "pcBid": 6070
+        "mobileBid": 4460,
+        "pcBid": 6670
       },
       {
         "rank": 3,
-        "mobileBid": 3100,
-        "pcBid": 2610
+        "mobileBid": 3400,
+        "pcBid": 2870
       },
       {
         "rank": 4,
-        "mobileBid": 2690,
-        "pcBid": 1710
+        "mobileBid": 2950,
+        "pcBid": 1870
       },
       {
         "rank": 5,
         "mobileBid": 70,
-        "pcBid": 1610
+        "pcBid": 1760
       }
     ],
     "탕수육프랜차이즈": [
       {
         "rank": 1,
-        "mobileBid": 17900,
-        "pcBid": 3160
+        "mobileBid": 19650,
+        "pcBid": 3470
       },
       {
         "rank": 2,
-        "mobileBid": 1880,
-        "pcBid": 2060
+        "mobileBid": 2070,
+        "pcBid": 2260
       },
       {
         "rank": 3,
-        "mobileBid": 1380,
-        "pcBid": 1430
+        "mobileBid": 1520,
+        "pcBid": 1570
       },
       {
         "rank": 4,
-        "mobileBid": 1170,
-        "pcBid": 1210
+        "mobileBid": 1280,
+        "pcBid": 1330
       },
       {
         "rank": 5,
@@ -141137,22 +141137,22 @@
     "중국집체인": [
       {
         "rank": 1,
-        "mobileBid": 4950,
-        "pcBid": 5370
+        "mobileBid": 5430,
+        "pcBid": 5890
       },
       {
         "rank": 2,
-        "mobileBid": 3760,
+        "mobileBid": 4130,
         "pcBid": 1070
       },
       {
         "rank": 3,
-        "mobileBid": 2120,
+        "mobileBid": 2320,
         "pcBid": 870
       },
       {
         "rank": 4,
-        "mobileBid": 1610,
+        "mobileBid": 1760,
         "pcBid": 100
       },
       {
@@ -141164,17 +141164,17 @@
     "탕수육체인점": [
       {
         "rank": 1,
-        "mobileBid": 2090,
-        "pcBid": 1270
+        "mobileBid": 2290,
+        "pcBid": 1390
       },
       {
         "rank": 2,
-        "mobileBid": 1420,
+        "mobileBid": 1560,
         "pcBid": 1070
       },
       {
         "rank": 3,
-        "mobileBid": 1050,
+        "mobileBid": 1160,
         "pcBid": 980
       },
       {
@@ -141191,12 +141191,12 @@
     "프랜차이즈중식": [
       {
         "rank": 1,
-        "mobileBid": 2730,
-        "pcBid": 1300
+        "mobileBid": 2990,
+        "pcBid": 1430
       },
       {
         "rank": 2,
-        "mobileBid": 1930,
+        "mobileBid": 2120,
         "pcBid": 1070
       },
       {
@@ -141759,7 +141759,7 @@
       {
         "rank": 1,
         "mobileBid": 970,
-        "pcBid": 1340
+        "pcBid": 1470
       },
       {
         "rank": 2,
@@ -148211,18 +148211,18 @@
     "장안동맛집": [
       {
         "rank": 1,
-        "mobileBid": 3240,
-        "pcBid": 3190
+        "mobileBid": 3550,
+        "pcBid": 3500
       },
       {
         "rank": 2,
-        "mobileBid": 1500,
-        "pcBid": 1110
+        "mobileBid": 1650,
+        "pcBid": 1220
       },
       {
         "rank": 3,
-        "mobileBid": 1030,
-        "pcBid": 1010
+        "mobileBid": 1130,
+        "pcBid": 1110
       },
       {
         "rank": 4,
@@ -148913,8 +148913,8 @@
     "장한평맛집": [
       {
         "rank": 1,
-        "mobileBid": 1110,
-        "pcBid": 1000
+        "mobileBid": 1220,
+        "pcBid": 1100
       },
       {
         "rank": 2,
@@ -149264,8 +149264,8 @@
     "장한평역맛집": [
       {
         "rank": 1,
-        "mobileBid": 1230,
-        "pcBid": 1020
+        "mobileBid": 1350,
+        "pcBid": 1120
       },
       {
         "rank": 2,
@@ -153530,8 +153530,8 @@
     "아차산역데이트": [
       {
         "rank": 1,
-        "mobileBid": 1280,
-        "pcBid": 1020
+        "mobileBid": 1410,
+        "pcBid": 1120
       },
       {
         "rank": 2,
@@ -153639,7 +153639,7 @@
       {
         "rank": 1,
         "mobileBid": 710,
-        "pcBid": 1550
+        "pcBid": 1710
       },
       {
         "rank": 2,
@@ -155529,7 +155529,7 @@
       {
         "rank": 1,
         "mobileBid": 80,
-        "pcBid": 2460
+        "pcBid": 2700
       },
       {
         "rank": 2,
@@ -155798,7 +155798,7 @@
     "군자모임장소": [
       {
         "rank": 1,
-        "mobileBid": 1040,
+        "mobileBid": 1140,
         "pcBid": 70
       },
       {
@@ -156149,7 +156149,7 @@
     "군자역모임장소": [
       {
         "rank": 1,
-        "mobileBid": 1430,
+        "mobileBid": 1570,
         "pcBid": 560
       },
       {
@@ -159227,7 +159227,7 @@
     "짬뽕맛집": [
       {
         "rank": 1,
-        "mobileBid": 1150,
+        "mobileBid": 1270,
         "pcBid": 960
       },
       {
