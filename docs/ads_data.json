@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-02T00:29:56.247091",
+  "generated_at": "2026-06-02T04:53:14.825577",
   "stores": [
     {
       "store_name": "역대짬뽕 본부",
@@ -341,10 +341,10 @@
       "usePeriod": false,
       "dailyBudget": 10000,
       "useDailyBudget": true,
-      "totalChargeCost": 599,
+      "totalChargeCost": 1322,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 287,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:35.000Z",
@@ -362,10 +362,10 @@
       "usePeriod": false,
       "dailyBudget": 40000,
       "useDailyBudget": true,
-      "totalChargeCost": 947,
+      "totalChargeCost": 3913,
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 946,
+      "expectCost": 1,
       "migType": 0,
       "delFlag": false,
       "regTm": "2026-01-31T05:32:48.000Z",
@@ -2256,7 +2256,7 @@
       "mobileChannelKey": "2066998075",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 287,
+      "expectCost": 330,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2428,7 +2428,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 341,
+      "expectCost": 109,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2472,7 +2472,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 946,
+      "expectCost": 168,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -2516,7 +2516,7 @@
       "mobileChannelKey": "1726445983",
       "status": "ELIGIBLE",
       "statusReason": "ELIGIBLE",
-      "expectCost": 94,
+      "expectCost": 75,
       "migType": 0,
       "adgroupAttrJson": {
         "campaignTp": 6
@@ -92282,7 +92282,7 @@
   "keyword_stats": {
     "중식창업": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "중국집창업": {
@@ -92321,12 +92321,12 @@
       "compIdx": "높음"
     },
     "중식당창업": {
-      "monthlyPcQcCnt": 5,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "중식프랜차이즈": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 100,
       "monthlyMobileQcCnt": 150,
       "compIdx": "높음"
     },
@@ -92342,7 +92342,7 @@
     },
     "짬뽕창업": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "중국집체인점": {
@@ -92351,8 +92351,8 @@
       "compIdx": "높음"
     },
     "쭝식대장": {
-      "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 500,
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 490,
       "compIdx": "낮음"
     },
     "짬뽕체인점": {
@@ -92386,7 +92386,7 @@
       "compIdx": "높음"
     },
     "탕수육창업": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 20,
       "compIdx": "높음"
     },
@@ -92437,7 +92437,7 @@
     },
     "프랜차이즈중국집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "식당매매": {
@@ -92551,8 +92551,8 @@
       "compIdx": "중간"
     },
     "짬뽕맛집": {
-      "monthlyPcQcCnt": 910,
-      "monthlyMobileQcCnt": 26500,
+      "monthlyPcQcCnt": 920,
+      "monthlyMobileQcCnt": 25900,
       "compIdx": "높음"
     },
     "짬뽕집창업": {
@@ -92652,7 +92652,7 @@
     },
     "마라탕프랜차이즈": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 210,
+      "monthlyMobileQcCnt": 200,
       "compIdx": "높음"
     },
     "라멘전문점": {
@@ -93131,8 +93131,8 @@
       "compIdx": "높음"
     },
     "짬뽕": {
-      "monthlyPcQcCnt": 5130,
-      "monthlyMobileQcCnt": 80400,
+      "monthlyPcQcCnt": 5180,
+      "monthlyMobileQcCnt": 79000,
       "compIdx": "중간"
     },
     "카레체인점": {
@@ -93921,8 +93921,8 @@
       "compIdx": "높음"
     },
     "두부요리": {
-      "monthlyPcQcCnt": 4390,
-      "monthlyMobileQcCnt": 40000,
+      "monthlyPcQcCnt": 4580,
+      "monthlyMobileQcCnt": 40100,
       "compIdx": "높음"
     },
     "두부장인": {
@@ -97616,8 +97616,8 @@
       "compIdx": "높음"
     },
     "닭칼국수": {
-      "monthlyPcQcCnt": 1900,
-      "monthlyMobileQcCnt": 24100,
+      "monthlyPcQcCnt": 1950,
+      "monthlyMobileQcCnt": 23900,
       "compIdx": "높음"
     },
     "외식업창업교육": {
@@ -97981,8 +97981,8 @@
       "compIdx": "높음"
     },
     "중화요리": {
-      "monthlyPcQcCnt": 1130,
-      "monthlyMobileQcCnt": 27600,
+      "monthlyPcQcCnt": 1140,
+      "monthlyMobileQcCnt": 27000,
       "compIdx": "중간"
     },
     "집에서할수있는일": {
@@ -100881,8 +100881,8 @@
       "compIdx": "높음"
     },
     "부산맛집추천": {
-      "monthlyPcQcCnt": 880,
-      "monthlyMobileQcCnt": 8000,
+      "monthlyPcQcCnt": 900,
+      "monthlyMobileQcCnt": 7660,
       "compIdx": "높음"
     },
     "소자본창업추천": {
@@ -105887,7 +105887,7 @@
     },
     "석모리맛집": {
       "monthlyPcQcCnt": 370,
-      "monthlyMobileQcCnt": 2950,
+      "monthlyMobileQcCnt": 2880,
       "compIdx": "중간"
     },
     "순대국밥체인점": {
@@ -107867,7 +107867,7 @@
     },
     "성수역술집": {
       "monthlyPcQcCnt": 220,
-      "monthlyMobileQcCnt": 1220,
+      "monthlyMobileQcCnt": 1210,
       "compIdx": "높음"
     },
     "성주술집": {
@@ -108081,8 +108081,8 @@
       "compIdx": "높음"
     },
     "성수술집": {
-      "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 6750,
+      "monthlyPcQcCnt": 820,
+      "monthlyMobileQcCnt": 6620,
       "compIdx": "높음"
     },
     "쪽갈비체인점": {
@@ -108241,8 +108241,8 @@
       "compIdx": "높음"
     },
     "성수동술집": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1170,
+      "monthlyPcQcCnt": 240,
+      "monthlyMobileQcCnt": 1120,
       "compIdx": "높음"
     },
     "신사역술집": {
@@ -108271,8 +108271,8 @@
       "compIdx": "높음"
     },
     "합정역술집": {
-      "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 3500,
+      "monthlyPcQcCnt": 520,
+      "monthlyMobileQcCnt": 3440,
       "compIdx": "높음"
     },
     "돈가스브랜드": {
@@ -109331,8 +109331,8 @@
       "compIdx": "높음"
     },
     "점심메뉴": {
-      "monthlyPcQcCnt": 2890,
-      "monthlyMobileQcCnt": 8720,
+      "monthlyPcQcCnt": 2960,
+      "monthlyMobileQcCnt": 8640,
       "compIdx": "중간"
     },
     "학생간식": {
@@ -112192,7 +112192,7 @@
     },
     "맛집추천": {
       "monthlyPcQcCnt": 1490,
-      "monthlyMobileQcCnt": 5350,
+      "monthlyMobileQcCnt": 5240,
       "compIdx": "높음"
     },
     "동네맛집뼈구이집": {
@@ -112426,8 +112426,8 @@
       "compIdx": "높음"
     },
     "성수동핫플": {
-      "monthlyPcQcCnt": 1730,
-      "monthlyMobileQcCnt": 15900,
+      "monthlyPcQcCnt": 1750,
+      "monthlyMobileQcCnt": 15100,
       "compIdx": "높음"
     },
     "수성구맛집": {
@@ -112447,7 +112447,7 @@
     },
     "먹골역맛집": {
       "monthlyPcQcCnt": 740,
-      "monthlyMobileQcCnt": 5890,
+      "monthlyMobileQcCnt": 5790,
       "compIdx": "높음"
     },
     "대구서구초밥": {
@@ -112466,13 +112466,13 @@
       "compIdx": "높음"
     },
     "오마카세": {
-      "monthlyPcQcCnt": 4280,
-      "monthlyMobileQcCnt": 33700,
+      "monthlyPcQcCnt": 4420,
+      "monthlyMobileQcCnt": 33300,
       "compIdx": "높음"
     },
     "중랑구맛집": {
-      "monthlyPcQcCnt": 1070,
-      "monthlyMobileQcCnt": 7600,
+      "monthlyPcQcCnt": 1080,
+      "monthlyMobileQcCnt": 7440,
       "compIdx": "높음"
     },
     "면목동맛집": {
@@ -113152,7 +113152,7 @@
     },
     "양고기식당": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 910,
+      "monthlyMobileQcCnt": 880,
       "compIdx": "높음"
     },
     "고기집메뉴": {
@@ -113821,8 +113821,8 @@
       "compIdx": "높음"
     },
     "유산슬": {
-      "monthlyPcQcCnt": 2920,
-      "monthlyMobileQcCnt": 23600,
+      "monthlyPcQcCnt": 2980,
+      "monthlyMobileQcCnt": 22900,
       "compIdx": "중간"
     },
     "소바프랜차이즈": {
@@ -115261,8 +115261,8 @@
       "compIdx": "중간"
     },
     "뭐먹지": {
-      "monthlyPcQcCnt": 900,
-      "monthlyMobileQcCnt": 3860,
+      "monthlyPcQcCnt": 920,
+      "monthlyMobileQcCnt": 3810,
       "compIdx": "높음"
     },
     "미니포장마차": {
@@ -115552,7 +115552,7 @@
     },
     "회식장소추천": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 90,
+      "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
     "샵인샵사업자": {
@@ -115831,8 +115831,8 @@
       "compIdx": "낮음"
     },
     "꿔바로우": {
-      "monthlyPcQcCnt": 1410,
-      "monthlyMobileQcCnt": 10300,
+      "monthlyPcQcCnt": 1430,
+      "monthlyMobileQcCnt": 10200,
       "compIdx": "중간"
     },
     "마라샹궈": {
@@ -116076,8 +116076,8 @@
       "compIdx": "중간"
     },
     "중식": {
-      "monthlyPcQcCnt": 1560,
-      "monthlyMobileQcCnt": 17400,
+      "monthlyPcQcCnt": 1600,
+      "monthlyMobileQcCnt": 17100,
       "compIdx": "중간"
     },
     "밀키트배달": {
@@ -116151,7 +116151,7 @@
       "compIdx": "중간"
     },
     "단체회식": {
-      "monthlyPcQcCnt": 50,
+      "monthlyPcQcCnt": 60,
       "monthlyMobileQcCnt": 240,
       "compIdx": "높음"
     },
@@ -116196,8 +116196,8 @@
       "compIdx": "높음"
     },
     "회식장소": {
-      "monthlyPcQcCnt": 340,
-      "monthlyMobileQcCnt": 620,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 630,
       "compIdx": "높음"
     },
     "꽃갈비": {
@@ -116551,8 +116551,8 @@
       "compIdx": "중간"
     },
     "왕십리맛집": {
-      "monthlyPcQcCnt": 4830,
-      "monthlyMobileQcCnt": 28300,
+      "monthlyPcQcCnt": 4980,
+      "monthlyMobileQcCnt": 28000,
       "compIdx": "높음"
     },
     "왕십리술집": {
@@ -116561,8 +116561,8 @@
       "compIdx": "중간"
     },
     "한양대맛집": {
-      "monthlyPcQcCnt": 670,
-      "monthlyMobileQcCnt": 4380,
+      "monthlyPcQcCnt": 690,
+      "monthlyMobileQcCnt": 4350,
       "compIdx": "중간"
     },
     "베트남쌀국수프랜차이즈": {
@@ -117091,8 +117091,8 @@
       "compIdx": "높음"
     },
     "짜장면": {
-      "monthlyPcQcCnt": 4290,
-      "monthlyMobileQcCnt": 60200,
+      "monthlyPcQcCnt": 4390,
+      "monthlyMobileQcCnt": 59200,
       "compIdx": "중간"
     },
     "메밀": {
@@ -117391,8 +117391,8 @@
       "compIdx": "높음"
     },
     "유니짜장": {
-      "monthlyPcQcCnt": 800,
-      "monthlyMobileQcCnt": 5360,
+      "monthlyPcQcCnt": 820,
+      "monthlyMobileQcCnt": 5320,
       "compIdx": "중간"
     },
     "짬뽕가루": {
@@ -117411,8 +117411,8 @@
       "compIdx": "높음"
     },
     "짬뽕만들기": {
-      "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 4760,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 4720,
       "compIdx": "높음"
     },
     "간짜장": {
@@ -119241,8 +119241,8 @@
       "compIdx": "높음"
     },
     "군자역맛집": {
-      "monthlyPcQcCnt": 3180,
-      "monthlyMobileQcCnt": 16200,
+      "monthlyPcQcCnt": 3250,
+      "monthlyMobileQcCnt": 16100,
       "compIdx": "높음"
     },
     "하남쭈꾸미": {
@@ -119531,8 +119531,8 @@
       "compIdx": "높음"
     },
     "건대술집": {
-      "monthlyPcQcCnt": 1260,
-      "monthlyMobileQcCnt": 18100,
+      "monthlyPcQcCnt": 1280,
+      "monthlyMobileQcCnt": 17400,
       "compIdx": "높음"
     },
     "군자고기": {
@@ -119541,13 +119541,13 @@
       "compIdx": "높음"
     },
     "군자고기집": {
-      "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 810,
+      "monthlyPcQcCnt": 130,
+      "monthlyMobileQcCnt": 790,
       "compIdx": "중간"
     },
     "군자역삼겹살": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 580,
+      "monthlyMobileQcCnt": 570,
       "compIdx": "중간"
     },
     "아차산미나리": {
@@ -119557,21 +119557,21 @@
     },
     "아차산역삼겹살": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 200,
+      "monthlyMobileQcCnt": 190,
       "compIdx": "중간"
     },
     "중곡동고기집": {
-      "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 470,
+      "monthlyPcQcCnt": 40,
+      "monthlyMobileQcCnt": 460,
       "compIdx": "중간"
     },
     "성수동고기집": {
-      "monthlyPcQcCnt": 160,
+      "monthlyPcQcCnt": 200,
       "monthlyMobileQcCnt": 1050,
       "compIdx": "중간"
     },
     "규동": {
-      "monthlyPcQcCnt": 1860,
+      "monthlyPcQcCnt": 1900,
       "monthlyMobileQcCnt": 13500,
       "compIdx": "높음"
     },
@@ -119587,7 +119587,7 @@
     },
     "군자동맛집": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 1210,
+      "monthlyMobileQcCnt": 1180,
       "compIdx": "높음"
     },
     "답십리고깃집": {
@@ -119656,8 +119656,8 @@
       "compIdx": "중간"
     },
     "중곡동맛집": {
-      "monthlyPcQcCnt": 520,
-      "monthlyMobileQcCnt": 4890,
+      "monthlyPcQcCnt": 530,
+      "monthlyMobileQcCnt": 4770,
       "compIdx": "중간"
     },
     "청량리모임": {
@@ -119666,8 +119666,8 @@
       "compIdx": "높음"
     },
     "동대문역사문화공원역맛집": {
-      "monthlyPcQcCnt": 580,
-      "monthlyMobileQcCnt": 3140,
+      "monthlyPcQcCnt": 610,
+      "monthlyMobileQcCnt": 3070,
       "compIdx": "중간"
     },
     "청량리근처맛집": {
@@ -119702,17 +119702,17 @@
     },
     "경기광주시청맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 270,
+      "monthlyMobileQcCnt": 260,
       "compIdx": "높음"
     },
     "구리교문동맛집": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 210,
+      "monthlyMobileQcCnt": 200,
       "compIdx": "높음"
     },
     "군자맛집": {
-      "monthlyPcQcCnt": 3690,
-      "monthlyMobileQcCnt": 21000,
+      "monthlyPcQcCnt": 3810,
+      "monthlyMobileQcCnt": 20800,
       "compIdx": "높음"
     },
     "아차산": {
@@ -119721,13 +119721,13 @@
       "compIdx": "중간"
     },
     "아차산맛집": {
-      "monthlyPcQcCnt": 1200,
-      "monthlyMobileQcCnt": 9530,
+      "monthlyPcQcCnt": 1210,
+      "monthlyMobileQcCnt": 9330,
       "compIdx": "중간"
     },
     "덕소역맛집": {
-      "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 860,
+      "monthlyPcQcCnt": 100,
+      "monthlyMobileQcCnt": 840,
       "compIdx": "중간"
     },
     "외대맛집": {
@@ -119736,18 +119736,18 @@
       "compIdx": "높음"
     },
     "아차산역맛집": {
-      "monthlyPcQcCnt": 860,
-      "monthlyMobileQcCnt": 6810,
+      "monthlyPcQcCnt": 870,
+      "monthlyMobileQcCnt": 6630,
       "compIdx": "중간"
     },
     "동묘역맛집": {
-      "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 3090,
+      "monthlyPcQcCnt": 320,
+      "monthlyMobileQcCnt": 2970,
       "compIdx": "높음"
     },
     "상록회관": {
-      "monthlyPcQcCnt": 2390,
-      "monthlyMobileQcCnt": 33000,
+      "monthlyPcQcCnt": 2480,
+      "monthlyMobileQcCnt": 32500,
       "compIdx": "중간"
     },
     "상록회관연탄구이": {
@@ -119772,7 +119772,7 @@
     },
     "건대한식맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 450,
+      "monthlyMobileQcCnt": 460,
       "compIdx": "높음"
     },
     "쌍문역고기집": {
@@ -119781,13 +119781,13 @@
       "compIdx": "중간"
     },
     "어린이대공원맛집": {
-      "monthlyPcQcCnt": 930,
-      "monthlyMobileQcCnt": 10600,
+      "monthlyPcQcCnt": 940,
+      "monthlyMobileQcCnt": 10200,
       "compIdx": "높음"
     },
     "성수소고기": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 410,
+      "monthlyMobileQcCnt": 400,
       "compIdx": "중간"
     },
     "사근동맛집": {
@@ -119831,23 +119831,23 @@
       "compIdx": "높음"
     },
     "광진구맛집": {
-      "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 5000,
+      "monthlyPcQcCnt": 740,
+      "monthlyMobileQcCnt": 4800,
       "compIdx": "높음"
     },
     "사가정맛집": {
-      "monthlyPcQcCnt": 800,
-      "monthlyMobileQcCnt": 6180,
+      "monthlyPcQcCnt": 820,
+      "monthlyMobileQcCnt": 6070,
       "compIdx": "높음"
     },
     "신당맛집": {
-      "monthlyPcQcCnt": 1790,
-      "monthlyMobileQcCnt": 9990,
+      "monthlyPcQcCnt": 1840,
+      "monthlyMobileQcCnt": 9890,
       "compIdx": "높음"
     },
     "구의동고기집": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 350,
+      "monthlyMobileQcCnt": 330,
       "compIdx": "높음"
     },
     "일원동맛집": {
@@ -119857,7 +119857,7 @@
     },
     "광나루역맛집": {
       "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 3360,
+      "monthlyMobileQcCnt": 3290,
       "compIdx": "낮음"
     },
     "석촌동맛집": {
@@ -119876,8 +119876,8 @@
       "compIdx": "높음"
     },
     "구의동맛집": {
-      "monthlyPcQcCnt": 650,
-      "monthlyMobileQcCnt": 4050,
+      "monthlyPcQcCnt": 670,
+      "monthlyMobileQcCnt": 3930,
       "compIdx": "높음"
     },
     "망우동맛집": {
@@ -119886,8 +119886,8 @@
       "compIdx": "높음"
     },
     "신당역맛집": {
-      "monthlyPcQcCnt": 1830,
-      "monthlyMobileQcCnt": 10300,
+      "monthlyPcQcCnt": 1900,
+      "monthlyMobileQcCnt": 10200,
       "compIdx": "높음"
     },
     "시립대술집": {
@@ -119901,13 +119901,13 @@
       "compIdx": "중간"
     },
     "신당동맛집": {
-      "monthlyPcQcCnt": 1140,
-      "monthlyMobileQcCnt": 7630,
+      "monthlyPcQcCnt": 1180,
+      "monthlyMobileQcCnt": 7520,
       "compIdx": "높음"
     },
     "동대문근처맛집": {
-      "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 750,
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 720,
       "compIdx": "중간"
     },
     "닭볶음탕맛집": {
@@ -119921,18 +119921,18 @@
       "compIdx": "높음"
     },
     "신내역맛집": {
-      "monthlyPcQcCnt": 100,
+      "monthlyPcQcCnt": 110,
       "monthlyMobileQcCnt": 900,
       "compIdx": "높음"
     },
     "중랑역맛집": {
-      "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 3280,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 3230,
       "compIdx": "높음"
     },
     "중화역맛집": {
-      "monthlyPcQcCnt": 530,
-      "monthlyMobileQcCnt": 4180,
+      "monthlyPcQcCnt": 540,
+      "monthlyMobileQcCnt": 4130,
       "compIdx": "중간"
     },
     "왕십리고기집": {
@@ -119946,8 +119946,8 @@
       "compIdx": "중간"
     },
     "생생정보맛집": {
-      "monthlyPcQcCnt": 260,
-      "monthlyMobileQcCnt": 6490,
+      "monthlyPcQcCnt": 270,
+      "monthlyMobileQcCnt": 6800,
       "compIdx": "높음"
     },
     "세종가족모임": {
@@ -119976,8 +119976,8 @@
       "compIdx": "낮음"
     },
     "장어덮밥": {
-      "monthlyPcQcCnt": 2850,
-      "monthlyMobileQcCnt": 28800,
+      "monthlyPcQcCnt": 2940,
+      "monthlyMobileQcCnt": 28400,
       "compIdx": "중간"
     },
     "어비리맛집": {
@@ -119997,12 +119997,12 @@
     },
     "워커힐맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1010,
+      "monthlyMobileQcCnt": 1000,
       "compIdx": "중간"
     },
     "약수역맛집": {
-      "monthlyPcQcCnt": 2250,
-      "monthlyMobileQcCnt": 10300,
+      "monthlyPcQcCnt": 2300,
+      "monthlyMobileQcCnt": 10100,
       "compIdx": "중간"
     },
     "광주퇴촌맛집": {
@@ -120016,18 +120016,18 @@
       "compIdx": "중간"
     },
     "복지리": {
-      "monthlyPcQcCnt": 930,
-      "monthlyMobileQcCnt": 5500,
+      "monthlyPcQcCnt": 940,
+      "monthlyMobileQcCnt": 5380,
       "compIdx": "중간"
     },
     "아산병원맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1320,
+      "monthlyMobileQcCnt": 1350,
       "compIdx": "높음"
     },
     "황학동맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1120,
+      "monthlyMobileQcCnt": 1100,
       "compIdx": "높음"
     },
     "약수역술집": {
@@ -120036,8 +120036,8 @@
       "compIdx": "높음"
     },
     "사가정역맛집": {
-      "monthlyPcQcCnt": 600,
-      "monthlyMobileQcCnt": 3690,
+      "monthlyPcQcCnt": 610,
+      "monthlyMobileQcCnt": 3640,
       "compIdx": "중간"
     },
     "중화동맛집": {
@@ -120057,32 +120057,32 @@
     },
     "중랑구회식": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "복어맛집": {
-      "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 6240,
+      "monthlyPcQcCnt": 270,
+      "monthlyMobileQcCnt": 5970,
       "compIdx": "높음"
     },
     "구의역맛집": {
-      "monthlyPcQcCnt": 2040,
-      "monthlyMobileQcCnt": 9360,
+      "monthlyPcQcCnt": 2080,
+      "monthlyMobileQcCnt": 9210,
       "compIdx": "높음"
     },
     "강구맛집": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 1600,
+      "monthlyMobileQcCnt": 1500,
       "compIdx": "중간"
     },
     "약수동맛집": {
       "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1830,
+      "monthlyMobileQcCnt": 1820,
       "compIdx": "중간"
     },
     "광장동맛집": {
       "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 3250,
+      "monthlyMobileQcCnt": 3190,
       "compIdx": "높음"
     },
     "봉화산역우대갈비": {
@@ -120101,13 +120101,13 @@
       "compIdx": "높음"
     },
     "신설동역맛집": {
-      "monthlyPcQcCnt": 490,
-      "monthlyMobileQcCnt": 2350,
+      "monthlyPcQcCnt": 520,
+      "monthlyMobileQcCnt": 2330,
       "compIdx": "높음"
     },
     "광진구자양동맛집": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 550,
+      "monthlyMobileQcCnt": 530,
       "compIdx": "높음"
     },
     "미금역맛집": {
@@ -120181,13 +120181,13 @@
       "compIdx": "높음"
     },
     "동묘맛집": {
-      "monthlyPcQcCnt": 2300,
-      "monthlyMobileQcCnt": 31800,
+      "monthlyPcQcCnt": 2340,
+      "monthlyMobileQcCnt": 30500,
       "compIdx": "높음"
     },
     "구의역고기집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1020,
+      "monthlyMobileQcCnt": 1040,
       "compIdx": "높음"
     },
     "육사시미": {
@@ -120196,8 +120196,8 @@
       "compIdx": "중간"
     },
     "구의맛집": {
-      "monthlyPcQcCnt": 700,
-      "monthlyMobileQcCnt": 3700,
+      "monthlyPcQcCnt": 720,
+      "monthlyMobileQcCnt": 3630,
       "compIdx": "높음"
     },
     "분당회식": {
@@ -120222,12 +120222,12 @@
     },
     "창신동맛집": {
       "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 3490,
+      "monthlyMobileQcCnt": 3380,
       "compIdx": "높음"
     },
     "충무로역맛집": {
-      "monthlyPcQcCnt": 1150,
-      "monthlyMobileQcCnt": 5870,
+      "monthlyPcQcCnt": 1190,
+      "monthlyMobileQcCnt": 5920,
       "compIdx": "중간"
     },
     "SFG": {
@@ -120236,18 +120236,18 @@
       "compIdx": "중간"
     },
     "신설동맛집": {
-      "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 5710,
+      "monthlyPcQcCnt": 1080,
+      "monthlyMobileQcCnt": 5660,
       "compIdx": "높음"
     },
     "강변역맛집": {
-      "monthlyPcQcCnt": 660,
-      "monthlyMobileQcCnt": 5720,
+      "monthlyPcQcCnt": 680,
+      "monthlyMobileQcCnt": 5650,
       "compIdx": "중간"
     },
     "서울장어맛집": {
-      "monthlyPcQcCnt": 380,
-      "monthlyMobileQcCnt": 2160,
+      "monthlyPcQcCnt": 390,
+      "monthlyMobileQcCnt": 2130,
       "compIdx": "높음"
     },
     "아구찜소스": {
@@ -120307,17 +120307,17 @@
     },
     "면목역맛집": {
       "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 2310,
+      "monthlyMobileQcCnt": 2280,
       "compIdx": "높음"
     },
     "생생정보오늘방송맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 1590,
+      "monthlyMobileQcCnt": 1730,
       "compIdx": "중간"
     },
     "생방송투데이맛집": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 6070,
+      "monthlyMobileQcCnt": 6250,
       "compIdx": "높음"
     },
     "행당동맛집": {
@@ -120341,8 +120341,8 @@
       "compIdx": "중간"
     },
     "복국": {
-      "monthlyPcQcCnt": 800,
-      "monthlyMobileQcCnt": 9060,
+      "monthlyPcQcCnt": 820,
+      "monthlyMobileQcCnt": 8790,
       "compIdx": "중간"
     },
     "광화문이자카야": {
@@ -120361,18 +120361,18 @@
       "compIdx": "높음"
     },
     "왕십리역맛집": {
-      "monthlyPcQcCnt": 1920,
+      "monthlyPcQcCnt": 1990,
       "monthlyMobileQcCnt": 10600,
       "compIdx": "높음"
     },
     "동대문역맛집": {
-      "monthlyPcQcCnt": 990,
-      "monthlyMobileQcCnt": 8970,
+      "monthlyPcQcCnt": 1000,
+      "monthlyMobileQcCnt": 8760,
       "compIdx": "높음"
     },
     "서울고기맛집": {
-      "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 2360,
+      "monthlyPcQcCnt": 340,
+      "monthlyMobileQcCnt": 2310,
       "compIdx": "높음"
     },
     "동대문역사문화공원맛집": {
@@ -120381,8 +120381,8 @@
       "compIdx": "중간"
     },
     "DDP맛집": {
-      "monthlyPcQcCnt": 650,
-      "monthlyMobileQcCnt": 3070,
+      "monthlyPcQcCnt": 660,
+      "monthlyMobileQcCnt": 2880,
       "compIdx": "중간"
     },
     "라비에벨CC맛집": {
@@ -120391,18 +120391,18 @@
       "compIdx": "중간"
     },
     "라비에벨맛집": {
-      "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 260,
+      "monthlyPcQcCnt": 40,
+      "monthlyMobileQcCnt": 250,
       "compIdx": "중간"
     },
     "로드힐스CC맛집": {
-      "monthlyPcQcCnt": 50,
+      "monthlyPcQcCnt": 60,
       "monthlyMobileQcCnt": 510,
       "compIdx": "중간"
     },
     "화천읍맛집": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 600,
+      "monthlyMobileQcCnt": 580,
       "compIdx": "중간"
     },
     "명절선물세트": {
@@ -120411,8 +120411,8 @@
       "compIdx": "높음"
     },
     "자양동맛집": {
-      "monthlyPcQcCnt": 650,
-      "monthlyMobileQcCnt": 4840,
+      "monthlyPcQcCnt": 660,
+      "monthlyMobileQcCnt": 4680,
       "compIdx": "높음"
     },
     "마곡이자카야": {
@@ -120422,12 +120422,12 @@
     },
     "구의농원": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 1240,
+      "monthlyMobileQcCnt": 1230,
       "compIdx": "낮음"
     },
     "민물장어맛집": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 890,
+      "monthlyMobileQcCnt": 850,
       "compIdx": "높음"
     },
     "서울오겹살맛집": {
@@ -120486,8 +120486,8 @@
       "compIdx": "높음"
     },
     "강동역맛집": {
-      "monthlyPcQcCnt": 750,
-      "monthlyMobileQcCnt": 4140,
+      "monthlyPcQcCnt": 760,
+      "monthlyMobileQcCnt": 4150,
       "compIdx": "높음"
     },
     "모듬회": {
@@ -120511,8 +120511,8 @@
       "compIdx": "중간"
     },
     "생생정보통맛집": {
-      "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 760,
+      "monthlyPcQcCnt": 80,
+      "monthlyMobileQcCnt": 770,
       "compIdx": "중간"
     },
     "왕십리가성비술집": {
@@ -120526,13 +120526,13 @@
       "compIdx": "높음"
     },
     "성동구맛집": {
-      "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 1400,
+      "monthlyPcQcCnt": 260,
+      "monthlyMobileQcCnt": 1360,
       "compIdx": "높음"
     },
     "하남시맛집": {
       "monthlyPcQcCnt": 400,
-      "monthlyMobileQcCnt": 2880,
+      "monthlyMobileQcCnt": 2820,
       "compIdx": "높음"
     },
     "보리굴비선물": {
@@ -120602,17 +120602,17 @@
     },
     "장어구이맛집": {
       "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 4140,
+      "monthlyMobileQcCnt": 4040,
       "compIdx": "높음"
     },
     "교문동맛집": {
-      "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 360,
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 350,
       "compIdx": "높음"
     },
     "일광장어구이": {
-      "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 660,
+      "monthlyPcQcCnt": 40,
+      "monthlyMobileQcCnt": 640,
       "compIdx": "중간"
     },
     "왕십리대패삼겹살": {
@@ -120626,8 +120626,8 @@
       "compIdx": "높음"
     },
     "롯데타워맛집": {
-      "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 11600,
+      "monthlyPcQcCnt": 1070,
+      "monthlyMobileQcCnt": 11200,
       "compIdx": "높음"
     },
     "고덕동맛집": {
@@ -120662,7 +120662,7 @@
     },
     "포천돼지갈비": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 650,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "건대회식": {
@@ -120747,12 +120747,12 @@
     },
     "군자역맛집추천": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 180,
+      "monthlyMobileQcCnt": 190,
       "compIdx": "중간"
     },
     "퇴촌맛집": {
       "monthlyPcQcCnt": 730,
-      "monthlyMobileQcCnt": 9050,
+      "monthlyMobileQcCnt": 8810,
       "compIdx": "높음"
     },
     "시흥맛집": {
@@ -120792,12 +120792,12 @@
     },
     "경기도광주맛집": {
       "monthlyPcQcCnt": 1360,
-      "monthlyMobileQcCnt": 12500,
+      "monthlyMobileQcCnt": 12000,
       "compIdx": "높음"
     },
     "남양주가볼만한곳": {
-      "monthlyPcQcCnt": 3140,
-      "monthlyMobileQcCnt": 37300,
+      "monthlyPcQcCnt": 3160,
+      "monthlyMobileQcCnt": 35700,
       "compIdx": "높음"
     },
     "남한산성맛집": {
@@ -120811,28 +120811,28 @@
       "compIdx": "높음"
     },
     "하남맛집": {
-      "monthlyPcQcCnt": 3630,
-      "monthlyMobileQcCnt": 38100,
+      "monthlyPcQcCnt": 3690,
+      "monthlyMobileQcCnt": 36800,
       "compIdx": "높음"
     },
     "방이동맛집": {
-      "monthlyPcQcCnt": 4690,
-      "monthlyMobileQcCnt": 24200,
+      "monthlyPcQcCnt": 4820,
+      "monthlyMobileQcCnt": 23800,
       "compIdx": "높음"
     },
     "양평가볼만한곳": {
-      "monthlyPcQcCnt": 5380,
-      "monthlyMobileQcCnt": 51800,
+      "monthlyPcQcCnt": 5450,
+      "monthlyMobileQcCnt": 49600,
       "compIdx": "높음"
     },
     "경기광주맛집": {
-      "monthlyPcQcCnt": 2630,
-      "monthlyMobileQcCnt": 23200,
+      "monthlyPcQcCnt": 2660,
+      "monthlyMobileQcCnt": 22600,
       "compIdx": "높음"
     },
     "건대공연": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
     "서울이색술집": {
@@ -120841,8 +120841,8 @@
       "compIdx": "높음"
     },
     "서울혼자놀기": {
-      "monthlyPcQcCnt": 700,
-      "monthlyMobileQcCnt": 4500,
+      "monthlyPcQcCnt": 710,
+      "monthlyMobileQcCnt": 4390,
       "compIdx": "높음"
     },
     "재즈라이브": {
@@ -120857,7 +120857,7 @@
     },
     "건대가볼만한곳": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 460,
+      "monthlyMobileQcCnt": 430,
       "compIdx": "높음"
     },
     "건대입구역술집추천": {
@@ -120921,7 +120921,7 @@
       "compIdx": "중간"
     },
     "홍대라이브공연": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
@@ -120932,17 +120932,17 @@
     },
     "홍대재즈클럽": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "묵동맛집": {
-      "monthlyPcQcCnt": 260,
-      "monthlyMobileQcCnt": 2600,
+      "monthlyPcQcCnt": 270,
+      "monthlyMobileQcCnt": 2570,
       "compIdx": "높음"
     },
     "하남애견동반식당": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1720,
+      "monthlyMobileQcCnt": 1640,
       "compIdx": "높음"
     },
     "뚝섬맛집": {
@@ -120952,12 +120952,12 @@
     },
     "하남맛집추천": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 410,
+      "monthlyMobileQcCnt": 400,
       "compIdx": "높음"
     },
     "성수놀거리": {
-      "monthlyPcQcCnt": 3140,
-      "monthlyMobileQcCnt": 29400,
+      "monthlyPcQcCnt": 3170,
+      "monthlyMobileQcCnt": 28400,
       "compIdx": "높음"
     },
     "시흥능곡역맛집": {
@@ -120972,32 +120972,32 @@
     },
     "하남시청맛집": {
       "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 1800,
+      "monthlyMobileQcCnt": 1750,
       "compIdx": "중간"
     },
     "약선요리": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 970,
+      "monthlyMobileQcCnt": 940,
       "compIdx": "높음"
     },
     "하남삼겹살": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 890,
+      "monthlyMobileQcCnt": 850,
       "compIdx": "높음"
     },
     "경기도하남맛집": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 3340,
+      "monthlyMobileQcCnt": 3270,
       "compIdx": "높음"
     },
     "스타필드하남맛집": {
-      "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 5420,
+      "monthlyPcQcCnt": 250,
+      "monthlyMobileQcCnt": 5230,
       "compIdx": "높음"
     },
     "성수이자카야": {
       "monthlyPcQcCnt": 460,
-      "monthlyMobileQcCnt": 3440,
+      "monthlyMobileQcCnt": 3410,
       "compIdx": "높음"
     },
     "군자동갈만한곳": {
@@ -121616,8 +121616,8 @@
       "compIdx": "중간"
     },
     "삼복": {
-      "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 1110,
+      "monthlyPcQcCnt": 290,
+      "monthlyMobileQcCnt": 1150,
       "compIdx": "낮음"
     },
     "대전역맛집": {
@@ -121761,13 +121761,13 @@
       "compIdx": "낮음"
     },
     "올림픽공원맛집": {
-      "monthlyPcQcCnt": 1730,
-      "monthlyMobileQcCnt": 17700,
+      "monthlyPcQcCnt": 1750,
+      "monthlyMobileQcCnt": 17000,
       "compIdx": "높음"
     },
     "거여동맛집": {
       "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 2730,
+      "monthlyMobileQcCnt": 2670,
       "compIdx": "중간"
     },
     "10월서울근교갈만한곳": {
@@ -121782,17 +121782,17 @@
     },
     "남양주뷰맛집": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 280,
+      "monthlyMobileQcCnt": 270,
       "compIdx": "중간"
     },
     "남양주시다산동맛집": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 240,
+      "monthlyPcQcCnt": 50,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "높음"
     },
     "동구릉맛집": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 2220,
+      "monthlyMobileQcCnt": 2130,
       "compIdx": "중간"
     },
     "미사역근처맛집": {
@@ -121802,7 +121802,7 @@
     },
     "잠실롯데마트맛집": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 150,
+      "monthlyMobileQcCnt": 140,
       "compIdx": "중간"
     },
     "하남시덕풍동맛집": {
@@ -121812,7 +121812,7 @@
     },
     "하남풍산맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "서울근교놀러갈만한곳": {
@@ -121822,17 +121822,17 @@
     },
     "암사동맛집": {
       "monthlyPcQcCnt": 560,
-      "monthlyMobileQcCnt": 4180,
+      "monthlyMobileQcCnt": 4070,
       "compIdx": "높음"
     },
     "송파맛집": {
-      "monthlyPcQcCnt": 1370,
-      "monthlyMobileQcCnt": 11100,
+      "monthlyPcQcCnt": 1410,
+      "monthlyMobileQcCnt": 10800,
       "compIdx": "높음"
     },
     "멸치회": {
-      "monthlyPcQcCnt": 570,
-      "monthlyMobileQcCnt": 5170,
+      "monthlyPcQcCnt": 580,
+      "monthlyMobileQcCnt": 4840,
       "compIdx": "중간"
     },
     "선릉역점심맛집": {
@@ -121841,28 +121841,28 @@
       "compIdx": "높음"
     },
     "호평동맛집": {
-      "monthlyPcQcCnt": 1350,
-      "monthlyMobileQcCnt": 10400,
+      "monthlyPcQcCnt": 1370,
+      "monthlyMobileQcCnt": 10200,
       "compIdx": "높음"
     },
     "마천동맛집": {
       "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1900,
+      "monthlyMobileQcCnt": 1840,
       "compIdx": "높음"
     },
     "퇴계원맛집": {
-      "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 3630,
+      "monthlyPcQcCnt": 430,
+      "monthlyMobileQcCnt": 3550,
       "compIdx": "낮음"
     },
     "오남읍맛집": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 1100,
+      "monthlyMobileQcCnt": 1060,
       "compIdx": "높음"
     },
     "방이역맛집": {
-      "monthlyPcQcCnt": 700,
-      "monthlyMobileQcCnt": 4450,
+      "monthlyPcQcCnt": 710,
+      "monthlyMobileQcCnt": 4390,
       "compIdx": "높음"
     },
     "강동구점심": {
@@ -121871,13 +121871,13 @@
       "compIdx": "높음"
     },
     "천호동맛집": {
-      "monthlyPcQcCnt": 1310,
-      "monthlyMobileQcCnt": 9030,
+      "monthlyPcQcCnt": 1330,
+      "monthlyMobileQcCnt": 8940,
       "compIdx": "높음"
     },
     "건대역맛집": {
-      "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 2420,
+      "monthlyPcQcCnt": 290,
+      "monthlyMobileQcCnt": 2370,
       "compIdx": "높음"
     },
     "성내동맛집": {
@@ -121886,58 +121886,58 @@
       "compIdx": "높음"
     },
     "강동구청맛집": {
-      "monthlyPcQcCnt": 600,
-      "monthlyMobileQcCnt": 3010,
+      "monthlyPcQcCnt": 610,
+      "monthlyMobileQcCnt": 2990,
       "compIdx": "높음"
     },
     "길동역맛집": {
-      "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 2550,
+      "monthlyPcQcCnt": 460,
+      "monthlyMobileQcCnt": 2530,
       "compIdx": "높음"
     },
     "진건읍맛집": {
-      "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 360,
+      "monthlyPcQcCnt": 80,
+      "monthlyMobileQcCnt": 350,
       "compIdx": "높음"
     },
     "진접읍맛집": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 790,
+      "monthlyMobileQcCnt": 780,
       "compIdx": "높음"
     },
     "천호맛집": {
-      "monthlyPcQcCnt": 3120,
-      "monthlyMobileQcCnt": 18600,
+      "monthlyPcQcCnt": 3200,
+      "monthlyMobileQcCnt": 18400,
       "compIdx": "높음"
     },
     "감일맛집": {
-      "monthlyPcQcCnt": 360,
-      "monthlyMobileQcCnt": 3410,
+      "monthlyPcQcCnt": 370,
+      "monthlyMobileQcCnt": 3380,
       "compIdx": "높음"
     },
     "화양동맛집": {
-      "monthlyPcQcCnt": 120,
+      "monthlyPcQcCnt": 130,
       "monthlyMobileQcCnt": 670,
       "compIdx": "높음"
     },
     "하남한우": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 400,
+      "monthlyMobileQcCnt": 390,
       "compIdx": "높음"
     },
     "서울근교가볼만한곳": {
       "monthlyPcQcCnt": 730,
-      "monthlyMobileQcCnt": 2550,
+      "monthlyMobileQcCnt": 2450,
       "compIdx": "높음"
     },
     "하남데이트": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 670,
+      "monthlyMobileQcCnt": 660,
       "compIdx": "높음"
     },
     "퇴촌한정식": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 1270,
+      "monthlyMobileQcCnt": 1230,
       "compIdx": "높음"
     },
     "둔촌동맛집": {
@@ -121956,8 +121956,8 @@
       "compIdx": "중간"
     },
     "길동맛집": {
-      "monthlyPcQcCnt": 1220,
-      "monthlyMobileQcCnt": 7930,
+      "monthlyPcQcCnt": 1240,
+      "monthlyMobileQcCnt": 7780,
       "compIdx": "높음"
     },
     "강동맛집": {
@@ -121966,8 +121966,8 @@
       "compIdx": "높음"
     },
     "퇴촌토마토": {
-      "monthlyPcQcCnt": 680,
-      "monthlyMobileQcCnt": 4710,
+      "monthlyPcQcCnt": 720,
+      "monthlyMobileQcCnt": 4760,
       "compIdx": "중간"
     },
     "선릉역점심식사": {
@@ -121977,27 +121977,27 @@
     },
     "하남가볼만한곳": {
       "monthlyPcQcCnt": 380,
-      "monthlyMobileQcCnt": 4180,
+      "monthlyMobileQcCnt": 3980,
       "compIdx": "높음"
     },
     "개롱역맛집": {
-      "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 2490,
+      "monthlyPcQcCnt": 410,
+      "monthlyMobileQcCnt": 2460,
       "compIdx": "중간"
     },
     "동서울터미널맛집": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 3780,
+      "monthlyMobileQcCnt": 3710,
       "compIdx": "높음"
     },
     "오금역맛집": {
       "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 2390,
+      "monthlyMobileQcCnt": 2330,
       "compIdx": "높음"
     },
     "강동구맛집": {
-      "monthlyPcQcCnt": 1480,
-      "monthlyMobileQcCnt": 9350,
+      "monthlyPcQcCnt": 1500,
+      "monthlyMobileQcCnt": 9180,
       "compIdx": "높음"
     },
     "선릉점심맛집": {
@@ -122042,47 +122042,47 @@
     },
     "남양주당일글램핑": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 450,
+      "monthlyMobileQcCnt": 440,
       "compIdx": "중간"
     },
     "명일동맛집": {
       "monthlyPcQcCnt": 400,
-      "monthlyMobileQcCnt": 3400,
+      "monthlyMobileQcCnt": 3340,
       "compIdx": "높음"
     },
     "하남코스트코맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 580,
+      "monthlyMobileQcCnt": 570,
       "compIdx": "높음"
     },
     "팔당물안개공원": {
       "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 3900,
+      "monthlyMobileQcCnt": 3790,
       "compIdx": "중간"
     },
     "미음나루맛집": {
-      "monthlyPcQcCnt": 220,
-      "monthlyMobileQcCnt": 3300,
+      "monthlyPcQcCnt": 230,
+      "monthlyMobileQcCnt": 3240,
       "compIdx": "높음"
     },
     "잠실롯데월드몰맛집": {
-      "monthlyPcQcCnt": 1600,
-      "monthlyMobileQcCnt": 18000,
+      "monthlyPcQcCnt": 1640,
+      "monthlyMobileQcCnt": 17500,
       "compIdx": "높음"
     },
     "천호동한정식": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 250,
+      "monthlyMobileQcCnt": 240,
       "compIdx": "중간"
     },
     "가평베네스트CC맛집": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 70,
       "monthlyMobileQcCnt": 430,
       "compIdx": "높음"
     },
     "가평양떼목장근처맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 530,
+      "monthlyMobileQcCnt": 490,
       "compIdx": "높음"
     },
     "강동구룸식당": {
@@ -122096,7 +122096,7 @@
       "compIdx": "높음"
     },
     "홍유릉맛집": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 160,
       "compIdx": "중간"
     },
@@ -122106,13 +122106,13 @@
       "compIdx": "높음"
     },
     "양수리맛집": {
-      "monthlyPcQcCnt": 470,
-      "monthlyMobileQcCnt": 7000,
+      "monthlyPcQcCnt": 490,
+      "monthlyMobileQcCnt": 6820,
       "compIdx": "높음"
     },
     "가평베고니아새정원맛집": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "높음"
     },
     "남영동술집": {
@@ -122121,48 +122121,48 @@
       "compIdx": "높음"
     },
     "대왕비빔밥": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 480,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 470,
       "compIdx": "중간"
     },
     "육회만드는법": {
-      "monthlyPcQcCnt": 320,
-      "monthlyMobileQcCnt": 8100,
+      "monthlyPcQcCnt": 310,
+      "monthlyMobileQcCnt": 7900,
       "compIdx": "중간"
     },
     "하남고기집": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 1240,
+      "monthlyMobileQcCnt": 1190,
       "compIdx": "높음"
     },
     "선릉역점심": {
-      "monthlyPcQcCnt": 730,
-      "monthlyMobileQcCnt": 1010,
+      "monthlyPcQcCnt": 770,
+      "monthlyMobileQcCnt": 1020,
       "compIdx": "높음"
     },
     "콜키지": {
-      "monthlyPcQcCnt": 3620,
-      "monthlyMobileQcCnt": 15200,
+      "monthlyPcQcCnt": 3740,
+      "monthlyMobileQcCnt": 15100,
       "compIdx": "중간"
     },
     "금남리맛집": {
       "monthlyPcQcCnt": 290,
-      "monthlyMobileQcCnt": 4230,
+      "monthlyMobileQcCnt": 4130,
       "compIdx": "중간"
     },
     "하남스타필드근처맛집": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 1240,
+      "monthlyMobileQcCnt": 1180,
       "compIdx": "높음"
     },
     "고덕역맛집": {
-      "monthlyPcQcCnt": 670,
+      "monthlyPcQcCnt": 680,
       "monthlyMobileQcCnt": 5070,
       "compIdx": "높음"
     },
     "묘적사계곡": {
-      "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 1380,
+      "monthlyPcQcCnt": 190,
+      "monthlyMobileQcCnt": 1420,
       "compIdx": "중간"
     },
     "굽은다리역맛집": {
@@ -122171,18 +122171,18 @@
       "compIdx": "중간"
     },
     "평내동맛집": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1790,
+      "monthlyPcQcCnt": 240,
+      "monthlyMobileQcCnt": 1780,
       "compIdx": "높음"
     },
     "남양주시가볼만한곳": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 430,
+      "monthlyMobileQcCnt": 410,
       "compIdx": "높음"
     },
     "수원금곡동맛집": {
-      "monthlyPcQcCnt": 370,
-      "monthlyMobileQcCnt": 3680,
+      "monthlyPcQcCnt": 390,
+      "monthlyMobileQcCnt": 3650,
       "compIdx": "높음"
     },
     "남양주애견동반식당": {
@@ -122191,28 +122191,28 @@
       "compIdx": "높음"
     },
     "덕소맛집": {
-      "monthlyPcQcCnt": 870,
-      "monthlyMobileQcCnt": 9700,
+      "monthlyPcQcCnt": 890,
+      "monthlyMobileQcCnt": 9490,
       "compIdx": "중간"
     },
     "구리역맛집": {
-      "monthlyPcQcCnt": 680,
-      "monthlyMobileQcCnt": 4810,
+      "monthlyPcQcCnt": 700,
+      "monthlyMobileQcCnt": 4740,
       "compIdx": "높음"
     },
     "호평맛집": {
       "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 2950,
+      "monthlyMobileQcCnt": 2890,
       "compIdx": "높음"
     },
     "율동공원맛집": {
-      "monthlyPcQcCnt": 870,
-      "monthlyMobileQcCnt": 12200,
+      "monthlyPcQcCnt": 880,
+      "monthlyMobileQcCnt": 11900,
       "compIdx": "중간"
     },
     "성수동": {
-      "monthlyPcQcCnt": 12200,
-      "monthlyMobileQcCnt": 48900,
+      "monthlyPcQcCnt": 12100,
+      "monthlyMobileQcCnt": 43400,
       "compIdx": "높음"
     },
     "송리단길맛집": {
@@ -122221,13 +122221,13 @@
       "compIdx": "높음"
     },
     "하남미사맛집": {
-      "monthlyPcQcCnt": 900,
-      "monthlyMobileQcCnt": 8050,
+      "monthlyPcQcCnt": 920,
+      "monthlyMobileQcCnt": 7880,
       "compIdx": "높음"
     },
     "강남역맛집내돈내산": {
-      "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 570,
+      "monthlyPcQcCnt": 190,
+      "monthlyMobileQcCnt": 560,
       "compIdx": "높음"
     },
     "만성찬팅": {
@@ -122241,13 +122241,13 @@
       "compIdx": "중간"
     },
     "오산횟집": {
-      "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 1990,
+      "monthlyPcQcCnt": 280,
+      "monthlyMobileQcCnt": 1940,
       "compIdx": "낮음"
     },
     "일도씨닭갈비": {
-      "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 2960,
+      "monthlyPcQcCnt": 320,
+      "monthlyMobileQcCnt": 2950,
       "compIdx": "중간"
     },
     "방이맛집": {
@@ -122261,8 +122261,8 @@
       "compIdx": "중간"
     },
     "서종맛집": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 3960,
+      "monthlyPcQcCnt": 240,
+      "monthlyMobileQcCnt": 3820,
       "compIdx": "중간"
     },
     "남양주야외맛집": {
@@ -122287,17 +122287,17 @@
     },
     "하남24시식당": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 450,
+      "monthlyMobileQcCnt": 440,
       "compIdx": "높음"
     },
     "미사역맛집": {
-      "monthlyPcQcCnt": 1700,
-      "monthlyMobileQcCnt": 10600,
+      "monthlyPcQcCnt": 1730,
+      "monthlyMobileQcCnt": 10500,
       "compIdx": "높음"
     },
     "남양주맛집추천": {
-      "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 2810,
+      "monthlyPcQcCnt": 170,
+      "monthlyMobileQcCnt": 2740,
       "compIdx": "높음"
     },
     "잠실석촌호수맛집": {
@@ -122307,22 +122307,22 @@
     },
     "대성리맛집": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 1950,
+      "monthlyMobileQcCnt": 1870,
       "compIdx": "중간"
     },
     "평내호평맛집": {
       "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 3030,
+      "monthlyMobileQcCnt": 2950,
       "compIdx": "높음"
     },
     "남양주물의정원맛집": {
-      "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 1090,
+      "monthlyPcQcCnt": 100,
+      "monthlyMobileQcCnt": 1060,
       "compIdx": "높음"
     },
     "하남미사리맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 850,
+      "monthlyMobileQcCnt": 810,
       "compIdx": "높음"
     },
     "천호동돈사돈": {
@@ -122331,13 +122331,13 @@
       "compIdx": "중간"
     },
     "팔당맛집": {
-      "monthlyPcQcCnt": 2000,
-      "monthlyMobileQcCnt": 20400,
+      "monthlyPcQcCnt": 2010,
+      "monthlyMobileQcCnt": 19900,
       "compIdx": "높음"
     },
     "물의정원": {
-      "monthlyPcQcCnt": 1480,
-      "monthlyMobileQcCnt": 8650,
+      "monthlyPcQcCnt": 1510,
+      "monthlyMobileQcCnt": 8490,
       "compIdx": "중간"
     },
     "상일동맛집": {
@@ -122347,32 +122347,32 @@
     },
     "남양주덕소맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1390,
+      "monthlyMobileQcCnt": 1360,
       "compIdx": "높음"
     },
     "평내동쭈꾸미": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 310,
+      "monthlyMobileQcCnt": 320,
       "compIdx": "중간"
     },
     "둔촌역맛집": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1690,
+      "monthlyPcQcCnt": 240,
+      "monthlyMobileQcCnt": 1660,
       "compIdx": "높음"
     },
     "팔당역맛집": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 1300,
+      "monthlyMobileQcCnt": 1270,
       "compIdx": "중간"
     },
     "미사리맛집": {
       "monthlyPcQcCnt": 320,
-      "monthlyMobileQcCnt": 4750,
+      "monthlyMobileQcCnt": 4650,
       "compIdx": "높음"
     },
     "명일역맛집": {
-      "monthlyPcQcCnt": 410,
-      "monthlyMobileQcCnt": 3560,
+      "monthlyPcQcCnt": 420,
+      "monthlyMobileQcCnt": 3510,
       "compIdx": "낮음"
     },
     "강동구모임장소": {
@@ -122381,23 +122381,23 @@
       "compIdx": "높음"
     },
     "운길산역맛집": {
-      "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 1140,
+      "monthlyPcQcCnt": 110,
+      "monthlyMobileQcCnt": 1120,
       "compIdx": "중간"
     },
     "성수데이트": {
-      "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 3110,
+      "monthlyPcQcCnt": 1020,
+      "monthlyMobileQcCnt": 3040,
       "compIdx": "높음"
     },
     "성수동소고기": {
-      "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 250,
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 240,
       "compIdx": "높음"
     },
     "성수핫플레이스": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 730,
+      "monthlyMobileQcCnt": 700,
       "compIdx": "높음"
     },
     "양수리가볼만한곳": {
@@ -122411,7 +122411,7 @@
       "compIdx": "높음"
     },
     "남양주장어맛집": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 100,
       "monthlyMobileQcCnt": 1040,
       "compIdx": "중간"
     },
@@ -122426,28 +122426,28 @@
       "compIdx": "높음"
     },
     "이태원맛집": {
-      "monthlyPcQcCnt": 4450,
-      "monthlyMobileQcCnt": 33800,
+      "monthlyPcQcCnt": 4530,
+      "monthlyMobileQcCnt": 32600,
       "compIdx": "높음"
     },
     "남양주애견동반맛집": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 600,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 570,
       "compIdx": "중간"
     },
     "양주애견동반카페": {
-      "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 1060,
+      "monthlyPcQcCnt": 30,
+      "monthlyMobileQcCnt": 1010,
       "compIdx": "높음"
     },
     "포천애견동반숙소": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 220,
+      "monthlyMobileQcCnt": 210,
       "compIdx": "높음"
     },
     "포천애견동반펜션": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 990,
+      "monthlyMobileQcCnt": 980,
       "compIdx": "높음"
     },
     "뚝섬역회식": {
@@ -122456,8 +122456,8 @@
       "compIdx": "높음"
     },
     "서울숲근처맛집": {
-      "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 2980,
+      "monthlyPcQcCnt": 290,
+      "monthlyMobileQcCnt": 2910,
       "compIdx": "중간"
     },
     "성수동가족모임": {
@@ -122467,7 +122467,7 @@
     },
     "성수동데이트": {
       "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 1190,
+      "monthlyMobileQcCnt": 1160,
       "compIdx": "높음"
     },
     "성수동모임": {
@@ -122487,37 +122487,37 @@
     },
     "성수동맛집추천": {
       "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 2020,
+      "monthlyMobileQcCnt": 1960,
       "compIdx": "높음"
     },
     "건대입구역맛집": {
-      "monthlyPcQcCnt": 970,
-      "monthlyMobileQcCnt": 5030,
+      "monthlyPcQcCnt": 1000,
+      "monthlyMobileQcCnt": 4940,
       "compIdx": "높음"
     },
     "다산신도시맛집": {
       "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 1360,
+      "monthlyMobileQcCnt": 1340,
       "compIdx": "높음"
     },
     "팔당가볼만한곳": {
-      "monthlyPcQcCnt": 220,
-      "monthlyMobileQcCnt": 3300,
+      "monthlyPcQcCnt": 230,
+      "monthlyMobileQcCnt": 3150,
       "compIdx": "높음"
     },
     "경기광주가볼만한곳": {
-      "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 6020,
+      "monthlyPcQcCnt": 450,
+      "monthlyMobileQcCnt": 5760,
       "compIdx": "높음"
     },
     "남양주시맛집": {
-      "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 990,
+      "monthlyPcQcCnt": 130,
+      "monthlyMobileQcCnt": 960,
       "compIdx": "높음"
     },
     "화도맛집": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 4100,
+      "monthlyMobileQcCnt": 3970,
       "compIdx": "높음"
     },
     "롯데월드타워맛집": {
@@ -122536,8 +122536,8 @@
       "compIdx": "중간"
     },
     "양평두물머리맛집": {
-      "monthlyPcQcCnt": 480,
-      "monthlyMobileQcCnt": 6260,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 5960,
       "compIdx": "높음"
     },
     "문정역맛집": {
@@ -122547,7 +122547,7 @@
     },
     "남양주갈만한곳": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 910,
+      "monthlyMobileQcCnt": 890,
       "compIdx": "높음"
     },
     "석촌호수고깃집": {
@@ -122572,7 +122572,7 @@
     },
     "남양주애견동반": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 990,
+      "monthlyMobileQcCnt": 960,
       "compIdx": "중간"
     },
     "구리시보쌈": {
@@ -122582,12 +122582,12 @@
     },
     "건대주변맛집": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 90,
+      "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
     "남양주다산맛집": {
-      "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 3050,
+      "monthlyPcQcCnt": 250,
+      "monthlyMobileQcCnt": 2970,
       "compIdx": "높음"
     },
     "미사강변맛집": {
@@ -122607,12 +122607,12 @@
     },
     "가평고기집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 490,
+      "monthlyMobileQcCnt": 470,
       "compIdx": "낮음"
     },
     "구리가볼만한곳": {
       "monthlyPcQcCnt": 330,
-      "monthlyMobileQcCnt": 4720,
+      "monthlyMobileQcCnt": 4470,
       "compIdx": "높음"
     },
     "단대오거리맛집": {
@@ -122621,13 +122621,13 @@
       "compIdx": "중간"
     },
     "정약용유적지": {
-      "monthlyPcQcCnt": 530,
-      "monthlyMobileQcCnt": 3210,
+      "monthlyPcQcCnt": 550,
+      "monthlyMobileQcCnt": 3110,
       "compIdx": "낮음"
     },
     "조안면맛집": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 1420,
+      "monthlyMobileQcCnt": 1350,
       "compIdx": "낮음"
     },
     "남양주데이트코스": {
@@ -122637,27 +122637,27 @@
     },
     "평내맛집": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 2270,
+      "monthlyMobileQcCnt": 2240,
       "compIdx": "높음"
     },
     "다산현대프리미엄아울렛맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 380,
+      "monthlyMobileQcCnt": 370,
       "compIdx": "높음"
     },
     "경기도광주가볼만한곳": {
-      "monthlyPcQcCnt": 1000,
-      "monthlyMobileQcCnt": 10400,
+      "monthlyPcQcCnt": 1030,
+      "monthlyMobileQcCnt": 9980,
       "compIdx": "높음"
     },
     "남양주파스타맛집": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 960,
+      "monthlyMobileQcCnt": 940,
       "compIdx": "높음"
     },
     "세미원맛집": {
-      "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 530,
+      "monthlyPcQcCnt": 30,
+      "monthlyMobileQcCnt": 490,
       "compIdx": "높음"
     },
     "미사고기집": {
@@ -122666,8 +122666,8 @@
       "compIdx": "높음"
     },
     "미사역술집": {
-      "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1020,
+      "monthlyPcQcCnt": 120,
+      "monthlyMobileQcCnt": 1010,
       "compIdx": "높음"
     },
     "스타클럽5": {
@@ -122676,8 +122676,8 @@
       "compIdx": "중간"
     },
     "성수점심": {
-      "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 890,
+      "monthlyPcQcCnt": 460,
+      "monthlyMobileQcCnt": 870,
       "compIdx": "중간"
     },
     "명품맛집": {
@@ -122692,7 +122692,7 @@
     },
     "경기도가평맛집": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 430,
+      "monthlyMobileQcCnt": 420,
       "compIdx": "높음"
     },
     "미사맛집": {
@@ -122737,12 +122737,12 @@
     },
     "미사경정공원맛집": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 610,
+      "monthlyMobileQcCnt": 580,
       "compIdx": "높음"
     },
     "디타워맛집": {
-      "monthlyPcQcCnt": 540,
-      "monthlyMobileQcCnt": 1500,
+      "monthlyPcQcCnt": 570,
+      "monthlyMobileQcCnt": 1480,
       "compIdx": "높음"
     },
     "서울숲룸식당": {
@@ -122757,7 +122757,7 @@
     },
     "가마솥매운탕": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "중간"
     },
     "남양주맛집내돈내산": {
@@ -122767,7 +122767,7 @@
     },
     "호평평내맛집": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 300,
+      "monthlyMobileQcCnt": 280,
       "compIdx": "높음"
     },
     "분당오리": {
@@ -122786,7 +122786,7 @@
       "compIdx": "높음"
     },
     "강남점심맛집": {
-      "monthlyPcQcCnt": 290,
+      "monthlyPcQcCnt": 300,
       "monthlyMobileQcCnt": 1150,
       "compIdx": "높음"
     },
@@ -122801,8 +122801,8 @@
       "compIdx": "높음"
     },
     "다산동맛집": {
-      "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 4830,
+      "monthlyPcQcCnt": 730,
+      "monthlyMobileQcCnt": 4760,
       "compIdx": "높음"
     },
     "가든파이브맛집": {
@@ -122811,8 +122811,8 @@
       "compIdx": "중간"
     },
     "서울근교드라이브": {
-      "monthlyPcQcCnt": 2040,
-      "monthlyMobileQcCnt": 11400,
+      "monthlyPcQcCnt": 2080,
+      "monthlyMobileQcCnt": 11000,
       "compIdx": "높음"
     },
     "장지역맛집": {
@@ -122836,8 +122836,8 @@
       "compIdx": "높음"
     },
     "전골": {
-      "monthlyPcQcCnt": 550,
-      "monthlyMobileQcCnt": 6090,
+      "monthlyPcQcCnt": 560,
+      "monthlyMobileQcCnt": 6010,
       "compIdx": "높음"
     },
     "잠실고기집": {
@@ -122882,7 +122882,7 @@
     },
     "퇴촌가볼만한곳": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 1030,
+      "monthlyMobileQcCnt": 990,
       "compIdx": "높음"
     },
     "갈매맛집": {
@@ -122891,13 +122891,13 @@
       "compIdx": "중간"
     },
     "성수회식": {
-      "monthlyPcQcCnt": 180,
+      "monthlyPcQcCnt": 210,
       "monthlyMobileQcCnt": 220,
       "compIdx": "높음"
     },
     "스타필드맛집": {
       "monthlyPcQcCnt": 540,
-      "monthlyMobileQcCnt": 6490,
+      "monthlyMobileQcCnt": 6350,
       "compIdx": "높음"
     },
     "구리시맛집": {
@@ -122912,12 +122912,12 @@
     },
     "화담숲가볼만한곳": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "성수핫플": {
       "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 2440,
+      "monthlyMobileQcCnt": 2360,
       "compIdx": "높음"
     },
     "삼전동맛집": {
@@ -122956,8 +122956,8 @@
       "compIdx": "중간"
     },
     "응암역맛집": {
-      "monthlyPcQcCnt": 590,
-      "monthlyMobileQcCnt": 4060,
+      "monthlyPcQcCnt": 600,
+      "monthlyMobileQcCnt": 3990,
       "compIdx": "높음"
     },
     "방이먹자골목맛집": {
@@ -122972,7 +122972,7 @@
     },
     "두물머리근처맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 740,
+      "monthlyMobileQcCnt": 690,
       "compIdx": "중간"
     },
     "화도읍맛집": {
@@ -123011,8 +123011,8 @@
       "compIdx": "중간"
     },
     "마두역맛집": {
-      "monthlyPcQcCnt": 530,
-      "monthlyMobileQcCnt": 3850,
+      "monthlyPcQcCnt": 550,
+      "monthlyMobileQcCnt": 3840,
       "compIdx": "중간"
     },
     "둔촌시장맛집": {
@@ -123042,7 +123042,7 @@
     },
     "노원킹크랩": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "하남스타필드맛집": {
@@ -123052,7 +123052,7 @@
     },
     "경기도맛집추천": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 1280,
+      "monthlyMobileQcCnt": 1230,
       "compIdx": "높음"
     },
     "야외식사": {
@@ -123071,8 +123071,8 @@
       "compIdx": "높음"
     },
     "장어구이": {
-      "monthlyPcQcCnt": 1560,
-      "monthlyMobileQcCnt": 17300,
+      "monthlyPcQcCnt": 1590,
+      "monthlyMobileQcCnt": 16900,
       "compIdx": "높음"
     },
     "송파고기집": {
@@ -123152,7 +123152,7 @@
     },
     "토평동맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1380,
+      "monthlyMobileQcCnt": 1340,
       "compIdx": "높음"
     },
     "잠실신천맛집": {
@@ -123197,7 +123197,7 @@
     },
     "남양주가족모임": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 210,
+      "monthlyMobileQcCnt": 190,
       "compIdx": "높음"
     },
     "성수회식장소": {
@@ -123226,13 +123226,13 @@
       "compIdx": "높음"
     },
     "장어초벌구이": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 100,
       "monthlyMobileQcCnt": 760,
       "compIdx": "중간"
     },
     "초벌구이장어": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 230,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "중간"
     },
     "복정동맛집": {
@@ -123341,8 +123341,8 @@
       "compIdx": "높음"
     },
     "진접맛집": {
-      "monthlyPcQcCnt": 2090,
-      "monthlyMobileQcCnt": 14700,
+      "monthlyPcQcCnt": 2080,
+      "monthlyMobileQcCnt": 14400,
       "compIdx": "높음"
     },
     "남양주마석맛집": {
@@ -123492,7 +123492,7 @@
     },
     "강변맛집": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 1830,
+      "monthlyMobileQcCnt": 1810,
       "compIdx": "중간"
     },
     "워커힐호텔주변맛집": {
@@ -123507,12 +123507,12 @@
     },
     "동서울터미널근처맛집": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 380,
+      "monthlyMobileQcCnt": 370,
       "compIdx": "낮음"
     },
     "강변테크노마트맛집": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 1810,
+      "monthlyMobileQcCnt": 1820,
       "compIdx": "중간"
     },
     "워커힐호텔근처맛집": {
@@ -123522,7 +123522,7 @@
     },
     "강변역브런치": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 110,
+      "monthlyMobileQcCnt": 100,
       "compIdx": "중간"
     },
     "강변역주변맛집": {
@@ -123531,13 +123531,13 @@
       "compIdx": "높음"
     },
     "강변역테크노마트맛집": {
-      "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 330,
+      "monthlyPcQcCnt": 20,
+      "monthlyMobileQcCnt": 320,
       "compIdx": "중간"
     },
     "광나루역근처맛집": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "중간"
     },
     "광장동레스토랑": {
@@ -123546,13 +123546,13 @@
       "compIdx": "중간"
     },
     "어린이대공원근처맛집": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 900,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 880,
       "compIdx": "높음"
     },
     "워커힐근처맛집": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 760,
+      "monthlyMobileQcCnt": 750,
       "compIdx": "중간"
     },
     "워커힐호텔맛집": {
@@ -123567,22 +123567,22 @@
     },
     "구의동피자": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 240,
+      "monthlyMobileQcCnt": 250,
       "compIdx": "중간"
     },
     "도선동맛집": {
-      "monthlyPcQcCnt": 40,
+      "monthlyPcQcCnt": 50,
       "monthlyMobileQcCnt": 200,
       "compIdx": "중간"
     },
     "백종원맛집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 50,
+      "monthlyMobileQcCnt": 40,
       "compIdx": "낮음"
     },
     "성시경맛집": {
       "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 1390,
+      "monthlyMobileQcCnt": 1350,
       "compIdx": "중간"
     },
     "왕십리청첩장모임": {
@@ -123592,7 +123592,7 @@
     },
     "서울숲점심": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 390,
+      "monthlyMobileQcCnt": 380,
       "compIdx": "높음"
     },
     "경기광주삼겹살맛집": {
@@ -124197,7 +124197,7 @@
     },
     "아차산역갈만한곳": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "낮음"
     },
     "아차산역데이트": {
@@ -124212,12 +124212,12 @@
     },
     "아차산역중국집": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 130,
+      "monthlyMobileQcCnt": 120,
       "compIdx": "낮음"
     },
     "답십리역맛집": {
-      "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 1780,
+      "monthlyPcQcCnt": 310,
+      "monthlyMobileQcCnt": 1770,
       "compIdx": "중간"
     },
     "아차산역가족외식": {
@@ -124302,7 +124302,7 @@
     },
     "신답역맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 250,
+      "monthlyMobileQcCnt": 240,
       "compIdx": "중간"
     },
     "신답역중식당": {
@@ -124366,8 +124366,8 @@
       "compIdx": "낮음"
     },
     "용답역맛집": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 630,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "중간"
     },
     "용답역주차되는곳": {
@@ -124557,7 +124557,7 @@
     },
     "남한산성민박": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
     "오산산악회": {
@@ -124566,8 +124566,8 @@
       "compIdx": "높음"
     },
     "남한산성고구려": {
-      "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 970,
+      "monthlyPcQcCnt": 120,
+      "monthlyMobileQcCnt": 960,
       "compIdx": "중간"
     },
     "양주근처맛집": {
@@ -124576,33 +124576,33 @@
       "compIdx": "높음"
     },
     "남한산성둘레길": {
-      "monthlyPcQcCnt": 1330,
-      "monthlyMobileQcCnt": 9530,
+      "monthlyPcQcCnt": 1350,
+      "monthlyMobileQcCnt": 9200,
       "compIdx": "중간"
     },
     "남한산성족구장": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 70,
       "monthlyMobileQcCnt": 140,
       "compIdx": "중간"
     },
     "남한산성야유회": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 30,
       "compIdx": "낮음"
     },
     "토종닭백숙맛집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 180,
+      "monthlyMobileQcCnt": 170,
       "compIdx": "높음"
     },
     "남한산성백숙": {
-      "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 7010,
+      "monthlyPcQcCnt": 810,
+      "monthlyMobileQcCnt": 6860,
       "compIdx": "중간"
     },
     "오사사": {
       "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 1020,
+      "monthlyMobileQcCnt": 1000,
       "compIdx": "낮음"
     },
     "크리스마스예약": {
@@ -124621,8 +124621,8 @@
       "compIdx": "높음"
     },
     "화곡맛집": {
-      "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 3450,
+      "monthlyPcQcCnt": 400,
+      "monthlyMobileQcCnt": 3400,
       "compIdx": "높음"
     },
     "광주남한산성맛집": {
@@ -124636,13 +124636,13 @@
       "compIdx": "중간"
     },
     "남한산성계곡": {
-      "monthlyPcQcCnt": 380,
-      "monthlyMobileQcCnt": 3040,
+      "monthlyPcQcCnt": 420,
+      "monthlyMobileQcCnt": 3170,
       "compIdx": "높음"
     },
     "남한산성닭도리탕": {
-      "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 310,
+      "monthlyPcQcCnt": 30,
+      "monthlyMobileQcCnt": 290,
       "compIdx": "중간"
     },
     "남한산성오리집": {
@@ -124661,13 +124661,13 @@
       "compIdx": "높음"
     },
     "잠실놀거리": {
-      "monthlyPcQcCnt": 2080,
-      "monthlyMobileQcCnt": 17200,
+      "monthlyPcQcCnt": 2110,
+      "monthlyMobileQcCnt": 16400,
       "compIdx": "높음"
     },
     "오리전문점": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 430,
+      "monthlyMobileQcCnt": 420,
       "compIdx": "높음"
     },
     "오리구이": {
@@ -124682,7 +124682,7 @@
     },
     "군자갈만한곳": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 30,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "중간"
     },
     "군자주차되는곳": {
@@ -124692,7 +124692,7 @@
     },
     "군자중국집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 240,
+      "monthlyMobileQcCnt": 250,
       "compIdx": "낮음"
     },
     "군자중식당": {
@@ -124717,17 +124717,17 @@
     },
     "군자데이트": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 370,
+      "monthlyMobileQcCnt": 360,
       "compIdx": "중간"
     },
     "군자데이트코스": {
-      "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 90,
+      "monthlyPcQcCnt": 10,
+      "monthlyMobileQcCnt": 80,
       "compIdx": "중간"
     },
     "군자회식": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 40,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
     "군자단체회식": {
@@ -124752,7 +124752,7 @@
     },
     "장어양식장": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 260,
+      "monthlyMobileQcCnt": 250,
       "compIdx": "높음"
     },
     "장어도매": {
@@ -124777,17 +124777,17 @@
     },
     "생생정보통맛집오늘": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 500,
+      "monthlyMobileQcCnt": 540,
       "compIdx": "중간"
     },
     "포천갈비": {
-      "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 3770,
+      "monthlyPcQcCnt": 280,
+      "monthlyMobileQcCnt": 3650,
       "compIdx": "높음"
     },
     "군자역데이트": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 160,
+      "monthlyMobileQcCnt": 150,
       "compIdx": "중간"
     },
     "군자역갈만한곳": {
@@ -124812,12 +124812,12 @@
     },
     "군자역놀거리": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 850,
+      "monthlyMobileQcCnt": 810,
       "compIdx": "중간"
     },
     "군자역가족모임": {
-      "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyPcQcCnt": 10,
+      "monthlyMobileQcCnt": 20,
       "compIdx": "중간"
     },
     "군자역가족외식": {
@@ -124832,7 +124832,7 @@
     },
     "군자역모임장소": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "군자역회식": {
@@ -125342,7 +125342,7 @@
     },
     "중식맛집": {
       "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 5710,
+      "monthlyMobileQcCnt": 5530,
       "compIdx": "높음"
     },
     "중식주차되는곳": {
@@ -125402,7 +125402,7 @@
     },
     "중식회식": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 5,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "짬뽕찐맛집": {
@@ -125416,18 +125416,18 @@
       "compIdx": "높음"
     },
     "개금맛집": {
-      "monthlyPcQcCnt": 760,
-      "monthlyMobileQcCnt": 7310,
+      "monthlyPcQcCnt": 770,
+      "monthlyMobileQcCnt": 7200,
       "compIdx": "중간"
     },
     "짜장면맛집": {
-      "monthlyPcQcCnt": 450,
-      "monthlyMobileQcCnt": 12400,
+      "monthlyPcQcCnt": 460,
+      "monthlyMobileQcCnt": 12100,
       "compIdx": "높음"
     },
     "김포짬뽕맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 2190,
+      "monthlyMobileQcCnt": 2100,
       "compIdx": "높음"
     },
     "이수역맛집": {
@@ -125436,18 +125436,18 @@
       "compIdx": "높음"
     },
     "중국집메뉴": {
-      "monthlyPcQcCnt": 420,
-      "monthlyMobileQcCnt": 2590,
+      "monthlyPcQcCnt": 430,
+      "monthlyMobileQcCnt": 2560,
       "compIdx": "중간"
     },
     "팔보채": {
-      "monthlyPcQcCnt": 3890,
-      "monthlyMobileQcCnt": 40600,
+      "monthlyPcQcCnt": 3970,
+      "monthlyMobileQcCnt": 39300,
       "compIdx": "높음"
     },
     "중국요리맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 1020,
+      "monthlyMobileQcCnt": 990,
       "compIdx": "높음"
     },
     "강남중식당": {
@@ -125456,18 +125456,18 @@
       "compIdx": "높음"
     },
     "룸있는식당": {
-      "monthlyPcQcCnt": 120,
+      "monthlyPcQcCnt": 130,
       "monthlyMobileQcCnt": 1030,
       "compIdx": "높음"
     },
     "내방역맛집": {
-      "monthlyPcQcCnt": 1230,
-      "monthlyMobileQcCnt": 7190,
+      "monthlyPcQcCnt": 1250,
+      "monthlyMobileQcCnt": 7140,
       "compIdx": "높음"
     },
     "중식당맛집": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 1000,
+      "monthlyMobileQcCnt": 970,
       "compIdx": "높음"
     },
     "중식요리맛집": {
@@ -125477,7 +125477,7 @@
     },
     "탕수육맛집": {
       "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 6970,
+      "monthlyMobileQcCnt": 6760,
       "compIdx": "높음"
     },
     "방배역맛집": {
@@ -125487,17 +125487,17 @@
     },
     "김포애견동반식당": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 2200,
+      "monthlyMobileQcCnt": 2100,
       "compIdx": "높음"
     },
     "가산디지털단지역맛집": {
-      "monthlyPcQcCnt": 2230,
-      "monthlyMobileQcCnt": 4440,
+      "monthlyPcQcCnt": 2330,
+      "monthlyMobileQcCnt": 4480,
       "compIdx": "높음"
     },
     "간짜장맛집": {
       "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 3960,
+      "monthlyMobileQcCnt": 3930,
       "compIdx": "높음"
     },
     "오향장육맛집": {
@@ -125506,8 +125506,8 @@
       "compIdx": "중간"
     },
     "저녁식사": {
-      "monthlyPcQcCnt": 490,
-      "monthlyMobileQcCnt": 2130,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 2120,
       "compIdx": "중간"
     },
     "점심맛집": {
@@ -125517,12 +125517,12 @@
     },
     "중국집맛집": {
       "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 8990,
+      "monthlyMobileQcCnt": 8730,
       "compIdx": "중간"
     },
     "반포맛집": {
-      "monthlyPcQcCnt": 720,
-      "monthlyMobileQcCnt": 5580,
+      "monthlyPcQcCnt": 730,
+      "monthlyMobileQcCnt": 5450,
       "compIdx": "높음"
     },
     "사당룸식당": {
@@ -125561,13 +125561,13 @@
       "compIdx": "높음"
     },
     "사당역중국집": {
-      "monthlyPcQcCnt": 120,
+      "monthlyPcQcCnt": 130,
       "monthlyMobileQcCnt": 670,
       "compIdx": "높음"
     },
     "저녁추천": {
-      "monthlyPcQcCnt": 1380,
-      "monthlyMobileQcCnt": 4750,
+      "monthlyPcQcCnt": 1410,
+      "monthlyMobileQcCnt": 4710,
       "compIdx": "높음"
     },
     "안양일번가맛집": {
@@ -125581,68 +125581,68 @@
       "compIdx": "높음"
     },
     "보은맛집": {
-      "monthlyPcQcCnt": 960,
-      "monthlyMobileQcCnt": 9520,
+      "monthlyPcQcCnt": 980,
+      "monthlyMobileQcCnt": 9010,
       "compIdx": "중간"
     },
     "안양역맛집": {
-      "monthlyPcQcCnt": 1530,
-      "monthlyMobileQcCnt": 9570,
+      "monthlyPcQcCnt": 1580,
+      "monthlyMobileQcCnt": 9490,
       "compIdx": "높음"
     },
     "부천고급식당": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 170,
+      "monthlyMobileQcCnt": 160,
       "compIdx": "중간"
     },
     "부천룸식당": {
       "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1170,
+      "monthlyMobileQcCnt": 1130,
       "compIdx": "높음"
     },
     "부천상견례": {
-      "monthlyPcQcCnt": 170,
+      "monthlyPcQcCnt": 180,
       "monthlyMobileQcCnt": 560,
       "compIdx": "높음"
     },
     "부천옥길동맛집": {
-      "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 1610,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 1570,
       "compIdx": "중간"
     },
     "옥길동맛집": {
       "monthlyPcQcCnt": 800,
-      "monthlyMobileQcCnt": 7010,
+      "monthlyMobileQcCnt": 6800,
       "compIdx": "높음"
     },
     "중식룸식당": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "중간"
     },
     "중식코스요리": {
       "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 2170,
+      "monthlyMobileQcCnt": 2100,
       "compIdx": "중간"
     },
     "중국음식": {
-      "monthlyPcQcCnt": 990,
-      "monthlyMobileQcCnt": 4570,
+      "monthlyPcQcCnt": 1020,
+      "monthlyMobileQcCnt": 4530,
       "compIdx": "중간"
     },
     "오향장육": {
-      "monthlyPcQcCnt": 1570,
-      "monthlyMobileQcCnt": 9970,
+      "monthlyPcQcCnt": 1590,
+      "monthlyMobileQcCnt": 9880,
       "compIdx": "중간"
     },
     "샥스핀": {
-      "monthlyPcQcCnt": 570,
-      "monthlyMobileQcCnt": 4200,
+      "monthlyPcQcCnt": 590,
+      "monthlyMobileQcCnt": 4190,
       "compIdx": "중간"
     },
     "익산금마맛집": {
-      "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 3080,
+      "monthlyPcQcCnt": 190,
+      "monthlyMobileQcCnt": 2980,
       "compIdx": "중간"
     },
     "마린시티맛집": {
@@ -125651,8 +125651,8 @@
       "compIdx": "중간"
     },
     "군산맛집": {
-      "monthlyPcQcCnt": 11100,
-      "monthlyMobileQcCnt": 104600,
+      "monthlyPcQcCnt": 11300,
+      "monthlyMobileQcCnt": 99400,
       "compIdx": "높음"
     },
     "평촌역맛집": {
@@ -125662,22 +125662,22 @@
     },
     "평촌중식당": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 290,
+      "monthlyMobileQcCnt": 280,
       "compIdx": "중간"
     },
     "부산베이징덕": {
-      "monthlyPcQcCnt": 140,
-      "monthlyMobileQcCnt": 960,
+      "monthlyPcQcCnt": 150,
+      "monthlyMobileQcCnt": 940,
       "compIdx": "중간"
     },
     "부산코스요리": {
-      "monthlyPcQcCnt": 270,
-      "monthlyMobileQcCnt": 1660,
+      "monthlyPcQcCnt": 290,
+      "monthlyMobileQcCnt": 1640,
       "compIdx": "높음"
     },
     "해운대구남로맛집": {
       "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 1640,
+      "monthlyMobileQcCnt": 1600,
       "compIdx": "중간"
     },
     "해운대단체": {
@@ -125686,8 +125686,8 @@
       "compIdx": "높음"
     },
     "해운대룸식당": {
-      "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 660,
+      "monthlyPcQcCnt": 140,
+      "monthlyMobileQcCnt": 640,
       "compIdx": "높음"
     },
     "해운대모임장소": {
@@ -125696,8 +125696,8 @@
       "compIdx": "중간"
     },
     "해운대술집": {
-      "monthlyPcQcCnt": 780,
-      "monthlyMobileQcCnt": 7600,
+      "monthlyPcQcCnt": 790,
+      "monthlyMobileQcCnt": 7420,
       "compIdx": "높음"
     },
     "해운대접대": {
@@ -125707,7 +125707,7 @@
     },
     "중국요리메뉴": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 2720,
+      "monthlyMobileQcCnt": 2660,
       "compIdx": "높음"
     },
     "서울데이트": {
@@ -125721,7 +125721,7 @@
       "compIdx": "중간"
     },
     "고급중국집": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 110,
       "compIdx": "중간"
     },
@@ -125757,7 +125757,7 @@
     },
     "중국요리집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 540,
+      "monthlyMobileQcCnt": 510,
       "compIdx": "높음"
     },
     "중국요리코스": {
@@ -125767,7 +125767,7 @@
     },
     "중국음식메뉴": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 50,
+      "monthlyMobileQcCnt": 60,
       "compIdx": "중간"
     },
     "중식당요리": {
@@ -125777,7 +125777,7 @@
     },
     "중식레스토랑": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 470,
+      "monthlyMobileQcCnt": 450,
       "compIdx": "중간"
     },
     "중식요리집": {
@@ -125791,43 +125791,43 @@
       "compIdx": "높음"
     },
     "해삼탕": {
-      "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 620,
+      "monthlyPcQcCnt": 60,
+      "monthlyMobileQcCnt": 600,
       "compIdx": "높음"
     },
     "에그누들": {
-      "monthlyPcQcCnt": 490,
-      "monthlyMobileQcCnt": 4230,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 4520,
       "compIdx": "중간"
     },
     "상동역맛집": {
-      "monthlyPcQcCnt": 1100,
-      "monthlyMobileQcCnt": 6770,
+      "monthlyPcQcCnt": 1130,
+      "monthlyMobileQcCnt": 6620,
       "compIdx": "높음"
     },
     "서울시청맛집": {
-      "monthlyPcQcCnt": 1120,
-      "monthlyMobileQcCnt": 6620,
+      "monthlyPcQcCnt": 1160,
+      "monthlyMobileQcCnt": 6350,
       "compIdx": "높음"
     },
     "경기도안산맛집": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 940,
+      "monthlyMobileQcCnt": 930,
       "compIdx": "높음"
     },
     "부산해운대맛집": {
-      "monthlyPcQcCnt": 3030,
-      "monthlyMobileQcCnt": 20300,
+      "monthlyPcQcCnt": 3090,
+      "monthlyMobileQcCnt": 19600,
       "compIdx": "높음"
     },
     "상계역맛집": {
-      "monthlyPcQcCnt": 750,
-      "monthlyMobileQcCnt": 6290,
+      "monthlyPcQcCnt": 770,
+      "monthlyMobileQcCnt": 6240,
       "compIdx": "높음"
     },
     "난자완스": {
-      "monthlyPcQcCnt": 1040,
-      "monthlyMobileQcCnt": 6810,
+      "monthlyPcQcCnt": 1050,
+      "monthlyMobileQcCnt": 6580,
       "compIdx": "낮음"
     },
     "분위기좋은식당": {
@@ -125841,7 +125841,7 @@
       "compIdx": "높음"
     },
     "제로페이가맹점": {
-      "monthlyPcQcCnt": 3890,
+      "monthlyPcQcCnt": 3970,
       "monthlyMobileQcCnt": 17300,
       "compIdx": "높음"
     },
@@ -125861,8 +125861,8 @@
       "compIdx": "중간"
     },
     "아산가볼만한곳": {
-      "monthlyPcQcCnt": 2910,
-      "monthlyMobileQcCnt": 40600,
+      "monthlyPcQcCnt": 2950,
+      "monthlyMobileQcCnt": 38300,
       "compIdx": "높음"
     },
     "아산스파비스맛집": {
@@ -125876,13 +125876,13 @@
       "compIdx": "중간"
     },
     "아산여행": {
-      "monthlyPcQcCnt": 390,
-      "monthlyMobileQcCnt": 1400,
+      "monthlyPcQcCnt": 400,
+      "monthlyMobileQcCnt": 1360,
       "compIdx": "높음"
     },
     "온양가볼만한곳": {
       "monthlyPcQcCnt": 160,
-      "monthlyMobileQcCnt": 2530,
+      "monthlyMobileQcCnt": 2410,
       "compIdx": "높음"
     },
     "천안맛집베스트": {
@@ -125891,33 +125891,33 @@
       "compIdx": "높음"
     },
     "천안아산가볼만한곳": {
-      "monthlyPcQcCnt": 790,
-      "monthlyMobileQcCnt": 6260,
+      "monthlyPcQcCnt": 810,
+      "monthlyMobileQcCnt": 5970,
       "compIdx": "높음"
     },
     "천안점심맛집": {
-      "monthlyPcQcCnt": 480,
-      "monthlyMobileQcCnt": 2980,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 2930,
       "compIdx": "높음"
     },
     "천안코스요리": {
       "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 1340,
+      "monthlyMobileQcCnt": 1320,
       "compIdx": "중간"
     },
     "충청도가볼만한곳": {
-      "monthlyPcQcCnt": 1780,
-      "monthlyMobileQcCnt": 16900,
+      "monthlyPcQcCnt": 1810,
+      "monthlyMobileQcCnt": 16300,
       "compIdx": "높음"
     },
     "연말": {
-      "monthlyPcQcCnt": 700,
+      "monthlyPcQcCnt": 710,
       "monthlyMobileQcCnt": 890,
       "compIdx": "낮음"
     },
     "천안상견례": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 530,
+      "monthlyMobileQcCnt": 510,
       "compIdx": "중간"
     },
     "안산맛집": {
@@ -125926,28 +125926,28 @@
       "compIdx": "높음"
     },
     "부산먹거리": {
-      "monthlyPcQcCnt": 560,
-      "monthlyMobileQcCnt": 2600,
+      "monthlyPcQcCnt": 570,
+      "monthlyMobileQcCnt": 2510,
       "compIdx": "중간"
     },
     "양재동중국집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 220,
+      "monthlyMobileQcCnt": 210,
       "compIdx": "중간"
     },
     "맛있는거": {
-      "monthlyPcQcCnt": 440,
-      "monthlyMobileQcCnt": 1780,
+      "monthlyPcQcCnt": 450,
+      "monthlyMobileQcCnt": 1790,
       "compIdx": "높음"
     },
     "깐풍기": {
-      "monthlyPcQcCnt": 1920,
-      "monthlyMobileQcCnt": 16400,
+      "monthlyPcQcCnt": 1940,
+      "monthlyMobileQcCnt": 16200,
       "compIdx": "높음"
     },
     "삼선짬뽕": {
       "monthlyPcQcCnt": 410,
-      "monthlyMobileQcCnt": 4460,
+      "monthlyMobileQcCnt": 4380,
       "compIdx": "높음"
     },
     "세종단체식당": {
@@ -125957,7 +125957,7 @@
     },
     "세종상견례": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 280,
+      "monthlyMobileQcCnt": 270,
       "compIdx": "높음"
     },
     "세종시가족모임": {
@@ -125967,11 +125967,11 @@
     },
     "세종시중식당": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 230,
+      "monthlyMobileQcCnt": 220,
       "compIdx": "높음"
     },
     "세종시회식장소": {
-      "monthlyPcQcCnt": 5,
+      "monthlyPcQcCnt": 10,
       "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
@@ -125981,12 +125981,12 @@
       "compIdx": "높음"
     },
     "해운대회식": {
-      "monthlyPcQcCnt": 60,
+      "monthlyPcQcCnt": 70,
       "monthlyMobileQcCnt": 150,
       "compIdx": "높음"
     },
     "걸포동식당": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 20,
       "monthlyMobileQcCnt": 160,
       "compIdx": "중간"
     },
@@ -125996,8 +125996,8 @@
       "compIdx": "높음"
     },
     "구래동점심맛집": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 550,
+      "monthlyPcQcCnt": 90,
+      "monthlyMobileQcCnt": 560,
       "compIdx": "높음"
     },
     "구래동회식": {
@@ -126006,13 +126006,13 @@
       "compIdx": "높음"
     },
     "구래맛집": {
-      "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 1320,
+      "monthlyPcQcCnt": 100,
+      "monthlyMobileQcCnt": 1270,
       "compIdx": "중간"
     },
     "김포가볼만한곳": {
       "monthlyPcQcCnt": 1990,
-      "monthlyMobileQcCnt": 26600,
+      "monthlyMobileQcCnt": 25100,
       "compIdx": "높음"
     },
     "김포가족모임": {
@@ -126021,8 +126021,8 @@
       "compIdx": "높음"
     },
     "김포갈만한곳": {
-      "monthlyPcQcCnt": 200,
-      "monthlyMobileQcCnt": 2010,
+      "monthlyPcQcCnt": 210,
+      "monthlyMobileQcCnt": 1910,
       "compIdx": "높음"
     },
     "김포걸포동맛집": {
@@ -126036,13 +126036,13 @@
       "compIdx": "높음"
     },
     "김포구래동맛집": {
-      "monthlyPcQcCnt": 420,
+      "monthlyPcQcCnt": 430,
       "monthlyMobileQcCnt": 5180,
       "compIdx": "높음"
     },
     "김포구래맛집": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 910,
+      "monthlyMobileQcCnt": 880,
       "compIdx": "높음"
     },
     "김포데이트코스": {
@@ -126052,7 +126052,7 @@
     },
     "김포마송맛집": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 1500,
+      "monthlyMobileQcCnt": 1490,
       "compIdx": "중간"
     },
     "김포맛집베스트": {
@@ -126062,37 +126062,37 @@
     },
     "김포맛집추천": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 1450,
+      "monthlyMobileQcCnt": 1390,
       "compIdx": "높음"
     },
     "김포사우동맛집": {
-      "monthlyPcQcCnt": 240,
-      "monthlyMobileQcCnt": 2230,
+      "monthlyPcQcCnt": 250,
+      "monthlyMobileQcCnt": 2220,
       "compIdx": "높음"
     },
     "김포석모리맛집": {
-      "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 5260,
+      "monthlyPcQcCnt": 310,
+      "monthlyMobileQcCnt": 5180,
       "compIdx": "높음"
     },
     "김포시맛집": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 360,
+      "monthlyMobileQcCnt": 340,
       "compIdx": "높음"
     },
     "김포시청맛집": {
       "monthlyPcQcCnt": 40,
-      "monthlyMobileQcCnt": 480,
+      "monthlyMobileQcCnt": 460,
       "compIdx": "높음"
     },
     "김포양촌맛집": {
-      "monthlyPcQcCnt": 180,
-      "monthlyMobileQcCnt": 4930,
+      "monthlyPcQcCnt": 190,
+      "monthlyMobileQcCnt": 5060,
       "compIdx": "높음"
     },
     "김포여행": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 520,
+      "monthlyMobileQcCnt": 510,
       "compIdx": "높음"
     },
     "김포운양동맛집": {
@@ -126101,8 +126101,8 @@
       "compIdx": "높음"
     },
     "김포장기동맛집": {
-      "monthlyPcQcCnt": 850,
-      "monthlyMobileQcCnt": 7310,
+      "monthlyPcQcCnt": 880,
+      "monthlyMobileQcCnt": 7290,
       "compIdx": "높음"
     },
     "김포점심": {
@@ -126127,22 +126127,22 @@
     },
     "마산동맛집": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 1610,
+      "monthlyMobileQcCnt": 1600,
       "compIdx": "중간"
     },
     "마산역맛집": {
-      "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 3180,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 3120,
       "compIdx": "중간"
     },
     "마송맛집": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 870,
+      "monthlyMobileQcCnt": 860,
       "compIdx": "중간"
     },
     "사우동맛집": {
-      "monthlyPcQcCnt": 930,
-      "monthlyMobileQcCnt": 6100,
+      "monthlyPcQcCnt": 960,
+      "monthlyMobileQcCnt": 6020,
       "compIdx": "높음"
     },
     "사우동점심": {
@@ -126152,7 +126152,7 @@
     },
     "석모리식당": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 190,
+      "monthlyMobileQcCnt": 180,
       "compIdx": "중간"
     },
     "운양동맛집": {
@@ -126166,48 +126166,48 @@
       "compIdx": "높음"
     },
     "통진맛집": {
-      "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 3300,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 3270,
       "compIdx": "중간"
     },
     "동파육": {
-      "monthlyPcQcCnt": 2370,
+      "monthlyPcQcCnt": 2420,
       "monthlyMobileQcCnt": 16200,
       "compIdx": "높음"
     },
     "천안맛집추천": {
       "monthlyPcQcCnt": 230,
-      "monthlyMobileQcCnt": 2000,
+      "monthlyMobileQcCnt": 1930,
       "compIdx": "높음"
     },
     "역곡역맛집": {
-      "monthlyPcQcCnt": 990,
-      "monthlyMobileQcCnt": 6690,
+      "monthlyPcQcCnt": 1020,
+      "monthlyMobileQcCnt": 6610,
       "compIdx": "중간"
     },
     "강남맛집추천": {
       "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 1390,
+      "monthlyMobileQcCnt": 1370,
       "compIdx": "높음"
     },
     "천안가족식사": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 190,
+      "monthlyMobileQcCnt": 180,
       "compIdx": "높음"
     },
     "강원도원주맛집": {
-      "monthlyPcQcCnt": 280,
-      "monthlyMobileQcCnt": 2240,
+      "monthlyPcQcCnt": 290,
+      "monthlyMobileQcCnt": 2170,
       "compIdx": "높음"
     },
     "서울단체식당": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "상견례식당": {
-      "monthlyPcQcCnt": 690,
-      "monthlyMobileQcCnt": 4830,
+      "monthlyPcQcCnt": 700,
+      "monthlyMobileQcCnt": 4780,
       "compIdx": "높음"
     },
     "가족모임룸": {
@@ -126221,18 +126221,18 @@
       "compIdx": "높음"
     },
     "가족식사": {
-      "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 1470,
+      "monthlyPcQcCnt": 160,
+      "monthlyMobileQcCnt": 1390,
       "compIdx": "중간"
     },
     "갤러리아포레": {
-      "monthlyPcQcCnt": 1630,
-      "monthlyMobileQcCnt": 7330,
+      "monthlyPcQcCnt": 1670,
+      "monthlyMobileQcCnt": 7210,
       "compIdx": "중간"
     },
     "갤러리아포레맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 640,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "중간"
     },
     "갤러리아포레중식당": {
@@ -126242,12 +126242,12 @@
     },
     "고급중식당": {
       "monthlyPcQcCnt": 130,
-      "monthlyMobileQcCnt": 600,
+      "monthlyMobileQcCnt": 580,
       "compIdx": "중간"
     },
     "다이닝룸": {
-      "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 2170,
+      "monthlyPcQcCnt": 530,
+      "monthlyMobileQcCnt": 2140,
       "compIdx": "높음"
     },
     "단체모임장소": {
@@ -126267,12 +126267,12 @@
     },
     "상견례장소": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 540,
+      "monthlyMobileQcCnt": 530,
       "compIdx": "높음"
     },
     "생일파티장소": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 490,
+      "monthlyMobileQcCnt": 480,
       "compIdx": "높음"
     },
     "서울가볼만한곳추천": {
@@ -126282,7 +126282,7 @@
     },
     "서울가족모임식당": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 340,
+      "monthlyMobileQcCnt": 320,
       "compIdx": "높음"
     },
     "서울가족모임장소": {
@@ -126292,7 +126292,7 @@
     },
     "서울가족식사": {
       "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 310,
+      "monthlyMobileQcCnt": 300,
       "compIdx": "높음"
     },
     "서울가족식사추천": {
@@ -126301,13 +126301,13 @@
       "compIdx": "높음"
     },
     "서울고급식당": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
     "서울근처가볼만한곳": {
       "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 800,
+      "monthlyMobileQcCnt": 760,
       "compIdx": "높음"
     },
     "서울단체회식": {
@@ -126321,12 +126321,12 @@
       "compIdx": "높음"
     },
     "서울맛집추천": {
-      "monthlyPcQcCnt": 540,
-      "monthlyMobileQcCnt": 3920,
+      "monthlyPcQcCnt": 550,
+      "monthlyMobileQcCnt": 3810,
       "compIdx": "높음"
     },
     "서울모임": {
-      "monthlyPcQcCnt": 30,
+      "monthlyPcQcCnt": 40,
       "monthlyMobileQcCnt": 90,
       "compIdx": "높음"
     },
@@ -126337,12 +126337,12 @@
     },
     "서울상견례": {
       "monthlyPcQcCnt": 150,
-      "monthlyMobileQcCnt": 420,
+      "monthlyMobileQcCnt": 410,
       "compIdx": "높음"
     },
     "서울숲가볼만한곳": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 690,
+      "monthlyMobileQcCnt": 660,
       "compIdx": "높음"
     },
     "서울숲가족모임": {
@@ -126352,7 +126352,7 @@
     },
     "서울숲가족식사": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 110,
+      "monthlyMobileQcCnt": 100,
       "compIdx": "중간"
     },
     "서울숲갤러리아포레맛집": {
@@ -126366,13 +126366,13 @@
       "compIdx": "높음"
     },
     "서울숲역맛집": {
-      "monthlyPcQcCnt": 510,
-      "monthlyMobileQcCnt": 4710,
+      "monthlyPcQcCnt": 530,
+      "monthlyMobileQcCnt": 4590,
       "compIdx": "높음"
     },
     "서울숲주변맛집": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 560,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 550,
       "compIdx": "높음"
     },
     "서울숲코스요리": {
@@ -126396,8 +126396,8 @@
       "compIdx": "높음"
     },
     "서울파인다이닝": {
-      "monthlyPcQcCnt": 680,
-      "monthlyMobileQcCnt": 3570,
+      "monthlyPcQcCnt": 710,
+      "monthlyMobileQcCnt": 3580,
       "compIdx": "높음"
     },
     "서울회식장소": {
@@ -126412,12 +126412,12 @@
     },
     "성수동가족식사": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 140,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "성수동갈만한곳": {
-      "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 460,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 440,
       "compIdx": "높음"
     },
     "성수동단체회식": {
@@ -126426,8 +126426,8 @@
       "compIdx": "높음"
     },
     "성수동회식": {
-      "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 90,
+      "monthlyPcQcCnt": 80,
+      "monthlyMobileQcCnt": 100,
       "compIdx": "높음"
     },
     "성수룸있는식당": {
@@ -126436,8 +126436,8 @@
       "compIdx": "높음"
     },
     "성수맛집추천": {
-      "monthlyPcQcCnt": 300,
-      "monthlyMobileQcCnt": 840,
+      "monthlyPcQcCnt": 280,
+      "monthlyMobileQcCnt": 810,
       "compIdx": "높음"
     },
     "성수모임": {
@@ -126447,7 +126447,7 @@
     },
     "성수역근처맛집": {
       "monthlyPcQcCnt": 100,
-      "monthlyMobileQcCnt": 630,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "성수역룸식당": {
@@ -126457,12 +126457,12 @@
     },
     "성수역회식": {
       "monthlyPcQcCnt": 90,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "높음"
     },
     "성수점심회식": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 30,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 40,
       "compIdx": "높음"
     },
     "원테이블레스토랑": {
@@ -126482,7 +126482,7 @@
     },
     "프라이빗레스토랑": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 80,
+      "monthlyMobileQcCnt": 70,
       "compIdx": "높음"
     },
     "프라이빗룸": {
@@ -126496,8 +126496,8 @@
       "compIdx": "중간"
     },
     "성수룸식당": {
-      "monthlyPcQcCnt": 70,
-      "monthlyMobileQcCnt": 200,
+      "monthlyPcQcCnt": 80,
+      "monthlyMobileQcCnt": 190,
       "compIdx": "중간"
     },
     "상견례": {
@@ -126506,28 +126506,28 @@
       "compIdx": "높음"
     },
     "부모님생신식당": {
-      "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1600,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 1610,
       "compIdx": "높음"
     },
     "강남상견례": {
-      "monthlyPcQcCnt": 200,
+      "monthlyPcQcCnt": 220,
       "monthlyMobileQcCnt": 510,
       "compIdx": "높음"
     },
     "24시식당": {
-      "monthlyPcQcCnt": 620,
-      "monthlyMobileQcCnt": 25400,
+      "monthlyPcQcCnt": 610,
+      "monthlyMobileQcCnt": 25000,
       "compIdx": "높음"
     },
     "양동시장맛집": {
       "monthlyPcQcCnt": 190,
-      "monthlyMobileQcCnt": 2520,
+      "monthlyMobileQcCnt": 2420,
       "compIdx": "중간"
     },
     "연태고량주": {
-      "monthlyPcQcCnt": 3490,
-      "monthlyMobileQcCnt": 35500,
+      "monthlyPcQcCnt": 3560,
+      "monthlyMobileQcCnt": 34900,
       "compIdx": "높음"
     },
     "화정동짬뽕": {
@@ -126537,7 +126537,7 @@
     },
     "가족모임": {
       "monthlyPcQcCnt": 110,
-      "monthlyMobileQcCnt": 780,
+      "monthlyMobileQcCnt": 740,
       "compIdx": "중간"
     },
     "룸식당": {
@@ -126546,12 +126546,12 @@
       "compIdx": "중간"
     },
     "코스요리": {
-      "monthlyPcQcCnt": 360,
-      "monthlyMobileQcCnt": 3030,
+      "monthlyPcQcCnt": 370,
+      "monthlyMobileQcCnt": 2960,
       "compIdx": "중간"
     },
     "오늘뭐먹지?": {
-      "monthlyPcQcCnt": 130,
+      "monthlyPcQcCnt": 140,
       "monthlyMobileQcCnt": 290,
       "compIdx": "높음"
     },
@@ -126562,7 +126562,7 @@
     },
     "가족모임식당": {
       "monthlyPcQcCnt": 250,
-      "monthlyMobileQcCnt": 2790,
+      "monthlyMobileQcCnt": 2680,
       "compIdx": "높음"
     },
     "상견례장소추천": {
@@ -126571,13 +126571,13 @@
       "compIdx": "높음"
     },
     "서울가족모임": {
-      "monthlyPcQcCnt": 20,
+      "monthlyPcQcCnt": 30,
       "monthlyMobileQcCnt": 60,
       "compIdx": "높음"
     },
     "마라카오위": {
       "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 1060,
+      "monthlyMobileQcCnt": 1020,
       "compIdx": "중간"
     },
     "서울회식": {
@@ -126586,8 +126586,8 @@
       "compIdx": "높음"
     },
     "원주혁신도시맛집": {
-      "monthlyPcQcCnt": 1260,
-      "monthlyMobileQcCnt": 11300,
+      "monthlyPcQcCnt": 1300,
+      "monthlyMobileQcCnt": 11200,
       "compIdx": "높음"
     },
     "서울상견례장소": {
@@ -126596,28 +126596,28 @@
       "compIdx": "높음"
     },
     "칠순식당": {
-      "monthlyPcQcCnt": 100,
+      "monthlyPcQcCnt": 110,
       "monthlyMobileQcCnt": 550,
       "compIdx": "높음"
     },
     "서울룸식당": {
-      "monthlyPcQcCnt": 210,
+      "monthlyPcQcCnt": 220,
       "monthlyMobileQcCnt": 930,
       "compIdx": "높음"
     },
     "강남상견례장소": {
       "monthlyPcQcCnt": 50,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 130,
       "compIdx": "높음"
     },
     "판교역": {
-      "monthlyPcQcCnt": 4880,
-      "monthlyMobileQcCnt": 25300,
+      "monthlyPcQcCnt": 5050,
+      "monthlyMobileQcCnt": 25100,
       "compIdx": "높음"
     },
     "파인다이닝": {
-      "monthlyPcQcCnt": 2640,
-      "monthlyMobileQcCnt": 12900,
+      "monthlyPcQcCnt": 2710,
+      "monthlyMobileQcCnt": 12800,
       "compIdx": "높음"
     },
     "칠순잔치장소": {
@@ -126626,8 +126626,8 @@
       "compIdx": "높음"
     },
     "강남단체회식": {
-      "monthlyPcQcCnt": 60,
-      "monthlyMobileQcCnt": 220,
+      "monthlyPcQcCnt": 70,
+      "monthlyMobileQcCnt": 210,
       "compIdx": "높음"
     },
     "서울갈만한곳": {
@@ -126636,8 +126636,8 @@
       "compIdx": "높음"
     },
     "양고기스테이크": {
-      "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 1520,
+      "monthlyPcQcCnt": 180,
+      "monthlyMobileQcCnt": 1490,
       "compIdx": "높음"
     },
     "양고기프렌치랙": {
@@ -126646,18 +126646,18 @@
       "compIdx": "중간"
     },
     "경북상주": {
-      "monthlyPcQcCnt": 1100,
-      "monthlyMobileQcCnt": 2210,
+      "monthlyPcQcCnt": 1140,
+      "monthlyMobileQcCnt": 2200,
       "compIdx": "중간"
     },
     "경천섬": {
-      "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 2100,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 1980,
       "compIdx": "중간"
     },
     "김천맛집": {
-      "monthlyPcQcCnt": 2960,
-      "monthlyMobileQcCnt": 33100,
+      "monthlyPcQcCnt": 3040,
+      "monthlyMobileQcCnt": 31800,
       "compIdx": "높음"
     },
     "가좌역맛집": {
@@ -126666,13 +126666,13 @@
       "compIdx": "중간"
     },
     "상수동맛집": {
-      "monthlyPcQcCnt": 120,
-      "monthlyMobileQcCnt": 630,
+      "monthlyPcQcCnt": 110,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "상수맛집": {
-      "monthlyPcQcCnt": 790,
-      "monthlyMobileQcCnt": 4500,
+      "monthlyPcQcCnt": 800,
+      "monthlyMobileQcCnt": 4400,
       "compIdx": "높음"
     },
     "서울데이트맛집": {
@@ -126686,33 +126686,33 @@
       "compIdx": "높음"
     },
     "연남동소개팅": {
-      "monthlyPcQcCnt": 90,
+      "monthlyPcQcCnt": 100,
       "monthlyMobileQcCnt": 350,
       "compIdx": "높음"
     },
     "연희동맛집": {
-      "monthlyPcQcCnt": 3000,
-      "monthlyMobileQcCnt": 24600,
+      "monthlyPcQcCnt": 3120,
+      "monthlyMobileQcCnt": 24000,
       "compIdx": "높음"
     },
     "중식주점": {
       "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 210,
+      "monthlyMobileQcCnt": 200,
       "compIdx": "중간"
     },
     "홍대마라탕": {
-      "monthlyPcQcCnt": 170,
-      "monthlyMobileQcCnt": 2340,
+      "monthlyPcQcCnt": 180,
+      "monthlyMobileQcCnt": 2280,
       "compIdx": "높음"
     },
     "홍대술집추천": {
-      "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1970,
+      "monthlyPcQcCnt": 220,
+      "monthlyMobileQcCnt": 1880,
       "compIdx": "높음"
     },
     "홍대역맛집": {
       "monthlyPcQcCnt": 310,
-      "monthlyMobileQcCnt": 2640,
+      "monthlyMobileQcCnt": 2560,
       "compIdx": "높음"
     },
     "강남단체회식장소": {
@@ -126726,13 +126726,13 @@
       "compIdx": "높음"
     },
     "홍대입구역맛집": {
-      "monthlyPcQcCnt": 1450,
-      "monthlyMobileQcCnt": 11600,
+      "monthlyPcQcCnt": 1500,
+      "monthlyMobileQcCnt": 11300,
       "compIdx": "높음"
     },
     "고급식당": {
       "monthlyPcQcCnt": 80,
-      "monthlyMobileQcCnt": 470,
+      "monthlyMobileQcCnt": 460,
       "compIdx": "높음"
     },
     "고급레스토랑": {
@@ -126741,13 +126741,13 @@
       "compIdx": "높음"
     },
     "구순잔치": {
-      "monthlyPcQcCnt": 530,
-      "monthlyMobileQcCnt": 3770,
+      "monthlyPcQcCnt": 540,
+      "monthlyMobileQcCnt": 3640,
       "compIdx": "높음"
     },
     "칠순잔치": {
-      "monthlyPcQcCnt": 950,
-      "monthlyMobileQcCnt": 5100,
+      "monthlyPcQcCnt": 1000,
+      "monthlyMobileQcCnt": 4970,
       "compIdx": "높음"
     },
     "칠순잔치비용": {
@@ -126767,22 +126767,22 @@
     },
     "생선샤브샤브": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 30,
       "compIdx": "중간"
     },
     "상암맛집": {
-      "monthlyPcQcCnt": 2800,
-      "monthlyMobileQcCnt": 9410,
+      "monthlyPcQcCnt": 2880,
+      "monthlyMobileQcCnt": 9350,
       "compIdx": "높음"
     },
     "합정술집": {
-      "monthlyPcQcCnt": 1200,
-      "monthlyMobileQcCnt": 10800,
+      "monthlyPcQcCnt": 1240,
+      "monthlyMobileQcCnt": 10600,
       "compIdx": "높음"
     },
     "시흥시맛집": {
-      "monthlyPcQcCnt": 400,
-      "monthlyMobileQcCnt": 2380,
+      "monthlyPcQcCnt": 410,
+      "monthlyMobileQcCnt": 2290,
       "compIdx": "높음"
     },
     "서울숲모임": {
@@ -126791,13 +126791,13 @@
       "compIdx": "높음"
     },
     "서울상견례식당": {
-      "monthlyPcQcCnt": 500,
-      "monthlyMobileQcCnt": 1670,
+      "monthlyPcQcCnt": 510,
+      "monthlyMobileQcCnt": 1650,
       "compIdx": "높음"
     },
     "망원맛집": {
-      "monthlyPcQcCnt": 2080,
-      "monthlyMobileQcCnt": 17500,
+      "monthlyPcQcCnt": 2130,
+      "monthlyMobileQcCnt": 17000,
       "compIdx": "높음"
     },
     "팔순식사": {
@@ -126806,8 +126806,8 @@
       "compIdx": "높음"
     },
     "팔순잔치": {
-      "monthlyPcQcCnt": 730,
-      "monthlyMobileQcCnt": 4320,
+      "monthlyPcQcCnt": 760,
+      "monthlyMobileQcCnt": 4170,
       "compIdx": "높음"
     },
     "팔순잔치장소": {
@@ -126866,8 +126866,8 @@
       "compIdx": "높음"
     },
     "연회장": {
-      "monthlyPcQcCnt": 370,
-      "monthlyMobileQcCnt": 1400,
+      "monthlyPcQcCnt": 380,
+      "monthlyMobileQcCnt": 1370,
       "compIdx": "높음"
     },
     "회식하기좋은곳": {
@@ -126877,12 +126877,12 @@
     },
     "강남회식장소": {
       "monthlyPcQcCnt": 140,
-      "monthlyMobileQcCnt": 270,
+      "monthlyMobileQcCnt": 280,
       "compIdx": "높음"
     },
     "대구중국집": {
       "monthlyPcQcCnt": 210,
-      "monthlyMobileQcCnt": 1610,
+      "monthlyMobileQcCnt": 1540,
       "compIdx": "높음"
     },
     "짬뽕갈만한곳": {
@@ -126937,7 +126937,7 @@
     },
     "짜장맛집": {
       "monthlyPcQcCnt": 30,
-      "monthlyMobileQcCnt": 960,
+      "monthlyMobileQcCnt": 940,
       "compIdx": "높음"
     },
     "짜장주차되는곳": {
@@ -127006,28 +127006,28 @@
       "compIdx": "낮음"
     },
     "합정맛집": {
-      "monthlyPcQcCnt": 6620,
-      "monthlyMobileQcCnt": 37100,
+      "monthlyPcQcCnt": 6780,
+      "monthlyMobileQcCnt": 36400,
       "compIdx": "높음"
     },
     "합정역맛집": {
-      "monthlyPcQcCnt": 3530,
-      "monthlyMobileQcCnt": 17400,
+      "monthlyPcQcCnt": 3620,
+      "monthlyMobileQcCnt": 17200,
       "compIdx": "높음"
     },
     "망원역맛집": {
       "monthlyPcQcCnt": 760,
-      "monthlyMobileQcCnt": 5120,
+      "monthlyMobileQcCnt": 4980,
       "compIdx": "높음"
     },
     "합정고기집": {
-      "monthlyPcQcCnt": 470,
-      "monthlyMobileQcCnt": 3320,
+      "monthlyPcQcCnt": 480,
+      "monthlyMobileQcCnt": 3280,
       "compIdx": "높음"
     },
     "마포구청맛집": {
       "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 2030,
+      "monthlyMobileQcCnt": 1960,
       "compIdx": "높음"
     },
     "합정회식장소": {
@@ -127036,28 +127036,28 @@
       "compIdx": "중간"
     },
     "마포맛집": {
-      "monthlyPcQcCnt": 2360,
-      "monthlyMobileQcCnt": 13700,
+      "monthlyPcQcCnt": 2430,
+      "monthlyMobileQcCnt": 13500,
       "compIdx": "높음"
     },
     "마포구맛집": {
       "monthlyPcQcCnt": 400,
-      "monthlyMobileQcCnt": 2260,
+      "monthlyMobileQcCnt": 2230,
       "compIdx": "높음"
     },
     "합정동맛집": {
-      "monthlyPcQcCnt": 460,
-      "monthlyMobileQcCnt": 2860,
+      "monthlyPcQcCnt": 470,
+      "monthlyMobileQcCnt": 2800,
       "compIdx": "높음"
     },
     "마포구청역맛집": {
       "monthlyPcQcCnt": 320,
-      "monthlyMobileQcCnt": 1790,
+      "monthlyMobileQcCnt": 1780,
       "compIdx": "높음"
     },
     "망원동맛집": {
-      "monthlyPcQcCnt": 2360,
-      "monthlyMobileQcCnt": 15300,
+      "monthlyPcQcCnt": 2390,
+      "monthlyMobileQcCnt": 14800,
       "compIdx": "높음"
     },
     "합정역모임": {
@@ -127071,13 +127071,13 @@
       "compIdx": "중간"
     },
     "합정회식": {
-      "monthlyPcQcCnt": 180,
+      "monthlyPcQcCnt": 190,
       "monthlyMobileQcCnt": 900,
       "compIdx": "높음"
     },
     "서교동고기집": {
-      "monthlyPcQcCnt": 20,
-      "monthlyMobileQcCnt": 590,
+      "monthlyPcQcCnt": 30,
+      "monthlyMobileQcCnt": 620,
       "compIdx": "높음"
     },
     "연남동저녁식사": {
@@ -127091,13 +127091,13 @@
       "compIdx": "높음"
     },
     "서울데이트할만한곳": {
-      "monthlyPcQcCnt": 10,
+      "monthlyPcQcCnt": 5,
       "monthlyMobileQcCnt": 30,
       "compIdx": "높음"
     },
     "서울아이랑": {
-      "monthlyPcQcCnt": 350,
-      "monthlyMobileQcCnt": 2580,
+      "monthlyPcQcCnt": 360,
+      "monthlyMobileQcCnt": 2510,
       "compIdx": "높음"
     },
     "서울별미": {
@@ -127247,12 +127247,12 @@
     },
     "룸있는중국집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 60,
+      "monthlyMobileQcCnt": 50,
       "compIdx": "중간"
     },
     "룸있는중식당": {
       "monthlyPcQcCnt": 10,
-      "monthlyMobileQcCnt": 120,
+      "monthlyMobileQcCnt": 110,
       "compIdx": "높음"
     },
     "룸있는찐맛집": {
@@ -127302,7 +127302,7 @@
     },
     "주차되는맛집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 130,
+      "monthlyMobileQcCnt": 140,
       "compIdx": "중간"
     },
     "주차되는찐맛집": {
@@ -128062,7 +128062,7 @@
     },
     "장안동탕수육맛집": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 10,
+      "monthlyMobileQcCnt": 5,
       "compIdx": "높음"
     },
     "장안동탕수육주차되는곳": {
@@ -129107,7 +129107,7 @@
     },
     "천안짬뽕맛집추천": {
       "monthlyPcQcCnt": 5,
-      "monthlyMobileQcCnt": 20,
+      "monthlyMobileQcCnt": 10,
       "compIdx": "높음"
     },
     "천안짬뽕갈만한곳추천": {
