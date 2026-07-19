@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T01:31:08.731507",
+  "generated_at": "2026-07-19T01:48:51.656315",
   "tracking_history": {
     "역대짬뽕 본점|수원 짬뽕": {
       "store_name": "역대짬뽕 본점",
@@ -55293,6 +55293,16 @@
       "keyword": "반월 짬뽕",
       "history": [
         {
+          "date": "2026-07-19",
+          "weekday": "일",
+          "rank": 1,
+          "blog_reviews": "463",
+          "visitor_reviews": "1,155",
+          "save_count": "6,000+",
+          "score": null,
+          "method": "browser_exec"
+        },
+        {
           "date": "2026-07-15",
           "weekday": "수",
           "rank": 1,
@@ -60546,69 +60556,6 @@
                 "code": "total",
                 "label": "만족도",
                 "count": 221
-              },
-              {
-                "code": "menu",
-                "label": "메뉴",
-                "count": 82
-              },
-              {
-                "code": "service",
-                "label": "서비스",
-                "count": 34
-              },
-              {
-                "code": "amount",
-                "label": "음식량",
-                "count": 33
-              }
-            ],
-            "voted_keywords": [
-              {
-                "displayName": "음식이 맛있어요",
-                "count": 617
-              },
-              {
-                "displayName": "매장이 넓어요",
-                "count": 282
-              },
-              {
-                "displayName": "재료가 신선해요",
-                "count": 209
-              },
-              {
-                "displayName": "양이 많아요",
-                "count": 206
-              },
-              {
-                "displayName": "친절해요",
-                "count": 151
-              }
-            ]
-          }
-        },
-        {
-          "date": "2026-04-05",
-          "weekday": "일",
-          "rank": 1,
-          "blog_reviews": "455",
-          "visitor_reviews": "970",
-          "save_count": "6,000+",
-          "score": null,
-          "method": "browser_exec",
-          "review_stats": {
-            "total": 970,
-            "avg_rating": 4.17,
-            "themes": [
-              {
-                "code": "taste",
-                "label": "맛",
-                "count": 425
-              },
-              {
-                "code": "total",
-                "label": "만족도",
-                "count": 220
               },
               {
                 "code": "menu",
