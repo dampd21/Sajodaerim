@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T11:58:35.396876",
+  "generated_at": "2026-09-24T11:49:09.681957",
   "platform": "naver",
   "stores": [
     {
@@ -22445,6 +22445,24 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "e323d7c21caa8a65"
+        },
+        {
+          "type": "visitor",
+          "author": "이수 빈13",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MTlfMjk2/MDAxNzg5Nzk1NjM3MTk0.BlR6bY8xVwhEPitz2CYN1hrnpevYeMHAaZTg8DQ8zv4g.A7XSHe5G5Jzl7ShQ1SrhhND_JCSFmgBrng_Q1GEaPa8g.JPEG/14147.jpg?type=w1500_60_sharpen",
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MTlfODUg/MDAxNzg5Nzk1NjM3MjM2._KDi9bcK8zKMlNid_-_soC4Q4WzXxh8GEYzmH9NDhvUg.d6kFeb4cB2Z3901oQzF3f9M3j-TQLwOXKXkanbsw1sQg.JPEG/14145.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "ee13352bf6819ef7"
         }
       ],
       "blog_reviews": [
@@ -24536,15 +24554,60 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "52eaf0ca23368151"
+        },
+        {
+          "type": "blog",
+          "blog_url": "https://m.blog.naver.com/rlaekdus4471/224341189335",
+          "author": "다다",
+          "blog_name": "이것저것",
+          "title": "",
+          "content": "",
+          "write_date_raw": "",
+          "write_date": null,
+          "images": [
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTM2%2FMDAxNzgzNDg2MjE0NDMw.Te2JDbcaArJqdjzszCCM3-YmquIXfYdDGXj5pKpNDncg.KMku3WxGwnPIm5jFGTibLoTsJ0wBi7RkIKu5MVKAEv4g.JPEG%2FIMG%25A3%25DF5682.jpg%23900x811",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfNTcg%2FMDAxNzgzNDgxODM1MDgx.JdXJcfO6krkznfJiQMjksIjtG2IgPGpI0Dr2nqfT4uIg.dGNrg0_cm65a7Wph6t1JKQE_LTfIdyi_kRUFJ2M82_gg.JPEG%2FIMG%25A3%25DF5676.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjAx%2FMDAxNzgzNDgxODM0NTA1.jEFuOLT0SXxvE6LrDiUUUolNjcjsOzwkPIs5cigMQIQg.giI1onEicOHnCfS-hcd_gd6wfesICtbrfqANaeoSe8wg.JPEG%2FIMG%25A3%25DF5677.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjQy%2FMDAxNzgzNDgxODI4ODY0.Id_VgqpylZKCQ9hxIpGaBDvJEI89VRqqtC6L2pd1Ewwg._nGKXy18QywLRtPfVXPW3d9Gptos2rI3vnLXiKxqIhcg.JPEG%2FIMG%25A3%25DF5678.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjM0%2FMDAxNzgzNDgxODI0NTI3.5-PYHhRgYzEGI4dRP6SON4Xfv26G3T8Y_vwp0BJUYgIg.-YK_TCXKX8NTnNuwmJ7k_TWDwzgmE0PdTlZyjRGF-A0g.JPEG%2FIMG%25A3%25DF5684.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTk1%2FMDAxNzgzNDgxODI4MTY5.qoCchzVeWHiSSnCSnwsl2hE8-F0a2RNu-RDivK8oHiAg.mHOdU92yeNnuCOE2i5N1Jw_Z7qXgAfjFnui00Ybq8KAg.JPEG%2FIMG%25A3%25DF5679.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjkz%2FMDAxNzgzNDgxODM1MjEx.lXdmIZqdKpoL3S92hxHlam-KJz4E-5nI2zDIQJjbSdYg.CzVmy_lMQsNbi7Hv-vN0X-C5dUaKFGiT0rBn6xJA55Ug.JPEG%2FIMG%25A3%25DF5680.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjgy%2FMDAxNzgzNDgxODI4NjEz.OnAE8ICmdedtbxqYYxL0UKEbRopJos0KnXFP81CytWcg.QAHr5jAu68KTQ0GLWAZJrl2Vk0SFvI8d2r8kFY4ODSUg.JPEG%2FIMG%25A3%25DF5685.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTUz%2FMDAxNzgzNDg2NDA1MzIx.yZnTQHJKea7YzWsYh_bdJBf-HY2q1v5ZRN3Ovy9YxTAg.ykHXFvGNdeF28z_b02pLXWSqK6bVWiheL7HPfj5zA6Qg.JPEG%2FIMG%25A3%25DF5686.jpg%23900x1056",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTM2%2FMDAxNzgzNDg2MjE0NDMw.Te2JDbcaArJqdjzszCCM3-YmquIXfYdDGXj5pKpNDncg.KMku3WxGwnPIm5jFGTibLoTsJ0wBi7RkIKu5MVKAEv4g.JPEG%2FIMG%25A3%25DF5682.jpg%23900x811",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfNTcg%2FMDAxNzgzNDgxODM1MDgx.JdXJcfO6krkznfJiQMjksIjtG2IgPGpI0Dr2nqfT4uIg.dGNrg0_cm65a7Wph6t1JKQE_LTfIdyi_kRUFJ2M82_gg.JPEG%2FIMG%25A3%25DF5676.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjAx%2FMDAxNzgzNDgxODM0NTA1.jEFuOLT0SXxvE6LrDiUUUolNjcjsOzwkPIs5cigMQIQg.giI1onEicOHnCfS-hcd_gd6wfesICtbrfqANaeoSe8wg.JPEG%2FIMG%25A3%25DF5677.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjQy%2FMDAxNzgzNDgxODI4ODY0.Id_VgqpylZKCQ9hxIpGaBDvJEI89VRqqtC6L2pd1Ewwg._nGKXy18QywLRtPfVXPW3d9Gptos2rI3vnLXiKxqIhcg.JPEG%2FIMG%25A3%25DF5678.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjM0%2FMDAxNzgzNDgxODI0NTI3.5-PYHhRgYzEGI4dRP6SON4Xfv26G3T8Y_vwp0BJUYgIg.-YK_TCXKX8NTnNuwmJ7k_TWDwzgmE0PdTlZyjRGF-A0g.JPEG%2FIMG%25A3%25DF5684.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTk1%2FMDAxNzgzNDgxODI4MTY5.qoCchzVeWHiSSnCSnwsl2hE8-F0a2RNu-RDivK8oHiAg.mHOdU92yeNnuCOE2i5N1Jw_Z7qXgAfjFnui00Ybq8KAg.JPEG%2FIMG%25A3%25DF5679.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjkz%2FMDAxNzgzNDgxODM1MjEx.lXdmIZqdKpoL3S92hxHlam-KJz4E-5nI2zDIQJjbSdYg.CzVmy_lMQsNbi7Hv-vN0X-C5dUaKFGiT0rBn6xJA55Ug.JPEG%2FIMG%25A3%25DF5680.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjgy%2FMDAxNzgzNDgxODI4NjEz.OnAE8ICmdedtbxqYYxL0UKEbRopJos0KnXFP81CytWcg.QAHr5jAu68KTQ0GLWAZJrl2Vk0SFvI8d2r8kFY4ODSUg.JPEG%2FIMG%25A3%25DF5685.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTUz%2FMDAxNzgzNDg2NDA1MzIx.yZnTQHJKea7YzWsYh_bdJBf-HY2q1v5ZRN3Ovy9YxTAg.ykHXFvGNdeF28z_b02pLXWSqK6bVWiheL7HPfj5zA6Qg.JPEG%2FIMG%25A3%25DF5686.jpg%23900x1056",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTM2%2FMDAxNzgzNDg2MjE0NDMw.Te2JDbcaArJqdjzszCCM3-YmquIXfYdDGXj5pKpNDncg.KMku3WxGwnPIm5jFGTibLoTsJ0wBi7RkIKu5MVKAEv4g.JPEG%2FIMG%25A3%25DF5682.jpg%23900x811",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfNTcg%2FMDAxNzgzNDgxODM1MDgx.JdXJcfO6krkznfJiQMjksIjtG2IgPGpI0Dr2nqfT4uIg.dGNrg0_cm65a7Wph6t1JKQE_LTfIdyi_kRUFJ2M82_gg.JPEG%2FIMG%25A3%25DF5676.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjAx%2FMDAxNzgzNDgxODM0NTA1.jEFuOLT0SXxvE6LrDiUUUolNjcjsOzwkPIs5cigMQIQg.giI1onEicOHnCfS-hcd_gd6wfesICtbrfqANaeoSe8wg.JPEG%2FIMG%25A3%25DF5677.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjQy%2FMDAxNzgzNDgxODI4ODY0.Id_VgqpylZKCQ9hxIpGaBDvJEI89VRqqtC6L2pd1Ewwg._nGKXy18QywLRtPfVXPW3d9Gptos2rI3vnLXiKxqIhcg.JPEG%2FIMG%25A3%25DF5678.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjM0%2FMDAxNzgzNDgxODI0NTI3.5-PYHhRgYzEGI4dRP6SON4Xfv26G3T8Y_vwp0BJUYgIg.-YK_TCXKX8NTnNuwmJ7k_TWDwzgmE0PdTlZyjRGF-A0g.JPEG%2FIMG%25A3%25DF5684.jpg%23900x676",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTk1%2FMDAxNzgzNDgxODI4MTY5.qoCchzVeWHiSSnCSnwsl2hE8-F0a2RNu-RDivK8oHiAg.mHOdU92yeNnuCOE2i5N1Jw_Z7qXgAfjFnui00Ybq8KAg.JPEG%2FIMG%25A3%25DF5679.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjkz%2FMDAxNzgzNDgxODM1MjEx.lXdmIZqdKpoL3S92hxHlam-KJz4E-5nI2zDIQJjbSdYg.CzVmy_lMQsNbi7Hv-vN0X-C5dUaKFGiT0rBn6xJA55Ug.JPEG%2FIMG%25A3%25DF5680.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMjgy%2FMDAxNzgzNDgxODI4NjEz.OnAE8ICmdedtbxqYYxL0UKEbRopJos0KnXFP81CytWcg.QAHr5jAu68KTQ0GLWAZJrl2Vk0SFvI8d2r8kFY4ODSUg.JPEG%2FIMG%25A3%25DF5685.jpg%23900x1200",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDhfMTUz%2FMDAxNzgzNDg2NDA1MzIx.yZnTQHJKea7YzWsYh_bdJBf-HY2q1v5ZRN3Ovy9YxTAg.ykHXFvGNdeF28z_b02pLXWSqK6bVWiheL7HPfj5zA6Qg.JPEG%2FIMG%25A3%25DF5686.jpg%23900x1056"
+          ],
+          "tags": [],
+          "keywords": [],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "d52c73c561225590"
         }
       ],
-      "visitor_count": 850,
-      "blog_count": 55,
-      "meta_visitor_count": 4518,
+      "visitor_count": 851,
+      "blog_count": 56,
+      "meta_visitor_count": 4526,
       "meta_blog_count": 439,
       "negative_count": 16,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T11:58:52.793075"
+      "crawled_at": "2026-09-24T11:50:03.129737"
     },
     {
       "store_name": "역대짬뽕 병점점",
@@ -24913,6 +24976,21 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "516fc153be13721e"
+        },
+        {
+          "type": "visitor",
+          "author": "유별나공주",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "0a0a11d14fa39323"
         }
       ],
       "blog_reviews": [
@@ -25990,13 +26068,13 @@
           "id": "592cb9ce40a5eb22"
         }
       ],
-      "visitor_count": 18,
+      "visitor_count": 19,
       "blog_count": 29,
       "meta_visitor_count": 711,
       "meta_blog_count": 109,
       "negative_count": 1,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T11:59:58.376803"
+      "crawled_at": "2026-09-24T11:51:02.150998"
     },
     {
       "store_name": "역대짬뽕 송파점",
@@ -53622,6 +53700,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "7368dd8db34b1828"
+        },
+        {
+          "type": "visitor",
+          "author": "dnj****",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MTlfMTAg/MDAxNzg5ODI5OTc0MjE2.QqwmzaHY88GVA6YkziN8reWXm85WK0GQIasz3TdmrvUg.rKzqFq5OxZ_hu3RzguvGWO3n532I6sEQm0s02PI0vXQg.JPEG/IMG_6347.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "a400ac8b528e512c"
         }
       ],
       "blog_reviews": [
@@ -60244,13 +60339,13 @@
           "id": "aed14bdb4d56ff85"
         }
       ],
-      "visitor_count": 1050,
+      "visitor_count": 1051,
       "blog_count": 136,
-      "meta_visitor_count": 1548,
+      "meta_visitor_count": 1551,
       "meta_blog_count": 253,
       "negative_count": 61,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:01:11.255080"
+      "crawled_at": "2026-09-24T11:52:19.652089"
     },
     {
       "store_name": "역대짬뽕 다산1호점",
@@ -71034,6 +71129,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "0d0e0851e9d56d2c"
+        },
+        {
+          "type": "visitor",
+          "author": "박준범2715",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MThfNTIg/MDAxNzg5NzM2MTQ0NDQw.JVtSB3LJfJdzjgeKDZsDERga8Tk8W-9ADhjycTHNENYg.op8YF_IOmrIFVsBWEMYEMldFT9xgpb30LCaFFW8U7Mkg.JPEG/image.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "0435b4795acd15c2"
         }
       ],
       "blog_reviews": [
@@ -72531,13 +72643,13 @@
           "id": "a13b4d0408e92924"
         }
       ],
-      "visitor_count": 418,
+      "visitor_count": 419,
       "blog_count": 41,
       "meta_visitor_count": 1839,
       "meta_blog_count": 877,
       "negative_count": 12,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:02:18.475438"
+      "crawled_at": "2026-09-24T11:53:33.441578"
     },
     {
       "store_name": "역대짬뽕 화성반월점",
@@ -76353,6 +76465,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "315ad013c558487b"
+        },
+        {
+          "type": "visitor",
+          "author": "도도한룽지",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MTZfMTIz/MDAxNzg5NTUyMTcyNzY1.DBA3E_UZJoDDeGdxpjcIyiqCcgqptbeyAV2CE1HGp-Mg.hPKGNc39rNklfcl3YMZBKrdXQKSQToycF3ijOtqD1Owg.JPEG/948AD8F0-8B7D-4815-A3EE-CABF0CA9C784.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "b652d470241dd8c3"
         }
       ],
       "blog_reviews": [
@@ -76960,13 +77089,13 @@
           "id": "1507aba5a57ba825"
         }
       ],
-      "visitor_count": 155,
+      "visitor_count": 156,
       "blog_count": 20,
-      "meta_visitor_count": 1210,
-      "meta_blog_count": 461,
+      "meta_visitor_count": 1213,
+      "meta_blog_count": 460,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:03:26.611095"
+      "crawled_at": "2026-09-24T11:54:21.252609"
     },
     {
       "store_name": "역대짬뽕 오산시청점",
@@ -80171,6 +80300,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "c3804dbd42405c72"
+        },
+        {
+          "type": "visitor",
+          "author": "ㅊㄱㄱㄹ",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjA5MThfMTg4/MDAxNzg5NzAxNDAyMDY5.OfiLOfe3ZVv_Opnzyw-2hLq9-5llJ1l86aQeqM2FoZkg.fT5st_s_u6fttxJz6VSfHGKps87m1ODzRyQieh4SmZwg.JPEG/20260918_121615.jpg.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "29467cf885f42ca1"
         }
       ],
       "blog_reviews": [
@@ -80865,13 +81011,13 @@
           "id": "436ef4fee3e826aa"
         }
       ],
-      "visitor_count": 129,
+      "visitor_count": 130,
       "blog_count": 22,
-      "meta_visitor_count": 1071,
+      "meta_visitor_count": 1072,
       "meta_blog_count": 270,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:04:30.476350"
+      "crawled_at": "2026-09-24T11:55:10.972884"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -107996,6 +108142,21 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "55fe57ed035f936c"
+        },
+        {
+          "type": "visitor",
+          "author": "nam****",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "2b175d15c4f86563"
         }
       ],
       "blog_reviews": [
@@ -115668,15 +115829,54 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "403de1d3bb9025b8"
+        },
+        {
+          "type": "blog",
+          "blog_url": "https://m.blog.naver.com/ui37qmtpv9/224351678592",
+          "author": "뽀짝탱구리",
+          "blog_name": "뽀짝탱구리",
+          "title": "",
+          "content": "",
+          "write_date_raw": "",
+          "write_date": null,
+          "images": [
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTgw%2FMDAxNzg0NTA0MzcxMjky.uL2TN0TVLtu6KIq3c_bTt7nQo5amVEZ_e2-gBhMP_C8g.1qbs0UkNmXSnH7OW9b7FL9CtPkVMVVLtcEStAkXBaZkg.JPEG%2F_img_1784504366_0.jpg%231429x1787",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTk5%2FMDAxNzg0NTA0Mzc2NDQ5.WF6dxW2z1kRHjqjju4epcGD-PWFSYbZhh0vbkAVIGiIg.VmqmCjhdqCKUpS_UISdpUKWJzLEQjdC0djQxfVBmDfwg.JPEG%2F_img_1784504371_1.jpg%231412x1412",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTUx%2FMDAxNzg0NTA0MzgxODQx.WErLxxiyw8Af_yUeVQXK_ShLoJfrMybrMCgkcRaVZ_Ug.YQGN1g-Hz8FHZSZaUuQwjAF9U7ifft33nh3873R6t7Qg.JPEG%2F_img_1784504376_2.jpg%231472x1843",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjAw%2FMDAxNzg0NTA0Mzg3NzQy.3GTYKpDXEGzt4djgBS2hw-ziodjqVhPqo-ZkPVrBkXsg.6oiog4YG6STgbkJGIYJIVZYdSf5k1UFuVk_8rTAgxTIg.JPEG%2F_img_1784504383_3.jpg%23977x1739",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0Mzk2MDM1.pfvcBQQ0-AnVQ3_bBcPCKoz2o6LoJJsJ9ciYRGk81NIg.DVzRso-a2O6UgEJbGAJkcT3XJXEAo77uR2h-gqkQAG4g.JPEG%2F_img_1784504388_4.jpg%233730x2797",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjc1%2FMDAxNzg0NTA0NDAxNjEz.8MTuwUKWY3a6XN1LStmJieeS0Ga63I36fwnUtFC3n_cg.tc6KPpjyeI3kiXEWvExzJ810PwHWDtaL1B2QzdFT5UAg.JPEG%2F_img_1784504396_5.jpg%231412x1767",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0NDA2Njky.W73a9EALu3GH5zbPDUdo4WBxg4MyaC9tWnqnJYcCnO0g.sGKsT5YNbtqm_exjQ7Ue0tUAJD7NnPLQ67qWXmMvWoUg.JPEG%2F_img_1784504401_6.jpg%231381x1842",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTgw%2FMDAxNzg0NTA0MzcxMjky.uL2TN0TVLtu6KIq3c_bTt7nQo5amVEZ_e2-gBhMP_C8g.1qbs0UkNmXSnH7OW9b7FL9CtPkVMVVLtcEStAkXBaZkg.JPEG%2F_img_1784504366_0.jpg%231429x1787",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTk5%2FMDAxNzg0NTA0Mzc2NDQ5.WF6dxW2z1kRHjqjju4epcGD-PWFSYbZhh0vbkAVIGiIg.VmqmCjhdqCKUpS_UISdpUKWJzLEQjdC0djQxfVBmDfwg.JPEG%2F_img_1784504371_1.jpg%231412x1412",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTUx%2FMDAxNzg0NTA0MzgxODQx.WErLxxiyw8Af_yUeVQXK_ShLoJfrMybrMCgkcRaVZ_Ug.YQGN1g-Hz8FHZSZaUuQwjAF9U7ifft33nh3873R6t7Qg.JPEG%2F_img_1784504376_2.jpg%231472x1843",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjAw%2FMDAxNzg0NTA0Mzg3NzQy.3GTYKpDXEGzt4djgBS2hw-ziodjqVhPqo-ZkPVrBkXsg.6oiog4YG6STgbkJGIYJIVZYdSf5k1UFuVk_8rTAgxTIg.JPEG%2F_img_1784504383_3.jpg%23977x1739",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0Mzk2MDM1.pfvcBQQ0-AnVQ3_bBcPCKoz2o6LoJJsJ9ciYRGk81NIg.DVzRso-a2O6UgEJbGAJkcT3XJXEAo77uR2h-gqkQAG4g.JPEG%2F_img_1784504388_4.jpg%233730x2797",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjc1%2FMDAxNzg0NTA0NDAxNjEz.8MTuwUKWY3a6XN1LStmJieeS0Ga63I36fwnUtFC3n_cg.tc6KPpjyeI3kiXEWvExzJ810PwHWDtaL1B2QzdFT5UAg.JPEG%2F_img_1784504396_5.jpg%231412x1767",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0NDA2Njky.W73a9EALu3GH5zbPDUdo4WBxg4MyaC9tWnqnJYcCnO0g.sGKsT5YNbtqm_exjQ7Ue0tUAJD7NnPLQ67qWXmMvWoUg.JPEG%2F_img_1784504401_6.jpg%231381x1842",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTgw%2FMDAxNzg0NTA0MzcxMjky.uL2TN0TVLtu6KIq3c_bTt7nQo5amVEZ_e2-gBhMP_C8g.1qbs0UkNmXSnH7OW9b7FL9CtPkVMVVLtcEStAkXBaZkg.JPEG%2F_img_1784504366_0.jpg%231429x1787",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x480&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTk5%2FMDAxNzg0NTA0Mzc2NDQ5.WF6dxW2z1kRHjqjju4epcGD-PWFSYbZhh0vbkAVIGiIg.VmqmCjhdqCKUpS_UISdpUKWJzLEQjdC0djQxfVBmDfwg.JPEG%2F_img_1784504371_1.jpg%231412x1412",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMTUx%2FMDAxNzg0NTA0MzgxODQx.WErLxxiyw8Af_yUeVQXK_ShLoJfrMybrMCgkcRaVZ_Ug.YQGN1g-Hz8FHZSZaUuQwjAF9U7ifft33nh3873R6t7Qg.JPEG%2F_img_1784504376_2.jpg%231472x1843",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjAw%2FMDAxNzg0NTA0Mzg3NzQy.3GTYKpDXEGzt4djgBS2hw-ziodjqVhPqo-ZkPVrBkXsg.6oiog4YG6STgbkJGIYJIVZYdSf5k1UFuVk_8rTAgxTIg.JPEG%2F_img_1784504383_3.jpg%23977x1739",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=678x452&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0Mzk2MDM1.pfvcBQQ0-AnVQ3_bBcPCKoz2o6LoJJsJ9ciYRGk81NIg.DVzRso-a2O6UgEJbGAJkcT3XJXEAo77uR2h-gqkQAG4g.JPEG%2F_img_1784504388_4.jpg%233730x2797",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjc1%2FMDAxNzg0NTA0NDAxNjEz.8MTuwUKWY3a6XN1LStmJieeS0Ga63I36fwnUtFC3n_cg.tc6KPpjyeI3kiXEWvExzJ810PwHWDtaL1B2QzdFT5UAg.JPEG%2F_img_1784504396_5.jpg%231412x1767",
+            "https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w1500_60_sharpen&size=480x600&src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MjBfMjQw%2FMDAxNzg0NTA0NDA2Njky.W73a9EALu3GH5zbPDUdo4WBxg4MyaC9tWnqnJYcCnO0g.sGKsT5YNbtqm_exjQ7Ue0tUAJD7NnPLQ67qWXmMvWoUg.JPEG%2F_img_1784504401_6.jpg%231381x1842"
+          ],
+          "tags": [],
+          "keywords": [],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "0bd9a3f7d4650c22"
         }
       ],
-      "visitor_count": 1019,
-      "blog_count": 255,
-      "meta_visitor_count": 2338,
+      "visitor_count": 1020,
+      "blog_count": 256,
+      "meta_visitor_count": 2342,
       "meta_blog_count": 636,
       "negative_count": 7,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:05:36.680696"
+      "crawled_at": "2026-09-24T11:56:33.763781"
     },
     {
       "store_name": "역대짬뽕 송탄점",
@@ -119295,11 +119495,11 @@
       ],
       "visitor_count": 129,
       "blog_count": 15,
-      "meta_visitor_count": 994,
+      "meta_visitor_count": 995,
       "meta_blog_count": 46,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:06:48.654338"
+      "crawled_at": "2026-09-24T11:57:44.520915"
     },
     {
       "store_name": "역대짬뽕 여수국동점",
@@ -119740,32 +119940,32 @@
       "meta_blog_count": 0,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-09-23T12:07:32.703641"
+      "crawled_at": "2026-09-24T11:58:54.301215"
     }
   ],
   "summary": {
     "total_stores": 9,
-    "total_visitor_reviews": 3778,
-    "total_blog_reviews": 583,
-    "total_reviews": 4361,
+    "total_visitor_reviews": 3785,
+    "total_blog_reviews": 585,
+    "total_reviews": 4370,
     "total_negative": 97,
     "total_ai_analyzed": 0,
-    "new_visitor_reviews": 4,
-    "new_blog_reviews": 1,
-    "meta_total_visitor": 14229,
-    "meta_total_blog": 3091
+    "new_visitor_reviews": 7,
+    "new_blog_reviews": 2,
+    "meta_total_visitor": 14249,
+    "meta_total_blog": 3090
   },
   "stats": {
     "today": 0,
-    "yesterday": 1,
-    "this_week": 8,
-    "last_week": 17,
+    "yesterday": 0,
+    "this_week": 6,
+    "last_week": 19,
     "this_month": 55,
-    "last_month": 70,
+    "last_month": 66,
     "total_negative": 97,
     "total_ai_analyzed": 0,
-    "daily_change": -100.0,
-    "weekly_change": -52.9,
-    "monthly_change": -21.4
+    "daily_change": 0,
+    "weekly_change": -68.4,
+    "monthly_change": -16.7
   }
 }
