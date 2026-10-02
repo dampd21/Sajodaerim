@@ -1,11 +1,74 @@
 {
-  "generated_at": "2026-10-01T03:10:41.649106",
+  "generated_at": "2026-10-02T03:12:23.056491",
   "tracking_history": {
     "역대짬뽕 본점|수원 짬뽕": {
       "store_name": "역대짬뽕 본점",
       "place_id": "1542530224",
       "keyword": "수원 짬뽕",
       "history": [
+        {
+          "date": "2026-10-02",
+          "weekday": "금",
+          "rank": null,
+          "blog_reviews": "0",
+          "visitor_reviews": "0",
+          "save_count": "0",
+          "score": 0,
+          "method": "browser_exec",
+          "review_stats": {
+            "total": 4588,
+            "avg_rating": 4.75,
+            "themes": [
+              {
+                "code": "taste",
+                "label": "맛",
+                "count": 2952
+              },
+              {
+                "code": "total",
+                "label": "만족도",
+                "count": 1652
+              },
+              {
+                "code": "service",
+                "label": "서비스",
+                "count": 433
+              },
+              {
+                "code": "menu",
+                "label": "메뉴",
+                "count": 388
+              },
+              {
+                "code": "amount",
+                "label": "음식량",
+                "count": 304
+              }
+            ],
+            "voted_keywords": [
+              {
+                "displayName": "음식이 맛있어요",
+                "count": 3761
+              },
+              {
+                "displayName": "매장이 넓어요",
+                "count": 2189
+              },
+              {
+                "displayName": "재료가 신선해요",
+                "count": 1864
+              },
+              {
+                "displayName": "양이 많아요",
+                "count": 1580
+              },
+              {
+                "displayName": "친절해요",
+                "count": 1021
+              }
+            ]
+          }
+        },
         {
           "date": "2026-09-26",
           "weekday": "토",
@@ -5238,69 +5301,6 @@
               {
                 "displayName": "친절해요",
                 "count": 642
-              }
-            ]
-          }
-        },
-        {
-          "date": "2026-04-18",
-          "weekday": "토",
-          "rank": null,
-          "blog_reviews": "0",
-          "visitor_reviews": "0",
-          "save_count": "0",
-          "score": 0,
-          "method": "browser_exec",
-          "review_stats": {
-            "total": 3199,
-            "avg_rating": 4.27,
-            "themes": [
-              {
-                "code": "taste",
-                "label": "맛",
-                "count": 1919
-              },
-              {
-                "code": "total",
-                "label": "만족도",
-                "count": 1054
-              },
-              {
-                "code": "menu",
-                "label": "메뉴",
-                "count": 267
-              },
-              {
-                "code": "service",
-                "label": "서비스",
-                "count": 252
-              },
-              {
-                "code": "amount",
-                "label": "음식량",
-                "count": 203
-              }
-            ],
-            "voted_keywords": [
-              {
-                "displayName": "음식이 맛있어요",
-                "count": 2469
-              },
-              {
-                "displayName": "매장이 넓어요",
-                "count": 1449
-              },
-              {
-                "displayName": "재료가 신선해요",
-                "count": 1233
-              },
-              {
-                "displayName": "양이 많아요",
-                "count": 1040
-              },
-              {
-                "displayName": "친절해요",
-                "count": 639
               }
             ]
           }
@@ -88802,6 +88802,16 @@
       "keyword": "여수 중국집",
       "history": [
         {
+          "date": "2026-10-02",
+          "weekday": "금",
+          "rank": null,
+          "blog_reviews": "0",
+          "visitor_reviews": "0",
+          "save_count": "0",
+          "score": 0,
+          "method": "browser_exec"
+        },
+        {
           "date": "2026-09-28",
           "weekday": "월",
           "rank": null,
@@ -89684,16 +89694,6 @@
         {
           "date": "2026-05-01",
           "weekday": "금",
-          "rank": null,
-          "blog_reviews": "0",
-          "visitor_reviews": "0",
-          "save_count": "0",
-          "score": 0,
-          "method": "browser_exec"
-        },
-        {
-          "date": "2026-04-30",
-          "weekday": "목",
           "rank": null,
           "blog_reviews": "0",
           "visitor_reviews": "0",
