@@ -1,11 +1,42 @@
 {
-  "generated_at": "2026-10-25T11:52:47.767347",
+  "generated_at": "2026-10-26T11:51:26.903371",
   "platform": "naver",
   "stores": [
     {
       "store_name": "역대짬뽕 본점",
       "place_id": "1542530224",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "ㅇㄴ75",
+          "content": "일끝나고 밥먹으러 왔는데 친절하시고 서비스도 좋아요 주차할자리가 많지는 않아도 있어서 좋네요",
+          "keywords": [
+            "저녁에 방문",
+            "일상",
+            "예약 없이 이용",
+            "지인・동료",
+            "바로 입장"
+          ],
+          "tags": [
+            "음식이 맛있어요",
+            "매장이 넓어요",
+            "친절해요"
+          ],
+          "visit_date_raw": "10.24.토",
+          "visit_date": "2026-10-24",
+          "visit_info": [
+            "방문일\n10.24.토\n2026년 10월 24일 토요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjRfNzcg/MDAxNzkyODQ5NzIxMjgz.5gVlGqukWqZDxWeG1_cNEXWCBLurTOWPFyyF7CWDaJIg.CN152fgewdjzNIixH9bmFpHL1Q_EvbhzbPg5S3t6IZwg.JPEG/20261024_224648.jpg.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": -8,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "3e56c7fe0f92d071"
+        },
         {
           "type": "visitor",
           "author": "cha****",
@@ -23096,6 +23127,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "f37dff280cdd8c39"
+        },
+        {
+          "type": "visitor",
+          "author": "흙46",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjRfMjM3/MDAxNzkyODM5ODY5Njg5.0hpm_TFqwPB-go0nqNkiUPOURG0pd8puJrDpibkt8lAg.rENyfBfWWfhX-nRYwgrevHQ9IhJ-ydGf3VInovvkDDog.JPEG/4658977D-D9C2-4849-9442-DA95A7BFB710.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "8e1d52e1aec31cc9"
         }
       ],
       "blog_reviews": [
@@ -25738,13 +25786,13 @@
           "id": "3cdc4cd2f83a1235"
         }
       ],
-      "visitor_count": 876,
+      "visitor_count": 878,
       "blog_count": 69,
-      "meta_visitor_count": 4785,
+      "meta_visitor_count": 4791,
       "meta_blog_count": 443,
       "negative_count": 16,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:53:00.402531"
+      "crawled_at": "2026-10-26T11:51:34.226988"
     },
     {
       "store_name": "역대짬뽕 병점점",
@@ -27304,12 +27352,43 @@
       "meta_blog_count": 109,
       "negative_count": 1,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:54:04.181060"
+      "crawled_at": "2026-10-26T11:52:29.627503"
     },
     {
       "store_name": "역대짬뽕 송파점",
       "place_id": "2066998075",
       "visitor_reviews": [
+        {
+          "type": "visitor",
+          "author": "wfe",
+          "content": "아기의자가 있어서 오게되었는데 짬뽕이랑 게살볶음밥 너무 맛있어요🧡🧡🩷🫢 또오게될것같아용!!",
+          "keywords": [
+            "연인・배우자",
+            "데이트",
+            "점심에 방문",
+            "예약 없이 이용",
+            "바로 입장"
+          ],
+          "tags": [
+            "음식이 맛있어요",
+            "재료가 신선해요",
+            "양이 많아요"
+          ],
+          "visit_date_raw": "10.24.토",
+          "visit_date": "2026-10-24",
+          "visit_info": [
+            "방문일\n10.24.토\n2026년 10월 24일 토요일",
+            "1번째 방문",
+            "인증 수단\n영수증"
+          ],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjRfMTY2/MDAxNzkyODI1NjY0MTM2.EEemF14XUtOAFIar9lpxANDqgust3Oer273xVduHWO0g.WMi2o9uxYX2qLAhwZtu4alfVxa3ifdkZUTBzl9kGnUwg.JPEG/4A4D5D69-2C3D-42A9-AEE3-62739743EF2E.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": -8,
+          "sentiment_method": "keyword_strong_positive",
+          "id": "26c43f895c28e032"
+        },
         {
           "type": "visitor",
           "author": "LGTWINS75",
@@ -55354,6 +55433,24 @@
           "sentiment_score": -3,
           "sentiment_method": "keyword_strong_positive",
           "id": "5a401023873503fd"
+        },
+        {
+          "type": "visitor",
+          "author": "노머씨",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjRfMTY0/MDAxNzkyODI0ODU5NDk5.ogF8SPh2W6AnJIIrmwuH2ykUDXQB4q45AAetXWO3pv0g.YrsMRaBMXM4OvG-2ccdytF2RKvqUP3bFu3vivcx--lQg.JPEG/17928248516111373758015722779619.jpg?type=w1500_60_sharpen",
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjRfNjAg/MDAxNzkyODI0ODczMjA5.hxq4wBf1Lhob0seQXJkdokiH8VXce_IEi_CdjB85CFgg.FbtfNSV3SxPCUvUwaADCSPb-4-8uBAZ-aX8dvbD3GiAg.JPEG/17928248651074866039776377144007.jpg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "9f94701e08223f74"
         }
       ],
       "blog_reviews": [
@@ -62486,13 +62583,13 @@
           "id": "8008b02714ec4ada"
         }
       ],
-      "visitor_count": 1070,
+      "visitor_count": 1072,
       "blog_count": 147,
-      "meta_visitor_count": 1675,
+      "meta_visitor_count": 1680,
       "meta_blog_count": 253,
       "negative_count": 61,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:55:04.743939"
+      "crawled_at": "2026-10-26T11:53:31.391006"
     },
     {
       "store_name": "역대짬뽕 다산1호점",
@@ -73766,6 +73863,23 @@
           "sentiment_score": 0,
           "sentiment_method": "keyword_threshold",
           "id": "e71e447618d962b6"
+        },
+        {
+          "type": "visitor",
+          "author": "아하하아하아",
+          "content": "",
+          "keywords": [],
+          "tags": [],
+          "visit_date_raw": "",
+          "visit_date": null,
+          "visit_info": [],
+          "images": [
+            "https://pup-review-phinf.pstatic.net/MjAyNjEwMjNfMTA1/MDAxNzkyNzI5MjQyNzk1.q5NeaxP-x-NSX-fkTvi6LmJzNarye8uQL-wBTUdNFEog.ctvexsjt0ULOGfgx-tAHt89Nvo6WLPZhkXxg82mjEQ4g.JPEG/IMG_5329.jpeg?type=w1500_60_sharpen"
+          ],
+          "is_negative": false,
+          "sentiment_score": 0,
+          "sentiment_method": "keyword_threshold",
+          "id": "caa81b8f1b9dfd77"
         }
       ],
       "blog_reviews": [
@@ -75407,13 +75521,13 @@
           "id": "f640be539602fbe1"
         }
       ],
-      "visitor_count": 442,
+      "visitor_count": 443,
       "blog_count": 45,
-      "meta_visitor_count": 1960,
+      "meta_visitor_count": 1963,
       "meta_blog_count": 878,
       "negative_count": 12,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:56:20.072764"
+      "crawled_at": "2026-10-26T11:55:18.250276"
     },
     {
       "store_name": "역대짬뽕 화성반월점",
@@ -80622,11 +80736,11 @@
       ],
       "visitor_count": 170,
       "blog_count": 31,
-      "meta_visitor_count": 1250,
+      "meta_visitor_count": 1251,
       "meta_blog_count": 460,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:57:23.111128"
+      "crawled_at": "2026-10-26T11:56:28.346757"
     },
     {
       "store_name": "역대짬뽕 오산시청점",
@@ -85223,11 +85337,11 @@
       ],
       "visitor_count": 146,
       "blog_count": 30,
-      "meta_visitor_count": 1132,
+      "meta_visitor_count": 1135,
       "meta_blog_count": 272,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:58:04.931540"
+      "crawled_at": "2026-10-26T11:57:29.308760"
     },
     {
       "store_name": "역대짬뽕 두정점",
@@ -120499,11 +120613,11 @@
       ],
       "visitor_count": 1039,
       "blog_count": 257,
-      "meta_visitor_count": 2414,
+      "meta_visitor_count": 2417,
       "meta_blog_count": 635,
       "negative_count": 7,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:59:08.774330"
+      "crawled_at": "2026-10-26T11:58:31.742574"
     },
     {
       "store_name": "역대짬뽕 송탄점",
@@ -124316,7 +124430,7 @@
       "meta_blog_count": 46,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T11:59:51.001632"
+      "crawled_at": "2026-10-26T11:59:33.124970"
     },
     {
       "store_name": "역대짬뽕 여수국동점",
@@ -124757,32 +124871,32 @@
       "meta_blog_count": 0,
       "negative_count": 0,
       "ai_analyzed_count": 0,
-      "crawled_at": "2026-10-25T12:00:51.021868"
+      "crawled_at": "2026-10-26T12:00:33.684774"
     }
   ],
   "summary": {
     "total_stores": 9,
-    "total_visitor_reviews": 3915,
+    "total_visitor_reviews": 3920,
     "total_blog_reviews": 634,
-    "total_reviews": 4549,
+    "total_reviews": 4554,
     "total_negative": 97,
     "total_ai_analyzed": 0,
-    "new_visitor_reviews": 3,
+    "new_visitor_reviews": 5,
     "new_blog_reviews": 0,
-    "meta_total_visitor": 14951,
+    "meta_total_visitor": 14972,
     "meta_total_blog": 3096
   },
   "stats": {
     "today": 0,
     "yesterday": 0,
-    "this_week": 5,
-    "last_week": 6,
-    "this_month": 36,
-    "last_month": 58,
+    "this_week": 4,
+    "last_week": 9,
+    "this_month": 35,
+    "last_month": 60,
     "total_negative": 97,
     "total_ai_analyzed": 0,
     "daily_change": 0,
-    "weekly_change": -16.7,
-    "monthly_change": -37.9
+    "weekly_change": -55.6,
+    "monthly_change": -41.7
   }
 }
