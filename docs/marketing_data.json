@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-01T03:19:55.247445",
+  "generated_at": "2026-11-02T03:29:00.330066",
   "tracking_history": {
     "역대짬뽕 본점|수원 짬뽕": {
       "store_name": "역대짬뽕 본점",
@@ -67990,6 +67990,16 @@
       "keyword": "천안 중국집",
       "history": [
         {
+          "date": "2026-11-02",
+          "weekday": "월",
+          "rank": 18,
+          "blog_reviews": "635",
+          "visitor_reviews": "2,428",
+          "save_count": "~100",
+          "score": "4.79",
+          "method": "browser_exec"
+        },
+        {
           "date": "2026-10-19",
           "weekday": "월",
           "rank": 15,
@@ -72217,69 +72227,6 @@
               }
             ]
           }
-        },
-        {
-          "date": "2026-05-03",
-          "weekday": "일",
-          "rank": 35,
-          "blog_reviews": "51",
-          "visitor_reviews": "1,015",
-          "save_count": "~100",
-          "score": null,
-          "method": "browser_exec",
-          "review_stats": {
-            "total": 1015,
-            "avg_rating": 0,
-            "themes": [
-              {
-                "code": "taste",
-                "label": "맛",
-                "count": 763
-              },
-              {
-                "code": "total",
-                "label": "만족도",
-                "count": 422
-              },
-              {
-                "code": "service",
-                "label": "서비스",
-                "count": 157
-              },
-              {
-                "code": "menu",
-                "label": "메뉴",
-                "count": 123
-              },
-              {
-                "code": "amount",
-                "label": "음식량",
-                "count": 78
-              }
-            ],
-            "voted_keywords": [
-              {
-                "displayName": "음식이 맛있어요",
-                "count": 925
-              },
-              {
-                "displayName": "매장이 넓어요",
-                "count": 496
-              },
-              {
-                "displayName": "재료가 신선해요",
-                "count": 489
-              },
-              {
-                "displayName": "양이 많아요",
-                "count": 390
-              },
-              {
-                "displayName": "친절해요",
-                "count": 358
-              }
-            ]
-          }
         }
       ]
     },
@@ -72288,6 +72235,69 @@
       "place_id": "1147851109",
       "keyword": "송탄 짬뽕",
       "history": [
+        {
+          "date": "2026-11-02",
+          "weekday": "월",
+          "rank": 10,
+          "blog_reviews": "48",
+          "visitor_reviews": "1,022",
+          "save_count": "100+",
+          "score": null,
+          "method": "browser_exec",
+          "review_stats": {
+            "total": 1022,
+            "avg_rating": null,
+            "themes": [
+              {
+                "code": "taste",
+                "label": "맛",
+                "count": 517
+              },
+              {
+                "code": "total",
+                "label": "만족도",
+                "count": 253
+              },
+              {
+                "code": "service",
+                "label": "서비스",
+                "count": 107
+              },
+              {
+                "code": "menu",
+                "label": "메뉴",
+                "count": 82
+              },
+              {
+                "code": "amount",
+                "label": "음식량",
+                "count": 61
+              }
+            ],
+            "voted_keywords": [
+              {
+                "displayName": "음식이 맛있어요",
+                "count": 736
+              },
+              {
+                "displayName": "재료가 신선해요",
+                "count": 399
+              },
+              {
+                "displayName": "양이 많아요",
+                "count": 335
+              },
+              {
+                "displayName": "친절해요",
+                "count": 273
+              },
+              {
+                "displayName": "매장이 넓어요",
+                "count": 273
+              }
+            ]
+          }
+        },
         {
           "date": "2026-10-31",
           "weekday": "토",
@@ -76587,69 +76597,6 @@
                 "code": "service",
                 "label": "서비스",
                 "count": 76
-              },
-              {
-                "code": "menu",
-                "label": "메뉴",
-                "count": 60
-              },
-              {
-                "code": "amount",
-                "label": "음식량",
-                "count": 53
-              }
-            ],
-            "voted_keywords": [
-              {
-                "displayName": "음식이 맛있어요",
-                "count": 587
-              },
-              {
-                "displayName": "재료가 신선해요",
-                "count": 315
-              },
-              {
-                "displayName": "양이 많아요",
-                "count": 278
-              },
-              {
-                "displayName": "매장이 넓어요",
-                "count": 221
-              },
-              {
-                "displayName": "친절해요",
-                "count": 217
-              }
-            ]
-          }
-        },
-        {
-          "date": "2026-05-05",
-          "weekday": "화",
-          "rank": 14,
-          "blog_reviews": "46",
-          "visitor_reviews": "869",
-          "save_count": "100+",
-          "score": null,
-          "method": "browser_exec",
-          "review_stats": {
-            "total": 869,
-            "avg_rating": 4.19,
-            "themes": [
-              {
-                "code": "taste",
-                "label": "맛",
-                "count": 405
-              },
-              {
-                "code": "total",
-                "label": "만족도",
-                "count": 192
-              },
-              {
-                "code": "service",
-                "label": "서비스",
-                "count": 75
               },
               {
                 "code": "menu",
