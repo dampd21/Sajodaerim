@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T07:39:48.954732",
+  "generated_at": "2026-11-25T06:07:56.492976",
   "tracking_history": {
     "역대짬뽕 본점|수원 짬뽕": {
       "store_name": "역대짬뽕 본점",
@@ -13328,6 +13328,69 @@
       "keyword": "병점 짬뽕",
       "history": [
         {
+          "date": "2026-11-25",
+          "weekday": "수",
+          "rank": 39,
+          "blog_reviews": "110",
+          "visitor_reviews": "713",
+          "save_count": "700+",
+          "score": "4.34",
+          "method": "browser_exec",
+          "review_stats": {
+            "total": 713,
+            "avg_rating": 4.34,
+            "themes": [
+              {
+                "code": "taste",
+                "label": "맛",
+                "count": 148
+              },
+              {
+                "code": "total",
+                "label": "만족도",
+                "count": 69
+              },
+              {
+                "code": "menu",
+                "label": "메뉴",
+                "count": 31
+              },
+              {
+                "code": "service",
+                "label": "서비스",
+                "count": 14
+              },
+              {
+                "code": "amount",
+                "label": "음식량",
+                "count": 9
+              }
+            ],
+            "voted_keywords": [
+              {
+                "displayName": "음식이 맛있어요",
+                "count": 290
+              },
+              {
+                "displayName": "매장이 넓어요",
+                "count": 66
+              },
+              {
+                "displayName": "친절해요",
+                "count": 59
+              },
+              {
+                "displayName": "양이 많아요",
+                "count": 59
+              },
+              {
+                "displayName": "재료가 신선해요",
+                "count": 43
+              }
+            ]
+          }
+        },
+        {
           "date": "2026-11-14",
           "weekday": "토",
           "rank": 44,
@@ -17873,34 +17936,41 @@
               }
             ]
           }
-        },
+        }
+      ]
+    },
+    "역대짬뽕 병점점|화성 중국집": {
+      "store_name": "역대짬뽕 병점점",
+      "place_id": "1870047654",
+      "keyword": "화성 중국집",
+      "history": [
         {
-          "date": "2026-05-10",
-          "weekday": "일",
-          "rank": 8,
-          "blog_reviews": "106",
-          "visitor_reviews": "710",
-          "save_count": "500+",
-          "score": "4.34",
+          "date": "2026-11-25",
+          "weekday": "수",
+          "rank": null,
+          "blog_reviews": "0",
+          "visitor_reviews": "0",
+          "save_count": "0",
+          "score": 0,
           "method": "browser_exec",
           "review_stats": {
-            "total": 710,
+            "total": 713,
             "avg_rating": 4.34,
             "themes": [
               {
                 "code": "taste",
                 "label": "맛",
-                "count": 146
+                "count": 148
               },
               {
                 "code": "total",
                 "label": "만족도",
-                "count": 66
+                "count": 69
               },
               {
                 "code": "menu",
                 "label": "메뉴",
-                "count": 30
+                "count": 31
               },
               {
                 "code": "service",
@@ -17916,34 +17986,27 @@
             "voted_keywords": [
               {
                 "displayName": "음식이 맛있어요",
-                "count": 287
+                "count": 290
               },
               {
                 "displayName": "매장이 넓어요",
-                "count": 65
+                "count": 66
               },
               {
                 "displayName": "친절해요",
-                "count": 58
+                "count": 59
               },
               {
                 "displayName": "양이 많아요",
-                "count": 57
+                "count": 59
               },
               {
                 "displayName": "재료가 신선해요",
-                "count": 42
+                "count": 43
               }
             ]
           }
-        }
-      ]
-    },
-    "역대짬뽕 병점점|화성 중국집": {
-      "store_name": "역대짬뽕 병점점",
-      "place_id": "1870047654",
-      "keyword": "화성 중국집",
-      "history": [
+        },
         {
           "date": "2026-11-24",
           "weekday": "화",
@@ -22219,69 +22282,6 @@
         {
           "date": "2026-05-10",
           "weekday": "일",
-          "rank": null,
-          "blog_reviews": "0",
-          "visitor_reviews": "0",
-          "save_count": "0",
-          "score": 0,
-          "method": "browser_exec",
-          "review_stats": {
-            "total": 710,
-            "avg_rating": 4.34,
-            "themes": [
-              {
-                "code": "taste",
-                "label": "맛",
-                "count": 146
-              },
-              {
-                "code": "total",
-                "label": "만족도",
-                "count": 66
-              },
-              {
-                "code": "menu",
-                "label": "메뉴",
-                "count": 30
-              },
-              {
-                "code": "service",
-                "label": "서비스",
-                "count": 14
-              },
-              {
-                "code": "amount",
-                "label": "음식량",
-                "count": 9
-              }
-            ],
-            "voted_keywords": [
-              {
-                "displayName": "음식이 맛있어요",
-                "count": 287
-              },
-              {
-                "displayName": "매장이 넓어요",
-                "count": 65
-              },
-              {
-                "displayName": "친절해요",
-                "count": 58
-              },
-              {
-                "displayName": "양이 많아요",
-                "count": 57
-              },
-              {
-                "displayName": "재료가 신선해요",
-                "count": 42
-              }
-            ]
-          }
-        },
-        {
-          "date": "2026-05-09",
-          "weekday": "토",
           "rank": null,
           "blog_reviews": "0",
           "visitor_reviews": "0",
@@ -79615,6 +79615,16 @@
       "keyword": "여수 짬뽕",
       "history": [
         {
+          "date": "2026-11-25",
+          "weekday": "수",
+          "rank": null,
+          "blog_reviews": "0",
+          "visitor_reviews": "0",
+          "save_count": "0",
+          "score": 0,
+          "method": "browser_exec"
+        },
+        {
           "date": "2026-11-19",
           "weekday": "목",
           "rank": null,
@@ -80497,16 +80507,6 @@
         {
           "date": "2026-05-05",
           "weekday": "화",
-          "rank": null,
-          "blog_reviews": "0",
-          "visitor_reviews": "0",
-          "save_count": "0",
-          "score": 0,
-          "method": "browser_exec"
-        },
-        {
-          "date": "2026-05-04",
-          "weekday": "월",
           "rank": null,
           "blog_reviews": "0",
           "visitor_reviews": "0",
